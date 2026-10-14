@@ -1,0 +1,110 @@
+# Joi_bio — kidney-related target set (n=10)
+#
+# 선정 기준
+#   ① PDB에 실험구조가 있을 것          → 도킹 가능
+#   ② ChEMBL에 활성 데이터가 있을 것     → 검증 게이트의 양성 대조군 확보
+#   ③ 신장 질환과의 연관성이 명확할 것
+#
+# benchmark_ligands 는 파이프라인 검증용 양성 대조군(승인약/임상 화합물)이다.
+# 이들이 도킹 상위에 올라오지 않으면 그 타깃의 신규 후보는 신뢰할 수 없다.
+
+targets:
+  # ---------- A. 신장암 (RCC) ----------
+  - gene: EPAS1
+    alias: HIF-2a
+    uniprot: Q99814
+    class: transcription_factor
+    disease: ccRCC
+    rationale: "VHL 결손 ccRCC의 핵심 구동자. belzutifan 승인 → 최상의 양성 대조군."
+    pocket_mode: cavity
+    benchmark_ligands: [belzutifan, PT2385, PT2977, PT2399]
+    priority: 1
+
+  - gene: MET
+    uniprot: P08581
+    class: kinase
+    disease: papillary_RCC
+    rationale: "유두상 신세포암 주요 구동 키나제. ATP 포켓 → 도킹 난이도 낮음."
+    pocket_mode: atp_site
+    benchmark_ligands: [cabozantinib, savolitinib, crizotinib, foretinib]
+    priority: 2
+
+  - gene: VHL
+    uniprot: P40337
+    class: e3_ligase
+    disease: ccRCC
+    rationale: "PROTAC 리크루터로 결합 데이터 풍부. PPI 계면이라 난이도 상한 측정용."
+    pocket_mode: ppi
+    benchmark_ligands: [VH032, VHL-ligand-1]
+    priority: 3
+
+  - gene: SLC5A2
+    alias: SGLT2
+    uniprot: P31639
+    class: transporter
+    disease: CKD_DKD
+    rationale: "신보호 효과 입증된 최대 성공 사례. 막단백질 벤치마크."
+    pocket_mode: cavity
+    benchmark_ligands: [dapagliflozin, empagliflozin, canagliflozin]
+    priority: 4
+    risk: "막단백질. 구조가 cryo-EM이면 해상도가 낮아 도킹 신뢰도 하락."
+
+  - gene: CA9
+    alias: CAIX
+    uniprot: Q16790
+    class: enzyme
+    disease: ccRCC
+    rationale: "ccRCC 특이 표면 마커. 아연 활성부위 → 금속 배위 도킹 검증."
+    pocket_mode: metal_site
+    benchmark_ligands: [acetazolamide, SLC-0111, methazolamide]
+    priority: 5
+    risk: "Zn2+ 배위 결합은 Vina 스코어링 함수가 과소평가하는 경향."
+
+  - gene: AXL
+    uniprot: P30530
+    class: kinase
+    disease: RCC_TKI_resistance
+    rationale: "RCC의 TKI 내성·전이 관여. 차세대 병용 타깃."
+    pocket_mode: atp_site
+    benchmark_ligands: [bemcentinib, cabozantinib, gilteritinib]
+    priority: 6
+
+  # ---------- B. 신장 기전 / CKD ----------
+  - gene: NLRP3
+    uniprot: Q96P20
+    class: inflammasome
+    disease: kidney_fibrosis
+    rationale: "신장 염증·섬유화 핵심. NACHT 도메인 알로스테릭 포켓."
+    pocket_mode: allosteric
+    benchmark_ligands: [MCC950, dapansutrile]
+    priority: 7
+
+  - gene: KEAP1
+    uniprot: Q14145
+    class: ppi
+    disease: oxidative_stress_CKD
+    rationale: "Nrf2 경로. PPI 타깃이라 리지드 도킹의 한계 측정용."
+    pocket_mode: ppi
+    benchmark_ligands: [KI-696, bardoxolone]
+    priority: 8
+
+  - gene: APOL1
+    uniprot: O14791
+    class: pore_forming
+    disease: FSGS_CKD
+    rationale: "G1/G2 위험 변이 기반 CKD. inaxaplin 등 신규 영역 → 화이트스페이스."
+    pocket_mode: predicted
+    benchmark_ligands: [inaxaplin]
+    priority: 9
+    risk: "실험 구조 부족. AlphaFold 모델 + blind docking → 검증 FAIL 예상이 정상."
+
+  - gene: KCNJ1
+    alias: ROMK
+    uniprot: P48048
+    class: ion_channel
+    disease: hypertension_diuresis
+    rationale: "신규 이뇨 타깃. 심혈관 부작용 적음."
+    pocket_mode: cavity
+    benchmark_ligands: [MK-7145, VU591]
+    priority: 10
+    risk: "이온채널. 결합 부위 정의가 어려움."

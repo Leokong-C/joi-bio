@@ -1,0 +1,16 @@
+name: joi-bio
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - requests
+  - pyyaml
+  - rdkit
+  # vina / openbabel 은 conda-forge 바이너리를 쓴다.
+  # pip install vina 는 Boost 1.83+ 의 deprecated 헤더 때문에 빌드가 깨진다.
+  - vina
+  - openbabel
+  - pip
+  - pip:
+      - meeko>=0.6.0

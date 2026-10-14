@@ -1,0 +1,6 @@
+targets/
+results/*.md
+__pycache__/
+*.pyc
+.venv/
+venv/
