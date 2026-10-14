@@ -26,8 +26,46 @@ permissions:
   contents: write
 
 jobs:
+  preflight:
+    name: 환경 사전 점검
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      # 의존성 문제를 2분 안에 잡는다. 이게 없으면 prep 5분 + 도킹 1시간을
+      # 쓰고 나서야 리간드 준비가 전부 실패했다는 걸 알게 된다.
+      - name: import·변환 점검
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python - <<'PY'
+          import vina, meeko, rdkit, scipy, numpy, requests, yaml
+          print("import OK:", "vina meeko rdkit scipy numpy requests yaml")
+          from meeko import MoleculePreparation, PDBQTWriterLegacy
+          from rdkit import Chem
+          from rdkit.Chem import AllChem
+          m = Chem.AddHs(Chem.MolFromSmiles("CC(=O)Oc1ccccc1C(=O)O"))
+          prm = AllChem.ETKDGv3(); prm.randomSeed = 42
+          assert AllChem.EmbedMolecule(m, prm) == 0, "3D 임베딩 실패"
+          AllChem.MMFFOptimizeMolecule(m, maxIters=200)
+          setups = MoleculePreparation().prepare(m)
+          txt, ok, err = PDBQTWriterLegacy.write_string(setups[0])
+          assert ok, f"PDBQT 변환 실패: {err}"
+          print(f"리간드 PDBQT 변환 OK ({len(txt.splitlines())}줄)")
+          v = vina.Vina(sf_name="vina", cpu=1, verbosity=0)
+          print("Vina 인스턴스 OK")
+          PY
+          obabel -V
+
   prep:
     name: 구조·라이브러리 준비
+    needs: preflight
     runs-on: ubuntu-latest
     timeout-minutes: 120
     outputs:
@@ -131,27 +169,6 @@ jobs:
           name: prepared
           path: targets/
 
-      - name: 환경 확인
-        shell: bash -el {0}
-        run: |
-          mkdir -p logs
-          set -o pipefail
-          { python -c "
-          import vina, meeko, rdkit, scipy
-          print('import OK: vina meeko rdkit scipy')
-          from meeko import MoleculePreparation, PDBQTWriterLegacy
-          from rdkit import Chem
-          from rdkit.Chem import AllChem
-          m = Chem.AddHs(Chem.MolFromSmiles('CC(=O)Oc1ccccc1C(=O)O'))
-          p = AllChem.ETKDGv3(); p.randomSeed = 42
-          assert AllChem.EmbedMolecule(m, p) == 0
-          s = MoleculePreparation().prepare(m)
-          txt, ok, _ = PDBQTWriterLegacy.write_string(s[0])
-          assert ok, 'PDBQT 변환 실패'
-          print('리간드 PDBQT 변환 OK')
-          "
-            obabel -V; } 2>&1 | tee logs/03_env.log
-
       - name: Stage 03 — Vina 도킹
         shell: bash -el {0}
         run: |
@@ -198,7 +215,7 @@ jobs:
 
   report:
     name: 검증·보고서
-    needs: [prep, dock]
+    needs: [preflight, prep, dock]
     if: always() && needs.prep.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 60
