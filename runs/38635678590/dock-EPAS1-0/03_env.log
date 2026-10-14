@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+  File "/home/runner/micromamba/envs/joi-bio/lib/python3.11/site-packages/meeko/__init__.py", line 29, in <module>
+    from .polymer import Polymer
+  File "/home/runner/micromamba/envs/joi-bio/lib/python3.11/site-packages/meeko/polymer.py", line 33, in <module>
+    from .chemtempgen import export_chem_templates_to_json
+  File "/home/runner/micromamba/envs/joi-bio/lib/python3.11/site-packages/meeko/chemtempgen.py", line 1, in <module>
+    import gemmi
+ModuleNotFoundError: No module named 'gemmi'
