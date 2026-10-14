@@ -1,0 +1,112 @@
+name: Joi_bio poses
+
+# 이미 끝난 실행의 도킹 결과를 재활용해 포즈 좌표만 생성한다.
+# 2,305개를 다시 도킹하지 않고 볼 화합물 15~20개만 꼼꼼히 다시 돌린다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "도킹 결과를 가져올 기존 실행 ID"
+        required: true
+      gene:
+        description: "타깃 유전자"
+        required: true
+        default: EPAS1
+      top_n:
+        description: "상위 후보 몇 개의 포즈를 저장할지"
+        required: false
+        default: "15"
+      exhaustiveness:
+        description: "포즈용 exhaustiveness"
+        required: false
+        default: "16"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  poses:
+    name: 포즈 생성
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      - name: 기존 실행에서 결과 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/dl
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 결과 재구성
+        shell: bash -el {0}
+        run: |
+          mkdir -p targets logs
+          cp -r /tmp/dl/prepared/* targets/ 2>/dev/null || true
+          for d in /tmp/dl/docked-*; do
+            [ -d "$d" ] || continue
+            g=$(basename "$d" | sed -E 's/^docked-(.+)-[0-9]+$/\1/')
+            mkdir -p "targets/$g"
+            cp "$d"/*.jsonl "targets/$g/" 2>/dev/null || true
+          done
+          ls -la targets/${{ inputs.gene }} | tee logs/poses_input.log
+
+      - name: 검증 게이트 (docked_all.jsonl 생성)
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python -m core.validation.gate --gene ${{ inputs.gene }} 2>&1 \
+            | tee logs/poses_validate.log
+
+      - name: 포즈 생성
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python -m modules.small_molecule.poses --gene ${{ inputs.gene }} \
+            --top-n ${{ inputs.top_n }} --poses-per-ligand 3 \
+            --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
+            | tee logs/poses.log
+
+      - name: ci-results 브랜치로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/poses"
+          mkdir -p "$OUT"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          G=${{ inputs.gene }}
+          mkdir -p "$OUT/$G"
+          for f in receptor.pdb poses.sdf poses_meta.json validation.json target_meta.json; do
+            cp "targets/$G/$f" "$OUT/$G/" 2>/dev/null || true
+          done
+          cd "$DEST"
+          git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "poses: ${G} from run ${{ inputs.source_run_id }}" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: poses-${{ inputs.gene }}
+          path: |
+            targets/*/poses.sdf
+            targets/*/poses_meta.json
+            targets/*/receptor.pdb
+            logs/
+          retention-days: 30
+          if-no-files-found: warn
