@@ -1,0 +1,26 @@
+{
+  "n_total": 2305,
+  "n_benchmark": 3,
+  "n_known_active": 553,
+  "n_decoy": 1752,
+  "benchmarks_requested": [
+    "belzutifan",
+    "PT2385",
+    "PT2399"
+  ],
+  "benchmarks_found": [
+    "belzutifan",
+    "PT2385",
+    "PT2399"
+  ],
+  "rejected_by": {
+    "PAINS": 96,
+    "logp": 179,
+    "mw": 25,
+    "tpsa": 12,
+    "too_small": 1,
+    "rotbonds": 29,
+    "hbond": 2
+  },
+  "activity_cutoff_nM": 10000.0
+}
