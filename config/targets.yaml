@@ -17,7 +17,9 @@ targets:
     disease: ccRCC
     rationale: "VHL 결손 ccRCC의 핵심 구동자. belzutifan 승인 → 최상의 양성 대조군."
     pocket_mode: cavity
-    benchmark_ligands: [belzutifan, PT2385, PT2977, PT2399]
+    # PT2977은 belzutifan의 개발 코드명이라 같은 ChEMBL ID로 중복 제거된다.
+    # "PT2977 미포함" 경고가 떠도 정상이다.
+    benchmark_ligands: [belzutifan, PT2385, PT2399]
     priority: 1
 
   - gene: MET

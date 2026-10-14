@@ -27,6 +27,11 @@ from pathlib import Path
 from rdkit import Chem, RDLogger
 from rdkit.Chem import AllChem
 
+# 의존성은 모듈 로드 시점에 터뜨린다. 워커 안에서 조용히 실패하면
+# 리간드 준비가 전부 실패해도 '도킹은 돌았다'처럼 보인다 (실제로 겪은 사고).
+from meeko import MoleculePreparation, PDBQTWriterLegacy  # noqa: E402
+from vina import Vina  # noqa: E402
+
 RDLogger.DisableLog("rdApp.*")
 
 
@@ -47,10 +52,6 @@ def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
 
 def ligand_pdbqt(smiles: str, seed: int = 42) -> str | None:
     """SMILES → 3D → PDBQT 문자열."""
-    try:
-        from meeko import MoleculePreparation, PDBQTWriterLegacy
-    except ImportError:
-        return None
     try:
         mol = Chem.MolFromSmiles(smiles)
         if mol is None:
@@ -85,8 +86,6 @@ def dock_one(job: tuple) -> dict:
         if lig is None:
             out.update(score=None, error="ligand_prep_failed")
             return out
-
-        from vina import Vina
 
         v = Vina(sf_name="vina", cpu=1, seed=42, verbosity=0)
         v.set_receptor(rec_path)
@@ -131,6 +130,18 @@ def main() -> int:
     rec_pdbqt = tdir / "receptor.pdbqt"
     if not prep_receptor(tdir / "receptor.pdb", rec_pdbqt):
         return 1
+
+    # 사전 점검 — 리간드 하나를 실제로 준비해 본다. 여기서 막히면 전체가 막히므로
+    # 수백 개를 돌려 100% 실패를 확인하느라 한 시간을 쓰지 않는다.
+    probe = ligand_pdbqt("CC(=O)Oc1ccccc1C(=O)O")
+    if probe is None:
+        print(
+            "[!] 사전 점검 실패: 리간드 PDBQT 변환이 되지 않는다. "
+            "meeko/rdkit 의존성(scipy 포함)을 확인할 것.",
+            file=sys.stderr,
+        )
+        return 1
+    print(f"    사전 점검 OK (프로브 리간드 {len(probe.splitlines())}줄)")
 
     lib = [
         json.loads(l) for l in (tdir / "library.jsonl").read_text().splitlines() if l.strip()

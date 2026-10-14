@@ -4,6 +4,7 @@ channels:
 dependencies:
   - python=3.11
   - numpy
+  - scipy          # meeko가 scipy.spatial을 요구한다. 없으면 리간드 준비가 전부 실패한다.
   - requests
   - pyyaml
   - rdkit
