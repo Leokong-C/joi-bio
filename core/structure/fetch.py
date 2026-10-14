@@ -24,7 +24,11 @@ import requests
 
 RCSB_SEARCH = "https://search.rcsb.org/rcsbsearch/v2/query"
 RCSB_FILE = "https://files.rcsb.org/download/{pdb_id}.pdb"
-AFDB = "https://alphafold.ebi.ac.uk/files/AF-{acc}-F1-model_v4.pdb"
+AFDB_TEMPLATES = [
+    "https://alphafold.ebi.ac.uk/files/AF-{acc}-F1-model_v4.pdb",
+    "https://alphafold.ebi.ac.uk/files/AF-{acc}-F1-model_v3.pdb",
+    "https://alphafold.ebi.ac.uk/files/AF-{acc}-F1-model_v2.pdb",
+]
 TIMEOUT = 90
 
 # 용매·완충제·결정화 첨가물 — 리간드로 오인하면 포켓이 엉뚱한 곳에 잡힌다.
@@ -43,20 +47,27 @@ COFACTOR_KEEP = {
 
 
 def _post(url: str, payload: dict, retries: int = 3) -> dict | None:
+    last = ""
     for attempt in range(retries):
         try:
             r = requests.post(url, json=payload, timeout=TIMEOUT)
             if r.status_code == 200:
                 return r.json()
-            if r.status_code == 204:  # no hits
+            if r.status_code == 204:  # 조건에 맞는 구조 없음
                 return {}
-        except requests.RequestException:
-            pass
+            last = f"HTTP {r.status_code}: {r.text[:300]}"
+            if 400 <= r.status_code < 500:
+                break  # 쿼리 자체가 잘못됨 — 재시도해도 같다
+        except requests.RequestException as e:
+            last = f"{type(e).__name__}: {e}"
         time.sleep(2 * (attempt + 1))
+    if last:
+        print(f"    [rcsb] {last}", file=sys.stderr)
     return None
 
 
 def _get(url: str, retries: int = 3) -> requests.Response | None:
+    last = ""
     for attempt in range(retries):
         try:
             r = requests.get(url, timeout=TIMEOUT)
@@ -64,57 +75,91 @@ def _get(url: str, retries: int = 3) -> requests.Response | None:
                 return r
             if r.status_code == 404:
                 return None
-        except requests.RequestException:
-            pass
+            last = f"HTTP {r.status_code} {url}"
+        except requests.RequestException as e:
+            last = f"{type(e).__name__}: {e} ({url})"
         time.sleep(2 * (attempt + 1))
+    if last:
+        print(f"    [http] {last}", file=sys.stderr)
     return None
 
 
-def search_rcsb(uniprot: str, max_hits: int = 25) -> list[str]:
-    """UniProt accession에 매핑된 실험 구조를 해상도 오름차순으로 반환."""
-    payload = {
-        "query": {
-            "type": "group",
-            "logical_operator": "and",
-            "nodes": [
-                {
-                    "type": "terminal",
-                    "service": "text",
-                    "parameters": {
-                        "attribute": (
-                            "rcsb_polymer_entity_container_identifiers"
-                            ".reference_sequence_identifiers.database_accession"
-                        ),
-                        "operator": "exact_match",
-                        "value": uniprot,
-                    },
-                },
-                {
-                    "type": "terminal",
-                    "service": "text",
-                    "parameters": {
-                        "attribute": "rcsb_entry_info.resolution_combined",
-                        "operator": "less_or_equal",
-                        "value": 3.5,
-                    },
-                },
-            ],
-        },
-        "return_type": "entry",
-        "request_options": {
-            "sort": [
-                {
-                    "attribute": "rcsb_entry_info.resolution_combined",
-                    "direction": "asc",
-                }
-            ],
-            "paginate": {"start": 0, "rows": max_hits},
+ACCESSION_ATTR = (
+    "rcsb_polymer_entity_container_identifiers"
+    ".reference_sequence_identifiers.database_accession"
+)
+
+
+def _accession_node(uniprot: str) -> dict:
+    return {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+            "attribute": ACCESSION_ATTR,
+            "operator": "exact_match",
+            "value": uniprot,
         },
     }
-    data = _post(RCSB_SEARCH, payload)
-    if not data:
-        return []
-    return [hit["identifier"] for hit in data.get("result_set", [])]
+
+
+def _resolution_node() -> dict:
+    return {
+        "type": "terminal",
+        "service": "text",
+        "parameters": {
+            "attribute": "rcsb_entry_info.resolution_combined",
+            "operator": "less_or_equal",
+            "value": 3.5,
+        },
+    }
+
+
+def search_rcsb(uniprot: str, max_hits: int = 25) -> list[str]:
+    """UniProt accession에 매핑된 실험 구조를 반환.
+
+    RCSB Search API는 버전에 따라 sort 키와 필터 허용 범위가 달라진다.
+    쿼리를 단순한 쪽으로 단계적으로 낮추며 재시도한다.
+    """
+    sort_asc = [{"sort_by": "rcsb_entry_info.resolution_combined", "direction": "asc"}]
+    attempts = [
+        {
+            "query": {
+                "type": "group",
+                "logical_operator": "and",
+                "nodes": [_accession_node(uniprot), _resolution_node()],
+            },
+            "return_type": "entry",
+            "request_options": {
+                "sort": sort_asc,
+                "paginate": {"start": 0, "rows": max_hits},
+            },
+        },
+        {
+            "query": _accession_node(uniprot),
+            "return_type": "entry",
+            "request_options": {
+                "sort": sort_asc,
+                "paginate": {"start": 0, "rows": max_hits},
+            },
+        },
+        {
+            "query": _accession_node(uniprot),
+            "return_type": "entry",
+            "request_options": {"paginate": {"start": 0, "rows": max_hits}},
+        },
+    ]
+
+    for i, payload in enumerate(attempts, 1):
+        data = _post(RCSB_SEARCH, payload)
+        if data:
+            ids = [hit["identifier"] for hit in data.get("result_set", [])]
+            if ids:
+                print(f"    RCSB 검색 {len(ids)}건 (쿼리 형태 {i})")
+                return ids
+        if data == {}:
+            print(f"    RCSB 검색 0건 (쿼리 형태 {i})")
+    print("    [!] RCSB 검색 전부 실패")
+    return []
 
 
 def parse_pdb(text: str) -> dict:
@@ -338,7 +383,12 @@ def prepare_target(target: dict, outdir: Path) -> dict:
     cand = select_structure(uniprot)
 
     if cand is None:
-        r = _get(AFDB.format(acc=uniprot))
+        print("    실험 구조 확보 실패 → AlphaFold 모델 시도")
+        r = None
+        for tpl in AFDB_TEMPLATES:
+            r = _get(tpl.format(acc=uniprot))
+            if r is not None:
+                break
         if r is None:
             meta["error"] = "실험 구조·AlphaFold 모델 모두 확보 실패"
             return meta

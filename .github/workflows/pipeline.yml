@@ -20,14 +20,16 @@ on:
         required: false
         default: "8"
 
+# 로그와 결과를 ci-results 브랜치로 되돌려 보낸다.
+# Actions 로그는 blob 스토리지에 있어 API로 읽기 어렵기 때문이다.
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   prep:
     name: 구조·라이브러리 준비
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     outputs:
       genes: ${{ steps.genes.outputs.list }}
     steps:
@@ -55,24 +57,56 @@ jobs:
           echo "타깃: $LIST"
 
       - name: Stage 01 — 구조 확보와 포켓 정의
+        id: s01
         shell: bash -el {0}
         run: |
+          mkdir -p logs
+          set -o pipefail
           for g in $(echo '${{ steps.genes.outputs.list }}' | python -c "import sys,json;print(' '.join(json.load(sys.stdin)))"); do
-            python -m core.structure.fetch --gene "$g"
+            echo "===== $g =====" | tee -a logs/01_structure.log
+            python -m core.structure.fetch --gene "$g" 2>&1 | tee -a logs/01_structure.log
           done
 
       - name: Stage 02 — 라이브러리 구성
+        if: always() && steps.s01.outcome == 'success'
         shell: bash -el {0}
         run: |
+          mkdir -p logs
+          set -o pipefail
           for g in $(echo '${{ steps.genes.outputs.list }}' | python -c "import sys,json;print(' '.join(json.load(sys.stdin)))"); do
-            python -m modules.small_molecule.library --gene "$g" --n-decoys ${{ inputs.n_decoys }}
+            echo "===== $g =====" | tee -a logs/02_library.log
+            python -m modules.small_molecule.library --gene "$g" \
+              --n-decoys ${{ inputs.n_decoys }} 2>&1 | tee -a logs/02_library.log
           done
 
+      - name: 로그·메타데이터를 ci-results 브랜치로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/prep"
+          mkdir -p "$OUT"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          # 큰 jsonl 은 제외하고 메타데이터만 가져간다
+          find targets -name '*.json' -exec cp --parents {} "$OUT/" \; 2>/dev/null || true
+          cd "$DEST"
+          git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "prep logs: run ${GITHUB_RUN_ID} (${{ inputs.gene }})" || exit 0
+          git push --quiet origin ci-results
+
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: prepared
           path: targets/
           retention-days: 7
+          if-no-files-found: warn
 
   dock:
     name: 도킹
@@ -100,23 +134,53 @@ jobs:
       - name: 환경 확인
         shell: bash -el {0}
         run: |
-          python -c "import vina, meeko, rdkit; print('vina/meeko/rdkit OK')"
-          obabel -V
+          mkdir -p logs
+          { python -c "import vina, meeko, rdkit; print('vina/meeko/rdkit import OK')"
+            obabel -V; } 2>&1 | tee logs/03_env.log
 
       - name: Stage 03 — Vina 도킹
         shell: bash -el {0}
         run: |
+          mkdir -p logs
+          set -o pipefail
           python -m modules.small_molecule.dock \
             --gene ${{ matrix.gene }} \
             --shard ${{ matrix.shard }} --n-shards 4 \
             --max-ligands ${{ inputs.max_ligands }} \
-            --exhaustiveness ${{ inputs.exhaustiveness }}
+            --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
+            | tee logs/03_dock_${{ matrix.gene }}_${{ matrix.shard }}.log
+
+      - name: 로그를 ci-results 브랜치로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          for i in 1 2 3 4 5; do
+            rm -rf "$DEST"
+            git clone --quiet --depth 1 --branch ci-results \
+              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+            OUT="$DEST/runs/${GITHUB_RUN_ID}/dock-${{ matrix.gene }}-${{ matrix.shard }}"
+            mkdir -p "$OUT"
+            cp -r logs/* "$OUT/" 2>/dev/null || true
+            cd "$DEST"
+            git add -A
+            git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+              commit -q -m "dock logs: run ${GITHUB_RUN_ID} ${{ matrix.gene }} shard ${{ matrix.shard }}" || exit 0
+            # 샤드 4개가 동시에 push 하므로 충돌 시 재시도
+            if git push --quiet origin ci-results; then exit 0; fi
+            sleep $((RANDOM % 20 + 5))
+          done
 
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: docked-${{ matrix.gene }}-${{ matrix.shard }}
           path: targets/${{ matrix.gene }}/docked_shard*.jsonl
           retention-days: 7
+          if-no-files-found: warn
 
   report:
     name: 검증·보고서
@@ -139,40 +203,76 @@ jobs:
       - name: 결과 수집
         shell: bash -el {0}
         run: |
-          mkdir -p targets
+          mkdir -p targets logs
           cp -r /tmp/dl/prepared/* targets/ 2>/dev/null || true
           for d in /tmp/dl/docked-*; do
             [ -d "$d" ] || continue
-            base=$(basename "$d")          # docked-<GENE>-<shard>
+            base=$(basename "$d")
             g=$(echo "$base" | sed -E 's/^docked-(.+)-[0-9]+$/\1/')
             mkdir -p "targets/$g"
             cp "$d"/*.jsonl "targets/$g/" 2>/dev/null || true
           done
-          echo "수집된 타깃:"; ls targets
+          echo "수집된 타깃:" | tee logs/04_collect.log
+          ls targets | tee -a logs/04_collect.log
 
       - name: Stage 04-05 — 검증 게이트와 ADMET
         shell: bash -el {0}
         run: |
+          set +e
           for g in $(ls targets); do
-            echo "::group::$g"
-            python -m core.validation.gate --gene "$g" || { echo "검증 건너뜀: $g"; echo "::endgroup::"; continue; }
-            python -m modules.small_molecule.admet --gene "$g" || true
-            echo "::endgroup::"
+            echo "===== $g =====" | tee -a logs/04_validate.log
+            python -m core.validation.gate --gene "$g" 2>&1 | tee -a logs/04_validate.log
+            python -m modules.small_molecule.admet --gene "$g" 2>&1 | tee -a logs/05_admet.log
           done
+          exit 0
 
       - name: Stage 06 — 보고서
         shell: bash -el {0}
-        run: python -m core.report.build
+        run: |
+          set -o pipefail
+          python -m core.report.build 2>&1 | tee logs/06_report.log
+
+      - name: 결과를 ci-results 브랜치로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/report"
+          mkdir -p "$OUT"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          cp -r results "$OUT/" 2>/dev/null || true
+          find targets -name '*.json' -exec cp --parents {} "$OUT/" \; 2>/dev/null || true
+          # 후보는 상위 20개만
+          for f in targets/*/candidates.jsonl; do
+            [ -f "$f" ] || continue
+            mkdir -p "$OUT/$(dirname "$f")"
+            head -20 "$f" > "$OUT/${f%.jsonl}_top20.jsonl"
+          done
+          cp "$OUT/results/report.md" "$DEST/LATEST_REPORT.md" 2>/dev/null || true
+          cd "$DEST"
+          git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "report: run ${GITHUB_RUN_ID} (${{ inputs.gene }})" || exit 0
+          git push --quiet origin ci-results
 
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: joi-bio-report
           path: |
             results/
+            logs/
             targets/*/validation.json
             targets/*/candidates.jsonl
             targets/*/target_meta.json
           retention-days: 30
+          if-no-files-found: warn
 
       - name: 요약 출력
-        run: cat results/report.md >> $GITHUB_STEP_SUMMARY
+        if: always()
+        run: cat results/report.md >> $GITHUB_STEP_SUMMARY || true
