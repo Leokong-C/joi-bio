@@ -135,7 +135,21 @@ jobs:
         shell: bash -el {0}
         run: |
           mkdir -p logs
-          { python -c "import vina, meeko, rdkit; print('vina/meeko/rdkit import OK')"
+          set -o pipefail
+          { python -c "
+          import vina, meeko, rdkit, scipy
+          print('import OK: vina meeko rdkit scipy')
+          from meeko import MoleculePreparation, PDBQTWriterLegacy
+          from rdkit import Chem
+          from rdkit.Chem import AllChem
+          m = Chem.AddHs(Chem.MolFromSmiles('CC(=O)Oc1ccccc1C(=O)O'))
+          p = AllChem.ETKDGv3(); p.randomSeed = 42
+          assert AllChem.EmbedMolecule(m, p) == 0
+          s = MoleculePreparation().prepare(m)
+          txt, ok, _ = PDBQTWriterLegacy.write_string(s[0])
+          assert ok, 'PDBQT 변환 실패'
+          print('리간드 PDBQT 변환 OK')
+          "
             obabel -V; } 2>&1 | tee logs/03_env.log
 
       - name: Stage 03 — Vina 도킹
