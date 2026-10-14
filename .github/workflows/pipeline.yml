@@ -257,6 +257,18 @@ jobs:
           done
           exit 0
 
+      - name: Stage 05b — 포즈 좌표 생성 (시각화용)
+        shell: bash -el {0}
+        run: |
+          set +e
+          for g in $(ls targets); do
+            [ -f "targets/$g/docked_all.jsonl" ] || continue
+            echo "===== $g =====" | tee -a logs/05b_poses.log
+            python -m modules.small_molecule.poses --gene "$g" \
+              --top-n 15 --poses-per-ligand 3 2>&1 | tee -a logs/05b_poses.log
+          done
+          exit 0
+
       - name: Stage 06 — 보고서
         shell: bash -el {0}
         run: |
@@ -283,6 +295,12 @@ jobs:
             [ -f "$f" ] || continue
             mkdir -p "$OUT/$(dirname "$f")"
             head -20 "$f" > "$OUT/${f%.jsonl}_top20.jsonl"
+          done
+          # 구조 뷰어가 읽을 파일 — 수용체와 포즈 좌표
+          for f in targets/*/receptor.pdb targets/*/poses.sdf; do
+            [ -f "$f" ] || continue
+            mkdir -p "$OUT/$(dirname "$f")"
+            cp "$f" "$OUT/$f"
           done
           cp "$OUT/results/report.md" "$DEST/LATEST_REPORT.md" 2>/dev/null || true
           cd "$DEST"
