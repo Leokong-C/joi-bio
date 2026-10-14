@@ -1,0 +1,44 @@
+{
+  "gene": "EPAS1",
+  "uniprot": "Q99814",
+  "declared_pocket_mode": "cavity",
+  "source": "RCSB",
+  "pdb_id": "3H82",
+  "resolution": 2.0,
+  "receptor": {
+    "chain": "A",
+    "n_atoms": 934,
+    "cofactors": [],
+    "cocrystal_ligand": {
+      "resname": "020",
+      "n_heavy": 20,
+      "center": [
+        9.222,
+        -9.701,
+        5.874
+      ]
+    }
+  },
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "020",
+    "center": [
+      9.222,
+      -9.701,
+      5.874
+    ],
+    "size": [
+      20.0,
+      20.0,
+      20.0
+    ],
+    "confidence": "high",
+    "note": "020 (20 heavy atoms) 기준"
+  },
+  "benchmark_ligands": [
+    "belzutifan",
+    "PT2385",
+    "PT2977",
+    "PT2399"
+  ]
+}
