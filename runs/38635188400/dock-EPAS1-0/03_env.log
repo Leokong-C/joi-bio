@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/runner/micromamba/envs/joi-bio/lib/python3.11/site-packages/meeko/__init__.py", line 28, in <module>
+    from .receptor_pdbqt import PDBQTReceptor
+  File "/home/runner/micromamba/envs/joi-bio/lib/python3.11/site-packages/meeko/receptor_pdbqt.py", line 12, in <module>
+    from scipy import spatial
+ModuleNotFoundError: No module named 'scipy'
