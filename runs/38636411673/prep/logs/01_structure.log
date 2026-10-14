@@ -1,0 +1,6 @@
+===== EPAS1 =====
+[*] EPAS1 (Q99814) 구조 준비
+    RCSB 검색 25건 (쿼리 형태 1)
+    source=RCSB pdb=3H82 res=2.0 chain=A atoms=934
+    pocket=cocrystal_ligand (high) center=[9.222, -9.701, 5.874] size=[20.0, 20.0, 20.0]
+    020 (20 heavy atoms) 기준
