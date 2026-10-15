@@ -146,7 +146,11 @@ def main() -> int:
     lib = [
         json.loads(l) for l in (tdir / "library.jsonl").read_text().splitlines() if l.strip()
     ]
-    # 벤치마크·활성이 모든 샤드에 고르게 퍼지도록 인덱스 기준으로 자른다
+    # 회전결합이 많은 리간드일수록 Vina 탐색이 오래 걸린다. 인덱스로 그냥
+    # 자르면 무거운 리간드가 한 샤드에 몰려 그 샤드만 타임아웃된다
+    # (EPAS1 1차 실행에서 4개 중 3개가 350분 타임아웃으로 취소됐다).
+    # 복잡도 순으로 정렬한 뒤 라운드로빈으로 나눠 부하를 고르게 만든다.
+    lib.sort(key=lambda r: -(r.get("rotb") or 0))
     shard_lib = [r for i, r in enumerate(lib) if i % args.n_shards == args.shard]
     if args.max_ligands:
         shard_lib = shard_lib[: args.max_ligands]

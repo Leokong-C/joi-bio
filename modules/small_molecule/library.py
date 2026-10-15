@@ -220,7 +220,28 @@ def canonical(smiles: str) -> str | None:
     return Chem.MolToSmiles(mol) if mol else None
 
 
-def build(uniprot: str, benchmarks: list[str], n_decoys: int) -> tuple[list[dict], dict]:
+def cap_actives(lib: list[dict], cap: int) -> tuple[list[dict], int]:
+    """활성을 가장 강력한 것 위주로 cap 개까지만 남긴다.
+
+    활성이 라이브러리의 24%를 차지하면 EF1% 의 이론적 최대가 4.1 로 떨어져
+    임계값 5.0 을 어떤 성능으로도 넘을 수 없다. AUC 와 BEDROC 도 같은 이유로
+    부풀려진다. 가상 스크리닝 벤치마크의 통상 비율은 활성 2% 안팎이다.
+    """
+    bench = [r for r in lib if r["source"] == "benchmark_spikein"]
+    others = [r for r in lib if r["source"] != "benchmark_spikein"]
+    actives = [r for r in others if r["label"] == "known_active"]
+    decoys = [r for r in others if r["label"] != "known_active"]
+
+    room = max(0, cap - len(bench))
+    # 활성도가 센 순(값이 작은 순). 값 없는 것은 뒤로.
+    actives.sort(key=lambda r: r.get("activity_nM") or float("inf"))
+    dropped = max(0, len(actives) - room)
+    return bench + actives[:room] + decoys, dropped
+
+
+def build(
+    uniprot: str, benchmarks: list[str], n_decoys: int, max_actives: int
+) -> tuple[list[dict], dict]:
     print("  [1/4] 벤치마크 리간드 수집")
     bench = fetch_benchmark_ligands(benchmarks)
 
@@ -251,10 +272,17 @@ def build(uniprot: str, benchmarks: list[str], n_decoys: int) -> tuple[list[dict
                 rejected[reason] = rejected.get(reason, 0) + 1
                 continue
         rec["smiles"] = cs
+        rec["rotb"] = Descriptors.NumRotatableBonds(Chem.MolFromSmiles(cs))
         seen[cs] = rec
 
-    lib = list(seen.values())
+    lib, n_dropped = cap_actives(list(seen.values()), max_actives)
+    n_act = sum(1 for r in lib if r["label"] == "known_active")
+    ratio = n_act / len(lib) if lib else 0
     stats = {
+        "active_fraction": round(ratio, 4),
+        "max_reachable_ef1": round(1 / ratio, 2) if ratio else None,
+        "n_actives_dropped": n_dropped,
+        "max_actives_cap": max_actives,
         "n_total": len(lib),
         "n_benchmark": sum(1 for r in lib if r["source"] == "benchmark_spikein"),
         "n_known_active": sum(1 for r in lib if r["label"] == "known_active"),
@@ -274,7 +302,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--gene", required=True)
     ap.add_argument("--uniprot")
-    ap.add_argument("--n-decoys", type=int, default=2000)
+    ap.add_argument("--n-decoys", type=int, default=2500)
+    ap.add_argument(
+        "--max-actives",
+        type=int,
+        default=60,
+        help="활성 상한. 활성 비율이 높으면 EF 임계값이 도달 불가능해진다",
+    )
     ap.add_argument("--targetdir", default=None)
     args = ap.parse_args()
 
@@ -300,7 +334,7 @@ def main() -> int:
         return 1
 
     print(f"[*] {args.gene} ({uniprot}) 라이브러리 구성")
-    lib, stats = build(uniprot, benchmarks, args.n_decoys)
+    lib, stats = build(uniprot, benchmarks, args.n_decoys, args.max_actives)
 
     (tdir / "library.jsonl").write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in lib)
@@ -315,6 +349,12 @@ def main() -> int:
         f"벤치마크 {stats['n_benchmark']})"
     )
     print(f"    제외: {stats['rejected_by']}")
+    print(
+        f"    활성 비율 {100 * stats['active_fraction']:.1f}% "
+        f"→ EF1% 이론적 최대 {stats['max_reachable_ef1']}"
+    )
+    if stats["n_actives_dropped"]:
+        print(f"    활성 {stats['n_actives_dropped']}개는 상한 초과로 제외 (약한 것부터)")
     missing = set(benchmarks) - set(stats["benchmarks_found"])
     if missing:
         print(f"    [!] 벤치마크 미포함: {sorted(missing)} — 검증 기준점이 약해진다")

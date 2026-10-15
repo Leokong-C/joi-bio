@@ -10,7 +10,11 @@ on:
       n_decoys:
         description: "decoy 수"
         required: false
-        default: "2000"
+        default: "2500"
+      max_actives:
+        description: "활성 상한 (높으면 EF 임계값이 도달 불가능해진다)"
+        required: false
+        default: "60"
       max_ligands:
         description: "샤드당 리간드 상한 (0=전체)"
         required: false
@@ -114,7 +118,8 @@ jobs:
           for g in $(echo '${{ steps.genes.outputs.list }}' | python -c "import sys,json;print(' '.join(json.load(sys.stdin)))"); do
             echo "===== $g =====" | tee -a logs/02_library.log
             python -m modules.small_molecule.library --gene "$g" \
-              --n-decoys ${{ inputs.n_decoys }} 2>&1 | tee -a logs/02_library.log
+              --n-decoys ${{ inputs.n_decoys }} \
+              --max-actives ${{ inputs.max_actives }} 2>&1 | tee -a logs/02_library.log
           done
 
       - name: 로그·메타데이터를 ci-results 브랜치로
@@ -155,7 +160,7 @@ jobs:
       fail-fast: false
       matrix:
         gene: ${{ fromJson(needs.prep.outputs.genes) }}
-        shard: [0, 1, 2, 3]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
       - uses: actions/checkout@v4
 
@@ -176,7 +181,7 @@ jobs:
           set -o pipefail
           python -m modules.small_molecule.dock \
             --gene ${{ matrix.gene }} \
-            --shard ${{ matrix.shard }} --n-shards 4 \
+            --shard ${{ matrix.shard }} --n-shards 8 \
             --max-ligands ${{ inputs.max_ligands }} \
             --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
             | tee logs/03_dock_${{ matrix.gene }}_${{ matrix.shard }}.log
