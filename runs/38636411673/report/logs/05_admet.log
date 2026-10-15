@@ -1,0 +1,6 @@
+[*] EPAS1: 후보 300개 프로파일링 (검증=PASS)
+    CHEMBL9945       vina= -8.83 LE=0.4904 QED=0.74 MW=238 cLogP=2.9
+    CHEMBL275086     vina= -8.20 LE=0.4314 QED=0.87 MW=274 cLogP=1.9
+    CHEMBL10095      vina= -9.66 LE=0.5086 QED=0.47 MW=252 cLogP=2.8
+    CHEMBL10173      vina= -7.65 LE=0.4028 QED=0.93 MW=275 cLogP=3.1
+    CHEMBL9575       vina= -7.62 LE=0.4233 QED=0.89 MW=243 cLogP=1.5

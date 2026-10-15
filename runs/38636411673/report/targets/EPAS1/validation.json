@@ -1,0 +1,46 @@
+{
+  "n_compounds": 573,
+  "n_known_active": 139,
+  "n_decoy": 434,
+  "ef1": 2.061,
+  "ef5": 2.843,
+  "ef10": 2.748,
+  "auc": 0.7013,
+  "bedroc": 0.6242,
+  "best_score": -9.663,
+  "thresholds": {
+    "ef1": 5.0,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [
+      {
+        "name": "belzutifan",
+        "rank": 128,
+        "percentile": 22.339,
+        "score": -5.636,
+        "chembl_id": "CHEMBL4585668",
+        "in_top_pct": false
+      }
+    ],
+    "n_requested": 3,
+    "n_found_in_library": 1,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": [
+      "pt2385",
+      "pt2399"
+    ]
+  },
+  "checks": {
+    "ef1": false,
+    "auc": true,
+    "bedroc": true
+  },
+  "verdict": "PASS",
+  "verdict_reason": "2/3 통과: auc, bedroc",
+  "gene": "EPAS1",
+  "pocket_confidence": "high"
+}
