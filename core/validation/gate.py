@@ -16,7 +16,8 @@ Joi_bio 신뢰성의 근거. 알려진 활성 화합물(known actives)을 라이
 
 판정
   INSUFFICIENT  활성 수가 10개 미만 → 통계적으로 무의미, 지표를 믿지 않는다
-  PASS          임계값 3개 중 2개 이상 충족
+  INVALID       활성 비율이 높아 EF 임계값이 도달 불가능 → 라이브러리 재구성 필요
+  PASS          유효한 임계값 중 2개 이상 충족
   FAIL          그 외
 """
 from __future__ import annotations
@@ -26,6 +27,8 @@ import math
 from pathlib import Path
 
 THRESHOLDS = {"ef1": 5.0, "auc": 0.70, "bedroc": 0.30}
+# 임계값은 활성 비율 2~3% 인 통상적 벤치마크를 전제로 한다.
+# 활성 비율이 높으면 EF 상한이 임계값 아래로 내려가고 AUC/BEDROC 도 부풀려진다.
 MIN_ACTIVES = 10
 BEDROC_ALPHA = 20.0
 
@@ -146,10 +149,25 @@ def evaluate(rows: list[dict], benchmark_ligands: list[str] | None = None) -> di
     }
     metrics["benchmark_recovery"] = benchmark_recovery(rows, benchmark_ligands or [])
 
+    # EF 는 비율로 나누므로 상한이 있다. 활성 비율이 높으면 임계값이
+    # 어떤 성능으로도 도달 불가능해지는데, 이를 모르고 FAIL 로 읽으면
+    # 파이프라인 탓을 하게 된다. 실제로 EPAS1 첫 실행에서 그랬다.
+    ratio = n_act / len(rows) if rows else 0
+    max_ef1 = round(1 / ratio, 2) if ratio else None
+    metrics["active_fraction"] = round(ratio, 4)
+    metrics["max_reachable_ef1"] = max_ef1
+    ef1_unreachable = max_ef1 is not None and THRESHOLDS["ef1"] > max_ef1
+    metrics["ef1_threshold_unreachable"] = ef1_unreachable
+
     checks = {
         k: (metrics[k] is not None and metrics[k] >= v) for k, v in THRESHOLDS.items()
     }
+    if ef1_unreachable:
+        checks["ef1"] = None  # 판정에서 제외 — 통과도 미달도 아니다
     metrics["checks"] = checks
+
+    passed_checks = sum(1 for v in checks.values() if v is True)
+    usable_checks = sum(1 for v in checks.values() if v is not None)
 
     if n_act < MIN_ACTIVES:
         metrics["verdict"] = "INSUFFICIENT"
@@ -157,17 +175,34 @@ def evaluate(rows: list[dict], benchmark_ligands: list[str] | None = None) -> di
             f"활성 화합물 {n_act}개 (최소 {MIN_ACTIVES}개 필요). "
             "지표가 계산되더라도 통계적으로 무의미하다."
         )
-    elif sum(checks.values()) >= 2:
+    elif ef1_unreachable and usable_checks < 3:
+        metrics["verdict"] = "INVALID"
+        metrics["verdict_reason"] = (
+            f"활성 비율 {100 * ratio:.1f}% — EF1% 이론적 최대가 {max_ef1}이라 "
+            f"임계값 {THRESHOLDS['ef1']}에 도달할 수 없다. 남은 지표(AUC, BEDROC)도 "
+            "활성 비율이 높으면 함께 부풀려지므로 믿을 수 없다. "
+            "라이브러리를 활성 2~3% 비율로 다시 구성할 것."
+        )
+    elif passed_checks >= 2:
         metrics["verdict"] = "PASS"
-        passed = [k for k, v in checks.items() if v]
-        metrics["verdict_reason"] = f"{len(passed)}/3 통과: {', '.join(passed)}"
+        passed = [k for k, v in checks.items() if v is True]
+        metrics["verdict_reason"] = f"{passed_checks}/{usable_checks} 통과: {', '.join(passed)}"
     else:
         metrics["verdict"] = "FAIL"
-        failed = [k for k, v in checks.items() if not v]
+        failed = [k for k, v in checks.items() if v is False]
         metrics["verdict_reason"] = (
             f"미달: {', '.join(failed)}. "
             "포켓 정의, 구조 선택, 또는 이 타깃 클래스에 대한 "
             "리지드 도킹의 한계를 의심할 것."
+        )
+
+    # 벤치마크 회수는 별도 경고. 지표가 통과해도 승인약을 못 찾으면
+    # 그 파이프라인은 신뢰할 수 없다.
+    br = metrics["benchmark_recovery"]
+    if br.get("n_found_in_library") and not br.get("n_in_top_pct"):
+        metrics["benchmark_warning"] = (
+            f"벤치마크 {br['n_found_in_library']}개 중 상위 {br['top_pct']}%에 "
+            "진입한 것이 없다. 지표가 통과하더라도 이 결과는 신뢰할 수 없다."
         )
     return metrics
 

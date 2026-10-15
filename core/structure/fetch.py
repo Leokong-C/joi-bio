@@ -22,6 +22,8 @@ from pathlib import Path
 
 import requests
 
+from core import chem
+
 RCSB_SEARCH = "https://search.rcsb.org/rcsbsearch/v2/query"
 RCSB_FILE = "https://files.rcsb.org/download/{pdb_id}.pdb"
 AFDB_TEMPLATES = [
@@ -253,8 +255,31 @@ def evaluate_candidate(pdb_id: str) -> dict | None:
     }
 
 
-def select_structure(uniprot: str, max_download: int = 12) -> dict | None:
-    """리간드를 품은 최고 해상도 구조를 고른다. 없으면 최고 해상도 apo."""
+def score_candidate(cand: dict, bench_smiles: list[str]) -> dict:
+    """후보 구조의 공결정 리간드가 벤치마크 화합물과 얼마나 닮았는지."""
+    info = {"similarity": 0.0, "ligand_smiles": None, "matched_benchmark": None}
+    if not cand["ligands"]:
+        return info
+    lig = cand["ligands"][0]
+    smi = chem.rcsb_ligand_smiles(lig["resname"])
+    info["ligand_smiles"] = smi
+    if smi and bench_smiles:
+        sim, idx = chem.max_similarity(smi, bench_smiles)
+        info["similarity"] = sim
+        info["matched_benchmark"] = idx
+    return info
+
+
+def select_structure(
+    uniprot: str, bench_smiles: list[str] | None = None, max_download: int = 16
+) -> dict | None:
+    """벤치마크 화합물과 가장 닮은 리간드가 결합한 구조를 고른다.
+
+    해상도만 보고 고르면 포켓이 다른 모양으로 닫혀 있는 구조를 집을 수 있다.
+    리지드 도킹은 측쇄 재배열을 모델링하지 못하므로, 벤치마크와 닮은 리간드가
+    이미 들어앉아 있는 구조라야 그 화합물을 제대로 수용한다.
+    """
+    bench_smiles = bench_smiles or []
     pdb_ids = search_rcsb(uniprot)
     if not pdb_ids:
         return None
@@ -264,16 +289,37 @@ def select_structure(uniprot: str, max_download: int = 12) -> dict | None:
         cand = evaluate_candidate(pdb_id)
         if cand is None:
             continue
-        (holo if cand["has_ligand"] else apo).append(cand)
-        # 리간드 구조를 3개 확보하면 충분 — 해상도순 조회라 이미 상위권이다.
-        if len(holo) >= 3:
+        if not cand["has_ligand"]:
+            apo.append(cand)
+            continue
+        cand["match"] = score_candidate(cand, bench_smiles)
+        holo.append(cand)
+        sim = cand["match"]["similarity"]
+        lig = cand["ligands"][0]
+        print(
+            f"      {pdb_id}: {lig['resname']} ({lig['n_heavy']} heavy) "
+            f"res={cand['resolution']} 유사도={sim:.3f}"
+        )
+        if sim >= 0.45:  # 충분히 닮았다 — 더 볼 필요 없다
+            break
+        if len(holo) >= 8:
             break
 
-    pool = holo or apo
-    if not pool:
-        return None
-    pool.sort(key=lambda c: (c["resolution"] if c["resolution"] else 99.0))
-    return pool[0]
+    if not holo:
+        if not apo:
+            return None
+        apo.sort(key=lambda c: c["resolution"] or 99.0)
+        apo[0]["match"] = {"similarity": 0.0, "ligand_smiles": None, "matched_benchmark": None}
+        return apo[0]
+
+    # 유사도 구간으로 먼저 나누고, 같은 구간 안에서 해상도로 고른다.
+    # 유사도가 조금 높다고 해상도 3.5 Å 구조를 집는 일을 막는다.
+    def bucket(c: dict) -> int:
+        sim = c["match"]["similarity"]
+        return 0 if sim >= 0.45 else 1 if sim >= 0.25 else 2
+
+    holo.sort(key=lambda c: (bucket(c), c["resolution"] or 99.0))
+    return holo[0]
 
 
 def build_receptor(cand: dict, out_pdb: Path) -> dict:
@@ -380,7 +426,21 @@ def prepare_target(target: dict, outdir: Path) -> dict:
     gene, uniprot = target["gene"], target["uniprot"]
     meta = {"gene": gene, "uniprot": uniprot, "declared_pocket_mode": target.get("pocket_mode")}
 
-    cand = select_structure(uniprot)
+    # 벤치마크 화합물의 SMILES를 먼저 확보한다. 구조 선택의 기준이 된다.
+    bench_names = target.get("benchmark_ligands", [])
+    bench_smiles, bench_found = [], []
+    for name in bench_names:
+        rec = chem.chembl_by_name(name)
+        if rec:
+            bench_smiles.append(rec["smiles"])
+            bench_found.append(name)
+    meta["benchmark_smiles_found"] = bench_found
+    if bench_names and not bench_smiles:
+        print("    [!] 벤치마크 SMILES 확보 실패 — 해상도만으로 구조를 고른다")
+    else:
+        print(f"    벤치마크 SMILES {len(bench_smiles)}개 확보 → 구조 선택 기준으로 사용")
+
+    cand = select_structure(uniprot, bench_smiles)
 
     if cand is None:
         print("    실험 구조 확보 실패 → AlphaFold 모델 시도")
@@ -409,6 +469,7 @@ def prepare_target(target: dict, outdir: Path) -> dict:
         meta["source"] = "RCSB"
         meta["pdb_id"] = cand["pdb_id"]
         meta["resolution"] = cand["resolution"]
+        meta["ligand_match"] = cand.get("match", {})
 
     receptor_pdb = outdir / "receptor.pdb"
     meta["receptor"] = build_receptor(cand, receptor_pdb)
