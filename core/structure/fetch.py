@@ -318,7 +318,15 @@ def select_structure(
         sim = c["match"]["similarity"]
         return 0 if sim >= 0.45 else 1 if sim >= 0.25 else 2
 
-    holo.sort(key=lambda c: (bucket(c), c["resolution"] or 99.0))
+    # 같은 구간·같은 해상도면 더 닮은 리간드를 고른다. 해상도를 0.1 Å 단위로
+    # 뭉개야 2.0 과 2.0 이 동점으로 잡히고 유사도가 결정권을 갖는다.
+    holo.sort(
+        key=lambda c: (
+            bucket(c),
+            round(c["resolution"] or 99.0, 1),
+            -c["match"]["similarity"],
+        )
+    )
     return holo[0]
 
 
