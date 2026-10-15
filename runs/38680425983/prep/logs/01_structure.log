@@ -1,0 +1,12 @@
+===== EPAS1 =====
+[*] EPAS1 (Q99814) 구조 준비
+    벤치마크 SMILES 3개 확보 → 구조 선택 기준으로 사용
+    RCSB 검색 25건 (쿼리 형태 1)
+      3H82: 020 (20 heavy) res=2.0 유사도=0.071
+      4GHI: 0X3 (21 heavy) res=2.0 유사도=0.107
+      6X21: UKJ (24 heavy) res=2.0 유사도=0.333
+      3F1O: 2XY (20 heavy) res=2.0 유사도=0.096
+      6CZW: FO7 (24 heavy) res=2.0 유사도=0.400
+    source=RCSB pdb=6CZW res=2.0 chain=A atoms=880
+    pocket=cocrystal_ligand (high) center=[24.54, -0.314, -10.001] size=[20.0, 20.0, 20.0]
+    FO7 (24 heavy atoms) 기준
