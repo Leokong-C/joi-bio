@@ -1,0 +1,239 @@
+name: Joi_bio control arm
+
+# 음성 대조군. 벤치마크와 닮지 않은 구조에 같은 라이브러리를 도킹해,
+# 유사도 기반 구조 선택이 만드는 편향의 크기를 잰다.
+#
+# 근거: Chaput et al. 2016 (J Cheminform 8:56) — 도킹 프로그램의 좋은 성능은
+# 상당 부분 "활성 화합물과 결정구조 리간드의 유사성" 으로 설명된다. 편향이 큰
+# 타깃을 제거하자 성공 타깃이 Glide 5/47, Gold 4/47 로 급감했다.
+# 편향을 재지 않은 결과는 순환논증이므로 보고서에 쓸 수 없다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      gene:
+        description: "타깃 유전자"
+        required: true
+        default: EPAS1
+      control_pdb:
+        description: "대조군 구조 PDB ID (벤치마크와 유사도가 낮은 것)"
+        required: true
+        default: 3H82
+      treatment_run_id:
+        description: "비교 대상인 기존 실행 ID (유사도 선택 팔)"
+        required: true
+      n_decoys:
+        description: "decoy 수 — treatment 와 동일해야 비교가 성립한다"
+        required: false
+        default: "2500"
+      max_actives:
+        description: "활성 상한 — treatment 와 동일해야 한다"
+        required: false
+        default: "60"
+      exhaustiveness:
+        description: "treatment 와 동일해야 한다"
+        required: false
+        default: "8"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  prep:
+    name: 대조군 구조·라이브러리
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      - name: 구조 강제 지정
+        shell: bash -el {0}
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          python -m core.structure.fetch --gene ${{ inputs.gene }} \
+            --pdb-id ${{ inputs.control_pdb }} 2>&1 | tee logs/c01_structure.log
+
+      - name: 라이브러리 (treatment 와 동일 설정)
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python -m modules.small_molecule.library --gene ${{ inputs.gene }} \
+            --n-decoys ${{ inputs.n_decoys }} \
+            --max-actives ${{ inputs.max_actives }} 2>&1 | tee logs/c02_library.log
+
+      - name: 로그를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/control-prep"
+          mkdir -p "$OUT"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          find targets -name '*.json' -exec cp --parents {} "$OUT/" \; 2>/dev/null || true
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "control prep: ${{ inputs.gene }} @ ${{ inputs.control_pdb }}" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: control-prepared
+          path: targets/
+          retention-days: 7
+
+  dock:
+    name: 대조군 도킹
+    needs: prep
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+      - uses: actions/download-artifact@v4
+        with:
+          name: control-prepared
+          path: targets/
+
+      - name: 도킹
+        shell: bash -el {0}
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          python -m modules.small_molecule.dock --gene ${{ inputs.gene }} \
+            --shard ${{ matrix.shard }} --n-shards 8 \
+            --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
+            | tee logs/c03_dock_${{ matrix.shard }}.log
+
+      - name: 로그를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          for i in 1 2 3 4 5; do
+            DEST=$RUNNER_TEMP/ci; rm -rf "$DEST"
+            git clone --quiet --depth 1 --branch ci-results \
+              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+            OUT="$DEST/runs/${GITHUB_RUN_ID}/control-dock-${{ matrix.shard }}"
+            mkdir -p "$OUT"; cp -r logs/* "$OUT/" 2>/dev/null || true
+            cd "$DEST" && git add -A
+            git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+              commit -q -m "control dock: shard ${{ matrix.shard }}" || exit 0
+            git push --quiet origin ci-results && exit 0
+            sleep $((RANDOM % 20 + 5))
+          done
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: control-docked-${{ matrix.shard }}
+          path: targets/${{ inputs.gene }}/docked_shard*.jsonl
+          retention-days: 7
+
+  compare:
+    name: 편향 측정
+    needs: [prep, dock]
+    if: always() && needs.prep.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      - name: 대조군 결과 수집
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/ctrl
+
+      - name: treatment 결과 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/treat
+          run-id: ${{ inputs.treatment_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 두 팔 재구성
+        shell: bash -el {0}
+        run: |
+          G=${{ inputs.gene }}
+          mkdir -p arms/control/$G arms/treatment/$G logs
+          cp -r /tmp/ctrl/control-prepared/$G/* arms/control/$G/ 2>/dev/null || true
+          for d in /tmp/ctrl/control-docked-*; do
+            [ -d "$d" ] && cp "$d"/*.jsonl arms/control/$G/ 2>/dev/null || true
+          done
+          cp -r /tmp/treat/prepared/$G/* arms/treatment/$G/ 2>/dev/null || true
+          for d in /tmp/treat/docked-*; do
+            [ -d "$d" ] && cp "$d"/*.jsonl arms/treatment/$G/ 2>/dev/null || true
+          done
+          echo "control:";   ls arms/control/$G   | tee -a logs/c04_collect.log
+          echo "treatment:"; ls arms/treatment/$G | tee -a logs/c04_collect.log
+
+      - name: 대조군 검증 게이트
+        shell: bash -el {0}
+        run: |
+          set +e
+          python -m core.validation.gate --gene ${{ inputs.gene }} \
+            --targetdir arms/control/${{ inputs.gene }} 2>&1 | tee logs/c05_gate_control.log
+          python -m core.validation.gate --gene ${{ inputs.gene }} \
+            --targetdir arms/treatment/${{ inputs.gene }} 2>&1 | tee logs/c05_gate_treatment.log
+          exit 0
+
+      - name: 편향 비교
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python -m core.validation.bias --gene ${{ inputs.gene }} \
+            --treatment arms/treatment/${{ inputs.gene }} \
+            --control arms/control/${{ inputs.gene }} 2>&1 | tee logs/c06_bias.log
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/control-compare"
+          mkdir -p "$OUT"
+          cp -r logs results "$OUT/" 2>/dev/null || true
+          find arms -name 'validation.json' -exec cp --parents {} "$OUT/" \; 2>/dev/null || true
+          find arms -name 'target_meta.json' -exec cp --parents {} "$OUT/" \; 2>/dev/null || true
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "bias measurement: ${{ inputs.gene }}" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bias-${{ inputs.gene }}
+          path: |
+            results/
+            logs/
+            arms/*/*/validation.json
+            arms/*/*/target_meta.json
+          retention-days: 30
