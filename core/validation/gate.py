@@ -218,9 +218,15 @@ def main() -> int:
 
     tdir = Path(args.targetdir) if args.targetdir else root / "targets" / args.gene
 
+    # 샤드 파일이 기본이지만, 앙상블처럼 합쳐진 결과는 docked_all.jsonl 로 온다.
+    # 이 폴백이 없어 앙상블 검증이 "도킹 결과 없음" 으로 멈춘 적이 있다.
     rows: list[dict] = []
     for shard in sorted(tdir.glob("docked_shard*.jsonl")):
         rows += [json.loads(l) for l in shard.read_text().splitlines() if l.strip()]
+    if not rows:
+        allf = tdir / "docked_all.jsonl"
+        if allf.exists():
+            rows = [json.loads(l) for l in allf.read_text().splitlines() if l.strip()]
     if not rows:
         print(f"[!] {args.gene}: 도킹 결과 없음")
         return 1
