@@ -1,0 +1,290 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>EPAS1 도킹 실험 기록</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* 실험 기록부 — 계측기 판독지. 두 팔 대조가 레이아웃의 척추. */
+:root{
+  --bg:#f7f8fa; --surface:#ffffff; --sunk:#eef1f5;
+  --fg:#111823; --muted:#5a6676; --line:#d8dee7;
+  --sig:#0b6e99;          /* 측정값 — 3D 렌더의 시안과 호응 */
+  --warn:#9a6700;         /* 주의 */
+  --bad:#a3262c;          /* 미달 */
+  --good:#1a7f4b;         /* 통과 */
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0d1117; --surface:#161b22; --sunk:#10151c;
+  --fg:#e6edf3; --muted:#9aa7b4; --line:#2a3139;
+  --sig:#4ab3dd; --warn:#d29922; --bad:#f06a6a; --good:#3fb950;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0d1117; --surface:#161b22; --sunk:#10151c;
+  --fg:#e6edf3; --muted:#9aa7b4; --line:#2a3139;
+  --sig:#4ab3dd; --warn:#d29922; --bad:#f06a6a; --good:#3fb950;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);
+  font-size:15px;line-height:1.6;margin:0}
+.wrap{max-width:1060px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:32px 72px}
+h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:0 0 6px;
+  letter-spacing:-.02em;text-wrap:balance;font-weight:700}
+h2{font-size:19px;margin:44px 0 14px;letter-spacing:-.01em;font-weight:600;
+  padding-bottom:7px;border-bottom:1px solid var(--line)}
+h3{font-size:15px;margin:24px 0 9px;font-weight:600}
+p{margin:0 0 13px;max-width:70ch}
+.lede{color:var(--muted);font-size:15px;margin-bottom:22px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+code,.m{font-family:var(--mono);font-size:.9em;font-variant-numeric:tabular-nums}
+
+/* 판정 배너 */
+.verdicts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));margin:20px 0 6px}
+.vcard{background:var(--surface);border:1px solid var(--line);border-radius:7px;
+  padding:14px 16px;border-left:3px solid var(--line)}
+.vcard.good{border-left-color:var(--good)} .vcard.bad{border-left-color:var(--bad)}
+.vcard.warn{border-left-color:var(--warn)}
+.vcard .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--muted)}
+.vcard .v{font-size:17px;font-weight:600;margin:3px 0 2px}
+.vcard.good .v{color:var(--good)} .vcard.bad .v{color:var(--bad)} .vcard.warn .v{color:var(--warn)}
+.vcard .d{font-size:12.5px;color:var(--muted);line-height:1.45}
+
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:7px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:480px}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--sunk);font-weight:600;font-size:11.5px;letter-spacing:.055em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.win{color:var(--good);font-weight:600} .lose{color:var(--bad)} .dim{color:var(--muted)}
+
+figure{margin:18px 0}
+figure img{display:block;width:100%;max-width:100%;border:1px solid var(--line);
+  border-radius:7px;background:var(--sunk)}
+figcaption{font-size:12.5px;color:var(--muted);margin-top:8px;max-width:70ch}
+.grid2{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.grid2 figure{margin:0}
+.note{background:var(--sunk);border:1px solid var(--line);border-left:3px solid var(--warn);
+  border-radius:6px;padding:12px 15px;margin:16px 0;font-size:13.5px}
+.note strong{color:var(--warn)}
+.meta{display:grid;gap:3px 20px;grid-template-columns:auto 1fr;font-size:13px;margin:10px 0 0}
+.meta dt{color:var(--muted);font-family:var(--mono);font-size:11.5px;
+  letter-spacing:.05em;text-transform:uppercase;padding-top:2px}
+.meta dd{margin:0;font-family:var(--mono);font-size:12.5px}
+ol.refs{font-size:12.5px;color:var(--muted);padding-left:20px;max-width:74ch}
+ol.refs li{margin-bottom:7px}
+ol.refs a{color:var(--sig)}
+sup a{color:var(--sig);text-decoration:none;font-family:var(--mono);font-size:10.5px;
+  padding:0 1px}
+.foot{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);
+  font-size:12px;color:var(--muted);font-family:var(--mono)}
+@media (max-width:460px){ .meta{grid-template-columns:1fr} }
+</style>
+
+<div class="wrap">
+
+<div class="eyebrow">실험 기록 · EPAS1-v2 · 2026-10-16</div>
+<h1>HIF-2α PAS-B 가상 스크리닝</h1>
+<p class="lede">신장암(ccRCC) 구동 전사인자 EPAS1에 대한 2,157개 화합물 도킹. 구조 선택
+편향을 재기 위해 두 수용체 구조에 같은 라이브러리를 각각 도킹했다.</p>
+
+<div class="verdicts">
+  <div class="vcard good">
+    <div class="k">검증 게이트</div><div class="v">PASS · 3/3</div>
+    <div class="d">EF1% 32.68 · AUC 0.772 · BEDROC 0.670. 상위 22개 중 20개가 활성.</div>
+  </div>
+  <div class="vcard bad">
+    <div class="k">합의 성공 기준</div><div class="v">미달</div>
+    <div class="d">belzutifan 상위 1% 목표 → 실제 2.318%. v1의 22.3%에서 9.6배 개선했으나 선을 넘지 못함.</div>
+  </div>
+  <div class="vcard warn">
+    <div class="k">구조 선택 편향</div><div class="v">BIAS_LIKELY</div>
+    <div class="d">조기 인식 지표가 최대 8.0배 차이. 상위권 순위의 상당 부분이 구조 선택에서 나왔다.</div>
+  </div>
+</div>
+
+<h2>두 팔 대조</h2>
+<p>같은 라이브러리(2,157개, 활성 60개), 같은 도킹 설정. <strong>차이는 수용체 구조 하나뿐이다.</strong>
+treatment는 벤치마크와 닮은 리간드가 결합한 구조를 유사도로 골랐고, control은 가장 닮지
+않은 구조를 강제 지정했다<sup><a href="#r3">3</a></sup>.</p>
+
+<div class="tw"><table>
+<thead><tr>
+  <th>항목</th><th>treatment</th><th>control</th><th class="n">배수</th>
+</tr></thead>
+<tbody>
+<tr><td>구조</td><td class="m">6CZW (FO7, PT1940)</td><td class="m">3H82 (020)</td><td class="n dim">—</td></tr>
+<tr><td>해상도</td><td class="m">1.60 Å</td><td class="m">1.50 Å</td><td class="n dim">대조군이 더 좋음</td></tr>
+<tr><td>벤치마크 유사도</td><td class="n">0.400</td><td class="n">0.071</td><td class="n dim">5.6×</td></tr>
+<tr><td>EF1%</td><td class="n win">32.68</td><td class="n">8.17</td><td class="n">4.0×</td></tr>
+<tr><td>EF5%</td><td class="n">12.32</td><td class="n">5.66</td><td class="n">2.2×</td></tr>
+<tr><td>AUC</td><td class="n">0.7717</td><td class="n">0.7161</td><td class="n dim">+0.056</td></tr>
+<tr><td>BEDROC (α=20)</td><td class="n">0.6697</td><td class="n">0.3004</td><td class="n">2.2×</td></tr>
+<tr><td>최고 스코어</td><td class="n">−12.62</td><td class="n">−9.92</td><td class="n dim">—</td></tr>
+<tr><td>게이트 판정</td><td><span class="win">PASS 3/3</span></td><td><span class="win">PASS 3/3</span></td><td class="n dim">—</td></tr>
+</tbody></table></div>
+
+<div class="note"><strong>AUC만 보면 편향을 놓친다.</strong> AUC 차이는 0.056에 그치지만
+EF1%는 4.0배, 벤치마크 백분위는 8.0배 벌어졌다. AUC는 전역 분리도라 상위권 재배열에
+둔감하다. 히트 선별이 일어나는 곳은 상위 1%이므로 조기 인식 지표로 판정해야 한다.
+첫 구현이 AUC만 보고 <code>BIAS_MODERATE</code>로 판정한 것은 오판이었고, 이 데이터를
+보고 수정했다.</div>
+
+<h3>벤치마크 회수</h3>
+<p>승인약과 임상 화합물이 라이브러리 어디에 랭크됐는가. <strong>어느 팔에서도 belzutifan은
+상위 1%에 들지 못했다.</strong></p>
+
+<div class="tw"><table>
+<thead><tr>
+  <th>화합물</th><th class="n">treatment 백분위</th><th class="n">control 백분위</th>
+  <th class="n">개선</th><th>상위 1%</th>
+</tr></thead>
+<tbody>
+<tr><td class="m">PT2399</td><td class="n">0.881%</td><td class="n">9.921%</td><td class="n">11.3×</td><td><span class="win">treatment ○</span></td></tr>
+<tr><td class="m">belzutifan</td><td class="n">2.318%</td><td class="n">18.544%</td><td class="n">8.0×</td><td><span class="lose">양쪽 ✕</span></td></tr>
+<tr><td class="m">PT2385</td><td class="n">5.563%</td><td class="n">28.141%</td><td class="n">5.1×</td><td><span class="lose">양쪽 ✕</span></td></tr>
+</tbody></table></div>
+
+<p>순위가 <code>PT2399 &gt; belzutifan &gt; PT2385</code> 순인 것이 진단적이다. 6CZW의 공결정
+리간드 FO7이 유사도 0.400으로 매칭된 상대가 바로 PT2399다. <strong>결정구조 리간드와 가장
+닮은 화합물이 가장 높게 잡혔다</strong> — Chaput 등이 지적한 편향의 서명 그대로다<sup><a href="#r3">3</a></sup>.</p>
+
+<h2>결합 모드 수렴</h2>
+<p>세 벤치마크를 독립적으로 도킹했는데 사실상 같은 자리에 같은 방향으로 앉았다.
+공통 골격(MCS) 기준 RMSD가 <strong>0.44~0.63 Å</strong>, 무게중심 거리는 0.10~0.34 Å이다.
+도킹 관례상 2 Å 이내면 같은 결합 모드로 본다.</p>
+
+<figure>
+  <img src="poses/_benchmark_overlay.png" alt="PAS-B 공동에 겹쳐 그린 세 벤치마크 포즈">
+  <figcaption>PT2399(시안) · belzutifan(분홍) · PT2385(금색)을 6CZW PAS-B 공동에 중첩.
+  다이아릴 에테르 골격이 거의 완전히 겹친다. 서로 다른 세 분자가 독립 도킹에서 수렴한 것은
+  포켓 정의가 맞다는 방증이다.</figcaption>
+</figure>
+
+<div class="grid2">
+<figure>
+  <img src="poses/BELZUTIFAN.png" alt="belzutifan 도킹 포즈">
+  <figcaption>belzutifan · Vina −9.44 kcal/mol. PAS-B 내부 공동에 완전히 묻힌다.</figcaption>
+</figure>
+<figure>
+  <img src="poses/CHEMBL5590666.png" alt="최고 스코어 화합물 도킹 포즈">
+  <figcaption>CHEMBL5590666 · Vina −12.62 kcal/mol. 라이브러리 최고 스코어.</figcaption>
+</figure>
+</div>
+
+<div class="note"><strong>유도 적합은 이 방법의 알려진 한계다.</strong> Ren 등은 belzutifan이
+결합하면 M252 측쇄가 포켓 밖으로 뒤집히고, H293이 수소결합을, F254가 π–π 상호작용을
+형성한다고 보고했다. M252A 변이에서 Ki가 23 nM에서 3.5 µM로 악화된다<sup><a href="#r1">1</a></sup>.
+리지드 수용체 도킹은 이 재배열을 모델링하지 못한다. belzutifan이 상위 1%를 놓친 이유로
+가장 유력하다.</div>
+
+<h2>화합물</h2>
+<p>벤치마크 3개와 상위 히트 12개. 전부 설폰 + 다이아릴 에테르 + 할로겐 아릴 모티프를
+공유한다.</p>
+
+<figure>
+  <img src="compounds_benchmark.png" alt="벤치마크 화합물 3종의 2D 구조">
+  <figcaption>벤치마크 — PT2399 · belzutifan · PT2385. 인다놀 코어에 다이아릴 에테르가
+  달린 PT 계열.</figcaption>
+</figure>
+
+<figure>
+  <img src="compounds_tophits.png" alt="상위 히트 12종의 2D 구조">
+  <figcaption>상위 히트 12개. 눈으로는 전부 같은 계열처럼 보이지만, 정량화하면 FO7과의
+  Tanimoto 중앙값은 0.326, belzutifan과 Murcko 골격이 같은 것은 12개 중 2개뿐이다.
+  같은 계열이라기보다 유사 화학형 수준이다.</figcaption>
+</figure>
+
+<div class="tw"><table>
+<thead><tr>
+  <th>화합물</th><th>구분</th><th class="n">Vina</th><th class="n">LE</th>
+  <th class="n">QED</th><th class="n">MW</th><th class="n">cLogP</th><th class="n">TPSA</th>
+</tr></thead>
+<tbody id="ctab"></tbody>
+</table></div>
+
+<h2>라이브러리 구성</h2>
+<p>활성 비율이 EF 임계값의 도달 가능성을 결정한다. EF는 비율로 나누는 지표라
+이론적 최대가 <code>N / n_active</code>로 묶인다. v1에서 활성이 24.3%였을 때 EF1%의
+최대는 4.12였고, 임계값 5.0은 <strong>어떤 성능으로도 통과할 수 없었다.</strong>
+DUD-E 관례인 리간드당 decoy 50개(활성 약 2%)에 맞춰 재구성했다<sup><a href="#r2">2</a></sup>.</p>
+
+<dl class="meta">
+  <dt>총 화합물</dt><dd>2,157</dd>
+  <dt>활성</dt><dd>60 (2.8%)</dd>
+  <dt>EF1% 최대</dt><dd>35.95 · 달성 32.68 (90.9%)</dd>
+  <dt>제외</dt><dd>logP 223 · PAINS 130 · rotB 43 · MW 25 · TPSA 19 · 기타 4</dd>
+  <dt>상한 초과</dt><dd>약한 활성 493개 제외</dd>
+</dl>
+
+<h2>방법</h2>
+<dl class="meta">
+  <dt>엔진</dt><dd>AutoDock Vina 1.2.x<sup><a href="#r5">5</a></sup> · exhaustiveness 8 · 리지드 수용체</dd>
+  <dt>리간드 준비</dt><dd>RDKit ETKDGv3 → MMFF94 → Meeko PDBQT</dd>
+  <dt>도킹 박스</dt><dd>중심 [24.54, −0.314, −10.001] · 20×20×20 Å · 공결정 리간드 기준</dd>
+  <dt>지표</dt><dd>EF1%/EF5% · ROC AUC · BEDROC α=20<sup><a href="#r4">4</a></sup></dd>
+  <dt>실행</dt><dd>GitHub Actions · 8샤드 병렬 · treatment <code>38680425983</code> / control <code>38921206944</code></dd>
+</dl>
+
+<h3>알려진 한계</h3>
+<p>리지드 수용체 도킹이라 측쇄 유연성과 유도 적합을 반영하지 않는다. 리간드
+프로토네이션은 ChEMBL 표기 그대로이며 pH 7.4 기준으로 재계산하지 않았다. 출력 화합물은
+전부 <code>candidate_for_testing</code>이고 실험 검증 전에는 히트가 아니다.</p>
+
+<h2>다음 단계</h2>
+<p>대조군 수치(EF1% 8.17)가 편향 없는 하한이다. 보고할 때는 두 값을 함께 낸다.
+유도 적합을 다루려면 여러 수용체 구조에 도킹하고 최고 스코어를 취하는 앙상블 도킹이
+표준 해법이다. belzutifan 결합 구조가 보고돼 있으므로<sup><a href="#r1">1</a></sup>
+앙상블에 포함할 수 있다.</p>
+
+<h2 id="refs">참고문헌</h2>
+<ol class="refs">
+<li id="r1">Ren X, Diao X, Zhuang J, Wu D. Structural Basis for the Allosteric Inhibition of
+  Hypoxia-Inducible Factor 2 by Belzutifan. <em>Mol Pharmacol</em> 2022;102(6):240–247.
+  <a href="https://molpharm.aspetjournals.org/content/102/6/240">doi:10.1124/molpharm.122.000525</a></li>
+<li id="r2">Mysinger MM, Carchia M, Irwin JJ, Shoichet BK. Directory of Useful Decoys, Enhanced
+  (DUD-E). <em>J Med Chem</em> 2012;55:6582–6594. doi:10.1021/jm300687e</li>
+<li id="r3">Chaput L, Martinez-Sanz J, Saettel N, Mouawad L. Benchmark of four popular virtual
+  screening programs: construction of the active/decoy dataset remains a major determinant of
+  measured performance. <em>J Cheminform</em> 2016;8:56.
+  <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5066283">doi:10.1186/s13321-016-0167-x</a></li>
+<li id="r4">Truchon JF, Bayly CI. Evaluating virtual screening methods: good and bad metrics for
+  the "early recognition" problem. <em>J Chem Inf Model</em> 2007;47:488–508. doi:10.1021/ci600426e</li>
+<li id="r5">Eberhardt J, Santos-Martins D, Tillack AF, Forli S. AutoDock Vina 1.2.0: New Docking
+  Methods, Expanded Force Field, and Python Bindings. <em>J Chem Inf Model</em> 2021.
+  Trott O, Olson AJ. <em>J Comput Chem</em> 2010;31(2):455–461.</li>
+<li id="r6">RCSB PDB <a href="https://www.rcsb.org/structure/6CZW">6CZW</a> (PT1940–HIF2α:ARNT, 1.60 Å)
+  · <a href="https://www.rcsb.org/structure/3H82">3H82</a> (1.50 Å)</li>
+</ol>
+
+<div class="foot">Joi_bio · github.com/Leokong-C/joi-bio · 로그와 원자료는 ci-results 브랜치</div>
+</div>
+
+<script>
+const COMPOUNDS = [{"name": "PT2399", "group": "benchmark", "vina": -8.61, "smiles": "N#Cc1cc(F)cc(Oc2ccc(S(=O)(=O)C(F)F)c3c2CC(F)(F)[C@H]3O)c1", "mw": 419.3, "clogp": 3.71, "tpsa": 87.4, "qed": 0.764, "hbd": 1, "hba": 5, "rotb": 4, "heavy": 28, "le": 0.3075}, {"name": "BELZUTIFAN", "group": "benchmark", "vina": -9.44, "smiles": "CS(=O)(=O)c1ccc(Oc2cc(F)cc(C#N)c2)c2c1[C@H](O)[C@H](F)[C@@H]2F", "mw": 383.3, "clogp": 3.29, "tpsa": 87.4, "qed": 0.879, "hbd": 1, "hba": 5, "rotb": 3, "heavy": 26, "le": 0.3631}, {"name": "PT2385", "group": "benchmark", "vina": -8.63, "smiles": "CS(=O)(=O)c1ccc(Oc2cc(F)cc(C#N)c2)c2c1[C@H](O)C(F)(F)C2", "mw": 383.3, "clogp": 3.12, "tpsa": 87.4, "qed": 0.88, "hbd": 1, "hba": 5, "rotb": 3, "heavy": 26, "le": 0.3319}, {"name": "CHEMBL5590666", "group": "top_hit", "vina": -12.62, "smiles": "N#Cc1cc(F)cc(Oc2ccc3c4c2[C@@H](F)[C@@H](F)[C@]4(O)C(F)(F)C3(F)F)c1", "mw": 403.3, "clogp": 4.78, "tpsa": 53.2, "qed": 0.735, "hbd": 1, "hba": 3, "rotb": 2, "heavy": 28, "le": 0.4507}, {"name": "CHEMBL4175320", "group": "top_hit", "vina": -12.17, "smiles": "N#Cc1cc(F)cc(Oc2ccc3c(c2C(F)F)[C@@H](O)C(F)(F)S3(=O)=O)c1", "mw": 405.3, "clogp": 3.84, "tpsa": 87.4, "qed": 0.784, "hbd": 1, "hba": 5, "rotb": 3, "heavy": 27, "le": 0.4507}, {"name": "CHEMBL4163990", "group": "top_hit", "vina": -11.82, "smiles": "N#Cc1cc(F)cc(Oc2ccc3c(c2C(F)F)[C@@H](O)C(F)(F)S3(=O)=O)c1", "mw": 405.3, "clogp": 3.84, "tpsa": 87.4, "qed": 0.784, "hbd": 1, "hba": 5, "rotb": 3, "heavy": 27, "le": 0.4378}, {"name": "CHEMBL4165091", "group": "top_hit", "vina": -11.55, "smiles": "O=S1(=O)c2ccc(Oc3cc(F)cc(Cl)c3)c(C(F)F)c2[C@@H](O)C1(F)F", "mw": 414.7, "clogp": 4.62, "tpsa": 63.6, "qed": 0.744, "hbd": 1, "hba": 4, "rotb": 3, "heavy": 26, "le": 0.4442}, {"name": "CHEMBL4168513", "group": "top_hit", "vina": -11.43, "smiles": "O=S1(=O)c2ccc(Oc3cc(F)cc(F)c3)c(C(F)F)c2[C@@H](O)C1(F)F", "mw": 398.3, "clogp": 4.11, "tpsa": 63.6, "qed": 0.791, "hbd": 1, "hba": 4, "rotb": 3, "heavy": 26, "le": 0.4396}, {"name": "CHEMBL4161060", "group": "top_hit", "vina": -10.89, "smiles": "Cc1c(Oc2cc(F)cc(Cl)c2)ccc2c1[C@H](O)C(F)(F)S2(=O)=O", "mw": 378.8, "clogp": 3.99, "tpsa": 63.6, "qed": 0.858, "hbd": 1, "hba": 4, "rotb": 2, "heavy": 24, "le": 0.4538}, {"name": "CHEMBL5964876", "group": "top_hit", "vina": -10.79, "smiles": "N#Cc1cc(F)cc(Oc2ccc(S(=O)(=O)C(F)F)c3c2CC[C@H]3O)c1", "mw": 383.3, "clogp": 3.47, "tpsa": 87.4, "qed": 0.874, "hbd": 1, "hba": 5, "rotb": 4, "heavy": 26, "le": 0.415}, {"name": "CHEMBL5918628", "group": "top_hit", "vina": -10.79, "smiles": "N#Cc1cc(F)cc(Oc2ccc(S(=O)(=O)C(F)(F)F)c3c2CC[C@H]3O)c1", "mw": 401.3, "clogp": 3.76, "tpsa": 87.4, "qed": 0.792, "hbd": 1, "hba": 5, "rotb": 3, "heavy": 27, "le": 0.3996}, {"name": "CHEMBL4168978", "group": "top_hit", "vina": -10.78, "smiles": "O=S1(=O)c2ccc(Oc3cc(F)cc(Cl)c3)c(Cl)c2[C@H](O)C1(F)F", "mw": 399.2, "clogp": 4.34, "tpsa": 63.6, "qed": 0.816, "hbd": 1, "hba": 4, "rotb": 2, "heavy": 24, "le": 0.4492}, {"name": "CHEMBL5785748", "group": "top_hit", "vina": -10.76, "smiles": "O=S(=O)(c1ccc(Oc2cc(F)c[n+]([O-])c2)c2c1[C@H](O)C(F)(F)C2)C(F)(F)F", "mw": 429.3, "clogp": 2.77, "tpsa": 90.5, "qed": 0.461, "hbd": 1, "hba": 5, "rotb": 3, "heavy": 28, "le": 0.3843}, {"name": "CHEMBL5910507", "group": "top_hit", "vina": -10.71, "smiles": "Cc1c(Oc2cc(F)cc(Cl)c2)ccc(S(=O)(=O)C(F)(F)F)c1Cl", "mw": 403.2, "clogp": 5.53, "tpsa": 43.4, "qed": 0.634, "hbd": 0, "hba": 3, "rotb": 3, "heavy": 24, "le": 0.4463}, {"name": "CHEMBL5833889", "group": "top_hit", "vina": -10.68, "smiles": "Cc1c(S(=O)(=O)C(F)F)ccc(Oc2cc(F)cc(Cl)c2)c1C#N", "mw": 375.8, "clogp": 4.45, "tpsa": 67.2, "qed": 0.791, "hbd": 0, "hba": 4, "rotb": 4, "heavy": 24, "le": 0.445}];
+const tb = document.getElementById('ctab');
+const f = (v, d) => v === null || v === undefined ? '—' : Number(v).toFixed(d);
+COMPOUNDS.forEach(c => {
+  const tr = document.createElement('tr');
+  const isB = c.group === 'benchmark';
+  tr.innerHTML =
+    '<td class="m">' + c.name + '</td>' +
+    '<td>' + (isB ? '벤치마크' : '히트') + '</td>' +
+    '<td class="n">' + f(c.vina, 2) + '</td>' +
+    '<td class="n">' + f(c.le, 3) + '</td>' +
+    '<td class="n">' + f(c.qed, 2) + '</td>' +
+    '<td class="n">' + f(c.mw, 0) + '</td>' +
+    '<td class="n">' + f(c.clogp, 1) + '</td>' +
+    '<td class="n">' + f(c.tpsa, 0) + '</td>';
+  if (isB) tr.style.background = 'var(--sunk)';
+  tb.appendChild(tr);
+});
+</script>

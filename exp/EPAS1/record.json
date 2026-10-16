@@ -1,0 +1,369 @@
+{
+ "experiment": {
+  "id": "EPAS1-v2",
+  "date": "2026-10-16",
+  "target": {
+   "gene": "EPAS1",
+   "alias": "HIF-2α",
+   "uniprot": "Q99814",
+   "disease": "ccRCC"
+  },
+  "runs": {
+   "treatment": "38680425983",
+   "control": "38921206944"
+  },
+  "engine": "AutoDock Vina 1.2.x, exhaustiveness 8, rigid receptor",
+  "box": {
+   "mode": "cocrystal_ligand",
+   "reference_ligand": "FO7",
+   "center": [
+    24.54,
+    -0.314,
+    -10.001
+   ],
+   "size": [
+    20.0,
+    20.0,
+    20.0
+   ],
+   "confidence": "high",
+   "note": "FO7 (24 heavy atoms) 기준"
+  }
+ },
+ "arms": {
+  "treatment": {
+   "pdb": "6CZW",
+   "res": 2.0,
+   "ligand": "FO7",
+   "similarity": 0.4,
+   "selection": "유사도 기반 자동 선택",
+   "ef1": 32.682,
+   "ef5": 12.316,
+   "auc": 0.7717,
+   "bedroc": 0.6697,
+   "verdict": "PASS",
+   "best": -12.81,
+   "bench": {
+    "pt2399": {
+     "rank": 19,
+     "pct": 0.881,
+     "score": -10.273,
+     "top1": true
+    },
+    "belzutifan": {
+     "rank": 50,
+     "pct": 2.318,
+     "score": -9.393,
+     "top1": false
+    },
+    "pt2385": {
+     "rank": 120,
+     "pct": 5.563,
+     "score": -8.611,
+     "top1": false
+    }
+   }
+  },
+  "control": {
+   "pdb": "3H82",
+   "res": 1.5,
+   "ligand": "020",
+   "similarity": 0.0714,
+   "selection": "강제 지정 (음성 대조군)",
+   "ef1": 8.17,
+   "ef5": 5.659,
+   "auc": 0.7161,
+   "bedroc": 0.3004,
+   "verdict": "PASS",
+   "best": -9.743,
+   "bench": {
+    "pt2399": {
+     "rank": 214,
+     "pct": 9.921,
+     "score": -6.637,
+     "top1": false
+    },
+    "belzutifan": {
+     "rank": 400,
+     "pct": 18.544,
+     "score": -5.636,
+     "top1": false
+    },
+    "pt2385": {
+     "rank": 607,
+     "pct": 28.141,
+     "score": -4.697,
+     "top1": false
+    }
+   }
+  }
+ },
+ "bias": {
+  "verdict": "BIAS_LIKELY",
+  "reason": "조기 인식 지표가 최대 8.0배 차이난다 (EF1 4.0배, BEDROC 2.229배, 벤치마크 백분위 8.0배). 상위권 순위의 상당 부분이 구조 선택에서 나왔다. 두 팔을 함께 보고하고, 대조군 수치를 편향 없는 하한으로 제시할 것.",
+  "auc_delta": 0.0556,
+  "ef1_ratio": 4.0,
+  "bedroc_ratio": 2.229,
+  "bench_ratio": 8.0
+ },
+ "library": {
+  "n": 2157,
+  "actives": 60,
+  "fraction": 2.8,
+  "max_ef1": 35.95,
+  "rejected": {
+   "PAINS": 130,
+   "logp": 223,
+   "mw": 25,
+   "tpsa": 19,
+   "too_small": 1,
+   "rotbonds": 43,
+   "hbond": 3
+  },
+  "dropped": 493
+ },
+ "convergence": {
+  "rmsd": {
+   "BELZUTIFAN–PT2385": 0.6,
+   "BELZUTIFAN–PT2399": 0.44,
+   "PT2385–PT2399": 0.63
+  },
+  "centroid": {
+   "BELZUTIFAN–PT2385": 0.1,
+   "BELZUTIFAN–PT2399": 0.29,
+   "PT2385–PT2399": 0.34
+  }
+ },
+ "similarity": {
+  "fo7_median": 0.326,
+  "bz_median": 0.353,
+  "same_scaffold": "2/12"
+ },
+ "compounds": [
+  {
+   "name": "PT2399",
+   "group": "benchmark",
+   "vina": -8.61,
+   "smiles": "N#Cc1cc(F)cc(Oc2ccc(S(=O)(=O)C(F)F)c3c2CC(F)(F)[C@H]3O)c1",
+   "mw": 419.3,
+   "clogp": 3.71,
+   "tpsa": 87.4,
+   "qed": 0.764,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 4,
+   "heavy": 28,
+   "le": 0.3075
+  },
+  {
+   "name": "BELZUTIFAN",
+   "group": "benchmark",
+   "vina": -9.44,
+   "smiles": "CS(=O)(=O)c1ccc(Oc2cc(F)cc(C#N)c2)c2c1[C@H](O)[C@H](F)[C@@H]2F",
+   "mw": 383.3,
+   "clogp": 3.29,
+   "tpsa": 87.4,
+   "qed": 0.879,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 3,
+   "heavy": 26,
+   "le": 0.3631
+  },
+  {
+   "name": "PT2385",
+   "group": "benchmark",
+   "vina": -8.63,
+   "smiles": "CS(=O)(=O)c1ccc(Oc2cc(F)cc(C#N)c2)c2c1[C@H](O)C(F)(F)C2",
+   "mw": 383.3,
+   "clogp": 3.12,
+   "tpsa": 87.4,
+   "qed": 0.88,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 3,
+   "heavy": 26,
+   "le": 0.3319
+  },
+  {
+   "name": "CHEMBL5590666",
+   "group": "top_hit",
+   "vina": -12.62,
+   "smiles": "N#Cc1cc(F)cc(Oc2ccc3c4c2[C@@H](F)[C@@H](F)[C@]4(O)C(F)(F)C3(F)F)c1",
+   "mw": 403.3,
+   "clogp": 4.78,
+   "tpsa": 53.2,
+   "qed": 0.735,
+   "hbd": 1,
+   "hba": 3,
+   "rotb": 2,
+   "heavy": 28,
+   "le": 0.4507
+  },
+  {
+   "name": "CHEMBL4175320",
+   "group": "top_hit",
+   "vina": -12.17,
+   "smiles": "N#Cc1cc(F)cc(Oc2ccc3c(c2C(F)F)[C@@H](O)C(F)(F)S3(=O)=O)c1",
+   "mw": 405.3,
+   "clogp": 3.84,
+   "tpsa": 87.4,
+   "qed": 0.784,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 3,
+   "heavy": 27,
+   "le": 0.4507
+  },
+  {
+   "name": "CHEMBL4163990",
+   "group": "top_hit",
+   "vina": -11.82,
+   "smiles": "N#Cc1cc(F)cc(Oc2ccc3c(c2C(F)F)[C@@H](O)C(F)(F)S3(=O)=O)c1",
+   "mw": 405.3,
+   "clogp": 3.84,
+   "tpsa": 87.4,
+   "qed": 0.784,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 3,
+   "heavy": 27,
+   "le": 0.4378
+  },
+  {
+   "name": "CHEMBL4165091",
+   "group": "top_hit",
+   "vina": -11.55,
+   "smiles": "O=S1(=O)c2ccc(Oc3cc(F)cc(Cl)c3)c(C(F)F)c2[C@@H](O)C1(F)F",
+   "mw": 414.7,
+   "clogp": 4.62,
+   "tpsa": 63.6,
+   "qed": 0.744,
+   "hbd": 1,
+   "hba": 4,
+   "rotb": 3,
+   "heavy": 26,
+   "le": 0.4442
+  },
+  {
+   "name": "CHEMBL4168513",
+   "group": "top_hit",
+   "vina": -11.43,
+   "smiles": "O=S1(=O)c2ccc(Oc3cc(F)cc(F)c3)c(C(F)F)c2[C@@H](O)C1(F)F",
+   "mw": 398.3,
+   "clogp": 4.11,
+   "tpsa": 63.6,
+   "qed": 0.791,
+   "hbd": 1,
+   "hba": 4,
+   "rotb": 3,
+   "heavy": 26,
+   "le": 0.4396
+  },
+  {
+   "name": "CHEMBL4161060",
+   "group": "top_hit",
+   "vina": -10.89,
+   "smiles": "Cc1c(Oc2cc(F)cc(Cl)c2)ccc2c1[C@H](O)C(F)(F)S2(=O)=O",
+   "mw": 378.8,
+   "clogp": 3.99,
+   "tpsa": 63.6,
+   "qed": 0.858,
+   "hbd": 1,
+   "hba": 4,
+   "rotb": 2,
+   "heavy": 24,
+   "le": 0.4538
+  },
+  {
+   "name": "CHEMBL5964876",
+   "group": "top_hit",
+   "vina": -10.79,
+   "smiles": "N#Cc1cc(F)cc(Oc2ccc(S(=O)(=O)C(F)F)c3c2CC[C@H]3O)c1",
+   "mw": 383.3,
+   "clogp": 3.47,
+   "tpsa": 87.4,
+   "qed": 0.874,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 4,
+   "heavy": 26,
+   "le": 0.415
+  },
+  {
+   "name": "CHEMBL5918628",
+   "group": "top_hit",
+   "vina": -10.79,
+   "smiles": "N#Cc1cc(F)cc(Oc2ccc(S(=O)(=O)C(F)(F)F)c3c2CC[C@H]3O)c1",
+   "mw": 401.3,
+   "clogp": 3.76,
+   "tpsa": 87.4,
+   "qed": 0.792,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 3,
+   "heavy": 27,
+   "le": 0.3996
+  },
+  {
+   "name": "CHEMBL4168978",
+   "group": "top_hit",
+   "vina": -10.78,
+   "smiles": "O=S1(=O)c2ccc(Oc3cc(F)cc(Cl)c3)c(Cl)c2[C@H](O)C1(F)F",
+   "mw": 399.2,
+   "clogp": 4.34,
+   "tpsa": 63.6,
+   "qed": 0.816,
+   "hbd": 1,
+   "hba": 4,
+   "rotb": 2,
+   "heavy": 24,
+   "le": 0.4492
+  },
+  {
+   "name": "CHEMBL5785748",
+   "group": "top_hit",
+   "vina": -10.76,
+   "smiles": "O=S(=O)(c1ccc(Oc2cc(F)c[n+]([O-])c2)c2c1[C@H](O)C(F)(F)C2)C(F)(F)F",
+   "mw": 429.3,
+   "clogp": 2.77,
+   "tpsa": 90.5,
+   "qed": 0.461,
+   "hbd": 1,
+   "hba": 5,
+   "rotb": 3,
+   "heavy": 28,
+   "le": 0.3843
+  },
+  {
+   "name": "CHEMBL5910507",
+   "group": "top_hit",
+   "vina": -10.71,
+   "smiles": "Cc1c(Oc2cc(F)cc(Cl)c2)ccc(S(=O)(=O)C(F)(F)F)c1Cl",
+   "mw": 403.2,
+   "clogp": 5.53,
+   "tpsa": 43.4,
+   "qed": 0.634,
+   "hbd": 0,
+   "hba": 3,
+   "rotb": 3,
+   "heavy": 24,
+   "le": 0.4463
+  },
+  {
+   "name": "CHEMBL5833889",
+   "group": "top_hit",
+   "vina": -10.68,
+   "smiles": "Cc1c(S(=O)(=O)C(F)F)ccc(Oc2cc(F)cc(Cl)c2)c1C#N",
+   "mw": 375.8,
+   "clogp": 4.45,
+   "tpsa": 67.2,
+   "qed": 0.791,
+   "hbd": 0,
+   "hba": 4,
+   "rotb": 4,
+   "heavy": 24,
+   "le": 0.445
+  }
+ ]
+}

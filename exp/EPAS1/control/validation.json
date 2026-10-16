@@ -1,0 +1,63 @@
+{
+  "n_compounds": 2157,
+  "n_known_active": 60,
+  "n_decoy": 2097,
+  "ef1": 8.17,
+  "ef5": 5.659,
+  "ef10": 4.161,
+  "auc": 0.7161,
+  "bedroc": 0.3004,
+  "best_score": -9.743,
+  "thresholds": {
+    "ef1": 5.0,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [
+      {
+        "name": "pt2399",
+        "rank": 214,
+        "percentile": 9.921,
+        "score": -6.637,
+        "chembl_id": "CHEMBL4165848",
+        "in_top_pct": false
+      },
+      {
+        "name": "belzutifan",
+        "rank": 400,
+        "percentile": 18.544,
+        "score": -5.636,
+        "chembl_id": "CHEMBL4585668",
+        "in_top_pct": false
+      },
+      {
+        "name": "pt2385",
+        "rank": 607,
+        "percentile": 28.141,
+        "score": -4.697,
+        "chembl_id": "CHEMBL4173075",
+        "in_top_pct": false
+      }
+    ],
+    "n_requested": 3,
+    "n_found_in_library": 3,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": []
+  },
+  "active_fraction": 0.0278,
+  "max_reachable_ef1": 35.95,
+  "ef1_threshold_unreachable": false,
+  "checks": {
+    "ef1": true,
+    "auc": true,
+    "bedroc": true
+  },
+  "verdict": "PASS",
+  "verdict_reason": "3/3 통과: ef1, auc, bedroc",
+  "benchmark_warning": "벤치마크 3개 중 상위 1.0%에 진입한 것이 없다. 지표가 통과하더라도 이 결과는 신뢰할 수 없다.",
+  "gene": "EPAS1",
+  "pocket_confidence": "high"
+}
