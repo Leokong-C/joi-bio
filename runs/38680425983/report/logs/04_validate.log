@@ -1,0 +1,12 @@
+===== EPAS1 =====
+[*] EPAS1 검증
+    화합물 2157 (활성 60)
+    ef1      = 32.682
+    ef5      = 12.316
+    auc      = 0.7717
+    bedroc   = 0.6697
+    벤치마크 리간드 (1/3 상위 1%):
+      OK pt2399           rank 19 (0.881%) score -10.273
+         belzutifan       rank 50 (2.318%) score -9.393
+         pt2385           rank 120 (5.563%) score -8.611
+    판정: PASS — 3/3 통과: ef1, auc, bedroc
