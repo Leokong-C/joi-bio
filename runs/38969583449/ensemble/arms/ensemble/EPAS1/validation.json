@@ -1,0 +1,62 @@
+{
+  "n_compounds": 2157,
+  "n_known_active": 60,
+  "n_decoy": 2097,
+  "ef1": 32.682,
+  "ef5": 12.316,
+  "ef10": 7.157,
+  "auc": 0.7884,
+  "bedroc": 0.6689,
+  "best_score": -12.81,
+  "thresholds": {
+    "ef1": 5.0,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [
+      {
+        "name": "pt2399",
+        "rank": 19,
+        "percentile": 0.881,
+        "score": -10.273,
+        "chembl_id": "CHEMBL4165848",
+        "in_top_pct": true
+      },
+      {
+        "name": "belzutifan",
+        "rank": 50,
+        "percentile": 2.318,
+        "score": -9.393,
+        "chembl_id": "CHEMBL4585668",
+        "in_top_pct": false
+      },
+      {
+        "name": "pt2385",
+        "rank": 121,
+        "percentile": 5.61,
+        "score": -8.611,
+        "chembl_id": "CHEMBL4173075",
+        "in_top_pct": false
+      }
+    ],
+    "n_requested": 3,
+    "n_found_in_library": 3,
+    "n_in_top_pct": 1,
+    "top_pct": 1.0,
+    "missing": []
+  },
+  "active_fraction": 0.0278,
+  "max_reachable_ef1": 35.95,
+  "ef1_threshold_unreachable": false,
+  "checks": {
+    "ef1": true,
+    "auc": true,
+    "bedroc": true
+  },
+  "verdict": "PASS",
+  "verdict_reason": "3/3 통과: ef1, auc, bedroc",
+  "gene": "EPAS1",
+  "pocket_confidence": "high"
+}

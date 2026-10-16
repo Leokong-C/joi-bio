@@ -1,0 +1,84 @@
+{
+  "gene": "EPAS1",
+  "uniprot": "Q99814",
+  "declared_pocket_mode": "cavity",
+  "benchmark_smiles_found": [
+    "belzutifan",
+    "PT2385",
+    "PT2399"
+  ],
+  "source": "RCSB",
+  "pdb_id": "6CZW+3H82",
+  "resolution": 2.0,
+  "ligand_match": {
+    "similarity": 0.4,
+    "ligand_smiles": "OCc1c(Br)c(Oc2cc(F)cc(Cl)c2)ccc1[S](=O)(=O)C(F)F",
+    "matched_benchmark": 2
+  },
+  "receptor": {
+    "chain": "A",
+    "n_atoms": 880,
+    "cofactors": [],
+    "cocrystal_ligand": {
+      "resname": "FO7",
+      "n_heavy": 24,
+      "center": [
+        24.54,
+        -0.314,
+        -10.001
+      ]
+    }
+  },
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "FO7",
+    "center": [
+      24.54,
+      -0.314,
+      -10.001
+    ],
+    "size": [
+      20.0,
+      20.0,
+      20.0
+    ],
+    "confidence": "high",
+    "note": "FO7 (24 heavy atoms) 기준"
+  },
+  "benchmark_ligands": [
+    "belzutifan",
+    "PT2385",
+    "PT2399"
+  ],
+  "structure_selection": "ensemble",
+  "ensemble": {
+    "n_ligands": 2157,
+    "n_arms": 2,
+    "arm_sizes": {
+      "6CZW": 2157,
+      "3H82": 2157
+    },
+    "best_receptor_share": {
+      "6CZW": 89.2,
+      "3H82": 10.8
+    },
+    "dominant_receptor": "6CZW",
+    "dominant_share": 89.2,
+    "effective": false,
+    "effectiveness_note": "6CZW 가 89.2% 의 리간드에서 최고 스코어를 냈다. 한 구조가 거의 전부를 가져갔다. 앙상블이 단일 구조와 사실상 같다.",
+    "receptors": {
+      "6CZW": {
+        "pdb_id": "6CZW",
+        "resolution": 2.0,
+        "ligand": "FO7",
+        "similarity": 0.4
+      },
+      "3H82": {
+        "pdb_id": "3H82",
+        "resolution": 1.5,
+        "ligand": "020",
+        "similarity": 0.0714
+      }
+    }
+  }
+}

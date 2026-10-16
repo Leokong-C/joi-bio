@@ -1,0 +1,14 @@
+[*] EPAS1 구조 선택 편향 측정
+    treatment 6CZW+3H82 (FO7, 유사도 0.4, 2.0 Å)
+    control   3H82 (020, 유사도 0.0714, 1.5 Å)
+
+    AUC  treatment=0.7884  control=0.7161
+    차이 0.0723
+
+    belzutifan       treatment 2.318%  control 18.544%  개선 16.226
+    pt2385           treatment 5.61%  control 28.141%  개선 22.531
+    pt2399           treatment 0.881%  control 9.921%  개선 9.04
+
+    판정: BIAS_LIKELY
+    조기 인식 지표가 최대 8.0배 차이난다 (EF1 4.0배, BEDROC 2.227배, 벤치마크 백분위 8.0배). 상위권 순위의 상당 부분이 구조 선택에서 나왔다. 두 팔을 함께 보고하고, 대조군 수치를 편향 없는 하한으로 제시할 것.
+[+] results/ensemble_vs_3H82.json

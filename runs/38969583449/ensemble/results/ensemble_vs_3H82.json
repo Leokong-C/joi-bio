@@ -1,0 +1,82 @@
+{
+  "gene": "EPAS1",
+  "treatment": {
+    "n": 2157,
+    "n_active": 60,
+    "auc": 0.7884,
+    "ef1": 32.682,
+    "ef5": 12.316,
+    "bedroc": 0.6689,
+    "best_score": -12.81,
+    "median_active": -9.351,
+    "median_decoy": -4.696,
+    "benchmarks": {
+      "pt2399": 0.881,
+      "belzutifan": 2.318,
+      "pt2385": 5.61
+    }
+  },
+  "control": {
+    "n": 2157,
+    "n_active": 60,
+    "auc": 0.7161,
+    "ef1": 8.17,
+    "ef5": 5.659,
+    "bedroc": 0.3004,
+    "best_score": -9.743,
+    "median_active": -6.01,
+    "median_decoy": -2.677,
+    "benchmarks": {
+      "pt2399": 9.921,
+      "belzutifan": 18.544,
+      "pt2385": 28.141
+    }
+  },
+  "auc_delta": 0.0723,
+  "ef1_ratio": 4.0,
+  "bedroc_ratio": 2.227,
+  "benchmark_ratio_median": 8.0,
+  "early_recognition_ratios": {
+    "ef1": 4.0,
+    "bedroc": 2.227,
+    "benchmark_percentile": 8.0
+  },
+  "verdict": "BIAS_LIKELY",
+  "verdict_reason": "조기 인식 지표가 최대 8.0배 차이난다 (EF1 4.0배, BEDROC 2.227배, 벤치마크 백분위 8.0배). 상위권 순위의 상당 부분이 구조 선택에서 나왔다. 두 팔을 함께 보고하고, 대조군 수치를 편향 없는 하한으로 제시할 것.",
+  "benchmark_comparison": [
+    {
+      "name": "belzutifan",
+      "treatment_percentile": 2.318,
+      "control_percentile": 18.544,
+      "improvement": 16.226
+    },
+    {
+      "name": "pt2385",
+      "treatment_percentile": 5.61,
+      "control_percentile": 28.141,
+      "improvement": 22.531
+    },
+    {
+      "name": "pt2399",
+      "treatment_percentile": 0.881,
+      "control_percentile": 9.921,
+      "improvement": 9.04
+    }
+  ],
+  "structures": {
+    "treatment": {
+      "pdb_id": "6CZW+3H82",
+      "resolution": 2.0,
+      "similarity": 0.4,
+      "selection": "ensemble",
+      "ligand": "FO7"
+    },
+    "control": {
+      "pdb_id": "3H82",
+      "resolution": 1.5,
+      "similarity": 0.0714,
+      "selection": "forced",
+      "ligand": "020"
+    }
+  }
+}

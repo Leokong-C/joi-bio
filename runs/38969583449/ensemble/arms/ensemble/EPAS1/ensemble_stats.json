@@ -1,0 +1,30 @@
+{
+  "n_ligands": 2157,
+  "n_arms": 2,
+  "arm_sizes": {
+    "6CZW": 2157,
+    "3H82": 2157
+  },
+  "best_receptor_share": {
+    "6CZW": 89.2,
+    "3H82": 10.8
+  },
+  "dominant_receptor": "6CZW",
+  "dominant_share": 89.2,
+  "effective": false,
+  "effectiveness_note": "6CZW 가 89.2% 의 리간드에서 최고 스코어를 냈다. 한 구조가 거의 전부를 가져갔다. 앙상블이 단일 구조와 사실상 같다.",
+  "receptors": {
+    "6CZW": {
+      "pdb_id": "6CZW",
+      "resolution": 2.0,
+      "ligand": "FO7",
+      "similarity": 0.4
+    },
+    "3H82": {
+      "pdb_id": "3H82",
+      "resolution": 1.5,
+      "ligand": "020",
+      "similarity": 0.0714
+    }
+  }
+}
