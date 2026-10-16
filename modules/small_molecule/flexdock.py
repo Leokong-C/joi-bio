@@ -60,12 +60,18 @@ def _candidate_cmds(pdb: Path, outstem: Path, flex_res: list[str]) -> list[list[
             exe = ["mk_prepare_receptor"]
         else:
             exe = [sys.executable, "-m", "meeko.cli.mk_prepare_receptor"]
+    # -f / --flexres 는 인자를 하나만 받는다. 잔기 여러 개는 쉼표로 묶어 넘긴다.
+    # (2026-10-17 실행 38971290707 에서 확인: 공백 구분은 unrecognized arguments)
+    csv = ",".join(flex_res)
+    rep: list[str] = []
+    for r in flex_res:
+        rep += ["-f", r]
     base = [
-        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", "-f", *flex_res, "--allow_bad_res"],
-        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", "-f", *flex_res],
-        ["--read_pdb", str(pdb), "-o", str(outstem), "-f", *flex_res, "--allow_bad_res"],
-        ["-i", str(pdb), "-o", str(outstem), "-p", "-f", *flex_res, "--allow_bad_res"],
-        ["--macromolecule", str(pdb), "-o", str(outstem), "-f", *flex_res],
+        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", "-f", csv, "--allow_bad_res"],
+        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", "-f", csv],
+        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", *rep, "--allow_bad_res"],
+        ["--read_pdb", str(pdb), "-o", str(outstem), "-f", csv, "--allow_bad_res"],
+        ["-i", str(pdb), "-o", str(outstem), "-p", "-f", csv, "--allow_bad_res"],
     ]
     return [exe + a for a in base]
 
@@ -273,6 +279,11 @@ def report(a: dict) -> None:
 
 
 def main() -> int:
+    # stdout 이 버퍼링되면 stderr 의 실패 메시지가 먼저 찍혀 로그 순서가 뒤집힌다.
+    try:
+        sys.stdout.reconfigure(line_buffering=True)
+    except Exception:
+        pass
     ap = argparse.ArgumentParser()
     ap.add_argument("--gene", required=True)
     ap.add_argument("--targetdir", required=True, help="리지드 결과가 있는 디렉터리")
