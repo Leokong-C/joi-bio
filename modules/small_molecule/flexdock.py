@@ -66,12 +66,17 @@ def _candidate_cmds(pdb: Path, outstem: Path, flex_res: list[str]) -> list[list[
     rep: list[str] = []
     for r in flex_res:
         rep += ["-f", r]
+    # 6CZW 의 SER292·TYR342 는 대체 위치(altloc A)를 갖는다. meeko 는 altloc 라벨이
+    # 보이면 어느 변이를 쓸지 모르겠다며 거부하므로 --default_altloc 으로 지정한다.
+    # (2026-10-17 실행 38972510507 에서 확인)
+    head = ["--read_pdb", str(pdb), "-o", str(outstem), "-p"]
     base = [
-        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", "-f", csv, "--allow_bad_res"],
-        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", "-f", csv],
-        ["--read_pdb", str(pdb), "-o", str(outstem), "-p", *rep, "--allow_bad_res"],
-        ["--read_pdb", str(pdb), "-o", str(outstem), "-f", csv, "--allow_bad_res"],
-        ["-i", str(pdb), "-o", str(outstem), "-p", "-f", csv, "--allow_bad_res"],
+        head + ["-f", csv, "--allow_bad_res", "--default_altloc", "A"],
+        head + ["-f", csv, "--default_altloc", "A"],
+        head + rep + ["--allow_bad_res", "--default_altloc", "A"],
+        head + ["-f", csv, "--allow_bad_res"],
+        ["-i", str(pdb), "-o", str(outstem), "-p", "-f", csv, "--allow_bad_res",
+         "--default_altloc", "A"],
     ]
     return [exe + a for a in base]
 
@@ -100,7 +105,7 @@ def prepare_flex_receptor(pdb: Path, outstem: Path, flex_res: list[str]) -> tupl
                       "잔기 번호·체인을 확인할 것.", file=sys.stderr)
             return rigid, flex
         print(f"[!] 후보 {i} 실패 (exit {r.returncode})", file=sys.stderr)
-        tail = (r.stderr or r.stdout or "").strip().splitlines()[-6:]
+        tail = (r.stderr or r.stdout or "").strip().splitlines()[-16:]
         for line in tail:
             print(f"      {line}", file=sys.stderr)
 
