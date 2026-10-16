@@ -1,0 +1,137 @@
+name: Joi_bio flex
+
+# 유연 측쇄 도킹 — 1단계 메커니즘 검증.
+#
+# 왜: 6CZW 에서 docked belzutifan 포즈를 재보니 MET252 측쇄가 2.05 Å 거리에 있다.
+# 탄소-탄소 반데르발스 접촉이 3.4~4.0 Å 이므로 이것은 충돌이다. Ren et al. 2022
+# (Mol Pharmacol 102:240) 은 belzutifan 결합 시 M252 가 뒤집힌다고 보고했고,
+# H293 수소결합·F254 π–π 도 특정했다. 우리 구조에서 셋 다 접촉 범위에 있다
+# (2.05 / 3.30 / 3.91 Å).
+#
+# 무엇을 묻는가: 전체 라이브러리를 유연 도킹으로 다시 돌릴 가치가 있는가.
+# 유연 도킹은 자유도가 늘어 거의 모든 리간드 스코어를 좋게 만들므로 'belzutifan 이
+# 좋아졌다' 는 증거가 아니다. decoy 개선폭을 기준선으로 두고 벤치마크가 그보다
+# 더 좋아졌는지만 본다. 아니면 11월 전체 실행은 취소한다.
+#
+# 덤: 리지드 대비 소요 배수 M 실측. 11월 비용을 추정 없이 계산할 수 있다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "리지드 결과를 가져올 기존 실행 ID (6CZW treatment)"
+        required: true
+      gene:
+        description: "타깃 유전자"
+        required: true
+        default: EPAS1
+      flex_res:
+        description: "유연화할 잔기 (공백 구분, 체인:번호)"
+        required: true
+        default: "A:252 A:293 A:254"
+      n_active:
+        description: "비교에 넣을 활성 개수"
+        required: false
+        default: "20"
+      n_decoy:
+        description: "비교에 넣을 decoy 개수 (기준선)"
+        required: false
+        default: "30"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  flex:
+    name: 유연 측쇄 메커니즘 검증
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      - name: 기존 실행에서 결과 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/dl
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 결과 재구성
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          G=${{ inputs.gene }}
+          mkdir -p targets logs
+          cp -r /tmp/dl/prepared/* targets/ 2>/dev/null || true
+          for d in /tmp/dl/docked-*; do
+            [ -d "$d" ] || continue
+            g=$(basename "$d" | sed -E 's/^docked-(.+)-[0-9]+$/\1/')
+            mkdir -p "targets/$g"
+            cp "$d"/*.jsonl "targets/$g/" 2>/dev/null || true
+          done
+          ls -la "targets/$G" | tee logs/f01_input.log
+          test -f "targets/$G/receptor.pdb" || { echo "receptor.pdb 없음"; exit 1; }
+
+      - name: 검증 게이트 (docked_all.jsonl 생성)
+        shell: bash -el {0}
+        run: |
+          set +e
+          python -m core.validation.gate --gene ${{ inputs.gene }} 2>&1 | tee logs/f02_gate.log
+          exit 0
+
+      # 여기서 실패하면 3분 만에 끝난다. meeko 의 인자명이 버전마다 달라
+      # 전체 도킹 100분을 쓴 뒤 수용체 분리에서 막히는 일을 막는다.
+      - name: 사전점검 — 수용체 rigid/flex 분리
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          G=${{ inputs.gene }}
+          python -m modules.small_molecule.flexdock --gene $G \
+            --targetdir targets/$G --outdir flex/$G \
+            --flex-res ${{ inputs.flex_res }} --prep-only 2>&1 | tee logs/f03_prep.log
+
+      - name: 유연 측쇄 도킹 + 짝지어 비교
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          G=${{ inputs.gene }}
+          python -m modules.small_molecule.flexdock --gene $G \
+            --targetdir targets/$G --outdir flex/$G \
+            --flex-res ${{ inputs.flex_res }} \
+            --n-active ${{ inputs.n_active }} --n-decoy ${{ inputs.n_decoy }} \
+            2>&1 | tee logs/f04_flexdock.log
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/flex"
+          mkdir -p "$OUT"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          cp -r flex "$OUT/" 2>/dev/null || true
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "flex: ${{ inputs.gene }} ${{ inputs.flex_res }}" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: flex-${{ inputs.gene }}
+          path: |
+            flex/
+            logs/
+            targets/*/receptor.pdb
+          retention-days: 30
+          if-no-files-found: warn
