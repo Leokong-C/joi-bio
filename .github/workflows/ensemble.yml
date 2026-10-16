@@ -1,0 +1,147 @@
+name: Joi_bio ensemble
+
+# 앙상블 도킹. 이미 끝난 두 실행(서로 다른 수용체 구조)의 결과를 합쳐
+# 리간드별 최고 스코어를 취한다. 재도킹하지 않으므로 몇 분이면 끝난다.
+#
+# 왜: 리지드 도킹은 측쇄 재배열을 모델링하지 못한다. EPAS1 에서 belzutifan 이
+# 상위 1% 를 놓친 것도 이 때문으로 보인다 — Ren et al. 2022 은 belzutifan 결합 시
+# M252 측쇄가 포켓 밖으로 뒤집힌다고 보고했다. 여러 구조에 도킹해 최고 스코어를
+# 취하면 수용체 유연성을 근사할 수 있다.
+#
+# 주의: 앙상블이 편향을 없애지는 않는다. 어느 수용체가 최고 스코어를 냈는지
+# 분포를 기록해, 한 구조가 독점하면 앙상블이 무의미했음을 드러낸다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      gene:
+        description: "타깃 유전자"
+        required: true
+        default: EPAS1
+      run_a:
+        description: "구성원 A 실행 ID (prepared + docked-* 아티팩트)"
+        required: true
+      label_a:
+        description: "구성원 A 라벨 (예: 6CZW)"
+        required: true
+        default: "6CZW"
+      run_b:
+        description: "구성원 B 실행 ID (control-prepared + control-docked-*)"
+        required: true
+      label_b:
+        description: "구성원 B 라벨 (예: 3H82)"
+        required: true
+        default: "3H82"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  ensemble:
+    name: 앙상블 합성·검증
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      - name: 구성원 A 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/a
+          run-id: ${{ inputs.run_a }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 구성원 B 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/b
+          run-id: ${{ inputs.run_b }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 두 구성원 재구성
+        shell: bash -el {0}
+        run: |
+          G=${{ inputs.gene }}
+          mkdir -p arms/a/$G arms/b/$G logs
+          # A 는 pipeline.yml 산출물 (prepared / docked-<gene>-<shard>)
+          cp -r /tmp/a/prepared/$G/* arms/a/$G/ 2>/dev/null || true
+          for d in /tmp/a/docked-*; do
+            [ -d "$d" ] && cp "$d"/*.jsonl arms/a/$G/ 2>/dev/null || true
+          done
+          # B 는 control.yml 산출물 (control-prepared / control-docked-<shard>)
+          cp -r /tmp/b/control-prepared/$G/* arms/b/$G/ 2>/dev/null || true
+          for d in /tmp/b/control-docked-*; do
+            [ -d "$d" ] && cp "$d"/*.jsonl arms/b/$G/ 2>/dev/null || true
+          done
+          echo "A:"; ls arms/a/$G | tee -a logs/e01_collect.log
+          echo "B:"; ls arms/b/$G | tee -a logs/e01_collect.log
+
+      - name: 앙상블 합성
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          G=${{ inputs.gene }}
+          python -m modules.small_molecule.ensemble --gene $G \
+            --arm "${{ inputs.label_a }}=arms/a/$G" \
+            --arm "${{ inputs.label_b }}=arms/b/$G" \
+            --outdir arms/ensemble/$G 2>&1 | tee logs/e02_ensemble.log
+
+      - name: 세 팔 모두 검증
+        shell: bash -el {0}
+        run: |
+          set +e
+          G=${{ inputs.gene }}
+          for a in a b ensemble; do
+            echo "===== $a =====" | tee -a logs/e03_gate.log
+            python -m core.validation.gate --gene $G --targetdir arms/$a/$G 2>&1 | tee -a logs/e03_gate.log
+          done
+          exit 0
+
+      - name: 앙상블 대 단일 구조 비교
+        shell: bash -el {0}
+        run: |
+          set +e
+          G=${{ inputs.gene }}
+          python -m core.validation.bias --gene $G \
+            --treatment arms/ensemble/$G --control arms/b/$G \
+            --out results/ensemble_vs_${{ inputs.label_b }}.json 2>&1 | tee logs/e04_vs_b.log
+          python -m core.validation.bias --gene $G \
+            --treatment arms/ensemble/$G --control arms/a/$G \
+            --out results/ensemble_vs_${{ inputs.label_a }}.json 2>&1 | tee logs/e04_vs_a.log
+          exit 0
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/ensemble"
+          mkdir -p "$OUT"
+          cp -r logs results "$OUT/" 2>/dev/null || true
+          find arms -name '*.json' -exec cp --parents {} "$OUT/" \; 2>/dev/null || true
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "ensemble: ${{ inputs.gene }} = ${{ inputs.label_a }} + ${{ inputs.label_b }}" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ensemble-${{ inputs.gene }}
+          path: |
+            results/
+            logs/
+            arms/ensemble/*/docked_all.jsonl
+            arms/*/*/validation.json
+            arms/*/*/ensemble_stats.json
+          retention-days: 30
