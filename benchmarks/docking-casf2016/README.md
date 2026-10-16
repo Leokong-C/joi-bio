@@ -67,13 +67,19 @@ PDBbind의 리간드 지정 파일이 없으므로 리간드를 구조에서 직
 ## 4. 실행 환경 제약 (확정)
 
 이 머신은 네이티브 Windows(16코어 / 28 GiB / GPU 없음)이고 연결된 원격 컴퓨트 대상은 없다.
-AutoDock Vina[^vina][^vina12]는 PyPI에 manylinux·musllinux 휠만 배포되며, 설치를 직접 시도한 결과
-`No matching distribution found for vina`로 실패했다. Vinardo[^vinardo] 등 Vina 계열 스코어링 함수도
-같은 바이너리에 의존한다. 따라서 **docking power(재도킹 포즈 복원)는 현재 환경에서 실행 불가**이며,
-리눅스 원격 컴퓨트 연결이 전제 조건이다.
+**재도킹은 이 환경에서 실행 가능하다.** 제약은 엔진이 아니라 Python 바인딩에 있다 —
+PyPI의 `vina` 1.2.7은 manylinux·musllinux 휠만 배포하므로 `pip install vina`는
+`No matching distribution found for vina`로 실패하고, sdist 빌드는 Boost·SWIG·MSVC를 요구하는데
+이 샌드박스에는 컴파일러가 없다(`cl`·`gcc`·`clang`·`cmake`·`swig` 모두 부재). conda-forge·bioconda에도
+win-64 빌드가 없다. 그러나 AutoDock Vina[^vina][^vina12] 공식 릴리스는 Windows 실행파일
+`vina_1.2.7_win.exe`(1,233,920 B)를 제공하며, 내려받아 실행한 결과 `AutoDock Vina v1.2.7`을
+정상 출력했다(exit 0). 따라서 파이프라인을 `vina.Vina()` API 대신 CLI 호출로 구성하면 된다.
+보조 도구인 Meeko(PDBQT 준비), sPyRMSD(대칭 보정 RMSD), PoseBusters도 순수 파이썬 패키지라
+Windows에서 설치된다.
 
-도킹 포즈를 얻은 뒤에는 RMSD 성공률만으로 충분하지 않다 — 물리적으로 불가능한 포즈가 성공으로 집계되는
-문제가 보고되어 있으므로 PoseBusters 류의 타당성 검사를 함께 적용한다.[^posebusters]
+도킹 포즈를 얻은 뒤에는 RMSD 성공률만으로 충분하지 않다 — 물리적으로 불가능한 포즈가 성공으로
+집계되는 문제가 보고되어 있으므로 PoseBusters 류의 타당성 검사를 함께 적용한다.[^posebusters]
+
 
 ## 5. 지금 확보한 수치: 기준선 (널 모델)
 
@@ -94,7 +100,7 @@ AutoDock Vina[^vina][^vina12]는 PyPI에 manylinux·musllinux 휠만 배포되�
 
 ## 6. 다음 단계
 
-1. 리눅스 원격 컴퓨트 연결 → AutoDock Vina 1.2.x 설치 → 285개 재도킹(네이티브 리간드 중심 상자, exhaustiveness 8 이상).
+1. Windows용 Vina 1.2.7 CLI로 285개 재도킹(네이티브 리간드 중심 상자, exhaustiveness 8 이상).
 2. 대칭 보정 RMSD로 docking power 산출(2 Å 성공률) + PoseBusters 타당성 검사.
 3. Vina / Vinardo 점수의 scoring power·ranking power를 위 기준선과 함께 제시.
 4. 1a30(펩타이드 리간드)은 별도 처리하거나 제외하고 그 사실을 명시.
