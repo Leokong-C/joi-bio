@@ -1,0 +1,16 @@
+total 1196
+drwxr-xr-x 2 runner runner   4096 Oct 16 15:36 .
+drwxr-xr-x 3 runner runner   4096 Oct 16 15:36 ..
+-rw-r--r-- 1 runner runner  62150 Oct 16 15:36 docked_shard0.jsonl
+-rw-r--r-- 1 runner runner  62667 Oct 16 15:36 docked_shard1.jsonl
+-rw-r--r-- 1 runner runner  63226 Oct 16 15:36 docked_shard2.jsonl
+-rw-r--r-- 1 runner runner  61956 Oct 16 15:36 docked_shard3.jsonl
+-rw-r--r-- 1 runner runner  62318 Oct 16 15:36 docked_shard4.jsonl
+-rw-r--r-- 1 runner runner  62411 Oct 16 15:36 docked_shard5.jsonl
+-rw-r--r-- 1 runner runner  62673 Oct 16 15:36 docked_shard6.jsonl
+-rw-r--r-- 1 runner runner  62761 Oct 16 15:36 docked_shard7.jsonl
+-rw-r--r-- 1 runner runner 408469 Oct 16 15:36 library.jsonl
+-rw-r--r-- 1 runner runner    525 Oct 16 15:36 library_stats.json
+-rw-r--r-- 1 runner runner 197802 Oct 16 15:36 raw.pdb
+-rw-r--r-- 1 runner runner  71284 Oct 16 15:36 receptor.pdb
+-rw-r--r-- 1 runner runner    944 Oct 16 15:36 target_meta.json
