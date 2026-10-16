@@ -1,0 +1,13 @@
+[!] 후보 1 실패 (exit 2)
+      mk_prepare_receptor.py: error: unrecognized arguments: A:293 A:254
+[!] 후보 2 실패 (exit 2)
+      mk_prepare_receptor.py: error: unrecognized arguments: A:293 A:254
+[!] 후보 3 실패 (exit 2)
+      mk_prepare_receptor.py: error: unrecognized arguments: A:293 A:254
+[!] 후보 4 실패 (exit 2)
+      mk_prepare_receptor.py: error: unrecognized arguments: A:293 A:254
+[!] 후보 5 실패 (exit 2)
+      mk_prepare_receptor.py: error: unrecognized arguments: --macromolecule targets/EPAS1/receptor.pdb A:293 A:254
+[!] 모든 인자 후보가 실패했다. 생성된 파일: []
+[*] EPAS1 유연 측쇄 도킹
+    유연화 잔기: A:252, A:293, A:254
