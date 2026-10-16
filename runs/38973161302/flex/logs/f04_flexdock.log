@@ -1,0 +1,23 @@
+[*] EPAS1 유연 측쇄 도킹
+    유연화 잔기: A:252, A:293, A:254
+    rigid 81 KB · flex 2217 B · 유연 잔기 3개
+    대상 53개 (벤치마크 3, 활성 23, decoy 30)
+    10/53  9.0분
+    20/53  19.5분
+    30/53  31.5분
+    40/53  42.5분
+    50/53  61.0분
+    53/53  64.6분
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/joi-bio/joi-bio/modules/small_molecule/flexdock.py", line 388, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/modules/small_molecule/flexdock.py", line 357, in main
+    analysis = analyse(ok)
+               ^^^^^^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/modules/small_molecule/flexdock.py", line 206, in analyse
+    base = _median(by["decoy"])
+           ^^^^^^^
+NameError: name '_median' is not defined
