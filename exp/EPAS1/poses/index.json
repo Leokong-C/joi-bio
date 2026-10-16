@@ -1,0 +1,44 @@
+[
+  {
+    "name": "PT2399",
+    "group": "benchmark",
+    "score": -8.61,
+    "png": "poses/PT2399.png"
+  },
+  {
+    "name": "BELZUTIFAN",
+    "group": "benchmark",
+    "score": -9.44,
+    "png": "poses/BELZUTIFAN.png"
+  },
+  {
+    "name": "PT2385",
+    "group": "benchmark",
+    "score": -8.63,
+    "png": "poses/PT2385.png"
+  },
+  {
+    "name": "CHEMBL5590666",
+    "group": "top_hit",
+    "score": -12.62,
+    "png": "poses/CHEMBL5590666.png"
+  },
+  {
+    "name": "CHEMBL4175320",
+    "group": "top_hit",
+    "score": -12.17,
+    "png": "poses/CHEMBL4175320.png"
+  },
+  {
+    "name": "CHEMBL4163990",
+    "group": "top_hit",
+    "score": -11.82,
+    "png": "poses/CHEMBL4163990.png"
+  },
+  {
+    "name": "benchmark_overlay",
+    "group": "overlay",
+    "score": null,
+    "png": "poses/_benchmark_overlay.png"
+  }
+]

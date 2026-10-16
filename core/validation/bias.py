@@ -29,7 +29,7 @@ import argparse
 import json
 from pathlib import Path
 
-from core.validation.gate import benchmark_recovery, roc_auc
+from core.validation.gate import benchmark_recovery, bedroc, enrichment_factor, roc_auc
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -53,6 +53,9 @@ def arm_metrics(rows: list[dict], benchmarks: list[str]) -> dict:
         "n": len(rows),
         "n_active": sum(labels),
         "auc": roc_auc(labels),
+        "ef1": enrichment_factor(labels, 0.01),
+        "ef5": enrichment_factor(labels, 0.05),
+        "bedroc": bedroc(labels),
         "best_score": rows[0]["score"] if rows else None,
         "median_active": _median([r["score"] for r, l in zip(rows, labels) if l]),
         "median_decoy": _median([r["score"] for r, l in zip(rows, labels) if not l]),
@@ -70,39 +73,74 @@ def _median(xs: list[float]) -> float | None:
 
 def compare(treat: dict, ctrl: dict) -> dict:
     """두 팔을 공통 화합물로 맞춰 비교한다."""
-    out = {"treatment": treat["metrics"], "control": ctrl["metrics"]}
+    out: dict = {"treatment": treat["metrics"], "control": ctrl["metrics"]}
 
-    t_auc, c_auc = treat["metrics"]["auc"], ctrl["metrics"]["auc"]
-    if t_auc is not None and c_auc is not None:
-        delta = round(t_auc - c_auc, 4)
-        out["auc_delta"] = delta
-        # 해석 기준은 보수적으로 잡는다. AUC 0.05 는 랭킹이 눈에 띄게 달라지는 폭이다.
-        if delta >= 0.15:
-            verdict = "BIAS_LIKELY"
-            reason = (
-                f"유사도 구조가 AUC 를 {delta:.3f} 끌어올렸다. 성능의 상당 부분이 "
-                "구조 선택에서 나왔을 수 있으므로, 결과를 보고할 때 두 값을 함께 낸다."
-            )
-        elif delta >= 0.05:
-            verdict = "BIAS_MODERATE"
-            reason = f"AUC 차이 {delta:.3f}. 편향이 있으나 지배적이지는 않다."
-        elif delta >= -0.05:
-            verdict = "BIAS_LOW"
-            reason = (
-                f"AUC 차이 {delta:.3f}. 구조 선택이 성능을 거의 바꾸지 않았다. "
-                "농축도가 화합물 자체의 상보성에서 나왔다는 뜻이다."
-            )
-        else:
-            verdict = "CONTROL_BETTER"
-            reason = (
-                f"대조군이 오히려 {-delta:.3f} 높다. 유사도 기반 구조 선택이 "
-                "역효과를 냈다. 선택 로직을 재검토할 것."
-            )
-        out["verdict"] = verdict
-        out["verdict_reason"] = reason
-    else:
+    t, c = treat["metrics"], ctrl["metrics"]
+
+    # AUC 만으로 판정하면 안 된다. AUC 는 전역 분리도라 상위권 재배열에 둔감하다.
+    # EPAS1 에서 AUC 차이는 0.056 에 그쳤지만 EF1% 는 8.17 → 32.68 (4.0배),
+    # 벤치마크 백분위는 5~11배 움직였다. 히트 선별이 일어나는 곳은 상위 1% 이므로
+    # 조기 인식 지표(EF1, BEDROC, 벤치마크 백분위)를 함께 본다.
+    def ratio(a, b):
+        if a is None or b is None or b <= 0:
+            return None
+        return round(a / b, 3)
+
+    out["auc_delta"] = (
+        round(t["auc"] - c["auc"], 4) if (t["auc"] is not None and c["auc"] is not None) else None
+    )
+    out["ef1_ratio"] = ratio(t["ef1"], c["ef1"])
+    out["bedroc_ratio"] = ratio(t["bedroc"], c["bedroc"])
+
+    # 벤치마크 백분위 개선 배수 (control 백분위 / treatment 백분위)
+    bench_ratios = []
+    for name, tp in t["benchmarks"].items():
+        cp = c["benchmarks"].get(name)
+        if tp and cp and tp > 0:
+            bench_ratios.append(cp / tp)
+    out["benchmark_ratio_median"] = (
+        round(sorted(bench_ratios)[len(bench_ratios) // 2], 3) if bench_ratios else None
+    )
+
+    signals = [x for x in (out["ef1_ratio"], out["bedroc_ratio"], out["benchmark_ratio_median"])
+               if x is not None]
+    if not signals:
         out["verdict"] = "INCOMPARABLE"
-        out["verdict_reason"] = "한쪽 팔의 AUC 를 계산할 수 없다 (활성 또는 decoy 부재)."
+        out["verdict_reason"] = "두 팔을 비교할 지표를 계산할 수 없다."
+        return out
+
+    worst = max(signals)  # 가장 크게 벌어진 지표로 판정한다
+    out["early_recognition_ratios"] = {
+        "ef1": out["ef1_ratio"],
+        "bedroc": out["bedroc_ratio"],
+        "benchmark_percentile": out["benchmark_ratio_median"],
+    }
+
+    if worst >= 3.0:
+        out["verdict"] = "BIAS_LIKELY"
+        out["verdict_reason"] = (
+            f"조기 인식 지표가 최대 {worst:.1f}배 차이난다 "
+            f"(EF1 {out['ef1_ratio']}배, BEDROC {out['bedroc_ratio']}배, "
+            f"벤치마크 백분위 {out['benchmark_ratio_median']}배). "
+            "상위권 순위의 상당 부분이 구조 선택에서 나왔다. 두 팔을 함께 보고하고, "
+            "대조군 수치를 편향 없는 하한으로 제시할 것."
+        )
+    elif worst >= 1.5:
+        out["verdict"] = "BIAS_MODERATE"
+        out["verdict_reason"] = (
+            f"조기 인식 지표가 최대 {worst:.1f}배 차이난다. 편향이 있으나 지배적이지는 않다."
+        )
+    elif worst >= 0.8:
+        out["verdict"] = "BIAS_LOW"
+        out["verdict_reason"] = (
+            f"조기 인식 지표 차이가 최대 {worst:.1f}배에 그친다. "
+            "구조 선택이 순위를 거의 바꾸지 않았다."
+        )
+    else:
+        out["verdict"] = "CONTROL_BETTER"
+        out["verdict_reason"] = (
+            "대조군이 오히려 낫다. 유사도 기반 구조 선택이 역효과를 냈다."
+        )
 
     # 벤치마크 백분위 대조 — 승인약이 어느 쪽에서 더 잘 잡히는가
     rows = []
