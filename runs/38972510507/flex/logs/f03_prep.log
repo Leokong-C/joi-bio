@@ -1,0 +1,33 @@
+[*] EPAS1 유연 측쇄 도킹
+    유연화 잔기: A:252, A:293, A:254
+[!] 후보 1 실패 (exit 1)
+      1. (for batch processing) Use -a/--allow_bad_res to automatically remove residues
+      that do not match templates, and --default_altloc to set
+      a default altloc variant. Use these at your own risk.
+      
+      2. (processing individual structure) Inspecting and fixing the input structure is recommended.
+      Use --wanted_altloc to set variants for specific residues.
+[!] 후보 2 실패 (exit 1)
+      1. (for batch processing) Use -a/--allow_bad_res to automatically remove residues
+      that do not match templates, and --default_altloc to set
+      a default altloc variant. Use these at your own risk.
+      
+      2. (processing individual structure) Inspecting and fixing the input structure is recommended.
+      Use --wanted_altloc to set variants for specific residues.
+[!] 후보 3 실패 (exit 1)
+      1. (for batch processing) Use -a/--allow_bad_res to automatically remove residues
+      that do not match templates, and --default_altloc to set
+      a default altloc variant. Use these at your own risk.
+      
+      2. (processing individual structure) Inspecting and fixing the input structure is recommended.
+      Use --wanted_altloc to set variants for specific residues.
+[!] 후보 4 실패 (exit 1)
+      1. (for batch processing) Use -a/--allow_bad_res to automatically remove residues
+      that do not match templates, and --default_altloc to set
+      a default altloc variant. Use these at your own risk.
+      
+      2. (processing individual structure) Inspecting and fixing the input structure is recommended.
+      Use --wanted_altloc to set variants for specific residues.
+[!] 후보 5 실패 (exit 1)
+      @> 880 atoms and 1 coordinate set(s) were parsed in 0.01s.
+[!] 모든 인자 후보가 실패했다. 생성된 파일: []
