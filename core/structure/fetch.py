@@ -16,6 +16,7 @@ core.structure.fetch — 타깃 구조 확보와 포켓 정의.
 from __future__ import annotations
 
 import json
+import re
 import sys
 import time
 from pathlib import Path
@@ -171,12 +172,15 @@ def parse_pdb(text: str) -> dict:
     in_model = True
     for line in text.splitlines():
         if line.startswith("REMARK   2 RESOLUTION."):
-            for tok in line.split():
+            # "REMARK   2 RESOLUTION.    1.60 ANGSTROMS."
+            # 단순 split 으로 첫 숫자를 집으면 REMARK 번호 2 를 해상도로 읽는다.
+            # EPAS1 1차 실행에서 모든 후보가 2.0 Å 로 나온 원인.
+            m = re.search(r"RESOLUTION\.\s+([0-9]*\.?[0-9]+)", line)
+            if m:
                 try:
-                    resolution = float(tok)
-                    break
+                    resolution = float(m.group(1))
                 except ValueError:
-                    continue
+                    pass
         rec = line[:6].strip()
         if rec == "MODEL":
             parts = line.split()
@@ -271,7 +275,10 @@ def score_candidate(cand: dict, bench_smiles: list[str]) -> dict:
 
 
 def select_structure(
-    uniprot: str, bench_smiles: list[str] | None = None, max_download: int = 16
+    uniprot: str,
+    bench_smiles: list[str] | None = None,
+    max_download: int = 16,
+    force_pdb_id: str | None = None,
 ) -> dict | None:
     """벤치마크 화합물과 가장 닮은 리간드가 결합한 구조를 고른다.
 
@@ -280,6 +287,17 @@ def select_structure(
     이미 들어앉아 있는 구조라야 그 화합물을 제대로 수용한다.
     """
     bench_smiles = bench_smiles or []
+    if force_pdb_id:
+        # 음성 대조군: 벤치마크와 닮지 않은 구조를 일부러 지정한다.
+        # 유사도 선택이 만드는 편향의 크기를 재기 위한 것이다.
+        print(f"    구조 강제 지정: {force_pdb_id}")
+        cand = evaluate_candidate(force_pdb_id.upper())
+        if cand is None:
+            return None
+        cand["match"] = score_candidate(cand, bench_smiles)
+        print(f"      유사도={cand['match']['similarity']:.3f} res={cand['resolution']}")
+        return cand
+
     pdb_ids = search_rcsb(uniprot)
     if not pdb_ids:
         return None
@@ -428,7 +446,7 @@ def define_pocket(cand: dict, receptor_meta: dict, out_pdb: Path) -> dict:
     }
 
 
-def prepare_target(target: dict, outdir: Path) -> dict:
+def prepare_target(target: dict, outdir: Path, force_pdb_id: str | None = None) -> dict:
     """타깃 하나의 구조·포켓을 준비하고 메타데이터를 반환."""
     outdir.mkdir(parents=True, exist_ok=True)
     gene, uniprot = target["gene"], target["uniprot"]
@@ -448,7 +466,7 @@ def prepare_target(target: dict, outdir: Path) -> dict:
     else:
         print(f"    벤치마크 SMILES {len(bench_smiles)}개 확보 → 구조 선택 기준으로 사용")
 
-    cand = select_structure(uniprot, bench_smiles)
+    cand = select_structure(uniprot, bench_smiles, force_pdb_id=force_pdb_id)
 
     if cand is None:
         print("    실험 구조 확보 실패 → AlphaFold 모델 시도")
@@ -478,6 +496,7 @@ def prepare_target(target: dict, outdir: Path) -> dict:
         meta["pdb_id"] = cand["pdb_id"]
         meta["resolution"] = cand["resolution"]
         meta["ligand_match"] = cand.get("match", {})
+        meta["structure_selection"] = "forced" if force_pdb_id else "similarity"
 
     receptor_pdb = outdir / "receptor.pdb"
     meta["receptor"] = build_receptor(cand, receptor_pdb)
@@ -498,6 +517,11 @@ def main() -> int:
     ap.add_argument("--gene", help="단일 타깃 (미지정 시 전체)")
     ap.add_argument("--config", default=str(root / "config" / "targets.yaml"))
     ap.add_argument("--outroot", default=str(root / "targets"))
+    ap.add_argument(
+        "--pdb-id",
+        default=None,
+        help="구조를 강제 지정 (음성 대조군용). 유사도 선택을 건너뛴다",
+    )
     args = ap.parse_args()
 
     targets = yaml.safe_load(Path(args.config).read_text())["targets"]
@@ -511,7 +535,7 @@ def main() -> int:
     for t in targets:
         outdir = Path(args.outroot) / t["gene"]
         print(f"[*] {t['gene']} ({t['uniprot']}) 구조 준비")
-        meta = prepare_target(t, outdir)
+        meta = prepare_target(t, outdir, force_pdb_id=args.pdb_id)
         (outdir / "target_meta.json").write_text(
             json.dumps(meta, indent=2, ensure_ascii=False)
         )
