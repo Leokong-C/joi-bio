@@ -1,0 +1,82 @@
+{
+  "gene": "EPAS1",
+  "treatment": {
+    "n": 2157,
+    "n_active": 60,
+    "auc": 0.7884,
+    "ef1": 32.682,
+    "ef5": 12.316,
+    "bedroc": 0.6689,
+    "best_score": -12.81,
+    "median_active": -9.351,
+    "median_decoy": -4.696,
+    "benchmarks": {
+      "pt2399": 0.881,
+      "belzutifan": 2.318,
+      "pt2385": 5.61
+    }
+  },
+  "control": {
+    "n": 2157,
+    "n_active": 60,
+    "auc": 0.7717,
+    "ef1": 32.682,
+    "ef5": 12.316,
+    "bedroc": 0.6697,
+    "best_score": -12.81,
+    "median_active": -9.351,
+    "median_decoy": -4.664,
+    "benchmarks": {
+      "pt2399": 0.881,
+      "belzutifan": 2.318,
+      "pt2385": 5.563
+    }
+  },
+  "auc_delta": 0.0167,
+  "ef1_ratio": 1.0,
+  "bedroc_ratio": 0.999,
+  "benchmark_ratio_median": 1.0,
+  "early_recognition_ratios": {
+    "ef1": 1.0,
+    "bedroc": 0.999,
+    "benchmark_percentile": 1.0
+  },
+  "verdict": "BIAS_LOW",
+  "verdict_reason": "조기 인식 지표 차이가 최대 1.0배에 그친다. 구조 선택이 순위를 거의 바꾸지 않았다.",
+  "benchmark_comparison": [
+    {
+      "name": "belzutifan",
+      "treatment_percentile": 2.318,
+      "control_percentile": 2.318,
+      "improvement": 0.0
+    },
+    {
+      "name": "pt2385",
+      "treatment_percentile": 5.61,
+      "control_percentile": 5.563,
+      "improvement": -0.047
+    },
+    {
+      "name": "pt2399",
+      "treatment_percentile": 0.881,
+      "control_percentile": 0.881,
+      "improvement": 0.0
+    }
+  ],
+  "structures": {
+    "treatment": {
+      "pdb_id": "6CZW+3H82",
+      "resolution": 2.0,
+      "similarity": 0.4,
+      "selection": "ensemble",
+      "ligand": "FO7"
+    },
+    "control": {
+      "pdb_id": "6CZW",
+      "resolution": 2.0,
+      "similarity": 0.4,
+      "selection": null,
+      "ligand": "FO7"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+[*] EPAS1 구조 선택 편향 측정
+    treatment 6CZW+3H82 (FO7, 유사도 0.4, 2.0 Å)
+    control   6CZW (FO7, 유사도 0.4, 2.0 Å)
+
+    AUC  treatment=0.7884  control=0.7717
+    차이 0.0167
+
+    belzutifan       treatment 2.318%  control 2.318%  개선 0.0
+    pt2385           treatment 5.61%  control 5.563%  개선 -0.047
+    pt2399           treatment 0.881%  control 0.881%  개선 0.0
+
+    판정: BIAS_LOW
+    조기 인식 지표 차이가 최대 1.0배에 그친다. 구조 선택이 순위를 거의 바꾸지 않았다.
+[+] results/ensemble_vs_6CZW.json
