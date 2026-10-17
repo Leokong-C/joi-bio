@@ -64,7 +64,7 @@ PDBbind의 리간드 지정 파일이 없으므로 리간드를 구조에서 직
 
 육안 확인용 대표 구조: [3o9i (최강, Ki 1.5 pM)](https://www.rcsb.org/structure/3O9I) · [4kzu (중앙값, Ki 313 nM)](https://www.rcsb.org/structure/4KZU) · [3ao4 (최약, Kd 8.5 mM)](https://www.rcsb.org/structure/3AO4).
 
-## 4. 실행 환경 제약 (확정)
+## 4. 실행 환경 (확정)
 
 이 머신은 네이티브 Windows(16코어 / 28 GiB / GPU 없음)이고 연결된 원격 컴퓨트 대상은 없다.
 **재도킹은 이 환경에서 실행 가능하다.** 제약은 엔진이 아니라 Python 바인딩에 있다 —
@@ -98,12 +98,71 @@ Windows에서 설치된다.
 결정 해상도가 logKa와 약하게 양의 상관을 보이는 것은 강한 결합자가 더 좋은 결정을 주는 경향에서 오는
 교란 변수이며, 성능 수치 해석 시 유의해야 한다.
 
-## 6. 다음 단계
+## 6. 2단계 결과 — AutoDock Vina 1.2.7 재도킹 (n = 284)
 
-1. Windows용 Vina 1.2.7 CLI로 285개 재도킹(네이티브 리간드 중심 상자, exhaustiveness 8 이상).
-2. 대칭 보정 RMSD로 docking power 산출(2 Å 성공률) + PoseBusters 타당성 검사.
-3. Vina / Vinardo 점수의 scoring power·ranking power를 위 기준선과 함께 제시.
-4. 1a30(펩타이드 리간드)은 별도 처리하거나 제외하고 그 사실을 명시.
+실행 환경은 이 Windows 머신이다. 공식 릴리스 실행파일 `vina_1.2.7_win.exe`를 CLI로 호출했고,
+설정은 네이티브 리간드 중심 상자(좌표 범위 + 각 축 10 Å), `exhaustiveness 8`, `num_modes 9`,
+`seed 42`, 작업당 `--cpu 1`을 14개 병렬로 돌렸다. 284개 전부 성공, 실패 0건, 총 44분(복합체당 중앙값 47.9초).
+수용체는 ATOM 레코드만 남겨 Open Babel로 pH 7.4 PDBQT로 변환했고, 리간드는 RCSB ModelServer에서
+결합차수가 포함된 SDF를 받아 Meeko로 PDBQT를 만들었다. RMSD는 sPyRMSD로 대칭을 보정해 계산했다.
+
+![재도킹 결과](./casf2016_vina_benchmark.png)
+
+### Docking power (포즈 복원)
+
+| 기준 | top-1 포즈 | 9개 모드 중 최선 |
+|---|---|---|
+| RMSD ≤ 1 Å | 52.1 % | 59.5 % |
+| **RMSD ≤ 2 Å** | **66.2 %** | **86.6 %** |
+| RMSD ≤ 3 Å | 76.1 % | 94.4 % |
+
+top-1 RMSD 중앙값 0.95 Å, 평균 2.13 Å. top-1과 best-of-9의 간격(66.2 % → 86.6 %)은
+**탐색이 아니라 순위 매기기가 병목**임을 뜻한다 — 올바른 포즈는 대개 9개 안에 들어 있지만
+점수가 그것을 1위로 올리지 못한다.
+
+### 포즈의 물리적 타당성 (PoseBusters)
+
+RMSD를 뺀 27개 검사를 모두 통과한 비율은 96.1 %다. 실패는 내부 에너지(98.2 % 통과),
+사면체 키랄성(99.3 %), 비방향족 고리 평면성(99.3 %), 내부 입체 충돌(99.6 %),
+이중결합 평면성(99.6 %)에서 나왔다. 타당성과 정확도를 함께 요구하면
+**PB 통과 AND RMSD ≤ 2 Å = 64.4 %**다. PoseBusters가 자체 계산한 RMSD ≤ 2 Å 판정은
+우리 sPyRMSD 결과와 284개 전부 일치했다.
+
+### Scoring power (결정 포즈 점수 vs 실험 logKa)
+
+| 예측자 | Pearson R | Spearman ρ |
+|---|---|---|
+| Vina 점수 (결정 포즈) | **+0.495** (p = 5.9×10⁻¹⁹) | +0.551 |
+| Vina 점수 (도킹 최고 모드) | +0.526 | — |
+| 리간드 중원자 수 (널 모델) | +0.469 | +0.493 |
+
+잔차 표준편차는 1.89 log 단위다. **Vina의 스코어링은 리간드 크기만 쓰는 널 모델을 거의 넘지 못한다**
+(R 0.495 대 0.469). 결합세기 예측의 설명력 대부분이 크기 효과라는 뜻이다.
+
+### Ranking power (타깃 내 리간드 5개 순위)
+
+| 예측자 | 타깃 내 평균 Spearman ρ | ρ ≥ 0.9 비율 |
+|---|---|---|
+| Vina 점수 | +0.430 (57개 타깃) | 15.8 % |
+| 리간드 중원자 수 (널 모델) | +0.557 (56개 타깃) | 14.0 % |
+
+두 예측자를 같이 계산할 수 있는 56개 타깃에서는 Vina +0.432 대 널 모델 +0.557이다.
+**같은 단백질에 붙는 리간드들의 순위에서는 Vina가 널 모델보다 못하다.** 크기 차이가 작아지는
+동일 타깃 내부에서는 Vina가 기댈 신호가 사라진다는 뜻으로 읽힌다.
+
+### 종합
+
+포즈를 찾는 능력(66.2 %)과 세기를 맞추는 능력(R = 0.495)은 성격이 다른 문제이고,
+이 벤치마크에서 Vina는 전자에서는 쓸 만하지만 후자에서는 자명한 기준선과 구별되지 않는다.
+단적인 예가 3k5v(Abl 키나아제–imatinib)로, 점수는 −10.98 kcal/mol로 데이터셋 상위권인데
+포즈는 결정 구조에서 11.92 Å 벗어나 있다 — 점수가 좋다는 것이 자리를 맞혔다는 뜻이 아니다.
+
+## 7. 다음 단계
+
+1. Vinardo 등 재채점 함수로 같은 포즈를 다시 매겨 스코어링 성능이 개선되는지 확인.
+2. exhaustiveness를 32까지 올려 top-1 ↔ best-of-9 간격이 탐색 부족 때문인지 점수 때문인지 분리.
+3. 1a30(펩타이드 리간드) 별도 처리.
+4. 결합부위 상자 크기 민감도 점검(현재 리간드 범위 + 10 Å).
 
 ## 참고문헌
 
@@ -121,3 +180,9 @@ Windows에서 설치된다.
 [^posebusters]: Buttenschoen M. et al. *PoseBusters: AI-based docking methods fail to generate physically valid poses or generalise to novel sequences.* Chemical Science (2024), DOI [10.1039/d3sc04185a](https://doi.org/10.1039/d3sc04185a)
 
 문헌 메타데이터는 PubMed에서 조회했다. 추가 배경: Liu Z. et al. *Forging the Basis for Developing Protein–Ligand Interaction Scoring Functions*, Accounts of Chemical Research (2017), DOI [10.1021/acs.accounts.6b00491](https://doi.org/10.1021/acs.accounts.6b00491).
+
+### 2단계 산출물
+
+- `casf2016_docking_results.csv` — 284개 복합체의 결정 포즈 점수, 도킹 점수, 9개 모드 RMSD, PoseBusters 판정
+- `casf2016_posebusters_top1.csv` — top-1 포즈의 PoseBusters 28개 검사 원자료
+- `casf2016_pymol_bundle.zip` — PyMOL 렌더링용 구조 3종과 `render_casf.pml`
