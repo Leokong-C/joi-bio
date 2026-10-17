@@ -1,0 +1,24 @@
+[*] EPAS1: 후보 187개 프로파일링 (검증=PASS)
+    중원자 하한 20 (활성 중앙값의 75%) — 113개 제외
+
+[*] 골격 기저율 검사 — 단순 상위 20개의 골격 구성
+    서로 다른 골격 10개
+       상위     라이브러리    농축비  골격
+     11개   55%     2.65%  20.8x  O=c1[nH]c(=O)c2nc(-c3ccccc3)[nH]c2[nH]1
+      1개    5%     0.05% 107.7x  c1ccn(Nc2nnc(N3CCOCC3)c3c2CCCC3)c1
+      1개    5%     1.76%   2.8x  O=c1oc(Nc2ccccc2)nc2ccccc12
+      1개    5%     0.14%  35.9x  O=c1[nH]c(=O)c2[nH]c(-c3ccccc3)nc2[nH]1
+      1개    5%     0.09%  53.8x  O=C1c2ccccc2C(=O)N1CCCc1ccccc1
+      1개    5%     0.65%   7.7x  O=c1cnn(-c2ccccc2)c(=O)[nH]1
+
+[*] 골격당 최대 2개로 다양화 → 20개 / 골격 20종
+    CHEMBL11446      vina= -9.75 LE=0.406 QED=0.94 중원자=24 골격순위=1
+    CHEMBL11220      vina=-10.19 LE=0.509 QED=0.71 중원자=20 골격순위=1
+    CHEMBL10254      vina= -9.61 LE=0.418 QED=0.79 중원자=23 골격순위=1
+    CHEMBL10873      vina= -9.82 LE=0.468 QED=0.73 중원자=21 골격순위=1
+    CHEMBL11322      vina= -9.41 LE=0.471 QED=0.80 중원자=20 골격순위=1
+    CHEMBL274141     vina= -9.11 LE=0.414 QED=0.84 중원자=22 골격순위=1
+    CHEMBL275755     vina= -9.14 LE=0.457 QED=0.80 중원자=20 골격순위=1
+    CHEMBL275534     vina= -8.47 LE=0.403 QED=0.93 중원자=21 골격순위=1
+
+[+] /home/runner/work/joi-bio/joi-bio/targets/EPAS1/scaffold_report.json
