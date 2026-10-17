@@ -1,0 +1,128 @@
+name: Joi_bio rerank
+
+# 후보 재선정 — 도킹하지 않는다. 기존 결과를 다시 고르기만 한다.
+#
+# 왜: 2026-10-17 진단에서 EPAS1 후보 20개 중 10개가 같은 골격(8-아릴-1,3-
+# 다이메틸잔틴)이었다. 잔틴은 평평하고 단단하며 수소결합기가 많아 작고 닫힌
+# 포켓에 잘 맞고 Vina 가 어디서든 높은 점수를 준다 — 알려진 promiscuous 골격이다.
+# 포즈 필터로는 걸러지지 않았다(수소결합을 실제로 만들기 때문).
+#
+# 그래서 골격 수준에서 처리한다.
+#   · 기저율 검사 — 그 골격이 상위권을 차지한 것이 농축인가 라이브러리 편중인가
+#   · 골격당 상한 — 동족 시리즈 하나가 후보 목록을 독점하지 못하게
+#   · 중원자 하한 — 활성보다 지나치게 작은 분자 제외
+#
+# 비용: 도킹이 없으므로 환경 구성이 대부분. 약 8 러너분.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "도킹 결과를 가져올 기존 실행 ID"
+        required: true
+        default: "38680425983"
+      gene:
+        required: true
+        default: EPAS1
+      per_scaffold:
+        description: "한 골격에서 올릴 최대 후보 수"
+        required: false
+        default: "2"
+      report_n:
+        description: "최종 후보 수"
+        required: false
+        default: "20"
+      min_heavy_frac:
+        description: "활성 중원자 중앙값 대비 하한 (0 이면 끔)"
+        required: false
+        default: "0.75"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  rerank:
+    name: 골격 기반 후보 재선정
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      - name: 기존 실행에서 결과 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/dl
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 결과 재구성
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          G=${{ inputs.gene }}
+          mkdir -p targets logs
+          cp -r /tmp/dl/prepared/* targets/ 2>/dev/null || true
+          for d in /tmp/dl/docked-*; do
+            [ -d "$d" ] || continue
+            g=$(basename "$d" | sed -E 's/^docked-(.+)-[0-9]+$/\1/')
+            mkdir -p "targets/$g"
+            cp "$d"/*.jsonl "targets/$g/" 2>/dev/null || true
+          done
+          ls -la "targets/$G" | tee logs/r01_input.log
+
+      - name: 검증 게이트
+        shell: bash -el {0}
+        run: |
+          set +e
+          python -m core.validation.gate --gene ${{ inputs.gene }} 2>&1 | tee logs/r02_gate.log
+          exit 0
+
+      - name: 골격 기반 재선정
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python -m modules.small_molecule.admet --gene ${{ inputs.gene }} \
+            --per-scaffold ${{ inputs.per_scaffold }} \
+            --report-n ${{ inputs.report_n }} \
+            --min-heavy-frac ${{ inputs.min_heavy_frac }} 2>&1 | tee logs/r03_rerank.log
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/rerank"
+          G=${{ inputs.gene }}
+          mkdir -p "$OUT/$G"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          # docked_all.jsonl 도 함께 올린다 — 전체 라이브러리 점수를 로컬에서
+          # 분석할 수 있어야 매번 CI 를 돌리지 않는다. 아티팩트 blob 은 프록시가 막는다.
+          for f in scaffold_report.json candidates.jsonl validation.json \
+                   target_meta.json library_stats.json docked_all.jsonl; do
+            cp "targets/$G/$f" "$OUT/$G/" 2>/dev/null || true
+          done
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "rerank: ${G} 골격 기반 후보 재선정" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rerank-${{ inputs.gene }}
+          path: |
+            targets/*/scaffold_report.json
+            targets/*/candidates.jsonl
+            logs/
+          retention-days: 30
+          if-no-files-found: warn
