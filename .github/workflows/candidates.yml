@@ -1,0 +1,130 @@
+name: Joi_bio candidates
+
+# 후보를 점수가 아니라 포즈로 판정한다.
+#
+# 왜: 2026-10-17 진단에서 EPAS1 상위 후보 20개가 전부 decoy 라벨이었고, 알려진
+# 활성보다 작았다(중원자 20 대 27). 크기-점수 상관이 +0.730 — PAS-B 공동이 작고
+# 닫혀 있어 큰 분자가 아예 들어가지 못한다(라이브러리의 22.6%). LE 중앙값 0.479 는
+# 중원자 20개로서 비현실적이다. 상위권이 '포켓을 잘 채운 분자' 가 아니라 '충돌을
+# 피한 작은 분자'일 수 있다는 뜻이고, Vina 점수는 이 둘을 구분하지 못한다.
+#
+# 그래서 승인약이 실제로 쓰는 상호작용을 재현하는지 본다 — H293 수소결합,
+# M252 서브포켓 점유, belzutifan 과의 자리 겹침, 포켓 매몰도.
+#
+# 비용: 23개 화합물 × exhaustiveness 16 ≈ 35 러너분.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "도킹 결과를 가져올 기존 실행 ID"
+        required: true
+        default: "38680425983"
+      gene:
+        description: "타깃 유전자"
+        required: true
+        default: EPAS1
+      top_n:
+        description: "판정할 상위 후보 수 (벤치마크는 별도로 추가됨)"
+        required: false
+        default: "20"
+      exhaustiveness:
+        required: false
+        default: "16"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  candidates:
+    name: 포즈 접촉 판정
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+
+      - name: 기존 실행에서 결과 내려받기
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/dl
+          run-id: ${{ inputs.source_run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 결과 재구성
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          G=${{ inputs.gene }}
+          mkdir -p targets logs
+          cp -r /tmp/dl/prepared/* targets/ 2>/dev/null || true
+          for d in /tmp/dl/docked-*; do
+            [ -d "$d" ] || continue
+            g=$(basename "$d" | sed -E 's/^docked-(.+)-[0-9]+$/\1/')
+            mkdir -p "targets/$g"
+            cp "$d"/*.jsonl "targets/$g/" 2>/dev/null || true
+          done
+          nproc | tee logs/c00_nproc.log
+          ls -la "targets/$G" | tee logs/c01_input.log
+          test -f "targets/$G/receptor.pdb" || { echo "receptor.pdb 없음"; exit 1; }
+
+      - name: 검증 게이트 (docked_all.jsonl 생성)
+        shell: bash -el {0}
+        run: |
+          set +e
+          python -m core.validation.gate --gene ${{ inputs.gene }} 2>&1 | tee logs/c02_gate.log
+          exit 0
+
+      - name: 포즈 생성 (벤치마크 + 상위 후보)
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python -m modules.small_molecule.poses --gene ${{ inputs.gene }} \
+            --top-n ${{ inputs.top_n }} --poses-per-ligand 3 \
+            --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 | tee logs/c03_poses.log
+
+      - name: 접촉 판정
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python -m modules.small_molecule.contacts --gene ${{ inputs.gene }} \
+            --reference BELZUTIFAN 2>&1 | tee logs/c04_contacts.log
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/candidates"
+          G=${{ inputs.gene }}
+          mkdir -p "$OUT/$G"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          for f in contacts.json poses.sdf poses_meta.json receptor.pdb; do
+            cp "targets/$G/$f" "$OUT/$G/" 2>/dev/null || true
+          done
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "candidates: ${G} 포즈 접촉 판정" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: candidates-${{ inputs.gene }}
+          path: |
+            targets/*/contacts.json
+            targets/*/poses.sdf
+            targets/*/poses_meta.json
+            targets/*/receptor.pdb
+            logs/
+          retention-days: 30
+          if-no-files-found: warn

@@ -113,8 +113,12 @@ def main() -> int:
             selected.append(r)
             seen.add(r["chembl_id"])
     # 2) 상위 후보
+    # selected 와 seen 은 항상 같이 늘어나므로 len(selected) >= len(seen) + top_n 은
+    # 영원히 참이 되지 않는다. 그래서 2026-10-16 실행에서 15개가 아니라 142개를
+    # 돌다 타임아웃이 났다. 벤치마크 수를 따로 세어 기준으로 삼는다.
+    n_bench = len(selected)
     for r in rows:
-        if len(selected) >= len(seen) + args.top_n:
+        if len(selected) >= n_bench + args.top_n:
             break
         if r["chembl_id"] in seen:
             continue
