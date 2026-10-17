@@ -1,0 +1,11 @@
+{
+  "wall_minutes": 64.6,
+  "n_docked": 53,
+  "runner_min_per_ligand": 1.2189,
+  "rigid_min_per_ligand": 0.567,
+  "time_multiplier_M": 2.15,
+  "full_library_runner_minutes": 2629,
+  "full_library_billable_minutes": 629,
+  "full_library_cost_usd": 5.03,
+  "source": "실행 38973161302 (분석 단계 크래시 전 도킹은 완주, 벽시계 64.6분)"
+}
