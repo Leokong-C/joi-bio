@@ -1,0 +1,200 @@
+MODEL 1
+REMARK VINA RESULT:   -11.522      0.000      0.000
+REMARK INTER + INTRA:         -19.270
+REMARK INTER:                 -13.879
+REMARK INTRA:                  -5.391
+REMARK UNBOUND:                -5.391
+REMARK SMILES CS(=O)(=O)c1ccc(Oc2cc(F)cc(C#N)c2)c2c1[C@H](O)[C@H](F)[C@@H]2F
+REMARK SMILES IDX 5 1 6 2 7 3 8 4 19 5 20 6 21 7 23 8 24 9 25 10 26 11 2 12
+REMARK SMILES IDX 3 13 4 14 1 15 22 16 9 18 10 19 11 20 18 21 12 22 15 23
+REMARK SMILES IDX 14 24 16 25 17 26 13 27
+REMARK H PARENT 22 17
+ROOT
+ATOM      1  C   UNL     1      26.512  -0.239  -9.183  1.00  0.00    +0.073 A 
+ATOM      2  C   UNL     1      25.255  -0.684  -8.742  1.00  0.00    +0.024 A 
+ATOM      3  C   UNL     1      24.156  -0.705  -9.615  1.00  0.00    +0.049 A 
+ATOM      4  C   UNL     1      24.304  -0.300 -10.943  1.00  0.00    +0.134 A 
+ATOM      5  C   UNL     1      25.548   0.126 -11.377  1.00  0.00    +0.039 A 
+ATOM      6  C   UNL     1      26.649   0.190 -10.499  1.00  0.00    +0.012 A 
+ATOM      7  C   UNL     1      27.856   0.700 -11.240  1.00  0.00    +0.184 C 
+ATOM      8  C   UNL     1      27.228   1.294 -12.517  1.00  0.00    +0.238 C 
+ATOM      9  F   UNL     1      26.901   2.599 -12.243  1.00  0.00    -0.241 F 
+ATOM     10  C   UNL     1      25.961   0.481 -12.774  1.00  0.00    +0.238 C 
+ATOM     11  F   UNL     1      25.068   1.206 -13.491  1.00  0.00    -0.239 F 
+ENDROOT
+BRANCH   1  12
+ATOM     12  S   UNL     1      27.910  -0.418  -8.092  1.00  0.00    +0.175 S 
+ATOM     13  O   UNL     1      27.785   0.581  -7.048  1.00  0.00    -0.224 OA
+ATOM     14  O   UNL     1      29.095  -0.425  -8.933  1.00  0.00    -0.224 OA
+ATOM     15  C   UNL     1      27.754  -2.044  -7.402  1.00  0.00    +0.163 C 
+ENDBRANCH   1  12
+BRANCH   7  16
+ATOM     16  O   UNL     1      28.512   1.709 -10.487  1.00  0.00    -0.385 OA
+ATOM     17  H   UNL     1      27.858   2.065  -9.853  1.00  0.00    +0.211 HD
+ENDBRANCH   7  16
+BRANCH   4  18
+ATOM     18  O   UNL     1      23.280  -0.405 -11.847  1.00  0.00    -0.457 OA
+BRANCH  18  19
+ATOM     19  C   UNL     1      22.025  -0.646 -11.335  1.00  0.00    +0.131 A 
+ATOM     20  C   UNL     1      21.432  -1.910 -11.336  1.00  0.00    +0.086 A 
+ATOM     21  C   UNL     1      21.374   0.435 -10.734  1.00  0.00    +0.066 A 
+ATOM     22  C   UNL     1      20.175  -2.069 -10.765  1.00  0.00    +0.128 A 
+ATOM     23  C   UNL     1      20.110   0.261 -10.162  1.00  0.00    +0.059 A 
+ATOM     24  C   UNL     1      19.506  -0.999 -10.182  1.00  0.00    +0.059 A 
+ATOM     25  C   UNL     1      19.437   1.371  -9.555  1.00  0.00    +0.099 C 
+ATOM     26  N   UNL     1      18.891   2.271  -9.067  1.00  0.00    -0.192 NA
+ATOM     27  F   UNL     1      19.599  -3.278 -10.771  1.00  0.00    -0.207 F 
+ENDBRANCH  18  19
+ENDBRANCH   4  18
+TORSDOF 4
+BEGIN_RES MET A 252
+REMARK INDEX MAP 3 1 15 2 18 3 21 4 22 5
+ROOT
+ATOM      1  CA  MET A 252      25.972   3.481 -16.699  1.00  0.00    +0.172 C 
+ENDROOT
+BRANCH   1   2
+ATOM      2  CB  MET A 252      25.816   4.485 -15.528  1.00  0.00    +0.046 C 
+BRANCH   2   3
+ATOM      3  CG  MET A 252      27.026   4.704 -14.663  1.00  0.00    +0.072 C 
+BRANCH   3   4
+ATOM      4  SD  MET A 252      27.240   6.454 -14.874  1.00  0.00    -0.165 SA
+ATOM      5  CE  MET A 252      28.925   6.460 -15.499  1.00  0.00    +0.085 C 
+ENDBRANCH   3   4
+ENDBRANCH   2   3
+ENDBRANCH   1   2
+END_RES MET A 252
+BEGIN_RES PHE A 254
+REMARK INDEX MAP 3 1 15 2 18 3 19 4 20 5 22 6 23 7 26 8
+ROOT
+ATOM      6  CA  PHE A 254      21.145  -0.176 -18.958  1.00  0.00    +0.175 C 
+ENDROOT
+BRANCH   6   7
+ATOM      7  CB  PHE A 254      19.685  -0.468 -18.548  1.00  0.00    +0.070 C 
+BRANCH   7   8
+ATOM      8  CG  PHE A 254      19.451  -0.564 -17.083  1.00  0.00    -0.045 A 
+ATOM      9  CD1 PHE A 254      19.332  -1.841 -16.438  1.00  0.00    +0.004 A 
+ATOM     10  CD2 PHE A 254      19.312   0.590 -16.285  1.00  0.00    +0.004 A 
+ATOM     11  CE1 PHE A 254      19.093  -1.900 -15.033  1.00  0.00    +0.000 A 
+ATOM     12  CE2 PHE A 254      19.084   0.492 -14.906  1.00  0.00    +0.000 A 
+ATOM     13  CZ  PHE A 254      18.952  -0.750 -14.271  1.00  0.00    +0.000 A 
+ENDBRANCH   7   8
+ENDBRANCH   6   7
+END_RES PHE A 254
+BEGIN_RES HIS A 293
+REMARK INDEX MAP 3 1 15 2 18 3 19 4 20 5 21 6 22 7 25 8
+ROOT
+ATOM     14  CA  HIS A 293      31.323   3.753  -9.096  1.00  0.00    +0.177 C 
+ENDROOT
+BRANCH  14  15
+ATOM     15  CB  HIS A 293      30.453   4.610 -10.008  1.00  0.00    +0.093 C 
+BRANCH  15  16
+ATOM     16  CG  HIS A 293      30.609   4.278 -11.482  1.00  0.00    +0.061 A 
+ATOM     17  ND1 HIS A 293      30.551   3.002 -11.958  1.00  0.00    -0.242 NA
+ATOM     18  CD2 HIS A 293      30.851   5.090 -12.591  1.00  0.00    +0.107 A 
+ATOM     19  CE1 HIS A 293      30.764   3.002 -13.290  1.00  0.00    +0.196 A 
+ATOM     20  NE2 HIS A 293      30.934   4.271 -13.686  1.00  0.00    -0.350 N 
+ATOM     21  HE2 HIS A 293      31.100   4.580 -14.655  1.00  0.00    +0.167 HD
+ENDBRANCH  15  16
+ENDBRANCH  14  15
+END_RES HIS A 293
+ENDMDL
+MODEL 2
+REMARK VINA RESULT:    -9.018      1.468      1.764
+REMARK INTER + INTRA:         -16.254
+REMARK INTER:                 -10.978
+REMARK INTRA:                  -5.276
+REMARK UNBOUND:                -5.391
+REMARK SMILES CS(=O)(=O)c1ccc(Oc2cc(F)cc(C#N)c2)c2c1[C@H](O)[C@H](F)[C@@H]2F
+REMARK SMILES IDX 5 1 6 2 7 3 8 4 19 5 20 6 21 7 23 8 24 9 25 10 26 11 2 12
+REMARK SMILES IDX 3 13 4 14 1 15 22 16 9 18 10 19 11 20 18 21 12 22 15 23
+REMARK SMILES IDX 14 24 16 25 17 26 13 27
+REMARK H PARENT 22 17
+ROOT
+ATOM      1  C   UNL     1      26.505  -0.305  -9.224  1.00  0.00    +0.073 A 
+ATOM      2  C   UNL     1      25.237  -0.704  -8.769  1.00  0.00    +0.024 A 
+ATOM      3  C   UNL     1      24.132  -0.696  -9.633  1.00  0.00    +0.049 A 
+ATOM      4  C   UNL     1      24.283  -0.307 -10.966  1.00  0.00    +0.134 A 
+ATOM      5  C   UNL     1      25.537   0.075 -11.413  1.00  0.00    +0.039 A 
+ATOM      6  C   UNL     1      26.646   0.109 -10.544  1.00  0.00    +0.012 A 
+ATOM      7  C   UNL     1      27.863   0.572 -11.298  1.00  0.00    +0.184 C 
+ATOM      8  C   UNL     1      27.245   1.177 -12.576  1.00  0.00    +0.238 C 
+ATOM      9  F   UNL     1      26.964   2.493 -12.310  1.00  0.00    -0.241 F 
+ATOM     10  C   UNL     1      25.950   0.404 -12.816  1.00  0.00    +0.238 C 
+ATOM     11  F   UNL     1      25.076   1.152 -13.532  1.00  0.00    -0.239 F 
+ENDROOT
+BRANCH   1  12
+ATOM     12  S   UNL     1      27.904  -0.521  -8.142  1.00  0.00    +0.175 S 
+ATOM     13  O   UNL     1      27.456  -1.273  -6.986  1.00  0.00    -0.224 OA
+ATOM     14  O   UNL     1      28.490   0.796  -7.952  1.00  0.00    -0.224 OA
+ATOM     15  C   UNL     1      29.069  -1.477  -9.076  1.00  0.00    +0.163 C 
+ENDBRANCH   1  12
+BRANCH   7  16
+ATOM     16  O   UNL     1      28.558   1.565 -10.559  1.00  0.00    -0.385 OA
+ATOM     17  H   UNL     1      29.504   1.314 -10.559  1.00  0.00    +0.211 HD
+ENDBRANCH   7  16
+BRANCH   4  18
+ATOM     18  O   UNL     1      23.248  -0.385 -11.862  1.00  0.00    -0.457 OA
+BRANCH  18  19
+ATOM     19  C   UNL     1      21.986  -0.131 -11.374  1.00  0.00    +0.131 A 
+ATOM     20  C   UNL     1      21.538   1.151 -11.054  1.00  0.00    +0.086 A 
+ATOM     21  C   UNL     1      21.121  -1.224 -11.273  1.00  0.00    +0.066 A 
+ATOM     22  C   UNL     1      20.235   1.319 -10.600  1.00  0.00    +0.128 A 
+ATOM     23  C   UNL     1      19.811  -1.041 -10.817  1.00  0.00    +0.059 A 
+ATOM     24  C   UNL     1      19.368   0.239 -10.474  1.00  0.00    +0.059 A 
+ATOM     25  C   UNL     1      18.926  -2.162 -10.702  1.00  0.00    +0.099 C 
+ATOM     26  N   UNL     1      18.211  -3.071 -10.607  1.00  0.00    -0.192 NA
+ATOM     27  F   UNL     1      19.803   2.547 -10.283  1.00  0.00    -0.207 F 
+ENDBRANCH  18  19
+ENDBRANCH   4  18
+TORSDOF 4
+BEGIN_RES MET A 252
+REMARK INDEX MAP 3 1 15 2 18 3 21 4 22 5
+ROOT
+ATOM      1  CA  MET A 252      25.972   3.481 -16.699  1.00  0.00    +0.172 C 
+ENDROOT
+BRANCH   1   2
+ATOM      2  CB  MET A 252      25.816   4.485 -15.528  1.00  0.00    +0.046 C 
+BRANCH   2   3
+ATOM      3  CG  MET A 252      26.863   4.430 -14.450  1.00  0.00    +0.072 C 
+BRANCH   3   4
+ATOM      4  SD  MET A 252      28.138   5.401 -15.213  1.00  0.00    -0.165 SA
+ATOM      5  CE  MET A 252      28.309   6.680 -13.962  1.00  0.00    +0.085 C 
+ENDBRANCH   3   4
+ENDBRANCH   2   3
+ENDBRANCH   1   2
+END_RES MET A 252
+BEGIN_RES PHE A 254
+REMARK INDEX MAP 3 1 15 2 18 3 19 4 20 5 22 6 23 7 26 8
+ROOT
+ATOM      6  CA  PHE A 254      21.145  -0.176 -18.958  1.00  0.00    +0.175 C 
+ENDROOT
+BRANCH   6   7
+ATOM      7  CB  PHE A 254      19.685  -0.468 -18.548  1.00  0.00    +0.070 C 
+BRANCH   7   8
+ATOM      8  CG  PHE A 254      19.437  -0.493 -17.082  1.00  0.00    -0.045 A 
+ATOM      9  CD1 PHE A 254      19.300  -1.736 -16.379  1.00  0.00    +0.004 A 
+ATOM     10  CD2 PHE A 254      19.302   0.700 -16.341  1.00  0.00    +0.004 A 
+ATOM     11  CE1 PHE A 254      19.047  -1.726 -14.975  1.00  0.00    +0.000 A 
+ATOM     12  CE2 PHE A 254      19.061   0.669 -14.961  1.00  0.00    +0.000 A 
+ATOM     13  CZ  PHE A 254      18.911  -0.540 -14.270  1.00  0.00    +0.000 A 
+ENDBRANCH   7   8
+ENDBRANCH   6   7
+END_RES PHE A 254
+BEGIN_RES HIS A 293
+REMARK INDEX MAP 3 1 15 2 18 3 19 4 20 5 21 6 22 7 25 8
+ROOT
+ATOM     14  CA  HIS A 293      31.323   3.753  -9.096  1.00  0.00    +0.177 C 
+ENDROOT
+BRANCH  14  15
+ATOM     15  CB  HIS A 293      30.453   4.610 -10.008  1.00  0.00    +0.093 C 
+BRANCH  15  16
+ATOM     16  CG  HIS A 293      30.645   4.312 -11.485  1.00  0.00    +0.061 A 
+ATOM     17  ND1 HIS A 293      30.404   3.084 -12.024  1.00  0.00    -0.242 NA
+ATOM     18  CD2 HIS A 293      31.092   5.112 -12.538  1.00  0.00    +0.107 A 
+ATOM     19  CE1 HIS A 293      30.699   3.097 -13.340  1.00  0.00    +0.196 A 
+ATOM     20  NE2 HIS A 293      31.106   4.333 -13.664  1.00  0.00    -0.350 N 
+ATOM     21  HE2 HIS A 293      31.384   4.645 -14.606  1.00  0.00    +0.167 HD
+ENDBRANCH  15  16
+ENDBRANCH  14  15
+END_RES HIS A 293
+ENDMDL
