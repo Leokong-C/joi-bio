@@ -1,0 +1,75 @@
+{
+  "n": 53,
+  "n_by_group": {
+    "benchmark": 3,
+    "active": 20,
+    "decoy": 30
+  },
+  "separation": {
+    "rigid": {
+      "auc": 0.7667,
+      "bedroc": 0.9656
+    },
+    "flex": {
+      "auc": 0.8478,
+      "bedroc": 0.9978
+    },
+    "auc_delta": 0.0811,
+    "bedroc_delta": 0.0322
+  },
+  "pocket_admission": {
+    "n": 12,
+    "share_pct": 22.6,
+    "n_active": 5,
+    "flex_score_median": -5.608,
+    "flex_score_best": -7.786,
+    "note": "리지드 스코어가 양수였던 화합물. 포켓에 들어가지 못했다가 측쇄가 풀리며 입장한 것으로, 스코어링 개선과는 다른 현상이다."
+  },
+  "median_delta_fitted_only": {
+    "benchmark": -2.129,
+    "active": -0.342,
+    "decoy": -1.118
+  },
+  "median_delta_all": {
+    "benchmark": -2.129,
+    "active": -0.476,
+    "decoy": -2.288
+  },
+  "benchmarks": [
+    {
+      "name": "BELZUTIFAN",
+      "rigid_score": -9.393,
+      "flex_score": -11.522,
+      "delta": -2.129,
+      "rank_rigid": 12,
+      "rank_flex": 3,
+      "rank_change": 9
+    },
+    {
+      "name": "PT2399",
+      "rigid_score": -10.273,
+      "flex_score": -11.308,
+      "delta": -1.035,
+      "rank_rigid": 8,
+      "rank_flex": 4,
+      "rank_change": 4
+    },
+    {
+      "name": "PT2385",
+      "rigid_score": -8.611,
+      "flex_score": -11.111,
+      "delta": -2.5,
+      "rank_rigid": 17,
+      "rank_flex": 5,
+      "rank_change": 12
+    }
+  ],
+  "flex_top10": {
+    "n_active": 10,
+    "n_benchmark": 3,
+    "n_newly_admitted": 0,
+    "score_cutoff": -10.63
+  },
+  "verdict": "INDUCED_FIT_SUPPORTED",
+  "verdict_reason": "같은 집합에서 AUC 가 +0.0811 변했고 벤치마크 순위가 중앙값 +9계단 올랐다. 새로 입장한 화합물은 상위 10위에 0개만 들어왔다. 측쇄 재배열이 순위를 실제로 개선한다 — 전체 라이브러리 재실행이 정당하다."
+}

@@ -186,6 +186,14 @@ def select_set(rows: list[dict], n_active: int, n_decoy: int, seed: int = 42) ->
     return bench + pick(acts, n_active) + pick(decs, n_decoy)
 
 
+def _median(xs: list[float]) -> float | None:
+    if not xs:
+        return None
+    xs = sorted(xs)
+    n = len(xs)
+    return round(xs[n // 2] if n % 2 else (xs[n // 2 - 1] + xs[n // 2]) / 2, 3)
+
+
 def _group(r: dict) -> str:
     if r.get("source") == "benchmark_spikein" or r.get("group") == "benchmark":
         return "benchmark"
@@ -193,85 +201,154 @@ def _group(r: dict) -> str:
 
 
 def analyse(rows: list[dict]) -> dict:
-    """짝지어 비교. 유연화가 벤치마크를 '선택적으로' 개선했는가?
+    """짝지어 비교. 유연화가 활성/decoy 분리도를 개선했는가?
 
-    유연 도킹은 자유도가 늘어 거의 모든 리간드의 스코어를 좋게 만든다. 따라서
-    'belzutifan 이 좋아졌다' 는 아무 의미가 없다. decoy 가 좋아진 폭을 기준선으로
-    두고, 벤치마크가 그보다 더 좋아졌는지를 본다.
+    왜 '중앙값 개선폭' 으로 판정하지 않는가
+      2026-10-17 실행 38973161302 에서 배운 것. 처음에는 decoy 의 중앙값 개선폭을
+      기준선으로 두고 벤치마크가 그보다 더 좋아졌는지를 봤다. 그 통계는 틀렸다.
+
+      라이브러리의 22.6% 는 리지드에서 스코어가 양수였다 — Vina 에서 양수는
+      '포켓에 들어가지 못했다' 는 뜻이다. 측쇄를 풀면 포켓이 열려 이들이 들어오고,
+      스코어가 +17 에서 -5 로 뛴다. 개선폭 20 이 넘는 값이 중앙값을 끌어당긴다.
+      그런데 이것은 스코어링이 좋아진 것이 아니라 '입장' 이라는 다른 현상이다.
+      실제로 이들은 유연 상위권에 끼지 못한다(중앙값 -5.6 대 상위 10위 경계 -10.6).
+
+    그래서 무엇으로 판정하는가
+      같은 화합물 집합을 두 방식으로 돌렸으므로, 같은 집합 안의 활성/decoy
+      분리도 변화를 직접 본다. AUC 와 BEDROC 의 짝지어 변화가 1차 지표다.
+      이 지표는 양수 스코어 화합물에 휘둘리지 않는다 — 순위만 쓰기 때문이다.
+      벤치마크 순위 변화를 2차로 보고, 새로 입장한 화합물 수는 위험 신호로 따로 센다.
+
+    주의
+      이 집합은 리지드 스코어 분포를 따라 균등 추출한 것이라 활성 비율이 높다
+      (43%). AUC·BEDROC 의 절대값은 전체 라이브러리 값과 비교할 수 없다.
+      같은 집합 안에서의 '변화' 만 유효하다.
     """
+    from core.validation.gate import bedroc, roc_auc
+
+    def sep(key: str) -> tuple[float | None, float | None]:
+        s = sorted(rows, key=lambda r: r[key])
+        lab = [1 if r.get("label") == "known_active" else 0 for r in s]
+        if not any(lab) or all(lab):
+            return None, None
+        return round(roc_auc(lab), 4), round(bedroc(lab), 4)
+
+    r_auc, r_bed = sep("rigid_score")
+    f_auc, f_bed = sep("flex_score")
+
     by: dict[str, list[float]] = {"benchmark": [], "active": [], "decoy": []}
     for r in rows:
         by[_group(r)].append(r["delta"])
 
-    base = _median(by["decoy"])
+    # 리지드에서 들어가지 못했던 화합물 — 개선폭 통계에서 분리한다
+    admitted = [r for r in rows if r["rigid_score"] > 0]
+    fitted = [r for r in rows if r["rigid_score"] <= 0]
+
     out: dict = {
         "n": len(rows),
-        "median_delta": {k: _median(v) for k, v in by.items()},
         "n_by_group": {k: len(v) for k, v in by.items()},
-        "decoy_baseline": base,
+        "separation": {
+            "rigid": {"auc": r_auc, "bedroc": r_bed},
+            "flex": {"auc": f_auc, "bedroc": f_bed},
+            "auc_delta": round(f_auc - r_auc, 4) if (f_auc and r_auc) else None,
+            "bedroc_delta": round(f_bed - r_bed, 4) if (f_bed and r_bed) else None,
+        },
+        "pocket_admission": {
+            "n": len(admitted),
+            "share_pct": round(100 * len(admitted) / len(rows), 1) if rows else None,
+            "n_active": sum(1 for r in admitted if r.get("label") == "known_active"),
+            "flex_score_median": _median([r["flex_score"] for r in admitted]),
+            "flex_score_best": min((r["flex_score"] for r in admitted), default=None),
+            "note": "리지드 스코어가 양수였던 화합물. 포켓에 들어가지 못했다가 측쇄가 "
+                    "풀리며 입장한 것으로, 스코어링 개선과는 다른 현상이다.",
+        },
+        # 원래 들어갔던 화합물만으로 본 개선폭 — 이쪽이 '재스코어링' 효과다
+        "median_delta_fitted_only": {
+            k: _median([r["delta"] for r in fitted if _group(r) == k])
+            for k in ("benchmark", "active", "decoy")
+        },
+        "median_delta_all": {k: _median(v) for k, v in by.items()},
     }
-    # 기준선 대비 초과 개선 (음수일수록 벤치마크가 선택적으로 좋아졌다는 뜻)
-    for k in ("benchmark", "active"):
-        m = out["median_delta"][k]
-        out[f"{k}_excess"] = round(m - base, 3) if (m is not None and base is not None) else None
 
-    # 순위 변화 — 같은 53개 집합 안에서
     rr = sorted(rows, key=lambda r: r["rigid_score"])
     fr = sorted(rows, key=lambda r: r["flex_score"])
     rpos = {r["chembl_id"]: i + 1 for i, r in enumerate(rr)}
     fpos = {r["chembl_id"]: i + 1 for i, r in enumerate(fr)}
-    out["benchmarks"] = [
-        {
-            "name": r.get("pref_name") or r["chembl_id"],
-            "rigid_score": r["rigid_score"],
-            "flex_score": r["flex_score"],
-            "delta": r["delta"],
-            "excess_vs_decoy": round(r["delta"] - base, 3) if base is not None else None,
-            "rank_rigid": rpos[r["chembl_id"]],
-            "rank_flex": fpos[r["chembl_id"]],
-            "rank_change": rpos[r["chembl_id"]] - fpos[r["chembl_id"]],
-        }
-        for r in rows
-        if _group(r) == "benchmark"
-    ]
-    out["benchmarks"].sort(key=lambda b: b["rank_flex"])
+    out["benchmarks"] = sorted(
+        (
+            {
+                "name": r.get("pref_name") or r["chembl_id"],
+                "rigid_score": r["rigid_score"],
+                "flex_score": r["flex_score"],
+                "delta": r["delta"],
+                "rank_rigid": rpos[r["chembl_id"]],
+                "rank_flex": fpos[r["chembl_id"]],
+                "rank_change": rpos[r["chembl_id"]] - fpos[r["chembl_id"]],
+            }
+            for r in rows
+            if _group(r) == "benchmark"
+        ),
+        key=lambda b: b["rank_flex"],
+    )
+    # 유연 상위 10위의 구성 — 새로 입장한 화합물이 상위권을 잠식했는가
+    top = fr[:10]
+    out["flex_top10"] = {
+        "n_active": sum(1 for r in top if r.get("label") == "known_active"),
+        "n_benchmark": sum(1 for r in top if _group(r) == "benchmark"),
+        "n_newly_admitted": sum(1 for r in top if r["rigid_score"] > 0),
+        "score_cutoff": round(top[-1]["flex_score"], 2) if top else None,
+    }
 
-    ex = out["benchmark_excess"]
-    if ex is None:
+    d_auc = out["separation"]["auc_delta"]
+    rank_gain = _median([b["rank_change"] for b in out["benchmarks"]])
+    if d_auc is None:
         out["verdict"] = "INCONCLUSIVE"
-        out["verdict_reason"] = "벤치마크 또는 decoy 결과가 부족해 비교할 수 없다."
-    elif ex <= -0.5:
+        out["verdict_reason"] = "활성/decoy 분리도를 계산할 수 없다."
+    elif d_auc >= 0.03 and (rank_gain or 0) > 0:
         out["verdict"] = "INDUCED_FIT_SUPPORTED"
         out["verdict_reason"] = (
-            f"벤치마크가 decoy 기준선보다 {abs(ex):.2f} kcal/mol 더 개선됐다. "
-            "측쇄 재배열이 승인약 결합을 실제로 좌우한다는 뜻 — 전체 라이브러리 재실행이 정당하다."
+            f"같은 집합에서 AUC 가 {d_auc:+.4f} 변했고 벤치마크 순위가 중앙값 "
+            f"{rank_gain:+.0f}계단 올랐다. 새로 입장한 화합물은 상위 10위에 "
+            f"{out['flex_top10']['n_newly_admitted']}개만 들어왔다. "
+            "측쇄 재배열이 순위를 실제로 개선한다 — 전체 라이브러리 재실행이 정당하다."
         )
-    elif ex <= -0.2:
+    elif d_auc >= 0.0:
         out["verdict"] = "INDUCED_FIT_WEAK"
         out["verdict_reason"] = (
-            f"벤치마크 초과 개선이 {abs(ex):.2f} kcal/mol 에 그친다. Vina 스코어 함수의 "
-            "통상 오차(~1.5 kcal/mol) 안이다. 전체 재실행의 기대 이득이 작다."
+            f"AUC 변화가 {d_auc:+.4f} 에 그친다. 개선 방향이긴 하나 작다. "
+            "전체 재실행의 기대 이득이 비용에 비해 불확실하다."
         )
     else:
-        out["verdict"] = "NO_SELECTIVE_GAIN"
+        out["verdict"] = "SEPARATION_DEGRADED"
         out["verdict_reason"] = (
-            "벤치마크가 decoy 보다 더 좋아지지 않았다. 유연화는 전체 스코어를 평행 이동시켰을 뿐 "
-            "순위를 개선하지 않는다. 전체 라이브러리 재실행은 비용만 쓰고 결과를 바꾸지 못한다."
+            f"AUC 가 {d_auc:+.4f} 로 나빠졌다. 자유도가 늘면서 decoy 가 활성보다 "
+            "더 이득을 봤다는 뜻이다. 유연화는 이 포켓에서 역효과다."
         )
     return out
 
 
 def report(a: dict) -> None:
+    s = a["separation"]
+    pa = a["pocket_admission"]
     print()
-    print("[*] 짝지어 비교 — 유연 측쇄가 벤치마크를 선택적으로 개선했는가?")
-    print(f"    그룹별 스코어 변화 중앙값 (음수 = 개선)")
+    print("[*] 짝지어 비교 — 유연 측쇄가 활성/decoy 분리도를 개선했는가?")
+    print(f"    같은 {a['n']}개 집합 내 분리도 (절대값은 전체 라이브러리와 비교 불가)")
+    print(f"      리지드  AUC {s['rigid']['auc']}  BEDROC {s['rigid']['bedroc']}")
+    print(f"      유연    AUC {s['flex']['auc']}  BEDROC {s['flex']['bedroc']}")
+    print(f"      변화    AUC {s['auc_delta']:+}  BEDROC {s['bedroc_delta']:+}")
+    print()
+    print(f"    포켓 입장 — 리지드에서 스코어 양수였던 화합물")
+    print(f"      {pa['n']}개 ({pa['share_pct']}%), 그중 활성 {pa['n_active']}개")
+    print(f"      유연 점수 중앙값 {pa['flex_score_median']}, 최고 {pa['flex_score_best']}")
+    print()
+    print(f"    유연 상위 10위 구성")
+    t = a["flex_top10"]
+    print(f"      활성 {t['n_active']}/10, 벤치마크 {t['n_benchmark']}개, "
+          f"새로 입장 {t['n_newly_admitted']}개, 경계 {t['score_cutoff']}")
+    print()
+    print(f"    개선폭 중앙값 — 원래 들어갔던 화합물만 (입장 효과 제외)")
     for k in ("benchmark", "active", "decoy"):
-        m = a["median_delta"][k]
-        n = a["n_by_group"][k]
-        print(f"      {k:10s} n={n:3d}  Δ={m}")
-    print(f"    decoy 기준선 {a['decoy_baseline']} 대비")
-    print(f"      벤치마크 초과 개선 {a['benchmark_excess']}")
-    print(f"      활성   초과 개선 {a['active_excess']}")
+        print(f"      {k:10s} Δ={a['median_delta_fitted_only'][k]}")
     print()
     print("    벤치마크별 (53개 집합 내 순위)")
     for b in a["benchmarks"]:
@@ -359,28 +436,38 @@ def main() -> int:
     report(analysis)
 
     wall = (time.time() - t0) / 60
-    runner_min = wall * workers
-    per_lig = runner_min / max(1, len(ok))
-    rigid_per_lig = 1223 / 2157  # v2 실측
+    # GitHub Actions 는 잡의 벽시계 시간으로 과금한다. 코어 수를 곱하면 안 된다
+    # (초기 구현의 오류). 리지드 기준선도 같은 단위다: 8샤드 합계 1,223 러너분 /
+    # 2,157 리간드 = 0.567 러너분/리간드.
+    per_lig = wall / max(1, len(ok))
+    rigid_per_lig = 1223 / 2157
+    m = per_lig / rigid_per_lig
+    full_lib_min = round(2157 * per_lig)
     stats = {
         "gene": args.gene,
         "flex_residues": args.flex_res,
         "n_docked": len(ok),
         "n_failed": len(results) - len(ok),
+        "workers": workers,
         "wall_minutes": round(wall, 1),
-        "runner_minutes": round(runner_min, 1),
         "runner_min_per_ligand": round(per_lig, 4),
         "rigid_min_per_ligand": round(rigid_per_lig, 4),
-        "time_multiplier_M": round(per_lig / rigid_per_lig, 2),
+        "time_multiplier_M": round(m, 2),
+        "full_library_runner_minutes": full_lib_min,
+        "full_library_billable_minutes": max(0, full_lib_min - 2000),
+        "full_library_cost_usd": round(max(0, full_lib_min - 2000) * 0.008, 2),
     }
     (outdir / "flex_stats.json").write_text(json.dumps(stats, indent=2, ensure_ascii=False))
 
     print()
     print(f"[+] 성공 {len(ok)}/{len(results)}")
-    print(f"    소요 {stats['wall_minutes']}분 (러너 {stats['runner_minutes']}분)")
+    print(f"    소요 {stats['wall_minutes']}분 (워커 {workers}개)")
     print(f"    리간드당 {stats['runner_min_per_ligand']} 러너분 "
           f"vs 리지드 {stats['rigid_min_per_ligand']}")
     print(f"    소요 배수 M = {stats['time_multiplier_M']}")
+    print(f"    전체 라이브러리 환산 {stats['full_library_runner_minutes']:,} 러너분 "
+          f"→ 과금 {stats['full_library_billable_minutes']:,}분 "
+          f"≈ ${stats['full_library_cost_usd']}")
     return 0
 
 
