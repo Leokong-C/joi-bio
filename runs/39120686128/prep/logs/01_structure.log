@@ -1,0 +1,14 @@
+===== MET =====
+[*] MET (P08581) 구조 준비
+    벤치마크 SMILES 4개 확보 → 구조 선택 기준으로 사용
+    RCSB 검색 25건 (쿼리 형태 1)
+      4R1V: 3E8 (37 heavy) res=1.2 유사도=0.139
+      3BUX: PTR (16 heavy) res=1.35 유사도=0.139
+      3F66: IHX (28 heavy) res=1.4 유사도=0.146
+      3ZCL: 5TF (24 heavy) res=1.4 유사도=0.151
+      3DKC: ATP (31 heavy) res=1.52 유사도=0.120
+      4MXC: DWF (42 heavy) res=1.63 유사도=0.423
+      5HTI: 66L (43 heavy) res=1.66 유사도=0.720
+    source=RCSB pdb=5HTI res=1.66 chain=A atoms=2304
+    pocket=cocrystal_ligand (high) center=[9.693, -18.296, -29.229] size=[20.0, 30.0, 24.8]
+    66L (43 heavy atoms) 기준
