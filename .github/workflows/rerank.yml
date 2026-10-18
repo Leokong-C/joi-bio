@@ -24,6 +24,18 @@ on:
       gene:
         required: true
         default: EPAS1
+      artifact_prefix:
+        description: "도킹 아티팩트 접두사. pipeline.yml 은 docked-, control.yml 은 control-docked-"
+        required: false
+        default: "docked-"
+      prepared_name:
+        description: "prepared 아티팩트 이름. control.yml 은 control-prepared"
+        required: false
+        default: "prepared"
+      arm:
+        description: "결과를 담을 이름 (treatment / control 등). ci-results 경로에 쓰인다"
+        required: false
+        default: "treatment"
       per_scaffold:
         description: "한 골격에서 올릴 최대 후보 수"
         required: false
@@ -65,15 +77,20 @@ jobs:
         run: |
           set -o pipefail
           G=${{ inputs.gene }}
-          mkdir -p targets logs
-          cp -r /tmp/dl/prepared/* targets/ 2>/dev/null || true
-          for d in /tmp/dl/docked-*; do
+          PFX="${{ inputs.artifact_prefix }}"
+          mkdir -p "targets/$G" logs
+          cp -r "/tmp/dl/${{ inputs.prepared_name }}"/* targets/ 2>/dev/null || true
+          # control.yml 은 prepared 안에 유전자 디렉터리를 두지 않는 경우가 있다
+          [ -f "targets/$G/receptor.pdb" ] || \
+            cp -r "/tmp/dl/${{ inputs.prepared_name }}"/* "targets/$G/" 2>/dev/null || true
+          # 샤드 이름은 docked-<gene>-<n> 또는 control-docked-<n> 두 형태가 있다
+          for d in /tmp/dl/${PFX}*; do
             [ -d "$d" ] || continue
-            g=$(basename "$d" | sed -E 's/^docked-(.+)-[0-9]+$/\1/')
-            mkdir -p "targets/$g"
-            cp "$d"/*.jsonl "targets/$g/" 2>/dev/null || true
+            cp "$d"/*.jsonl "targets/$G/" 2>/dev/null || true
           done
           ls -la "targets/$G" | tee logs/r01_input.log
+          test -f "targets/$G/receptor.pdb" || { echo "receptor.pdb 없음"; exit 1; }
+          ls targets/$G/*.jsonl >/dev/null 2>&1 || { echo "도킹 샤드 없음 (접두사 $PFX)"; exit 1; }
 
       - name: 검증 게이트
         shell: bash -el {0}
@@ -101,7 +118,7 @@ jobs:
           DEST=$RUNNER_TEMP/ci
           git clone --quiet --depth 1 --branch ci-results \
             "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
-          OUT="$DEST/runs/${GITHUB_RUN_ID}/rerank"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/rerank/${{ inputs.arm }}"
           G=${{ inputs.gene }}
           mkdir -p "$OUT/$G"
           cp -r logs "$OUT/" 2>/dev/null || true
