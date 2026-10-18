@@ -1,0 +1,271 @@
+{
+  "gene": "MET",
+  "pdb_id": "5HTI",
+  "resolution": 1.66,
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "66L",
+    "center": [
+      9.693,
+      -18.296,
+      -29.229
+    ],
+    "size": [
+      20.0,
+      30.0,
+      24.8
+    ],
+    "confidence": "high",
+    "note": "66L (43 heavy atoms) 기준"
+  },
+  "reference_ligand": "66L",
+  "compounds": [
+    {
+      "name": "FORETINIB",
+      "chembl_id": "CHEMBL1230609",
+      "group": "benchmark",
+      "screen_score": -11.271,
+      "pose_scores": [
+        -11.62,
+        -11.04,
+        -10.57
+      ],
+      "n_poses": 1,
+      "smiles": "COc1cc2c(Oc3ccc(NC(=O)C4(C(=O)Nc5ccc(F)cc5)CC4)cc3F)ccnc2cc1OCCCN1CCOCC1"
+    },
+    {
+      "name": "CABOZANTINIB",
+      "chembl_id": "CHEMBL2105717",
+      "group": "benchmark",
+      "screen_score": -11.166,
+      "pose_scores": [
+        -11.59,
+        -11.11,
+        -11.09
+      ],
+      "n_poses": 1,
+      "smiles": "COc1cc2nccc(Oc3ccc(NC(=O)C4(C(=O)Nc5ccc(F)cc5)CC4)cc3)c2cc1OC"
+    },
+    {
+      "name": "SAVOLITINIB",
+      "chembl_id": "CHEMBL3334567",
+      "group": "benchmark",
+      "screen_score": -9.405,
+      "pose_scores": [
+        -9.43,
+        -8.76,
+        -8.47
+      ],
+      "n_poses": 1,
+      "smiles": "C[C@@H](c1ccc2nccn2c1)n1nnc2ncc(-c3cnn(C)c3)nc21"
+    },
+    {
+      "name": "CRIZOTINIB",
+      "chembl_id": "CHEMBL601719",
+      "group": "benchmark",
+      "screen_score": -8.782,
+      "pose_scores": [
+        -9.08,
+        -8.77,
+        -8.71
+      ],
+      "n_poses": 1,
+      "smiles": "C[C@@H](Oc1cc(-c2cnn(C3CCNCC3)c2)cnc1N)c1c(Cl)ccc(F)c1Cl"
+    },
+    {
+      "name": "CHEMBL459876",
+      "chembl_id": "CHEMBL459876",
+      "group": "top_hit",
+      "screen_score": -13.039,
+      "pose_scores": [
+        -13.01,
+        -12.43,
+        -11.87
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(Nc1ccc(Oc2ccnc3[nH]ccc23)c(F)c1)c1cccc(-c2ccc(F)cc2)[n+]1[O-]"
+    },
+    {
+      "name": "CHEMBL454356",
+      "chembl_id": "CHEMBL454356",
+      "group": "top_hit",
+      "screen_score": -13.029,
+      "pose_scores": [
+        -13.01,
+        -12.39,
+        -12.06
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(Nc1ccc(Oc2ccnc3[nH]ccc23)c(F)c1)c1c[nH]cc(-c2ccc(F)cc2)c1=O"
+    },
+    {
+      "name": "CHEMBL459875",
+      "chembl_id": "CHEMBL459875",
+      "group": "top_hit",
+      "screen_score": -13.025,
+      "pose_scores": [
+        -13.03,
+        -12.38,
+        -12.1
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(Nc1ccc(Oc2ccnc3[nH]ccc23)c(F)c1)c1cccc(-c2ccccc2)[n+]1[O-]"
+    },
+    {
+      "name": "CHEMBL525260",
+      "chembl_id": "CHEMBL525260",
+      "group": "top_hit",
+      "screen_score": -12.982,
+      "pose_scores": [
+        -12.99,
+        -12.72,
+        -11.74
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(Cc1ccc(F)cc1)NC(=O)Nc1ccc(Oc2ccnc3[nH]c(-c4cccnc4)cc23)c(F)c1"
+    },
+    {
+      "name": "CHEMBL451809",
+      "chembl_id": "CHEMBL451809",
+      "group": "top_hit",
+      "screen_score": -12.648,
+      "pose_scores": [
+        -12.65,
+        -12.02,
+        -11.81
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(Nc1ccc(Oc2ccnc3[nH]ccc23)c(F)c1)c1cccn(-c2ccccc2)c1=O"
+    },
+    {
+      "name": "CHEMBL274294",
+      "chembl_id": "CHEMBL274294",
+      "group": "top_hit",
+      "screen_score": -12.101,
+      "pose_scores": [
+        -10.62,
+        -10.32,
+        -9.98
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(O)COc1cccc2c1CCC(Cc1coc(C(c3ccccc3)c3ccccc3)n1)C2"
+    },
+    {
+      "name": "CHEMBL276416",
+      "chembl_id": "CHEMBL276416",
+      "group": "top_hit",
+      "screen_score": -12.092,
+      "pose_scores": [
+        -12.04,
+        -9.78,
+        -9.71
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(O)COc1cccc2c1CCC(CC1=NC(C(c3ccccc3)c3ccccc3)=NC1)C2"
+    },
+    {
+      "name": "CHEMBL462624",
+      "chembl_id": "CHEMBL462624",
+      "group": "top_hit",
+      "screen_score": -12.08,
+      "pose_scores": [
+        -12.09,
+        -11.61,
+        -11.55
+      ],
+      "n_poses": 1,
+      "smiles": "Nc1nccc(Oc2ccc(NC(=O)c3cccn(-c4ccc(F)cc4)c3=O)cc2F)c1Cl"
+    },
+    {
+      "name": "CHEMBL454357",
+      "chembl_id": "CHEMBL454357",
+      "group": "top_hit",
+      "screen_score": -12.046,
+      "pose_scores": [
+        -12.06,
+        -11.82,
+        -11.8
+      ],
+      "n_poses": 1,
+      "smiles": "Cn1cc(C(=O)Nc2ccc(Oc3ccnc4[nH]ccc34)c(F)c2)c(=O)c(-c2ccc(F)cc2)c1"
+    },
+    {
+      "name": "BMS-777607",
+      "chembl_id": "CHEMBL460702",
+      "group": "top_hit",
+      "screen_score": -12.029,
+      "pose_scores": [
+        -12.06,
+        -11.61,
+        -10.23
+      ],
+      "n_poses": 1,
+      "smiles": "CCOc1ccn(-c2ccc(F)cc2)c(=O)c1C(=O)Nc1ccc(Oc2ccnc(N)c2Cl)c(F)c1"
+    },
+    {
+      "name": "CHEMBL461293",
+      "chembl_id": "CHEMBL461293",
+      "group": "top_hit",
+      "screen_score": -11.953,
+      "pose_scores": [
+        -11.95,
+        -10.97,
+        -10.64
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc2c(Oc3ccc(NC(=O)c4c(C)n(CC(C)=O)n(-c5ccccc5)c4=O)cc3F)ccnc2c1"
+    },
+    {
+      "name": "CHEMBL518656",
+      "chembl_id": "CHEMBL518656",
+      "group": "top_hit",
+      "screen_score": -11.925,
+      "pose_scores": [
+        -11.93,
+        -11.33,
+        -11.29
+      ],
+      "n_poses": 1,
+      "smiles": "Nc1nccc(Oc2ccc(NC(=O)c3cccn(-c4ccc(F)cc4)c3=O)cc2F)c1C#CCO"
+    },
+    {
+      "name": "CHEMBL494979",
+      "chembl_id": "CHEMBL494979",
+      "group": "top_hit",
+      "screen_score": -11.906,
+      "pose_scores": [
+        -11.9,
+        -10.49,
+        -10.38
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc2c(OCc3nnc4ccc(-c5cc(F)c(F)c(F)c5)nn34)ccnc2c1"
+    },
+    {
+      "name": "CHEMBL11480",
+      "chembl_id": "CHEMBL11480",
+      "group": "top_hit",
+      "screen_score": -11.771,
+      "pose_scores": [
+        -11.9,
+        -10.98,
+        -10.1
+      ],
+      "n_poses": 1,
+      "smiles": "O=C(O)COc1cccc2c1CCC=C2CCn1cc(C(c2ccccc2)c2ccccc2)cn1"
+    },
+    {
+      "name": "CHEMBL460502",
+      "chembl_id": "CHEMBL460502",
+      "group": "top_hit",
+      "screen_score": -11.765,
+      "pose_scores": [
+        -11.79,
+        -11.68,
+        -11.03
+      ],
+      "n_poses": 1,
+      "smiles": "NCC#Cc1c(Oc2ccc(NC(=O)c3cccn(-c4ccc(F)cc4)c3=O)cc2F)ccnc1N"
+    }
+  ]
+}

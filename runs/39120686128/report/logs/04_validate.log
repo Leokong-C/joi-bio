@@ -1,0 +1,13 @@
+===== MET =====
+[*] MET 검증
+    화합물 2156 (활성 59)
+    ef1      = 28.237
+    ef5      = 11.842
+    auc      = 0.9176
+    bedroc   = 0.6602
+    벤치마크 리간드 (0/4 상위 1%):
+         foretinib        rank 30 (1.391%) score -11.271
+         cabozantinib     rank 33 (1.531%) score -11.166
+         savolitinib      rank 395 (18.321%) score -9.405
+         crizotinib       rank 690 (32.004%) score -8.782
+    판정: PASS — 3/3 통과: ef1, auc, bedroc
