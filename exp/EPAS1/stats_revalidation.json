@@ -1,0 +1,91 @@
+{
+  "gene": "EPAS1",
+  "n": 2157,
+  "treatment": {
+    "ef1": {
+      "observed": 32.682,
+      "ci95": {
+        "lo": 25.254,
+        "hi": 40.372,
+        "n": 2000
+      },
+      "p_value": 0.0005
+    },
+    "ef5": {
+      "observed": 12.316,
+      "ci95": {
+        "lo": 9.837,
+        "hi": 14.779,
+        "n": 2000
+      },
+      "p_value": 0.0005
+    },
+    "auc": {
+      "observed": 0.7717,
+      "ci95": {
+        "lo": 0.662,
+        "hi": 0.864,
+        "n": 2000
+      },
+      "p_value": 0.0005
+    },
+    "bedroc": {
+      "observed": 0.6697,
+      "ci95": {
+        "lo": 0.561,
+        "hi": 0.769,
+        "n": 2000
+      },
+      "p_value": 0.0005
+    }
+  },
+  "paired": {
+    "n_common": 2157,
+    "metrics": {
+      "ef1": {
+        "treatment": 32.682,
+        "control": 8.17,
+        "diff": 24.512,
+        "ci95": {
+          "lo": 17.051,
+          "hi": 34.103,
+          "n": 2000
+        },
+        "significant": true
+      },
+      "ef5": {
+        "treatment": 12.316,
+        "control": 5.659,
+        "diff": 6.657,
+        "ci95": {
+          "lo": 4.279,
+          "hi": 9.218,
+          "n": 2000
+        },
+        "significant": true
+      },
+      "auc": {
+        "treatment": 0.7717,
+        "control": 0.7161,
+        "diff": 0.056,
+        "ci95": {
+          "lo": 0.009,
+          "hi": 0.097,
+          "n": 2000
+        },
+        "significant": true
+      },
+      "bedroc": {
+        "treatment": 0.6697,
+        "control": 0.3005,
+        "diff": 0.369,
+        "ci95": {
+          "lo": 0.283,
+          "hi": 0.454,
+          "n": 2000
+        },
+        "significant": true
+      }
+    }
+  }
+}
