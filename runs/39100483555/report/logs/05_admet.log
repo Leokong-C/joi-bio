@@ -1,0 +1,15 @@
+[*] MET: 후보 2개 프로파일링 (검증=INSUFFICIENT)
+    [!] 검증 미통과 — 이 후보군은 보고서에 히트로 실리지 않는다.
+    중원자 하한 34 (활성 중앙값의 75%) — 5개 제외
+
+[*] 골격 기저율 검사 — 단순 상위 2개의 골격 구성
+    서로 다른 골격 2개
+       상위     라이브러리    농축비  골격
+      1개   50%    12.50%   4.0x  O=C(Nc1ccccc1)C1=CCN(c2ccccc2)C1=O
+      1개   50%    12.50%   4.0x  O=C(CCCCc1ccc2c(n1)NCCC2)NCc1cccnc1
+
+[*] 골격당 최대 2개로 다양화 → 2개 / 골격 2종
+    CHEMBL10213      vina= -9.23 LE=0.272 QED=0.29 중원자=34 골격순위=1
+    CHEMBL9550       vina= -8.23 LE=0.222 QED=0.31 중원자=37 골격순위=1
+
+[+] /home/runner/work/joi-bio/joi-bio/targets/MET/scaffold_report.json

@@ -1,0 +1,56 @@
+{
+  "gene": "MET",
+  "validation_verdict": "INSUFFICIENT",
+  "heavy_atom_floor": 34,
+  "n_rejected_too_small": 5,
+  "n_profiled": 2,
+  "per_scaffold_cap": 2,
+  "naive_top": {
+    "n": 2,
+    "n_scaffolds": 2,
+    "scaffolds": [
+      {
+        "scaffold": "O=C(Nc1ccccc1)C1=CCN(c2ccccc2)C1=O",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 50.0,
+        "library_pct": 12.5,
+        "enrichment": 4.0
+      },
+      {
+        "scaffold": "O=C(CCCCc1ccc2c(n1)NCCC2)NCc1cccnc1",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 50.0,
+        "library_pct": 12.5,
+        "enrichment": 4.0
+      }
+    ]
+  },
+  "diversified": {
+    "n": 2,
+    "n_scaffolds": 2
+  },
+  "compounds": [
+    {
+      "chembl_id": "CHEMBL10213",
+      "score": -9.231,
+      "composite_score": 7.329,
+      "n_heavy": 34,
+      "ligand_efficiency": 0.272,
+      "scaffold": "O=C(Nc1ccccc1)C1=CCN(c2ccccc2)C1=O",
+      "scaffold_rank": 1,
+      "smiles": "O=C(O)CCCCCCCOc1ccc(NC(=O)C2=C(O)CN(c3ccc(Cl)cc3)C2=O)cc1"
+    },
+    {
+      "chembl_id": "CHEMBL9550",
+      "score": -8.23,
+      "composite_score": 6.694,
+      "n_heavy": 37,
+      "ligand_efficiency": 0.222,
+      "scaffold": "O=C(CCCCc1ccc2c(n1)NCCC2)NCc1cccnc1",
+      "scaffold_rank": 1,
+      "smiles": "COC(=O)C[C@@H](c1ccc(OC)nc1)N(C)C(=O)CCCCc1nc2c(cc1NS(C)(=O)=O)CCCN2"
+    }
+  ]
+}

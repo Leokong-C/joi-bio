@@ -1,0 +1,56 @@
+{
+  "gene": "MET",
+  "uniprot": "P08581",
+  "declared_pocket_mode": "atp_site",
+  "benchmark_smiles_found": [
+    "cabozantinib",
+    "savolitinib",
+    "crizotinib",
+    "foretinib"
+  ],
+  "source": "RCSB",
+  "pdb_id": "5HTI",
+  "resolution": 1.66,
+  "ligand_match": {
+    "similarity": 0.7195,
+    "ligand_smiles": "Fc1ccc(NC(=O)C2(CC2)C(=O)Nc3ccc(Oc4ccnc5cc(OCCN6CCOCC6)ncc45)c(F)c3)cc1",
+    "matched_benchmark": 3
+  },
+  "structure_selection": "similarity",
+  "receptor": {
+    "chain": "A",
+    "n_atoms": 2304,
+    "cofactors": [],
+    "cocrystal_ligand": {
+      "resname": "66L",
+      "n_heavy": 43,
+      "center": [
+        9.693,
+        -18.296,
+        -29.229
+      ]
+    }
+  },
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "66L",
+    "center": [
+      9.693,
+      -18.296,
+      -29.229
+    ],
+    "size": [
+      20.0,
+      30.0,
+      24.8
+    ],
+    "confidence": "high",
+    "note": "66L (43 heavy atoms) 기준"
+  },
+  "benchmark_ligands": [
+    "cabozantinib",
+    "savolitinib",
+    "crizotinib",
+    "foretinib"
+  ]
+}

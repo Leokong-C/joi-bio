@@ -1,0 +1,50 @@
+{
+  "n_compounds": 8,
+  "n_known_active": 1,
+  "n_decoy": 7,
+  "ef1": 8.0,
+  "ef5": 8.0,
+  "ef10": 8.0,
+  "auc": 1.0,
+  "bedroc": 1.0,
+  "best_score": -11.271,
+  "thresholds": {
+    "ef1": 5.0,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [
+      {
+        "name": "foretinib",
+        "rank": 1,
+        "percentile": 12.5,
+        "score": -11.271,
+        "chembl_id": "CHEMBL1230609",
+        "in_top_pct": true
+      }
+    ],
+    "n_requested": 4,
+    "n_found_in_library": 1,
+    "n_in_top_pct": 1,
+    "top_pct": 1.0,
+    "missing": [
+      "cabozantinib",
+      "crizotinib",
+      "savolitinib"
+    ]
+  },
+  "active_fraction": 0.125,
+  "max_reachable_ef1": 8.0,
+  "ef1_threshold_unreachable": false,
+  "checks": {
+    "ef1": true,
+    "auc": true,
+    "bedroc": true
+  },
+  "verdict": "INSUFFICIENT",
+  "verdict_reason": "활성 화합물 1개 (최소 10개 필요). 지표가 계산되더라도 통계적으로 무의미하다.",
+  "gene": "MET",
+  "pocket_confidence": "high"
+}
