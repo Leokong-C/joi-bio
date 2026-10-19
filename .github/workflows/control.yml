@@ -141,8 +141,20 @@ jobs:
             G=${{ inputs.gene }}
             echo "--- 수용체 파일"
             ls -la "targets/$G/receptor.pdb" 2>&1
-            echo "--- obabel 변환 단독"
-            python -u -c "from pathlib import Path; import modules.small_molecule.dock as d; p=Path('targets/$G/receptor.pdb'); q=Path('targets/$G/receptor.pdbqt'); print('pdb 크기', p.stat().st_size); print('변환', d.prep_receptor(p,q)); print('pdbqt 크기', q.stat().st_size)" 2>&1
+            echo "--- receptor.pdb 앞부분"
+            head -5 "targets/$G/receptor.pdb" 2>&1
+            echo "--- HETATM 잔기 종류"
+            awk '/^HETATM/{print substr($0,18,3)}' "targets/$G/receptor.pdb" 2>/dev/null | sort | uniq -c | sort -rn | head
+            echo "--- obabel 버전"
+            obabel -V 2>&1
+            echo "--- obabel 직접 실행 (출력을 삼키지 않는다)"
+            rm -f "targets/$G/receptor.pdbqt"
+            obabel "targets/$G/receptor.pdb" -O "targets/$G/receptor.pdbqt" -xr -p 7.4 --partialcharge gasteiger 2>&1
+            echo "obabel exit=$?  결과 크기=$(stat -c%s "targets/$G/receptor.pdbqt" 2>/dev/null || echo 없음)"
+            echo "--- 옵션 줄여서 재시도"
+            rm -f "targets/$G/t1.pdbqt"
+            obabel "targets/$G/receptor.pdb" -O "targets/$G/t1.pdbqt" -xr 2>&1
+            echo "  -xr 만: exit=$? 크기=$(stat -c%s "targets/$G/t1.pdbqt" 2>/dev/null || echo 없음)"
             echo "--- 원자 타입 점검 단독"
             python -u -c "from pathlib import Path; import modules.small_molecule.dock as d; print(d.sanitize_receptor_pdbqt(Path('targets/$G/receptor.pdbqt')))" 2>&1
             echo "--- Vina set_receptor 단독"
