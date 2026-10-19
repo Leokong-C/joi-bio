@@ -1,0 +1,71 @@
+{
+  "n_compounds": 2156,
+  "n_known_active": 59,
+  "n_decoy": 2097,
+  "ef1": 28.237,
+  "ef5": 11.842,
+  "ef10": 6.767,
+  "auc": 0.9176,
+  "bedroc": 0.6602,
+  "best_score": -13.039,
+  "thresholds": {
+    "ef1": 5.0,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [
+      {
+        "name": "foretinib",
+        "rank": 30,
+        "percentile": 1.391,
+        "score": -11.271,
+        "chembl_id": "CHEMBL1230609",
+        "in_top_pct": false
+      },
+      {
+        "name": "cabozantinib",
+        "rank": 33,
+        "percentile": 1.531,
+        "score": -11.166,
+        "chembl_id": "CHEMBL2105717",
+        "in_top_pct": false
+      },
+      {
+        "name": "savolitinib",
+        "rank": 395,
+        "percentile": 18.321,
+        "score": -9.405,
+        "chembl_id": "CHEMBL3334567",
+        "in_top_pct": false
+      },
+      {
+        "name": "crizotinib",
+        "rank": 690,
+        "percentile": 32.004,
+        "score": -8.782,
+        "chembl_id": "CHEMBL601719",
+        "in_top_pct": false
+      }
+    ],
+    "n_requested": 4,
+    "n_found_in_library": 4,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": []
+  },
+  "active_fraction": 0.0274,
+  "max_reachable_ef1": 36.54,
+  "ef1_threshold_unreachable": false,
+  "checks": {
+    "ef1": true,
+    "auc": true,
+    "bedroc": true
+  },
+  "verdict": "PASS",
+  "verdict_reason": "3/3 통과: ef1, auc, bedroc",
+  "benchmark_warning": "벤치마크 4개 중 상위 1.0%에 진입한 것이 없다. 지표가 통과하더라도 이 결과는 신뢰할 수 없다.",
+  "gene": "MET",
+  "pocket_confidence": "high"
+}

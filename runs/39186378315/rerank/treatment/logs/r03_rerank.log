@@ -1,0 +1,24 @@
+[*] MET: 후보 290개 프로파일링 (검증=PASS)
+    중원자 하한 25 (활성 중앙값의 75%) — 10개 제외
+
+[*] 골격 기저율 검사 — 단순 상위 20개의 골격 구성
+    서로 다른 골격 19개
+       상위     라이브러리    농축비  골격
+      2개   10%     0.14%  71.7x  c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)NCC2
+      1개    5%     0.05% 107.6x  c1ccc(C(C2=NCC(CC3CCc4ccccc4C3)=N2)c2ccc
+      1개    5%     0.05% 107.6x  O=C(c1ccc(CN2CCN(c3ccccc3)CC2)cc1)N1CCCC
+      1개    5%     0.05% 107.6x  O=C1Cc2cc(CCNC[C@@H]3CCCc4ccccc43)ccc2N1
+      1개    5%     0.05% 107.6x  c1ccc(C(c2ccccc2)c2nc(CC3CCc4ccccc4C3)co
+      1개    5%     0.28%  17.9x  c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)OCO2
+
+[*] 골격당 최대 2개로 다양화 → 20개 / 골격 20종
+    CHEMBL276416     vina=-12.09 LE=0.356 QED=0.50 중원자=34 골격순위=1
+    CHEMBL10417      vina=-10.81 LE=0.349 QED=0.69 중원자=31 골격순위=1
+    CHEMBL9869       vina=-10.12 LE=0.375 QED=0.85 중원자=27 골격순위=1
+    CHEMBL274294     vina=-12.10 LE=0.356 QED=0.37 중원자=34 골격순위=1
+    CHEMBL9944       vina=-10.07 LE=0.403 QED=0.81 중원자=25 골격순위=1
+    CHEMBL274055     vina= -9.89 LE=0.38 QED=0.84 중원자=26 골격순위=1
+    CHEMBL9612       vina=-10.11 LE=0.374 QED=0.79 중원자=27 골격순위=1
+    CHEMBL11765      vina=-11.75 LE=0.346 QED=0.39 중원자=34 골격순위=1
+
+[+] /home/runner/work/joi-bio/joi-bio/targets/MET/scaffold_report.json
