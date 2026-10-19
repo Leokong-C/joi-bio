@@ -35,6 +35,60 @@ from vina import Vina  # noqa: E402
 RDLogger.DisableLog("rdApp.*")
 
 
+# AutoDock 4 원자 타입 — Vina 가 수용체에서 받아들이는 것들.
+# 이 집합 밖의 타입이 PDBQT 에 들어가면 Vina 가 파이썬 예외가 아니라 네이티브에서
+# 죽는다. 스택 트레이스도 없고, 버퍼에 쌓인 출력도 함께 사라진다.
+AD4_RECEPTOR_TYPES = {
+    "H", "HD", "HS", "C", "A", "N", "NA", "NS", "OA", "OS", "F",
+    "MG", "P", "SA", "S", "CL", "CA", "MN", "FE", "ZN", "BR", "I", "SI", "B",
+}
+
+
+def sanitize_receptor_pdbqt(pdbqt: Path) -> dict:
+    """수용체 PDBQT 에서 Vina 가 모르는 원자 타입을 걸러낸다.
+
+    왜 필요한가
+      2026-10-19 MET 대조군(실행 39186266215)에서 8샤드가 전부 1~3초 만에
+      죽었고 로그는 0바이트였다. 파이썬 예외였다면 트레이스백이 남았을 것이다.
+      출력이 통째로 사라진 것은 버퍼를 비우기 전에 시그널로 죽었다는 뜻 —
+      네이티브 크래시다.
+
+      treatment(5HTI)와 control(3DKC)의 파이프라인 경로에서 다른 것은 보조인자
+      하나뿐이었다. 3DKC 는 Mg2+ 와 Cl- 를 갖고 있고, fetch.py 의 화이트리스트가
+      이들을 수용체에 보존한다. Open Babel 이 이온에 매긴 타입이 Vina 의 파서를
+      통과하지 못한 것으로 보인다.
+
+      어느 타입이 범인인지 단정하지 않고, 알려진 집합 밖은 전부 떨어뜨린다.
+      떨어뜨린 것은 반드시 로그에 남긴다 — 조용히 지우면 다음 사람이 같은
+      자리에서 또 헤맨다.
+
+    주의
+      금속 보조인자는 생물학적으로 결합 부위의 일부일 수 있다. 키나제 ATP
+      부위의 Mg2+ 가 그렇다. 떨어뜨린다는 것은 그 상호작용을 모델링하지
+      않겠다는 선언이므로, 결과 해석에 반영해야 한다.
+    """
+    kept, dropped = [], []
+    hist: dict[str, int] = {}
+    for line in pdbqt.read_text().splitlines():
+        if not line.startswith(("ATOM", "HETATM")):
+            kept.append(line)
+            continue
+        t = line[77:79].strip().upper() if len(line) >= 78 else ""
+        hist[t or "?"] = hist.get(t or "?", 0) + 1
+        if t in AD4_RECEPTOR_TYPES:
+            kept.append(line)
+        else:
+            dropped.append((t or "?", line[17:20].strip(), line[22:26].strip()))
+
+    if dropped:
+        pdbqt.write_text("\n".join(kept) + "\n")
+    return {
+        "atom_types": dict(sorted(hist.items(), key=lambda kv: -kv[1])),
+        "n_dropped": len(dropped),
+        "dropped": sorted({f"{t} ({res}{num})" for t, res, num in dropped}),
+    }
+
+
 def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
     if pdbqt.exists() and pdbqt.stat().st_size > 0:
         return True
@@ -131,6 +185,15 @@ def main() -> int:
     if not prep_receptor(tdir / "receptor.pdb", rec_pdbqt):
         return 1
 
+    # 수용체 원자 타입 점검 — Vina 가 모르는 타입은 네이티브 크래시를 낸다.
+    san = sanitize_receptor_pdbqt(rec_pdbqt)
+    print(f"    수용체 원자 타입: {san['atom_types']}", flush=True)
+    if san["n_dropped"]:
+        print(f"    [!] Vina 가 모르는 원자 {san['n_dropped']}개를 제외했다: "
+              f"{', '.join(san['dropped'])}", flush=True)
+        print("        금속 보조인자라면 그 상호작용은 모델링되지 않는다 — "
+              "결과 해석에 반영할 것.", flush=True)
+
     # 사전 점검 — 리간드 하나를 실제로 준비해 본다. 여기서 막히면 전체가 막히므로
     # 수백 개를 돌려 100% 실패를 확인하느라 한 시간을 쓰지 않는다.
     probe = ligand_pdbqt("CC(=O)Oc1ccccc1C(=O)O")
@@ -141,7 +204,20 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    print(f"    사전 점검 OK (프로브 리간드 {len(probe.splitlines())}줄)")
+    print(f"    사전 점검 OK (프로브 리간드 {len(probe.splitlines())}줄)", flush=True)
+
+    # 수용체 사전 점검 — 지금까지 리간드만 프로브하고 수용체는 그대로 믿었다.
+    # MET 대조군이 여기서 죽었다. 격자 계산까지 실제로 해 본다.
+    print("    수용체 사전 점검: set_receptor + compute_vina_maps ...", flush=True)
+    try:
+        _v = Vina(sf_name="vina", cpu=1, seed=42, verbosity=0)
+        _v.set_receptor(str(rec_pdbqt))
+        _v.set_ligand_from_string(probe)
+        _v.compute_vina_maps(center=list(pocket["center"]), box_size=list(pocket["size"]))
+    except Exception as e:  # noqa: BLE001
+        print(f"[!] 수용체 사전 점검 실패: {type(e).__name__}: {e}", file=sys.stderr, flush=True)
+        return 1
+    print("    수용체 사전 점검 OK", flush=True)
 
     lib = [
         json.loads(l) for l in (tdir / "library.jsonl").read_text().splitlines() if l.strip()

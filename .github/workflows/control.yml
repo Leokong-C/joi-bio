@@ -34,6 +34,10 @@ on:
         description: "treatment 와 동일해야 한다"
         required: false
         default: "8"
+      max_ligands:
+        description: "샤드당 리간드 상한 (0=전체). 수용체가 Vina 를 통과하는지 싸게 확인할 때 1~2 로 둔다"
+        required: false
+        default: "0"
 
 permissions:
   contents: write
@@ -117,8 +121,12 @@ jobs:
         run: |
           mkdir -p logs
           set -o pipefail
-          python -m modules.small_molecule.dock --gene ${{ inputs.gene }} \
+          # python -u 가 없으면 네이티브 크래시 때 버퍼에 쌓인 출력이 통째로
+          # 사라진다. 2026-10-19 MET 대조군에서 8샤드 전부 0바이트 로그만 남겨
+          # 원인 추적에 시간을 썼다.
+          python -u -m modules.small_molecule.dock --gene ${{ inputs.gene }} \
             --shard ${{ matrix.shard }} --n-shards 8 \
+            --max-ligands ${{ inputs.max_ligands }} \
             --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
             | tee logs/c03_dock_${{ matrix.shard }}.log
 
