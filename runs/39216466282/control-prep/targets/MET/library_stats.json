@@ -1,0 +1,30 @@
+{
+  "active_fraction": 0.0014,
+  "max_reachable_ef1": 718.33,
+  "n_actives_dropped": 0,
+  "max_actives_cap": 60,
+  "n_total": 2155,
+  "n_benchmark": 3,
+  "n_known_active": 3,
+  "n_decoy": 2152,
+  "benchmarks_requested": [
+    "cabozantinib",
+    "savolitinib",
+    "crizotinib",
+    "foretinib"
+  ],
+  "benchmarks_found": [
+    "cabozantinib",
+    "savolitinib",
+    "foretinib"
+  ],
+  "rejected_by": {
+    "PAINS": 96,
+    "logp": 186,
+    "tpsa": 18,
+    "rotbonds": 43,
+    "hbond": 3,
+    "mw": 2
+  },
+  "activity_cutoff_nM": 10000.0
+}
