@@ -1,0 +1,38 @@
+{
+  "gene": "MET",
+  "treatment": {
+    "n": 2156,
+    "n_active": 59,
+    "auc": 0.9176,
+    "ef1": 28.237,
+    "ef5": 11.842,
+    "bedroc": 0.6602,
+    "best_score": -13.039,
+    "median_active": -10.809,
+    "median_decoy": -8.123,
+    "benchmarks": {
+      "foretinib": 1.391,
+      "cabozantinib": 1.531,
+      "savolitinib": 18.321,
+      "crizotinib": 32.004
+    }
+  },
+  "control": {
+    "n": 0,
+    "n_active": 0,
+    "auc": null,
+    "ef1": null,
+    "ef5": null,
+    "bedroc": null,
+    "best_score": null,
+    "median_active": null,
+    "median_decoy": null,
+    "benchmarks": {}
+  },
+  "auc_delta": null,
+  "ef1_ratio": null,
+  "bedroc_ratio": null,
+  "benchmark_ratio_median": null,
+  "verdict": "INCOMPARABLE",
+  "verdict_reason": "두 팔을 비교할 지표를 계산할 수 없다."
+}
