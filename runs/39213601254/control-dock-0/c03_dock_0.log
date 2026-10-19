@@ -1,0 +1,35 @@
+=== shard 0 2026-10-19T07:13:46+00:00
+python: /home/runner/micromamba/envs/joi-bio/bin/python / Python 3.11.17
+--- targets 내용
+targets/:
+total 12
+drwxr-xr-x  3 runner runner 4096 Oct 19 07:13 .
+drwxr-xr-x 12 runner runner 4096 Oct 19 07:13 ..
+drwxr-xr-x  2 runner runner 4096 Oct 19 07:13 MET
+
+targets/MET:
+total 876
+drwxr-xr-x 2 runner runner   4096 Oct 19 07:13 .
+drwxr-xr-x 3 runner runner   4096 Oct 19 07:13 ..
+-rw-r--r-- 1 runner runner 408494 Oct 19 07:13 library.jsonl
+-rw-r--r-- 1 runner runner    561 Oct 19 07:13 library_stats.json
+-rw-r--r-- 1 runner runner 267057 Oct 19 07:13 raw.pdb
+-rw-r--r-- 1 runner runner 198697 Oct 19 07:13 receptor.pdb
+-rw-r--r-- 1 runner runner   1101 Oct 19 07:13 target_meta.json
+--- import 하나씩
+py 3.11.17
+numpy 2.4.6
+rdkit ok
+meeko ok
+vina ok
+--- 수용체 파일
+-rw-r--r-- 1 runner runner 198697 Oct 19 07:13 targets/MET/receptor.pdb
+--- obabel 변환 단독
+pdb 크기 198697
+변환 False
+pdbqt 크기 0
+--- 원자 타입 점검 단독
+{'atom_types': {}, 'n_dropped': 0, 'dropped': []}
+--- Vina set_receptor 단독
+set_receptor OK
+=== 진단 끝
