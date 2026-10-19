@@ -1,0 +1,16 @@
+[*] MET (P08581) 라이브러리 구성
+  [1/4] 벤치마크 리간드 수집
+    [+] 벤치마크 확보: cabozantinib → CHEMBL2105717
+    [+] 벤치마크 확보: savolitinib → CHEMBL3334567
+    [+] 벤치마크 확보: crizotinib → CHEMBL601719
+    [+] 벤치마크 확보: foretinib → CHEMBL1230609
+  [2/4] ChEMBL 활성 데이터 수집
+    ChEMBL 타깃: ['CHEMBL3717', 'CHEMBL6195521', 'CHEMBL6195562']
+    활성 0건 (10 uM 이하)
+  [3/4] 화합물명 보강
+  [4/4] Decoy 수집
+    decoy 2500개
+[+] 총 2156 (활성 4, decoy 2152, 벤치마크 4)
+    제외: {'PAINS': 96, 'logp': 186, 'tpsa': 18, 'rotbonds': 43, 'hbond': 3, 'mw': 2}
+    활성 비율 0.2% → EF1% 이론적 최대 539.0
+    [!] 활성 10개 미만 — 검증 게이트가 INSUFFICIENT로 판정될 것
