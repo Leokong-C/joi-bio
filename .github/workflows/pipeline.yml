@@ -179,7 +179,7 @@ jobs:
         run: |
           mkdir -p logs
           set -o pipefail
-          python -m modules.small_molecule.dock \
+          python -u -m modules.small_molecule.dock \
             --gene ${{ matrix.gene }} \
             --shard ${{ matrix.shard }} --n-shards 8 \
             --max-ligands ${{ inputs.max_ligands }} \
