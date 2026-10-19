@@ -1,0 +1,60 @@
+=== shard 3 2026-10-19T07:44:22+00:00
+python: /home/runner/micromamba/envs/joi-bio/bin/python / Python 3.11.17
+--- targets 내용
+targets/:
+total 12
+drwxr-xr-x  3 runner runner 4096 Oct 19 07:44 .
+drwxr-xr-x 12 runner runner 4096 Oct 19 07:44 ..
+drwxr-xr-x  2 runner runner 4096 Oct 19 07:44 MET
+
+targets/MET:
+total 864
+drwxr-xr-x 2 runner runner   4096 Oct 19 07:44 .
+drwxr-xr-x 3 runner runner   4096 Oct 19 07:44 ..
+-rw-r--r-- 1 runner runner 394262 Oct 19 07:44 library.jsonl
+-rw-r--r-- 1 runner runner    539 Oct 19 07:44 library_stats.json
+-rw-r--r-- 1 runner runner 267057 Oct 19 07:44 raw.pdb
+-rw-r--r-- 1 runner runner 198697 Oct 19 07:44 receptor.pdb
+-rw-r--r-- 1 runner runner   1101 Oct 19 07:44 target_meta.json
+--- import 하나씩
+py 3.11.17
+numpy 2.4.6
+rdkit ok
+meeko ok
+vina ok
+--- 수용체 파일
+-rw-r--r-- 1 runner runner 198697 Oct 19 07:44 targets/MET/receptor.pdb
+--- receptor.pdb 앞부분
+ATOM      1  N   VAL A1051      11.556  33.297  41.955  1.00 33.46           N  
+ATOM      2  CA  VAL A1051      12.354  32.034  42.081  1.00 31.93           C  
+ATOM      3  C   VAL A1051      13.504  32.204  43.066  1.00 31.08           C  
+ATOM      4  O   VAL A1051      14.396  33.020  42.851  1.00 30.12           O  
+ATOM      5  CB  VAL A1051      12.923  31.557  40.713  1.00 32.17           C  
+--- HETATM 잔기 종류
+      1  MG
+      1  CL
+--- obabel 버전
+Open Babel 3.2.1 -- Aug 19 2026 -- 17:02:44
+--- 변형 시험: 어느 옵션이 0 molecules 를 만드는가
+  원본 HETATM 2개 / 이온제거본 0
+0개
+  [full] 크기=0 원자=0
+0 :: 0 molecules converted
+  [xr만] 크기=196658 원자=2453 :: 1 molecule converted
+  [gasteiger만] 크기=0 원자=0
+0 :: 0 molecules converted
+  [이온제거+full] 크기=237006 원자=2960 :: 1 molecule converted
+--- 원자 타입 점검 단독
+{'atom_types': {'C': 1393, 'OA': 435, 'NA': 404, 'A': 189, 'N': 15, 'S': 15, 'MG': 1, 'CL': 1}, 'n_dropped': 0, 'dropped': []}
+--- Vina set_receptor 단독
+set_receptor OK
+=== 진단 끝
+    수용체 원자 타입: {'C': 1393, 'OA': 435, 'NA': 404, 'A': 189, 'N': 15, 'S': 15, 'MG': 1, 'CL': 1}
+    사전 점검 OK (프로브 리간드 28줄)
+    수용체 사전 점검: set_receptor + compute_vina_maps ...
+    수용체 사전 점검 OK
+[*] MET 도킹: 1 리간드 (활성 0) 샤드 4/8, 워커 2
+    박스 center=[16.69, 32.339, 20.436] size=[22.4, 20.6, 20.0] (cocrystal_ligand)
+    1/1  0.8분 경과, 잔여 ~0.0분
+[+] 성공 1/1 → docked_shard3.jsonl
+    최고 스코어: -5.79 kcal/mol (CHEMBL275503)
