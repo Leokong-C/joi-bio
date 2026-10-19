@@ -1,0 +1,59 @@
+{
+  "gene": "MET",
+  "uniprot": "P08581",
+  "declared_pocket_mode": "atp_site",
+  "benchmark_smiles_found": [
+    "cabozantinib",
+    "savolitinib",
+    "crizotinib",
+    "foretinib"
+  ],
+  "source": "RCSB",
+  "pdb_id": "3DKC",
+  "resolution": 1.52,
+  "ligand_match": {
+    "similarity": 0.12,
+    "ligand_smiles": "Nc1ncnc2n(cnc12)[C@@H]3O[C@H](CO[P@](O)(=O)O[P@@](O)(=O)O[P](O)(O)=O)[C@@H](O)[C@H]3O",
+    "matched_benchmark": 2
+  },
+  "structure_selection": "forced",
+  "receptor": {
+    "chain": "A",
+    "n_atoms": 2453,
+    "cofactors": [
+      "CL",
+      "MG"
+    ],
+    "cocrystal_ligand": {
+      "resname": "ATP",
+      "n_heavy": 31,
+      "center": [
+        16.69,
+        32.339,
+        20.436
+      ]
+    }
+  },
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "ATP",
+    "center": [
+      16.69,
+      32.339,
+      20.436
+    ],
+    "size": [
+      22.4,
+      20.6,
+      20.0
+    ],
+    "confidence": "high",
+    "note": "ATP (31 heavy atoms) 기준"
+  },
+  "benchmark_ligands": [
+    "cabozantinib",
+    "savolitinib",
+    "crizotinib",
+    "foretinib"
+  ]
+}
