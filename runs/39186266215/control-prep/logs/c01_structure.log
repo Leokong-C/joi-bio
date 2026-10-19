@@ -1,0 +1,8 @@
+[*] MET (P08581) 구조 준비
+    벤치마크 SMILES 4개 확보 → 구조 선택 기준으로 사용
+    구조 강제 지정: 3DKC
+      유사도=0.120 res=1.52
+    source=RCSB pdb=3DKC res=1.52 chain=A atoms=2453
+    pocket=cocrystal_ligand (high) center=[16.69, 32.339, 20.436] size=[22.4, 20.6, 20.0]
+    ATP (31 heavy atoms) 기준
+    cofactors: ['CL', 'MG']
