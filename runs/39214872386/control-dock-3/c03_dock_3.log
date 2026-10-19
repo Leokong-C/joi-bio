@@ -1,0 +1,64 @@
+=== shard 3 2026-10-19T07:28:23+00:00
+python: /home/runner/micromamba/envs/joi-bio/bin/python / Python 3.11.17
+--- targets 내용
+targets/:
+total 12
+drwxr-xr-x  3 runner runner 4096 Oct 19 07:28 .
+drwxr-xr-x 12 runner runner 4096 Oct 19 07:28 ..
+drwxr-xr-x  2 runner runner 4096 Oct 19 07:28 MET
+
+targets/MET:
+total 864
+drwxr-xr-x 2 runner runner   4096 Oct 19 07:28 .
+drwxr-xr-x 3 runner runner   4096 Oct 19 07:28 ..
+-rw-r--r-- 1 runner runner 394503 Oct 19 07:28 library.jsonl
+-rw-r--r-- 1 runner runner    556 Oct 19 07:28 library_stats.json
+-rw-r--r-- 1 runner runner 267057 Oct 19 07:28 raw.pdb
+-rw-r--r-- 1 runner runner 198697 Oct 19 07:28 receptor.pdb
+-rw-r--r-- 1 runner runner   1101 Oct 19 07:28 target_meta.json
+--- import 하나씩
+py 3.11.17
+numpy 2.4.6
+rdkit ok
+meeko ok
+vina ok
+--- 수용체 파일
+-rw-r--r-- 1 runner runner 198697 Oct 19 07:28 targets/MET/receptor.pdb
+--- receptor.pdb 앞부분
+ATOM      1  N   VAL A1051      11.556  33.297  41.955  1.00 33.46           N  
+ATOM      2  CA  VAL A1051      12.354  32.034  42.081  1.00 31.93           C  
+ATOM      3  C   VAL A1051      13.504  32.204  43.066  1.00 31.08           C  
+ATOM      4  O   VAL A1051      14.396  33.020  42.851  1.00 30.12           O  
+ATOM      5  CB  VAL A1051      12.923  31.557  40.713  1.00 32.17           C  
+--- HETATM 잔기 종류
+      1  MG
+      1  CL
+--- obabel 버전
+Open Babel 3.2.1 -- Aug 19 2026 -- 17:02:44
+--- obabel 직접 실행 (출력을 삼키지 않는다)
+==============================
+*** Open Babel Warning  in PerceiveBondOrders
+  Failed to kekulize aromatic bonds in OBMol::PerceiveBondOrders (title is targets/MET/receptor.pdb)
+
+0 molecules converted
+obabel exit=0  결과 크기=0
+--- 옵션 줄여서 재시도
+==============================
+*** Open Babel Warning  in PerceiveBondOrders
+  Failed to kekulize aromatic bonds in OBMol::PerceiveBondOrders (title is targets/MET/receptor.pdb)
+
+1 molecule converted
+  -xr 만: exit=0 크기=196658
+--- 원자 타입 점검 단독
+{'atom_types': {}, 'n_dropped': 0, 'dropped': []}
+--- Vina set_receptor 단독
+set_receptor OK
+=== 진단 끝
+[!] 수용체 변환 실패 — obabel exit=0, 출력 0 바이트
+    obabel stderr: ==============================
+    obabel stderr: *** Open Babel Warning  in PerceiveBondOrders
+    obabel stderr:   Failed to kekulize aromatic bonds in OBMol::PerceiveBondOrders (title is /home/runner/work/joi-bio/joi-bio/targets/MET/receptor.pdb)
+    obabel stderr: 
+    obabel stderr: 0 molecules converted
+    입력: /home/runner/work/joi-bio/joi-bio/targets/MET/receptor.pdb (198697 바이트)
+[!] 수용체를 준비하지 못해 중단한다.
