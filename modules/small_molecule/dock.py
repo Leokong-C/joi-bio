@@ -89,7 +89,20 @@ def sanitize_receptor_pdbqt(pdbqt: Path) -> dict:
     }
 
 
+MIN_RECEPTOR_ATOMS = 200
+
+
 def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
+    """수용체 PDB → PDBQT.
+
+    조용히 실패하지 않는다
+      2026-10-19 MET 대조군에서 8샤드가 1~3초 만에 죽고 로그가 0바이트였다.
+      원인은 네이티브 크래시가 아니라 침묵 세 겹이었다.
+        1. obabel 이 종료코드 0 으로 끝나면서 빈 파일을 썼다
+        2. 이 함수가 그것을 메시지 없이 False 로 반환했다 (예외 경로에서만 출력)
+        3. dock.py 가 메시지 없이 return 1 했다
+      obabel 의 stdout/stderr 를 삼키고 있었던 것이 결정적이었다. 이제 남긴다.
+    """
     if pdbqt.exists() and pdbqt.stat().st_size > 0:
         return True
     cmd = [
@@ -97,11 +110,33 @@ def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
         "-xr", "-p", "7.4", "--partialcharge", "gasteiger",
     ]
     try:
-        subprocess.run(cmd, check=True, capture_output=True, timeout=600)
-    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError) as e:
-        print(f"[!] 수용체 변환 실패: {e}", file=sys.stderr)
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+        print(f"[!] 수용체 변환 실패: {e}", file=sys.stderr, flush=True)
         return False
-    return pdbqt.exists() and pdbqt.stat().st_size > 0
+
+    size = pdbqt.stat().st_size if pdbqt.exists() else 0
+    if r.returncode != 0 or size == 0:
+        print(f"[!] 수용체 변환 실패 — obabel exit={r.returncode}, 출력 {size} 바이트",
+              file=sys.stderr, flush=True)
+        for stream, name in ((r.stderr, "stderr"), (r.stdout, "stdout")):
+            for line in (stream or "").strip().splitlines()[-25:]:
+                print(f"    obabel {name}: {line}", file=sys.stderr, flush=True)
+        print(f"    입력: {pdb} ({pdb.stat().st_size if pdb.exists() else 0} 바이트)",
+              file=sys.stderr, flush=True)
+        return False
+
+    # 빈 파일이 아니어도 원자가 없으면 의미가 없다. Vina 는 원자 없는 PDBQT 를
+    # 오류 없이 받아들이므로(위 진단에서 set_receptor OK 였다) 여기서 막는다.
+    n = sum(1 for l in pdbqt.read_text().splitlines()
+            if l.startswith(("ATOM", "HETATM")))
+    if n < MIN_RECEPTOR_ATOMS:
+        print(f"[!] 수용체 PDBQT 의 원자가 {n}개뿐이다 (최소 {MIN_RECEPTOR_ATOMS}). "
+              "변환이 반쯤 된 파일로 도킹하면 결과가 전부 무의미하다.",
+              file=sys.stderr, flush=True)
+        return False
+    print(f"    수용체 PDBQT 원자 {n:,}개", flush=True)
+    return True
 
 
 def ligand_pdbqt(smiles: str, seed: int = 42) -> str | None:
@@ -183,6 +218,7 @@ def main() -> int:
 
     rec_pdbqt = tdir / "receptor.pdbqt"
     if not prep_receptor(tdir / "receptor.pdb", rec_pdbqt):
+        print("[!] 수용체를 준비하지 못해 중단한다.", file=sys.stderr, flush=True)
         return 1
 
     # 수용체 원자 타입 점검 — Vina 가 모르는 타입은 네이티브 크래시를 낸다.
