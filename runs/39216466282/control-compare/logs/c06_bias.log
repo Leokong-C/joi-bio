@@ -1,0 +1,15 @@
+[*] MET 구조 선택 편향 측정
+    treatment 5HTI (66L, 유사도 0.7195, 1.66 Å)
+    control   3DKC (ATP, 유사도 0.12, 1.52 Å)
+
+    AUC  treatment=0.9176  control=0.7143
+    차이 0.2033
+
+    cabozantinib     treatment 1.531%  control None%  개선 None
+    crizotinib       treatment 32.004%  control None%  개선 None
+    foretinib        treatment 1.391%  control 37.5%  개선 36.109
+    savolitinib      treatment 18.321%  control None%  개선 None
+
+    판정: BIAS_LIKELY
+    조기 인식 지표가 최대 98.5배 차이난다 (EF1 None배, BEDROC 98.537배, 벤치마크 백분위 26.959배). 상위권 순위의 상당 부분이 구조 선택에서 나왔다. 두 팔을 함께 보고하고, 대조군 수치를 편향 없는 하한으로 제시할 것.
+[+] /home/runner/work/joi-bio/joi-bio/results/bias_MET.json

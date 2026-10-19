@@ -1,0 +1,10 @@
+[*] MET 검증
+    화합물 8 (활성 1)
+    ef1      = 0.0
+    ef5      = 0.0
+    auc      = 0.7143
+    bedroc   = 0.0067
+    벤치마크 리간드 (0/1 상위 1%):
+         foretinib        rank 3 (37.5%) score -7.107
+    라이브러리에 없음: ['cabozantinib', 'crizotinib', 'savolitinib']
+    판정: INSUFFICIENT — 활성 화합물 1개 (최소 10개 필요). 지표가 계산되더라도 통계적으로 무의미하다.

@@ -1,0 +1,87 @@
+{
+  "gene": "MET",
+  "treatment": {
+    "n": 2156,
+    "n_active": 59,
+    "auc": 0.9176,
+    "ef1": 28.237,
+    "ef5": 11.842,
+    "bedroc": 0.6602,
+    "best_score": -13.039,
+    "median_active": -10.809,
+    "median_decoy": -8.123,
+    "benchmarks": {
+      "foretinib": 1.391,
+      "cabozantinib": 1.531,
+      "savolitinib": 18.321,
+      "crizotinib": 32.004
+    }
+  },
+  "control": {
+    "n": 8,
+    "n_active": 1,
+    "auc": 0.7143,
+    "ef1": 0.0,
+    "ef5": 0.0,
+    "bedroc": 0.0067,
+    "best_score": -7.482,
+    "median_active": -7.107,
+    "median_decoy": -6.137,
+    "benchmarks": {
+      "foretinib": 37.5
+    }
+  },
+  "auc_delta": 0.2033,
+  "ef1_ratio": null,
+  "bedroc_ratio": 98.537,
+  "benchmark_ratio_median": 26.959,
+  "early_recognition_ratios": {
+    "ef1": null,
+    "bedroc": 98.537,
+    "benchmark_percentile": 26.959
+  },
+  "verdict": "BIAS_LIKELY",
+  "verdict_reason": "조기 인식 지표가 최대 98.5배 차이난다 (EF1 None배, BEDROC 98.537배, 벤치마크 백분위 26.959배). 상위권 순위의 상당 부분이 구조 선택에서 나왔다. 두 팔을 함께 보고하고, 대조군 수치를 편향 없는 하한으로 제시할 것.",
+  "benchmark_comparison": [
+    {
+      "name": "cabozantinib",
+      "treatment_percentile": 1.531,
+      "control_percentile": null,
+      "improvement": null
+    },
+    {
+      "name": "crizotinib",
+      "treatment_percentile": 32.004,
+      "control_percentile": null,
+      "improvement": null
+    },
+    {
+      "name": "foretinib",
+      "treatment_percentile": 1.391,
+      "control_percentile": 37.5,
+      "improvement": 36.109
+    },
+    {
+      "name": "savolitinib",
+      "treatment_percentile": 18.321,
+      "control_percentile": null,
+      "improvement": null
+    }
+  ],
+  "structures": {
+    "treatment": {
+      "pdb_id": "5HTI",
+      "resolution": 1.66,
+      "similarity": 0.7195,
+      "selection": "similarity",
+      "ligand": "66L"
+    },
+    "control": {
+      "pdb_id": "3DKC",
+      "resolution": 1.52,
+      "similarity": 0.12,
+      "selection": "forced",
+      "ligand": "ATP"
+    }
+  }
+}
