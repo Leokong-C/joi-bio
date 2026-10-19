@@ -91,6 +91,56 @@ def sanitize_receptor_pdbqt(pdbqt: Path) -> dict:
 
 MIN_RECEPTOR_ATOMS = 200
 
+# 단원자 이온 — Open Babel 의 Gasteiger 전하 계산이 이들에서 실패한다.
+MONATOMIC_IONS = {
+    "MG", "ZN", "MN", "FE", "FE2", "CA", "CU", "CU1", "NI", "CO",
+    "K", "NA", "CL", "BR", "IOD", "F", "CD", "HG", "SR", "BA", "CS", "RB", "LI",
+}
+
+
+def strip_monatomic_ions(pdb: Path) -> tuple[Path, list[str]]:
+    """Gasteiger 전하 계산을 막는 단원자 이온을 뺀 사본을 만든다.
+
+    왜
+      2026-10-19 MET 대조군(3DKC)에서 수용체 변환이 종료코드 0 으로 끝나면서
+      빈 파일을 냈다. 변형 시험 결과:
+
+        -xr -p 7.4 --partialcharge gasteiger   → 0 molecules converted
+        -xr                                     → 1 molecule, 2,453 원자
+        -xr --partialcharge gasteiger           → 0 molecules converted
+        이온 제거 + 위 전체 옵션                  → 1 molecule, 2,960 원자
+
+      -p 7.4 가 아니라 --partialcharge gasteiger 가 범인이다. 고립된 Mg2+/Cl-
+      에서 전하 할당이 실패한다. 3DKC 의 HETATM 은 그 둘뿐이었다.
+
+    왜 폴백이 아니라 이온 제거인가
+      옵션을 줄여 폴백하면 두 팔의 수용체 준비 방식이 달라진다. 이 실험의
+      전제는 '구조만 다르고 나머지는 동일' 이므로, 양성자화 여부가 달라지면
+      측정한 차이가 구조 선택 때문인지 준비 방식 때문인지 구분할 수 없게 된다.
+      편향 측정이라는 목적 자체가 무너진다.
+
+      이온 제거는 이온이 없는 구조(MET treatment 5HTI 는 보조인자가 비어 있다)
+      에서는 아무 일도 하지 않는다. 두 팔이 같은 명령으로 준비된다.
+
+    해석에 반영할 것
+      금속 보조인자는 생물학적으로 결합 부위의 일부일 수 있다. 키나제 ATP
+      부위의 Mg2+ 가 그렇다. 이것을 빼면 Mg 배위는 모델링되지 않는다.
+      다만 Vina 의 스코어 함수는 금속 배위를 제대로 다루지 못하고, 비교
+      대상인 두 팔이 똑같이 Mg 없이 준비되므로 비교 자체는 성립한다.
+      절대값 해석에만 영향이 있다.
+    """
+    kept, removed = [], []
+    for line in pdb.read_text().splitlines():
+        if line.startswith("HETATM") and line[17:20].strip().upper() in MONATOMIC_IONS:
+            removed.append(f"{line[17:20].strip()}{line[22:26].strip()}")
+            continue
+        kept.append(line)
+    if not removed:
+        return pdb, []
+    out = pdb.with_name(pdb.stem + "_noion.pdb")
+    out.write_text("\n".join(kept) + "\n")
+    return out, sorted(set(removed))
+
 
 def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
     """수용체 PDB → PDBQT.
@@ -105,8 +155,15 @@ def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
     """
     if pdbqt.exists() and pdbqt.stat().st_size > 0:
         return True
+
+    src, removed = strip_monatomic_ions(pdb)
+    if removed:
+        print(f"    단원자 이온 {len(removed)}개 제외: {', '.join(removed)} "
+              "— Gasteiger 전하 계산이 이들에서 실패한다. 금속 배위는 "
+              "모델링되지 않으므로 절대값 해석에 반영할 것.", flush=True)
+
     cmd = [
-        "obabel", str(pdb), "-O", str(pdbqt),
+        "obabel", str(src), "-O", str(pdbqt),
         "-xr", "-p", "7.4", "--partialcharge", "gasteiger",
     ]
     try:
@@ -122,7 +179,7 @@ def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
         for stream, name in ((r.stderr, "stderr"), (r.stdout, "stdout")):
             for line in (stream or "").strip().splitlines()[-25:]:
                 print(f"    obabel {name}: {line}", file=sys.stderr, flush=True)
-        print(f"    입력: {pdb} ({pdb.stat().st_size if pdb.exists() else 0} 바이트)",
+        print(f"    입력: {src} ({src.stat().st_size if src.exists() else 0} 바이트)",
               file=sys.stderr, flush=True)
         return False
 

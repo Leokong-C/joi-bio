@@ -122,56 +122,6 @@ jobs:
           mkdir -p logs
           L=logs/c03_dock_${{ matrix.shard }}.log
 
-          # 셸이 직접 쓰는 진단. 파이썬이 네이티브에서 죽어도 여기까지는 남는다.
-          # 2026-10-19 MET 대조군에서 8샤드가 1~3초 만에 죽고 로그가 0바이트였다.
-          # python -u 를 넣어도 그대로 0바이트였으므로 버퍼링 문제가 아니라
-          # 파이썬이 첫 줄도 쓰기 전에 죽는다는 뜻이다. 어디까지 가는지 본다.
-          set +e
-          {
-            echo "=== shard ${{ matrix.shard }} $(date -Is)"
-            echo "python: $(command -v python) / $(python -V 2>&1)"
-            echo "--- targets 내용"
-            ls -laR targets/ 2>&1 | head -40
-            echo "--- import 하나씩"
-            python -u -c "import sys; print('py', sys.version.split()[0])" 2>&1
-            python -u -c "import numpy; print('numpy', numpy.__version__)" 2>&1
-            python -u -c "import rdkit; print('rdkit ok')" 2>&1
-            python -u -c "import meeko; print('meeko ok')" 2>&1
-            python -u -c "import vina; print('vina ok')" 2>&1
-            G=${{ inputs.gene }}
-            echo "--- 수용체 파일"
-            ls -la "targets/$G/receptor.pdb" 2>&1
-            echo "--- receptor.pdb 앞부분"
-            head -5 "targets/$G/receptor.pdb" 2>&1
-            echo "--- HETATM 잔기 종류"
-            awk '/^HETATM/{print substr($0,18,3)}' "targets/$G/receptor.pdb" 2>/dev/null | sort | uniq -c | sort -rn | head
-            echo "--- obabel 버전"
-            obabel -V 2>&1
-            echo "--- 변형 시험: 어느 옵션이 0 molecules 를 만드는가"
-            R="targets/$G/receptor.pdb"
-            # 고립 이온만 뺀 사본. 양성자화 루틴이 여기서 막히는지 본다.
-            grep -v -E '^HETATM.{11}(MG|CL| CL| MG)' "$R" > "targets/$G/noion.pdb" 2>/dev/null || cp "$R" "targets/$G/noion.pdb"
-            echo "  원본 HETATM $(grep -c '^HETATM' "$R" 2>/dev/null || echo 0)개 / 이온제거본 $(grep -c '^HETATM' "targets/$G/noion.pdb" 2>/dev/null || echo 0)개"
-            for spec in "full|$R|-xr -p 7.4 --partialcharge gasteiger" \
-                        "xr만|$R|-xr" \
-                        "gasteiger만|$R|-xr --partialcharge gasteiger" \
-                        "이온제거+full|targets/$G/noion.pdb|-xr -p 7.4 --partialcharge gasteiger"; do
-              nm="${spec%%|*}"; rest="${spec#*|}"; src="${rest%%|*}"; opt="${rest#*|}"
-              out="targets/$G/try_$nm.pdbqt"; rm -f "$out"
-              msg=$(obabel "$src" -O "$out" $opt 2>&1 | tr '\n' ' ')
-              sz=$(stat -c%s "$out" 2>/dev/null || echo 0)
-              na=$(grep -c -E '^(ATOM|HETATM)' "$out" 2>/dev/null || echo 0)
-              echo "  [$nm] 크기=$sz 원자=$na :: $(echo "$msg" | grep -o '[0-9]* molecules\? converted' || echo '?')"
-            done
-            cp -f "targets/$G/try_xr만.pdbqt" "targets/$G/receptor.pdbqt" 2>/dev/null || true
-            echo "--- 원자 타입 점검 단독"
-            python -u -c "from pathlib import Path; import modules.small_molecule.dock as d; print(d.sanitize_receptor_pdbqt(Path('targets/$G/receptor.pdbqt')))" 2>&1
-            echo "--- Vina set_receptor 단독"
-            python -u -c "from vina import Vina; v=Vina(sf_name='vina',cpu=1,seed=42,verbosity=1); v.set_receptor('targets/$G/receptor.pdbqt'); print('set_receptor OK')" 2>&1
-            echo "=== 진단 끝"
-          } >> "$L" 2>&1
-          set -e
-
           set -o pipefail
           python -u -m modules.small_molecule.dock --gene ${{ inputs.gene }} \
             --shard ${{ matrix.shard }} --n-shards 8 \
