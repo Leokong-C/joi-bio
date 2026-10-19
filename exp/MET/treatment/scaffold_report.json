@@ -1,0 +1,284 @@
+{
+  "gene": "MET",
+  "validation_verdict": "PASS",
+  "heavy_atom_floor": 25,
+  "n_rejected_too_small": 10,
+  "n_profiled": 290,
+  "per_scaffold_cap": 2,
+  "naive_top": {
+    "n": 20,
+    "n_scaffolds": 19,
+    "scaffolds": [
+      {
+        "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)NCC2",
+        "n_top": 2,
+        "n_library": 3,
+        "top_pct": 10.0,
+        "library_pct": 0.14,
+        "enrichment": 71.7
+      },
+      {
+        "scaffold": "c1ccc(C(C2=NCC(CC3CCc4ccccc4C3)=N2)c2ccccc2)cc1",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 5.0,
+        "library_pct": 0.05,
+        "enrichment": 107.6
+      },
+      {
+        "scaffold": "O=C(c1ccc(CN2CCN(c3ccccc3)CC2)cc1)N1CCCCC1",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 5.0,
+        "library_pct": 0.05,
+        "enrichment": 107.6
+      },
+      {
+        "scaffold": "O=C1Cc2cc(CCNC[C@@H]3CCCc4ccccc43)ccc2N1",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 5.0,
+        "library_pct": 0.05,
+        "enrichment": 107.6
+      },
+      {
+        "scaffold": "c1ccc(C(c2ccccc2)c2nc(CC3CCc4ccccc4C3)co2)cc1",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 5.0,
+        "library_pct": 0.05,
+        "enrichment": 107.6
+      },
+      {
+        "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)OCO2",
+        "n_top": 1,
+        "n_library": 6,
+        "top_pct": 5.0,
+        "library_pct": 0.28,
+        "enrichment": 17.9
+      },
+      {
+        "scaffold": "c1cc2c3c(c1)[C@H](CNCCc1ccc4c(c1)OCO4)CC[C@@H]3CCO2",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 5.0,
+        "library_pct": 0.05,
+        "enrichment": 107.6
+      },
+      {
+        "scaffold": "c1ccc(C(c2ccccc2)c2cnn(CC3CCc4ccccc4C3)c2)cc1",
+        "n_top": 1,
+        "n_library": 1,
+        "top_pct": 5.0,
+        "library_pct": 0.05,
+        "enrichment": 107.6
+      }
+    ]
+  },
+  "diversified": {
+    "n": 20,
+    "n_scaffolds": 20
+  },
+  "compounds": [
+    {
+      "chembl_id": "CHEMBL276416",
+      "score": -12.092,
+      "composite_score": 9.97,
+      "n_heavy": 34,
+      "ligand_efficiency": 0.356,
+      "scaffold": "c1ccc(C(C2=NCC(CC3CCc4ccccc4C3)=N2)c2ccccc2)cc1",
+      "scaffold_rank": 1,
+      "smiles": "O=C(O)COc1cccc2c1CCC(CC1=NC(C(c3ccccc3)c3ccccc3)=NC1)C2"
+    },
+    {
+      "chembl_id": "CHEMBL10417",
+      "score": -10.815,
+      "composite_score": 9.646,
+      "n_heavy": 31,
+      "ligand_efficiency": 0.349,
+      "scaffold": "O=C(c1ccc(CN2CCN(c3ccccc3)CC2)cc1)N1CCCCC1",
+      "scaffold_rank": 1,
+      "smiles": "CC(C)Oc1ccccc1N1CCN(Cc2ccc(C(=O)N3CCCCC3)cc2)CC1"
+    },
+    {
+      "chembl_id": "CHEMBL9869",
+      "score": -10.125,
+      "composite_score": 9.631,
+      "n_heavy": 27,
+      "ligand_efficiency": 0.375,
+      "scaffold": "O=C1Cc2cc(CCNC[C@@H]3CCCc4ccccc43)ccc2N1",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)CC(=O)N2"
+    },
+    {
+      "chembl_id": "CHEMBL274294",
+      "score": -12.101,
+      "composite_score": 9.587,
+      "n_heavy": 34,
+      "ligand_efficiency": 0.356,
+      "scaffold": "c1ccc(C(c2ccccc2)c2nc(CC3CCc4ccccc4C3)co2)cc1",
+      "scaffold_rank": 1,
+      "smiles": "O=C(O)COc1cccc2c1CCC(Cc1coc(C(c3ccccc3)c3ccccc3)n1)C2"
+    },
+    {
+      "chembl_id": "CHEMBL9944",
+      "score": -10.073,
+      "composite_score": 9.496,
+      "n_heavy": 25,
+      "ligand_efficiency": 0.403,
+      "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)OCO2",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CNCCc1ccc2c(c1)OCO2"
+    },
+    {
+      "chembl_id": "CHEMBL274055",
+      "score": -9.891,
+      "composite_score": 9.45,
+      "n_heavy": 26,
+      "ligand_efficiency": 0.38,
+      "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)NCC2",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)NCC2"
+    },
+    {
+      "chembl_id": "CHEMBL9612",
+      "score": -10.105,
+      "composite_score": 9.441,
+      "n_heavy": 27,
+      "ligand_efficiency": 0.374,
+      "scaffold": "c1cc2c3c(c1)[C@H](CNCCc1ccc4c(c1)OCO4)CC[C@@H]3CCO2",
+      "scaffold_rank": 1,
+      "smiles": "CN(CCc1ccc2c(c1)OCO2)C[C@@H]1CC[C@@H]2CCOc3cccc1c32"
+    },
+    {
+      "chembl_id": "CHEMBL11765",
+      "score": -11.751,
+      "composite_score": 9.402,
+      "n_heavy": 34,
+      "ligand_efficiency": 0.346,
+      "scaffold": "c1ccc(C(c2ccccc2)c2cnn(CC3CCc4ccccc4C3)c2)cc1",
+      "scaffold_rank": 1,
+      "smiles": "O=C(O)COc1cccc2c1CCC(Cn1cc(C(c3ccccc3)c3ccccc3)cn1)C2"
+    },
+    {
+      "chembl_id": "CHEMBL9970",
+      "score": -10.216,
+      "composite_score": 9.38,
+      "n_heavy": 28,
+      "ligand_efficiency": 0.365,
+      "scaffold": "O=S1(=O)Cc2ccc(CCNC[C@@H]3CCCc4ccccc43)cc2C1",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)CS(=O)(=O)C2"
+    },
+    {
+      "chembl_id": "CHEMBL274391",
+      "score": -10.055,
+      "composite_score": 9.372,
+      "n_heavy": 26,
+      "ligand_efficiency": 0.387,
+      "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)OCC2",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)OCC2"
+    },
+    {
+      "chembl_id": "CHEMBL276236",
+      "score": -9.767,
+      "composite_score": 9.363,
+      "n_heavy": 26,
+      "ligand_efficiency": 0.376,
+      "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)CCN2",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)CCN2"
+    },
+    {
+      "chembl_id": "CHEMBL430314",
+      "score": -9.699,
+      "composite_score": 9.354,
+      "n_heavy": 26,
+      "ligand_efficiency": 0.373,
+      "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)CNC2",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)CNC2"
+    },
+    {
+      "chembl_id": "CHEMBL10180",
+      "score": -10.812,
+      "composite_score": 9.341,
+      "n_heavy": 32,
+      "ligand_efficiency": 0.338,
+      "scaffold": "O=S(=O)(NCCC#Cc1ccccc1)c1ccc(C#Cc2ccccc2)cc1",
+      "scaffold_rank": 1,
+      "smiles": "Cc1ccc(C#Cc2ccc(S(=O)(=O)NC(CC#Cc3ccccc3)C(=O)O)cc2)cc1"
+    },
+    {
+      "chembl_id": "CHEMBL10881",
+      "score": -10.914,
+      "composite_score": 9.32,
+      "n_heavy": 32,
+      "ligand_efficiency": 0.341,
+      "scaffold": "O=S(=O)(NCCC#Cc1ccccc1)c1ccc(-c2ccc3c(c2)OCO3)cc1",
+      "scaffold_rank": 1,
+      "smiles": "O=C(O)C(CC#Cc1ccccc1)NS(=O)(=O)c1ccc(-c2ccc3c(c2)OCO3)cc1"
+    },
+    {
+      "chembl_id": "CHEMBL268046",
+      "score": -11.012,
+      "composite_score": 9.31,
+      "n_heavy": 30,
+      "ligand_efficiency": 0.367,
+      "scaffold": "O=C(NCc1ccccc1)c1cc(-c2ccccc2)nc2ccccc12",
+      "scaffold_rank": 1,
+      "smiles": "CNC(=O)C(NC(=O)c1cc(-c2ccccc2)nc2ccccc12)c1ccccc1"
+    },
+    {
+      "chembl_id": "CHEMBL417243",
+      "score": -10.312,
+      "composite_score": 9.3,
+      "n_heavy": 27,
+      "ligand_efficiency": 0.382,
+      "scaffold": "c1ccc(COc2ccc(Cc3ccc(NC4=NCCN4)cc3)cc2)cc1",
+      "scaffold_rank": 1,
+      "smiles": "c1ccc(COc2ccc(Cc3ccc(NC4=NCCN4)cc3)cc2)cc1"
+    },
+    {
+      "chembl_id": "CHEMBL10409",
+      "score": -10.09,
+      "composite_score": 9.295,
+      "n_heavy": 26,
+      "ligand_efficiency": 0.388,
+      "scaffold": "c1ccc2c(c1)CCC[C@H]2CNCCc1ccc2c(c1)CCC2",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)CCC2"
+    },
+    {
+      "chembl_id": "CHEMBL9831",
+      "score": -9.902,
+      "composite_score": 9.286,
+      "n_heavy": 26,
+      "ligand_efficiency": 0.381,
+      "scaffold": "c1ccc2c(c1)CCCC2CNCCc1ccc2c(c1)OCO2",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCCC2CN(C)CCc1ccc2c(c1)OCO2"
+    },
+    {
+      "chembl_id": "CHEMBL10066",
+      "score": -10.071,
+      "composite_score": 9.282,
+      "n_heavy": 28,
+      "ligand_efficiency": 0.36,
+      "scaffold": "O=S1(=O)CCc2cc(CCNC[C@@H]3CCCc4ccccc43)ccc21",
+      "scaffold_rank": 1,
+      "smiles": "COc1cccc2c1CCC[C@H]2CN(C)CCc1ccc2c(c1)CCS2(=O)=O"
+    },
+    {
+      "chembl_id": "CHEMBL276667",
+      "score": -9.799,
+      "composite_score": 9.274,
+      "n_heavy": 27,
+      "ligand_efficiency": 0.363,
+      "scaffold": "c1cc2c(cc1CCNCC1CCCc3c1ccc1c3OCO1)OCO2",
+      "scaffold_rank": 1,
+      "smiles": "CN(CCc1ccc2c(c1)OCO2)CC1CCCc2c1ccc1c2OCO1"
+    }
+  ]
+}
