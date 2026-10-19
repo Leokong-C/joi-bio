@@ -120,15 +120,43 @@ jobs:
         shell: bash -el {0}
         run: |
           mkdir -p logs
+          L=logs/c03_dock_${{ matrix.shard }}.log
+
+          # 셸이 직접 쓰는 진단. 파이썬이 네이티브에서 죽어도 여기까지는 남는다.
+          # 2026-10-19 MET 대조군에서 8샤드가 1~3초 만에 죽고 로그가 0바이트였다.
+          # python -u 를 넣어도 그대로 0바이트였으므로 버퍼링 문제가 아니라
+          # 파이썬이 첫 줄도 쓰기 전에 죽는다는 뜻이다. 어디까지 가는지 본다.
+          set +e
+          {
+            echo "=== shard ${{ matrix.shard }} $(date -Is)"
+            echo "python: $(command -v python) / $(python -V 2>&1)"
+            echo "--- targets 내용"
+            ls -laR targets/ 2>&1 | head -40
+            echo "--- import 하나씩"
+            python -u -c "import sys; print('py', sys.version.split()[0])" 2>&1
+            python -u -c "import numpy; print('numpy', numpy.__version__)" 2>&1
+            python -u -c "import rdkit; print('rdkit ok')" 2>&1
+            python -u -c "import meeko; print('meeko ok')" 2>&1
+            python -u -c "import vina; print('vina ok')" 2>&1
+            G=${{ inputs.gene }}
+            echo "--- 수용체 파일"
+            ls -la "targets/$G/receptor.pdb" 2>&1
+            echo "--- obabel 변환 단독"
+            python -u -c "from pathlib import Path; import modules.small_molecule.dock as d; p=Path('targets/$G/receptor.pdb'); q=Path('targets/$G/receptor.pdbqt'); print('pdb 크기', p.stat().st_size); print('변환', d.prep_receptor(p,q)); print('pdbqt 크기', q.stat().st_size)" 2>&1
+            echo "--- 원자 타입 점검 단독"
+            python -u -c "from pathlib import Path; import modules.small_molecule.dock as d; print(d.sanitize_receptor_pdbqt(Path('targets/$G/receptor.pdbqt')))" 2>&1
+            echo "--- Vina set_receptor 단독"
+            python -u -c "from vina import Vina; v=Vina(sf_name='vina',cpu=1,seed=42,verbosity=1); v.set_receptor('targets/$G/receptor.pdbqt'); print('set_receptor OK')" 2>&1
+            echo "=== 진단 끝"
+          } >> "$L" 2>&1
+          set -e
+
           set -o pipefail
-          # python -u 가 없으면 네이티브 크래시 때 버퍼에 쌓인 출력이 통째로
-          # 사라진다. 2026-10-19 MET 대조군에서 8샤드 전부 0바이트 로그만 남겨
-          # 원인 추적에 시간을 썼다.
           python -u -m modules.small_molecule.dock --gene ${{ inputs.gene }} \
             --shard ${{ matrix.shard }} --n-shards 8 \
             --max-ligands ${{ inputs.max_ligands }} \
             --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
-            | tee logs/c03_dock_${{ matrix.shard }}.log
+            | tee -a "$L"
 
       - name: 로그를 ci-results 로
         if: always()
