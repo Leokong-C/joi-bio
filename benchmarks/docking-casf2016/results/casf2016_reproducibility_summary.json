@@ -1,0 +1,12 @@
+{
+ "n": 284,
+ "top1_le2A_prev_pct": 66.2,
+ "top1_le2A_rerun_pct": 66.2,
+ "median_rmsd_prev": 0.953,
+ "median_rmsd_rerun": 0.957,
+ "exact_3dp_rmsd_top1": 250,
+ "max_abs_d_rmsd_top1": 0.6633,
+ "mean_abs_d_rmsd_top1": 0.00705,
+ "n_success_flips": 0,
+ "cause": "Open Babel polar-hydrogen placement is not reproducible across processes; Vina itself is deterministic (score_only on the archived receptor reproduces the run value exactly)."
+}

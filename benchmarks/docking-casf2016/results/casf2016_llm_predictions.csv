@@ -1,0 +1,856 @@
+code,cond,logKa,target,abstain,pKd,confidence,recognized_complex,basis,in_tok,out_tok
+4llx,A,2.89,1,True,4.5,low,False,"Target undisclosed; small aminopyrimidine, no binding data available",711,152
+5c28,A,5.66,1,True,5.0,low,False,"No target specified; small fragment-like ligand, no binding data",718,146
+3uuo,A,7.96,1,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,734,148
+3ui7,A,9.0,1,True,5.5,low,False,No disclosed target; cannot verify specific complex,735,145
+5c2h,A,11.09,1,True,5.5,low,False,Target undisclosed; no reliable structure-activity basis for estimate,744,152
+2v00,A,3.66,2,True,5.0,low,False,Target undisclosed; no structural or assay reference available,723,144
+3wz8,A,5.82,2,True,5.5,low,False,Target undisclosed; no binding data available for this scaffold,742,148
+3pww,A,7.32,2,False,9.3,high,True,Structure matches HIV protease inhibitor nelfinavir-like peptidomimetic scaffold,800,163
+3prs,A,7.82,2,False,9.3,high,True,"Recognized as Ritonavir, HIV-1 protease inhibitor, known nanomolar Ki",790,164
+3uri,A,9.0,2,True,5.0,low,False,No target identity disclosed; cannot estimate specific binding,728,146
+4m0z,A,5.19,3,True,5.5,low,False,No target identity disclosed; no structural basis for specific estimate,736,149
+4m0y,A,6.46,3,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,730,149
+3qgy,A,7.8,3,True,5.5,low,False,"Target undisclosed; kinase-like scaffold guess only, no real basis",748,154
+4qd6,A,8.64,3,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,764,148
+4rfm,A,10.05,3,True,6.5,low,False,Target undisclosed; no structural basis to estimate affinity,776,149
+4cr9,A,4.1,4,True,5.0,low,False,Target undisclosed; small diaminoquinoline with no complex-specific data,716,152
+4cra,A,7.22,4,True,5.5,low,False,Unknown target; no binding data to anchor estimate,764,146
+4x6p,A,8.3,4,True,5.5,low,False,Target undisclosed; no structural basis to anchor affinity estimate,773,152
+4crc,A,8.72,4,True,5.0,low,False,Target undisclosed; no structural basis to estimate binding,771,146
+4ty7,A,9.52,4,True,5.5,low,False,Target undisclosed; no binding data or homology basis available,773,147
+5aba,A,2.98,5,True,5.0,low,False,Target undisclosed; no binding data available for this scaffold,736,146
+5a7b,A,3.57,5,True,5.0,low,False,Target undisclosed; no structural or assay reference available,742,144
+4agn,A,3.97,5,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,733,149
+4agp,A,4.69,5,True,5.5,low,False,Target undisclosed; no structural basis for specific affinity estimate,740,151
+4agq,A,5.01,5,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,740,146
+3bgz,A,6.26,6,True,5.0,low,False,No target specified; cannot estimate binding without protein context,735,144
+3jya,A,6.89,6,True,5.0,low,False,Target undisclosed; no structural or binding data to anchor estimate,728,149
+2c3i,A,7.6,6,True,5.5,low,False,No target disclosed; no basis for specific affinity estimate,732,148
+4k18,A,8.96,6,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,747,148
+5dwr,A,11.22,6,True,6.5,low,False,Target undisclosed; no binding data available for this specific complex,758,148
+3mss,A,4.66,7,False,8.2,medium,True,"Imatinib-like scaffold, known high-affinity Abl kinase inhibitor",754,159
+3k5v,A,6.3,7,False,8.0,medium,True,"Imatinib-like scaffold, known potent kinase (Abl/c-Kit) inhibitor",754,164
+3pyy,A,6.86,7,False,8.2,medium,True,"Imatinib-like scaffold, known Abl/Bcr-Abl kinase inhibitor chemotype",754,167
+2v7a,A,8.3,7,True,5.5,low,False,Target undisclosed; no structural/binding data to anchor estimate,761,151
+4twp,A,10.0,7,True,6.0,low,False,"No target specified; structure suggests kinase-like inhibitor, unverifiable estimate",741,158
+3wtj,A,6.53,8,True,5.5,low,False,No disclosed target; structure resembles imidacloprid-like cyanoimine nicotinoid,724,161
+3zdg,A,7.1,8,True,4.0,low,False,Target undisclosed; no structural or binding data available,720,143
+3u8k,A,8.66,8,True,5.0,low,False,Target undisclosed; no structural basis for affinity estimate,716,149
+4qac,A,9.4,8,True,5.5,low,False,"Unknown target; no binding data available, generic aminopyrimidine estimate",738,154
+3u8n,A,10.17,8,True,5.0,low,False,Target undisclosed; no binding data available for this ligand,719,145
+1a30,A,4.3,9,True,4.0,low,False,Target undisclosed; peptide-like tripeptide gives no basis for affinity,754,154
+2qnq,A,6.11,9,True,5.0,low,False,Target undisclosed; no binding data available for estimation,773,144
+1g2k,A,7.96,9,True,5.5,low,False,Target undisclosed; no structural basis to estimate affinity confidently,778,152
+1eby,A,9.7,9,True,5.0,low,False,No target identity given; symmetric bis-amide tartrate-like diol ligand,795,153
+3o9i,A,11.82,9,False,9.3,high,True,"Structure matches HIV protease inhibitor class (bis-THF carbamate, hydroxyethylamine, benzothiazole sulfonamide), darunavir-like",782,185
+4lzs,A,4.8,10,True,5.0,low,False,No target identity given; cannot estimate specific binding affinity,725,146
+3u5j,A,5.61,10,True,5.5,low,False,"Target undisclosed; alprazolam-like triazolobenzodiazepine scaffold, no binding data",733,164
+4wiv,A,6.26,10,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,739,148
+4ogj,A,6.79,10,True,6.5,low,False,"Diaminopyrimidine sulfonamide resembles kinase inhibitor chemotype, target undisclosed",758,167
+3p5o,A,7.3,10,True,5.5,low,False,"Triazolo-benzodiazepine scaffold, no disclosed target to anchor estimate",752,160
+1ps3,A,2.28,11,True,4.5,low,False,"No target specified; small polar iminosugar-like ligand, no binding data",745,152
+3dx1,A,3.58,11,True,4.5,low,False,"No target identity disclosed; small polar aminocyclitol, no binding data",726,153
+3d4z,A,4.89,11,True,4.5,low,False,"No target identity disclosed; small polar iminosugar-like ligand, no binding data",740,156
+3dx2,A,6.82,11,True,4.5,low,False,Target undisclosed; no structural or binding data to anchor estimate,742,151
+3ejr,A,8.57,11,True,5.0,low,False,Target undisclosed; no binding data available for this scaffold,759,146
+3l7b,A,2.4,12,True,5.0,low,False,"Target undisclosed; PLP-lysine aldimine ligand, no complex-specific data",739,157
+4eky,A,3.52,12,True,4.5,low,False,"Target undisclosed; nucleoside analog, no binding data available",758,150
+3g2n,A,4.09,12,True,4.5,low,False,"No target specified; ligand is PLP-lysine Schiff base, generic cofactor affinity",739,160
+3syr,A,5.1,12,True,4.0,low,False,"Target undisclosed; ligand is 5-fluoroarabinosyluracil-like nucleoside, no binding data",752,168
+3ebp,A,5.91,12,True,5.0,low,False,Target undisclosed; no binding data available to anchor estimate,751,147
+2w66,A,4.05,13,True,4.0,low,False,"Target undisclosed; small aminocyclitol sugar-like ligand, no binding data available",742,159
+2w4x,A,4.85,13,True,4.0,low,False,"No target identified; streptozotocin-like glycoside, no binding data",747,151
+2wca,A,5.6,13,True,4.5,low,False,Target undisclosed; no binding data to anchor estimate,757,148
+2xj7,A,6.66,13,True,4.0,low,False,No target identity disclosed; cannot estimate reliably,743,147
+2vvn,A,7.3,13,True,4.5,low,False,"No target disclosed; iminosugar-like glycomimetic, weak generic estimate",743,157
+3aru,A,3.22,14,True,5.0,low,False,"Target undisclosed; caffeine-like xanthine, no binding data available",730,151
+3arv,A,5.64,14,True,5.0,low,False,No target disclosed; alkaloid structure insufficient to estimate affinity,738,152
+3ary,A,6.0,14,True,5.0,low,False,No target identity provided; cannot ground estimate,724,142
+3arq,A,6.4,14,True,6.5,low,True,"Doxorubicin-like anthracycline; target undisclosed, no specific affinity data",784,158
+3arp,A,7.15,14,True,5.0,low,False,Target undisclosed; no structural or binding data to anchor estimate,747,149
+4ih5,A,4.11,15,True,5.5,low,False,"Target undisclosed; pyrazolopyrimidine kinase-hinge-like scaffold, generic estimate",722,167
+4ih7,A,5.24,15,True,5.0,low,False,No target specified; cannot estimate without protein context,726,142
+3cj4,A,6.51,15,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,748,149
+4eo8,A,8.15,15,True,5.0,low,False,Target undisclosed; no structural or assay reference available,752,144
+3gnw,A,9.1,15,True,5.5,low,False,Unknown target; no binding data or homology basis available,775,145
+1gpk,A,5.37,16,True,5.0,low,False,Target undisclosed; no binding data or homology to anchor estimate,742,149
+1gpn,A,6.48,16,True,5.0,low,False,Target undisclosed; no structural or assay reference available,742,144
+1h23,A,8.35,16,True,5.5,low,False,No target identity disclosed; cannot estimate specific binding,758,148
+1h22,A,9.1,16,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,756,146
+1e66,A,9.89,16,True,5.0,low,False,Target undisclosed; no reliable structure-activity basis for estimate,742,150
+3f3a,A,4.19,17,True,3.0,low,False,No target identity disclosed; tetradecane is a nonspecific hydrophobic ligand,709,159
+3f3c,A,6.02,17,True,4.0,low,False,No target specified; small amino-acid-like ligand lacks binding context,722,149
+4mme,A,6.5,17,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,731,149
+3f3d,A,7.16,17,True,3.5,low,False,"Target undisclosed; ligand is methionine, no specific complex data",712,151
+3f3e,A,7.7,17,True,3.5,low,False,"Target undisclosed; ligand is simple amino acid (leucine), no basis",714,155
+2wbg,A,4.45,18,True,4.5,low,False,"Target undisclosed; iminosugar-like scaffold, no binding data to anchor estimate",750,160
+2cbv,A,5.48,18,True,4.5,low,False,No target disclosed; polar aminocyclitol lacks binding-site context,736,153
+2j78,A,6.42,18,True,4.5,low,False,Target undisclosed; no protein context to anchor estimate,735,148
+2j7h,A,7.19,18,True,4.0,low,False,No target disclosed; small polyol unknown binding partner,722,147
+2cet,A,8.02,18,True,4.5,low,False,Target undisclosed; no structural basis for specific affinity estimate,751,151
+3udh,A,2.85,19,True,5.0,low,False,No target disclosed; no binding data to anchor estimate,718,145
+3rsx,A,4.41,19,True,5.0,low,False,Target undisclosed; no structural basis for specific estimate,721,146
+4djv,A,6.72,19,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,743,148
+2vkm,A,8.74,19,True,6.5,low,True,"Resembles peptidomimetic HIV protease inhibitor scaffold, no target disclosed",783,161
+4gid,A,10.77,19,True,5.5,low,False,"No target disclosed; peptidomimetic resembles protease inhibitor scaffold, rough guess",792,162
+4jfs,A,5.27,20,True,5.0,low,False,Target undisclosed; no binding data available for this scaffold,735,146
+4j28,A,5.7,20,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,741,149
+2wvt,A,6.12,20,True,4.5,low,False,"No target specified; iminosugar-like polyol, weak generic glycosidase binder",738,156
+2xii,A,7.2,20,True,5.0,low,False,"Target undisclosed; iminosugar-like scaffold, no reliable affinity basis",762,158
+4pcs,A,7.85,20,True,5.0,low,False,Target undisclosed; no binding data or structural context available,737,144
+3rr4,A,4.55,21,True,5.0,low,False,Target undisclosed; no structural or assay data to anchor estimate,730,149
+1s38,A,5.15,21,True,5.0,low,False,Target undisclosed; no structural or binding data available,719,143
+1r5y,A,6.46,21,True,5.0,low,False,No target specified; cannot estimate binding affinity,717,143
+3gc5,A,7.26,21,True,5.0,low,False,Target undisclosed; no identifiable complex or binding data to ground estimate,734,152
+3ge7,A,8.7,21,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,742,149
+4dli,A,5.62,22,True,5.5,low,False,Unknown target; no binding data to anchor estimate,729,146
+2zb1,A,6.32,22,True,5.5,low,False,Target undisclosed; no binding data available for this scaffold,743,148
+4f9w,A,6.94,22,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,734,148
+3e92,A,8.0,22,True,5.5,low,False,Target undisclosed; no structural basis to estimate specific affinity,743,151
+3e93,A,8.85,22,True,5.5,low,False,Target undisclosed; no protein context to anchor estimate,754,148
+4owm,A,2.96,23,True,4.5,low,False,"Target undisclosed; ligand resembles sugar-pyrophosphate, no binding data",755,159
+3twp,A,3.92,23,True,4.5,low,False,"Target undisclosed; ligand resembles ribose bisphosphate, no binding data",756,157
+3r88,A,4.82,23,True,4.5,low,False,Target undisclosed; no protein context to anchor estimate,756,148
+4gkm,A,5.17,23,True,4.0,low,False,No target identity disclosed; sugar-phosphate ligand lacks specific binding context,755,157
+3qqs,A,5.82,23,True,4.5,low,False,"Undisclosed target; ribose bisphosphate-like ligand, no specific complex data",756,158
+3gv9,A,2.12,24,True,5.0,low,False,No target identity disclosed; cannot assess specific binding,716,145
+3gr2,A,2.52,24,True,5.0,low,False,No target identity disclosed; cannot assess binding,725,143
+4kz6,A,3.1,24,True,5.0,low,False,Target undisclosed; no structural basis to estimate affinity,728,147
+4jxs,A,4.74,24,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,735,149
+2r9w,A,5.1,24,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,748,148
+2hb1,A,3.8,25,True,5.0,low,False,Target undisclosed; no structural basis to estimate affinity,718,147
+1bzc,A,4.92,25,True,5.5,low,False,Unknown target; phosphonate mimic suggests PTP/PSMA-like inhibitor but no direct data,753,166
+2qbr,A,6.33,25,True,5.0,low,False,No disclosed target; no binding data to reference,740,143
+2qbq,A,7.44,25,True,5.0,low,False,Target undisclosed; no binding data or homology basis available,754,145
+2qbp,A,8.4,25,True,5.0,low,False,Target undisclosed; no structural or assay reference available,760,144
+1q8t,A,4.76,26,True,5.0,low,False,No target identity provided; cannot ground estimate,735,142
+1ydr,A,5.52,26,True,5.0,low,False,Target undisclosed; no structural basis for specific estimate,728,146
+1q8u,A,5.96,26,True,5.5,low,False,Target undisclosed; no binding data available for this sulfonamide scaffold,734,154
+1ydt,A,7.32,26,True,5.0,low,False,Target undisclosed; no binding data available for estimate,737,144
+3ag9,A,8.05,26,True,4.5,low,False,Target undisclosed; no structural basis for specific affinity estimate,831,151
+3fcq,A,2.77,27,True,4.0,low,False,"Target undisclosed; ligand is a small acetylsalicylate-like acid, no basis",719,157
+1z9g,A,5.64,27,True,5.0,low,False,"No target identity disclosed, cannot estimate specific affinity",726,147
+1qf1,A,7.32,27,False,6.0,low,False,Thiol likely zinc-binding; resembles ACE/peptidase inhibitor pharmacophore,749,164
+5tmn,A,8.04,27,True,5.5,low,False,"Phosphonopeptide resembles metalloprotease inhibitor; target undisclosed, no verified complex",759,165
+4tmn,A,10.17,27,True,5.5,low,False,Phosphonamidate peptidomimetic resembles ACE/metalloprotease inhibitor but target undisclosed,768,169
+4ddk,A,2.29,28,True,4.5,low,False,"No target identity given; small acid fragment, low specific affinity expected",716,150
+4ddh,A,3.32,28,True,5.0,low,False,Target undisclosed; no binding data available for this benzofuran acetic acid,717,152
+3ivg,A,4.3,28,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,743,146
+3coz,A,5.57,28,True,6.5,low,False,Sulfamoyl adenosine aminoacyl-sulfamate mimics aaRS substrate; target undisclosed,769,170
+3coy,A,6.02,28,True,5.5,low,False,Target undisclosed; sulfamoyl-adenosine resembles aminoacyl-sulfamoyladenosine inhibitors,772,174
+3pxf,A,4.43,29,True,5.0,low,False,No target specified; cannot estimate specific binding affinity,727,145
+4eor,A,6.3,29,True,5.5,low,False,"Target undisclosed; sulfonamide-purine scaffold suggests carbonic anhydrase or kinase, unverifiable",745,172
+2xnb,A,6.83,29,True,5.5,low,False,Target undisclosed; no protein context to ground estimate,746,147
+1pxn,A,7.15,29,True,5.5,low,False,"Target undisclosed; kinase-like aminopyrimidine scaffold, no binding data",733,159
+2fvd,A,8.52,29,True,5.5,low,False,Unknown target; no binding data available for this compound,747,144
+4k77,A,6.63,30,True,5.5,low,False,No target specified; generic kinase-like scaffold guess only,724,148
+4e5w,A,7.66,30,True,5.5,low,False,Target undisclosed; no binding data available for this scaffold,746,148
+4ivb,A,8.72,30,True,5.5,low,False,Target undisclosed; no binding data available for estimate,745,146
+4ivd,A,9.52,30,True,5.5,low,False,No target disclosed; cannot assess specific binding interactions,747,148
+4ivc,A,10.0,30,True,5.5,low,False,No target identity disclosed; cannot ground estimate,746,146
+4f09,A,6.7,31,True,5.5,low,False,No target disclosed; generic kinase-like scaffold guess only,726,150
+4gfm,A,7.22,31,True,5.0,low,False,Unknown target; no binding data to anchor estimate,730,144
+4hge,A,7.92,31,True,5.5,low,False,No target identity disclosed; generic estimate from drug-like scaffold,738,152
+4e6q,A,8.36,31,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,736,148
+4jia,A,9.22,31,True,5.5,low,False,Target undisclosed; no protein context to anchor estimate,743,148
+2brb,A,4.86,32,True,5.5,low,False,No target specified; cannot determine real binding affinity,731,145
+2br1,A,5.14,32,True,5.5,low,False,"Unknown target; furopyrimidine kinase-like scaffold, generic estimate only",739,158
+3jvr,A,5.72,32,True,5.5,low,False,No target specified; cannot determine real binding affinity,743,145
+3jvs,A,6.54,32,True,5.0,low,False,Unknown target; no structural or binding data to ground estimate,749,146
+1nvq,A,8.25,32,True,6.5,low,True,"Staurosporine-like indolocarbazole; kinase inhibitors typically nM affinity, target undisclosed",774,167
+3acw,A,4.76,33,True,5.0,low,False,No disclosed target; biaryl-tropane-like ligand lacks binding context,731,155
+4ea2,A,6.44,33,True,4.5,low,False,Unknown target; no structural or binding data available,757,143
+2zcr,A,6.87,33,True,5.0,low,False,Target undisclosed; no structural or assay basis for estimate,748,147
+2zy1,A,7.4,33,True,5.0,low,False,No target identity disclosed; phosphonate ligand lacks binding context,732,150
+2zcq,A,8.82,33,True,5.0,low,False,Target undisclosed; no structural or assay reference to ground estimate,742,149
+1bcu,A,3.28,34,True,5.0,low,False,Target undisclosed; no structural or binding data available,720,143
+3bv9,A,5.36,34,True,4.5,low,False,No target identity provided; small aminoaldehyde lacks binding context,718,151
+1oyt,A,7.24,34,True,5.5,low,False,"Target undisclosed; amidine-bicyclic scaffold resembles protease inhibitors, no data",770,163
+2zda,A,8.4,34,True,5.0,low,False,Target undisclosed; benzamidine-Pro-Phe motif suggests serine protease but no quantitative basis,755,165
+3utu,A,10.92,34,True,5.5,low,False,"Peptidomimetic with amidine/sulfonamide; target undisclosed, no binding data",786,160
+3u9q,A,4.38,35,True,4.0,low,False,No target specified; decanoic acid generic weak affinity guess,710,149
+2yfe,A,6.63,35,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,734,148
+3fur,A,8.0,35,True,5.5,low,False,Target undisclosed; no structural basis to estimate specific affinity,757,151
+3b1m,A,8.48,35,True,5.0,low,False,Target undisclosed; no binding data or homology basis available,763,145
+2p4y,A,9.0,35,True,6.0,low,False,Target undisclosed; no protein context to anchor estimate,768,146
+3uo4,A,6.52,36,True,5.5,low,False,"Target undisclosed; diaminopyrimidine kinase-like scaffold, generic estimate",739,161
+3up2,A,7.4,36,True,5.5,low,False,"Target undisclosed; diaminopyrimidine kinase-like scaffold, generic estimate only",740,162
+3e5a,A,8.23,36,False,7.0,low,False,Kinase-hinge-binding diaminopyrimidine/triazine scaffold resembles known kinase inhibitors,757,169
+2wtv,A,8.74,36,True,6.0,low,False,Target undisclosed; no binding data to anchor estimate,756,148
+3myg,A,10.7,36,True,6.0,low,False,Target undisclosed; no binding data available to ground estimate,750,148
+3kgp,A,2.57,37,True,4.0,low,False,"No target specified; small fragment-like ligand, no binding data",713,148
+1c5z,A,4.01,37,True,4.5,low,False,Target undisclosed; benzamidine is weak generic protease-binding fragment,713,155
+1o5b,A,5.77,37,True,5.0,low,False,No target identity disclosed; amidine ligand lacks binding context,720,148
+1owh,A,7.4,37,True,5.0,low,False,Target undisclosed; diamidine-like scaffold lacks specific binding data,736,153
+1sqa,A,9.21,37,True,5.5,low,False,"Target undisclosed; amidine/pyrimidinylamine suggests protease inhibitor, no specific data",747,165
+4jsz,A,2.3,38,True,5.0,low,False,Unknown target; benzenesulfonamide is weak generic carbonic anhydrase binder,712,160
+3kwa,A,4.08,38,True,4.5,low,False,No target disclosed; spermidine-like polyamine lacks specific binding data,709,154
+2weg,A,6.5,38,True,5.0,low,False,"Unknown target; small benzenesulfonamide, weak generic estimate",713,153
+3ryj,A,7.8,38,True,5.0,low,False,Target undisclosed; sulfonamide suggests carbonic anhydrase but unverified,730,159
+3dd0,A,9.0,38,True,6.0,low,False,"Ethoxzolamide-like benzothiazole sulfonamide, likely carbonic anhydrase; target undisclosed",723,169
+2xdl,A,3.1,39,True,4.5,low,False,No target identity given; cannot estimate specific affinity,722,146
+3b27,A,5.16,39,True,5.5,low,False,No target specified; cannot assess binding without protein context,721,145
+1yc1,A,6.17,39,True,5.5,low,False,Target undisclosed; no complex identity to ground estimate,746,148
+3rlr,A,7.52,39,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,741,148
+2yki,A,9.46,39,True,6.0,low,False,"No disclosed target; unverifiable identity, generic kinase-like scaffold guess only",756,158
+1z95,A,7.12,40,True,6.0,low,True,"Resembles bicalutamide-like androgen receptor antagonist scaffold, target undisclosed",755,162
+3b68,A,8.4,40,True,5.0,low,False,Target undisclosed; no structural basis to estimate affinity,760,147
+3b5r,A,8.77,40,True,6.0,low,False,Target undisclosed; ligand resembles AR antagonist scaffold but no binding data,751,156
+3b65,A,9.27,40,True,5.5,low,False,"Target undisclosed; resembles antiandrogen-like scaffold, no reliable basis",741,159
+3g0w,A,9.52,40,True,5.0,low,False,"No protein target disclosed, cannot estimate binding",756,144
+4u4s,A,2.92,41,True,5.0,low,False,No target disclosed; cannot assess specific binding,717,143
+1p1q,A,4.89,41,True,5.0,low,False,No target identity disclosed; cannot assess specific binding,720,145
+1syi,A,5.44,41,True,5.0,low,False,Target undisclosed; no structural binding data available,735,142
+1p1n,A,6.8,41,True,4.5,low,False,Target undisclosed; no protein context to ground estimate,734,147
+2al5,A,8.4,41,True,4.5,low,False,"No target specified; small fragment-like ligand, no binding data",720,148
+3g2z,A,2.36,42,True,5.0,low,False,No target specified; cannot estimate binding without protein context,720,144
+3g31,A,2.89,42,True,4.5,low,False,Target undisclosed; small norbornane-imide fragment lacks binding data,752,154
+4de2,A,4.12,42,True,5.0,low,False,Target undisclosed; no structural or assay data to anchor estimate,738,149
+4de3,A,5.52,42,True,5.0,low,False,No target disclosed; no structural basis to estimate affinity,733,146
+4de1,A,5.96,42,True,5.5,low,False,Target undisclosed; no structural basis for specific affinity estimate,738,151
+1vso,A,4.72,43,True,5.0,low,False,Target undisclosed; no structural basis for quantitative estimate,736,148
+4dld,A,5.82,43,True,5.0,low,False,Target undisclosed; no binding data or structural basis available,743,145
+3gbb,A,6.9,43,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,742,149
+3fv2,A,8.11,43,True,5.0,low,False,Target undisclosed; no basis beyond generic amino-acid-like ligand size,756,154
+3fv1,A,9.3,43,True,5.0,low,False,Target undisclosed; no structural basis for numeric estimate,754,147
+4mgd,A,4.69,44,True,5.0,low,False,Target undisclosed (ligand resembles DDT metabolite); no basis for specific pKd,735,158
+2qe4,A,7.96,44,True,5.5,low,False,Target undisclosed; no basis beyond generic flavonoid-like ligand properties,744,157
+1qkt,A,9.04,44,True,7.5,low,False,"Estradiol structure, but no target specified to anchor affinity",746,149
+2pog,A,9.54,44,True,5.5,low,False,No target disclosed; cannot estimate specific binding affinity,742,149
+2p15,A,10.3,44,True,6.5,low,False,"Estradiol-like steroid scaffold, likely estrogen receptor ligand, target undisclosed",767,163
+2y5h,A,5.79,45,True,5.0,low,False,Target undisclosed; no binding data or structural homology to reference,771,147
+1lpg,A,7.09,45,True,5.5,low,False,Undisclosed target; no binding data to anchor estimate,763,148
+2xbv,A,8.43,45,True,5.5,low,False,Target undisclosed; no structural basis for specific affinity estimate,767,151
+1z6e,A,9.72,45,True,5.5,low,False,Unknown target; no experimental or homology data available,761,144
+1mq6,A,11.15,45,True,5.5,low,False,"No disclosed target; structure unrecognized, cannot ground estimate",761,152
+1nc3,A,5.0,46,True,5.0,low,False,"Target undisclosed; nucleoside analog, no binding data available",744,150
+1nc1,A,6.12,46,True,5.5,low,False,Target undisclosed; nucleoside analog resembles SAH-hydrolase/MTase ligand,742,163
+1y6r,A,10.11,46,True,5.5,low,False,"Target undisclosed; nucleoside-like ligand resembles MTA-analog inhibitor, no binding data",745,166
+4f2w,A,11.3,46,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,737,148
+4f3c,A,11.82,46,True,5.5,low,False,No target identity disclosed; cannot ground estimate,740,146
+1uto,A,2.27,47,True,4.0,low,False,No target identified; phenethylamine is a small nonspecific fragment,710,151
+4abg,A,3.57,47,True,5.0,low,False,"No target identity given; small fragment-like ligand, no binding data",717,147
+3gy4,A,5.1,47,True,4.5,low,False,Target undisclosed; small amidine/aniline fragment lacks specific binding data,716,156
+1k1i,A,6.58,47,False,7.0,low,True,"Amidine-benzyl naphthalenesulfonamide-proline scaffold resembles known serine protease (e.g., factor Xa/thrombin) inhibitors",764,185
+1o3f,A,7.96,47,True,5.0,low,False,"Target undisclosed; amidine-biphenyl scaffold resembles DNA minor-groove binders, no reliable basis",744,168
+2yge,A,5.06,48,True,7.5,low,True,"Geldanamycin-like ansamycin; target undisclosed, likely HSP90 nM binder",794,162
+2fxs,A,6.06,48,True,5.0,low,False,Target undisclosed; no structural or assay basis for estimate,745,147
+2iwx,A,6.68,48,True,5.0,low,False,"Target undisclosed; macrolactone resembles resorcylic lactone, no binding data",738,156
+2wer,A,7.05,48,True,5.5,low,False,Target undisclosed; resembles macrolactone (radicicol-like) with no binding data,760,158
+2vw5,A,8.52,48,True,7.5,low,True,"Geldanamycin-like macrocycle resembles Hsp90 ansamycin binder, target undisclosed",785,166
+4kzq,A,6.1,49,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,727,146
+4kzu,A,6.5,49,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,724,146
+4j21,A,7.41,49,True,5.5,low,False,No target specified; cannot determine real binding affinity,734,145
+4j3l,A,7.8,49,True,5.5,low,False,Target undisclosed; no binding data available to anchor estimate,744,149
+3kr8,A,8.1,49,True,5.5,low,False,No target identity disclosed; cannot ground estimate,732,146
+2ymd,A,3.16,50,True,5.0,low,False,"Serotonin-like ligand, no target specified to anchor estimate",716,151
+2wnc,A,6.32,50,True,6.5,low,True,Tropane indole ester resembles tropisetron-like 5-HT3 ligand,743,157
+2xys,A,7.42,50,True,5.0,low,False,Target undisclosed; alkaloid structure insufficient for quantitative estimate,757,154
+2wn9,A,8.52,50,True,5.5,low,False,Target undisclosed; no binding data to anchor estimate,727,148
+2x00,A,11.33,50,True,5.0,low,False,Target undisclosed; no binding data available for this macrocyclic ligand,794,151
+3ozt,A,4.13,51,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,771,149
+3ozs,A,5.33,51,True,5.0,low,False,Unknown target; no structural or assay reference available,776,142
+3oe5,A,6.88,51,True,5.0,low,False,Target undisclosed; no structural basis to estimate specific affinity,768,149
+3oe4,A,7.47,51,True,5.0,low,False,Target undisclosed; no structural basis for reliable estimate,770,147
+3nw9,A,9.0,51,True,5.5,low,False,Target undisclosed; adenosine-like scaffold but no binding data to anchor estimate,777,159
+3ao4,A,2.07,52,True,5.0,low,False,No target disclosed; cannot estimate binding without protein context,723,146
+3zt2,A,2.84,52,True,5.0,low,False,Target undisclosed; no binding data to anchor estimate,735,146
+3zsx,A,3.28,52,True,5.0,low,False,Target undisclosed; no structural or assay data to ground estimate,750,148
+4cig,A,3.67,52,True,5.0,low,False,Target undisclosed; no structural or assay reference available,750,144
+3zso,A,5.12,52,True,5.0,low,False,Target undisclosed; no structural basis to estimate affinity,767,147
+3n7a,A,3.7,53,True,4.0,low,False,"No target disclosed; ligand resembles shikimic acid, no binding data",729,151
+4ciw,A,4.82,53,True,4.0,low,False,"No target identity disclosed; small polar acid, cannot estimate",734,150
+3n86,A,5.64,53,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,743,149
+3n76,A,6.85,53,True,4.5,low,False,Target undisclosed; no binding data available to ground estimate,744,148
+2xb8,A,7.59,53,True,5.0,low,False,Target undisclosed; no structural or assay data to ground estimate,748,148
+4bkt,A,3.62,54,True,5.0,low,False,Target undisclosed; no structural basis for binding estimate,737,146
+4w9c,A,4.65,54,True,5.0,low,False,No target identity disclosed; cannot ground estimate,750,144
+4w9l,A,5.02,54,True,5.5,low,False,Target undisclosed; peptidomimetic resembles VHL/hydroxyproline ligase ligand,783,164
+4w9i,A,5.96,54,True,5.0,low,False,Target undisclosed; no structural basis for specific affinity estimate,765,149
+4w9h,A,6.73,54,True,5.0,low,False,Target undisclosed; ligand resembles VHL/hydroxyproline ligand fragment,763,158
+3nq9,A,4.03,55,True,3.5,low,False,No target specified; octanoic acid generic weak binder assumption,708,149
+3ueu,A,5.24,55,True,4.5,low,False,Target undisclosed; lauric acid generic fatty acid affinity unknown,712,155
+3uev,A,5.89,55,True,4.5,low,False,Target undisclosed; fatty acid ligand lacks specific binding context,714,153
+3uew,A,6.31,55,True,4.5,low,False,No target identity disclosed; cannot estimate specific binding,716,148
+3uex,A,6.92,55,True,4.0,low,False,Target undisclosed; fatty acid ligand lacks specific protein context,718,151
+3lka,A,2.82,56,True,5.0,low,False,"Target undisclosed; simple arylsulfonamide, no binding context available",716,153
+3ehy,A,5.85,56,True,4.0,low,False,"No target disclosed; small sulfonamide fragment-like ligand, low likely affinity",729,158
+3tsk,A,7.17,56,True,5.0,low,False,Target undisclosed; no binding data or homology available,772,143
+3nx7,A,8.1,56,True,5.0,low,False,No target specified; hydroxamate suggests MMP/metalloenzyme but unverifiable,729,160
+4gr0,A,9.55,56,True,5.5,low,False,"Unknown target; peptidomimetic phosphinic acid suggests protease inhibitor, no data",791,162
+3dxg,A,2.4,57,True,4.5,low,False,"Uridine monophosphate, no disclosed target to anchor estimate",752,152
+3d6q,A,3.76,57,True,4.5,low,False,"Target undisclosed; nucleoside analog, no binding data to anchor estimate",751,156
+1w4o,A,5.22,57,True,4.0,low,False,Uridine monophosphate-like nucleotide; no target identity to anchor estimate,754,157
+1o0h,A,5.92,57,True,5.0,low,False,"ADP-like ligand but target undisclosed, no basis for specific value",762,150
+1u1b,A,7.8,57,True,5.0,low,False,"Target undisclosed; dinucleotide-like ligand, no binding data basis",828,153
+4llx,B,2.89,1,True,4.0,low,False,"Small aminopyrimidine fragment, no specific PDE10A binding data known",754,155
+5c28,B,5.66,1,False,4.8,low,False,"Small aminopyrimidine fragment, weak predicted PDE10A affinity, no specific data",761,161
+3uuo,B,7.96,1,False,7.5,low,False,"PDE10A pyrazolopyridine-like scaffold with piperazine, typical inhibitor chemotype",777,166
+3ui7,B,9.0,1,False,7.5,low,False,"PDE10A inhibitor scaffold; pyrazoloquinoline-like with morpholinomethyl, typical PDE10A SAR",778,176
+5c2h,B,11.09,1,False,6.3,low,False,"PDE10A inhibitor-like chloropyrimidine scaffold, moderate predicted affinity by analogy",787,167
+2v00,B,3.66,2,False,3.5,low,False,"Small aminopyrimidinone fragment, weak aspartic protease binder, fragment-like affinity",751,163
+3wz8,B,5.82,2,False,4.8,low,False,"Aspartic protease fragment-like ligand, moderate size, no direct data recalled",758,157
+3pww,B,7.32,2,False,8.3,medium,True,"Peptidomimetic aspartic protease inhibitor, resembles known endothiapepsin/CMK-series ligands",816,170
+3prs,B,7.82,2,False,8.3,medium,True,"Peptidomimetic hydroxyethylene transition-state analog, typical endothiapepsin aspartic-protease inhibitor class",806,175
+3uri,B,9.0,2,False,4.2,low,False,"Small peptidomimetic with aldehyde warhead, weak aspartic protease inhibitor analogy",744,164
+4m0z,B,5.19,3,False,6.0,low,False,"Pyrazole urea/carboxamide fragment-like kinase hinge binder, moderate affinity estimate",759,166
+4m0y,B,6.46,3,True,5.2,low,False,Unrecognized pyrazole carboxamide; weak kinase hinge-binder-like features only,753,161
+3qgy,B,7.8,3,False,6.5,low,False,"Kinase-hinge-binding aminopyridine scaffold, typical ITK inhibitor potency range",771,164
+4qd6,B,8.64,3,False,7.2,low,False,"Kinase hinge-binding aminopyrazole/pyridine scaffold with sulfonyl, typical ITK inhibitor potency",787,175
+4rfm,B,10.05,3,False,7.5,low,False,ITK kinase inhibitor scaffold with pyrazole hinge binder; estimate from analogous kinase inhibitor SAR,799,174
+4cr9,B,4.1,4,True,4.0,low,False,"small diaminomethylquinoline fragment, no specific FXIa SAR data recalled",733,158
+4cra,B,7.22,4,False,7.3,low,False,"FXIa peptidomimetic inhibitor with aminoquinoline P1 basic group, typical nM potency",781,166
+4x6p,B,8.3,4,False,7.3,low,False,"FXIa active-site tetrazole-amide inhibitor scaffold, typical nM potency series",790,161
+4crc,B,8.72,4,False,6.8,low,False,Peptidomimetic with tetrazole/acrylamide motifs typical of FXIa inhibitors,788,164
+4ty7,B,9.52,4,False,8.3,low,False,FXIa imidazole-benzylamine chemotype resembling known S1/S1' pocket binders,786,162
+5aba,B,2.98,5,True,4.5,low,False,p53 lacks defined small-molecule pocket; no binding data recalled,764,153
+5a7b,B,3.57,5,True,4.5,low,False,No known p53 small-molecule pocket data for this ligand,770,148
+4agn,B,3.97,5,True,4.5,low,False,No known binding data for this p53-small molecule pair; p53 lacks defined small-molecule pocket,761,162
+4agp,B,4.69,5,True,5.0,low,False,p53 lacks defined small-molecule pocket; no binding data recognized,768,153
+4agq,B,5.01,5,True,4.5,low,False,No known p53-small molecule binding data for this specific ligand,768,148
+3bgz,B,6.26,6,False,5.0,low,False,Diarylindole carboxylic acid resembles weak-moderate Pim1 fragment-like inhibitors,765,166
+3jya,B,6.89,6,False,6.0,low,False,"Pim-1 ATP-site thienopyrimidinone-like scaffold, moderate dichlorophenyl fused inhibitor",758,174
+2c3i,B,7.6,6,True,5.5,low,False,No experimental data recalled; generic kinase-like fragment potency estimate,746,153
+4k18,B,8.96,6,False,6.8,low,False,"Pim-1 kinase inhibitor scaffold with imidazopyridazine core, typical submicromolar affinity",769,168
+5dwr,B,11.22,6,False,7.8,low,False,PIM1 inhibitor-like pyridine carboxamide scaffold; analogy to known PIM1 chemotypes,780,170
+3mss,B,4.66,7,False,9.3,high,True,"Imatinib structure vs ABL1 kinase, well-characterized nanomolar inhibitor",774,162
+3k5v,B,6.3,7,False,9.0,high,True,"Imatinib-ABL1 kinase, well-characterized nanomolar inhibitor complex",774,161
+3pyy,B,6.86,7,False,9.0,high,True,"Imatinib structure bound to ABL1, well-documented nanomolar affinity",775,156
+2v7a,B,8.3,7,False,6.8,low,False,Pyrazole-amide scaffold resembles kinase-hinge binders with piperazine solubilizing group,802,165
+4twp,B,10.0,7,False,7.2,low,False,Pyrazolopyridine/thioether scaffold resembles known ABL1 kinase inhibitors,762,164
+3wtj,B,6.53,8,False,6.5,low,True,"Imidacloprid-like neonicotinoid pharmacophore binding AChBP, known analog class",744,162
+3zdg,B,7.1,8,False,5.5,low,True,"AChBP is carbamate (e.g. neostigmine-like) ligand homolog, moderate affinity nicotinic surrogate",752,173
+3u8k,B,8.66,8,False,6.0,low,False,"AChBP nicotinic-like pyridine ether ligand, analog of nicotinic agonists",736,161
+4qac,B,9.4,8,True,5.5,low,False,"Unrecognized aminopyrimidine ligand; no binding data basis, rough estimate",758,159
+3u8n,B,10.17,8,False,6.0,low,False,AChBP nicotinic ligand resembles azepane/pyridine nAChR-type binders,739,160
+1a30,B,4.3,9,False,3.2,low,False,Short peptide fragment lacks typical protease-inhibitor scaffold features for tight binding,776,160
+2qnq,B,6.11,9,True,4.5,low,False,Unrecognized ligand scaffold; no binding data for this bis-sulfonamide vs Gag-Pol target,808,168
+1g2k,B,7.96,9,False,8.3,low,False,"cyclic sulfamide diol HIV protease inhibitor scaffold, resembles known peptidomimetic series",803,167
+1eby,B,9.7,9,False,8.2,medium,True,"C2-symmetric diol HIV protease inhibitor scaffold, resembles known potent peptidomimetics",817,167
+3o9i,B,11.82,9,False,9.5,medium,True,Resembles darunavir-like HIV protease inhibitor with bis-THF/sulfonamide scaffold,795,167
+4lzs,B,4.8,10,False,4.3,low,False,Small pyrrole fragment lacks typical BRD4 acetyl-lysine mimetic potency features,743,164
+3u5j,B,5.61,10,False,7.0,medium,True,"(+)-JQ1-like triazolobenzodiazepine, known BRD4 BET bromodomain ligand",751,168
+4wiv,B,6.26,10,False,6.5,low,False,Isoxazole-imidazopyrazine fragment resembles known BRD4 acetyl-lysine mimetics,757,168
+4ogj,B,6.79,10,False,6.5,low,False,BET BRD4 bromodomain; aminopyrimidine/sulfonamide scaffold resembles known BRD4 inhibitor chemotypes,776,180
+3p5o,B,7.3,10,False,7.3,medium,True,Thienotriazolodiazepine/JQ1-like BRD4 BET-bromodomain acetyl-lysine mimetic,770,174
+1ps3,B,2.28,11,False,6.5,low,False,Iminosugar-like bicyclic lactam resembling mannosidase inhibitors; estimate by analogy,763,166
+3dx1,B,3.58,11,False,5.5,low,False,Aminocyclopentanetriol resembles mannosidase iminosugar inhibitors; weak-moderate affinity estimate,746,172
+3d4z,B,4.89,11,False,6.5,low,False,Iminosugar-like bicyclic glycosidase inhibitor scaffold resembling known mannosidase inhibitors,760,170
+3dx2,B,6.82,11,False,6.5,low,True,Sulfoxide mannojirimycin-like iminosugar analog; similar glycosidase inhibitors bind mid-nanomolar,762,175
+3ejr,B,8.57,11,False,7.3,medium,True,"Swainsonine-like polyhydroxy indolizidine, known Golgi mannosidase II inhibitor class",779,168
+3l7b,B,2.4,12,False,4.3,low,False,PLP-lysine aldimine analog; weak millimolar-range binding typical for PLP-site modified ligands,764,166
+4eky,B,3.52,12,False,4.3,low,False,"Nucleoside analog resembling weak GP catalytic-site inhibitors, low micromolar-millimolar range",783,167
+3g2n,B,4.09,12,False,4.2,low,False,"PLP-like Schiff base analog, weak allosteric site binding by analogy",764,155
+3syr,B,5.1,12,False,4.0,low,True,"5-fluorouridine glycoside analog at GP active site, weak known inhibitor class",777,158
+3ebp,B,5.91,12,False,5.3,low,False,Flavonoid-like scaffold resembling known GP allosteric/catalytic site inhibitors,776,162
+2w66,B,4.05,13,False,6.5,medium,True,"GlcNAc-thiazoline-like iminosugar analog, known GH84 OGA inhibitor class",780,166
+2w4x,B,4.85,13,False,6.5,medium,True,Streptozotocin-like glycoside; known GH84 OGA nanomolar-micromolar inhibitor class,779,168
+2wca,B,5.6,13,False,7.5,medium,True,"PUGNAc-like carbamate oxime, known potent OGA/NagJ inhibitor scaffold",795,166
+2xj7,B,6.66,13,False,6.5,medium,True,"GlcNAc-derived bicyclic iminosugar inhibitor, analogous to GlcNAcstatin/NAG-thiazoline OGA inhibitors",781,186
+2vvn,B,7.3,13,False,6.5,low,True,"NAG-thiazoline analog, known OGA/NagJ-family inhibitor scaffold",775,161
+3aru,B,3.22,14,True,4.3,low,False,"No specific binding data; xanthine-derivative, weak chitinase affinity guess",742,156
+3arv,B,5.64,14,True,5.0,low,False,"Planar polycyclic cationic alkaloid-like ligand, likely weak-moderate chitinase active-site stacking",750,169
+3ary,B,6.0,14,True,4.5,low,False,No experimental data recalled; isothiocyanate-benzoxazole-imidazoline unusual for chitinase,736,166
+3arq,B,6.4,14,True,5.5,low,False,Anthracycline-like ligand unrelated to known chitinase substrates; no binding data recalled,796,161
+3arp,B,7.15,14,False,5.5,low,False,"bis-aminoacridinium linker resembles chitinase-binding dyes, weak estimate",759,160
+4ih5,B,4.11,15,True,5.0,low,False,"Small fragment-like pyrazolopyrimidine hydrazine, no specific binding data recalled",741,162
+4ih7,B,5.24,15,True,4.5,low,False,"Small fragment-like pyridinone, weak non-nucleoside HCV polymerase binder likely",745,162
+3cj4,B,6.51,15,False,4.8,low,False,"Small-molecule amide/succinamic acid fragment, weak non-nucleoside HCV polymerase inhibitor features",773,170
+4eo8,B,8.15,15,True,5.5,low,False,"Thiophene carboxylic acid resembles HCV NS5B allosteric inhibitors, no exact data",777,165
+3gnw,B,9.1,15,False,6.5,low,False,"HCV NS5B allosteric-site-like benzothiadiazine/dihydropyridine scaffold, moderate inhibitor potency typical",797,177
+1gpk,B,5.37,16,False,5.5,low,False,"Alkaloid-like amine scaffold, moderate size, no specific AChE data recalled",768,159
+1gpn,B,6.48,16,True,6.5,low,False,Unrecognized alkaloid-like ligand; no direct binding data available for TcAChE,768,159
+1h23,B,8.35,16,False,8.3,medium,True,"Bis-tacrine-like dodecamethylene-linked dihydropyridinone dimer, bivalent AChE gorge binder",784,174
+1h22,B,9.1,16,False,8.5,medium,True,Bis-tacrine-like bivalent AChE inhibitor spanning catalytic and peripheral sites,782,166
+1e66,B,9.89,16,False,7.2,low,False,Aminoacridine-like scaffold resembling known AChE peripheral/active site binders,768,158
+3f3a,B,4.19,17,True,3.0,low,False,"Tetradecane is inert hydrocarbon, no specific binding data available",720,153
+3f3c,B,6.02,17,True,4.0,low,False,Likely LeuT-like transporter with fluorophenylalanine substrate; no specific binding data known,733,162
+4mme,B,6.5,17,True,5.0,low,False,No specific binding data for this transporter-ligand pair known,742,147
+3f3d,B,7.16,17,True,4.0,low,False,Protein family/ligand underspecified; no specific binding data recalled,723,151
+3f3e,B,7.7,17,True,3.5,low,False,"Generic amino acid (leucine) substrate for bacterial transporter, weak/non-specific estimate",725,163
+2wbg,B,4.45,18,False,5.0,low,False,"Iminosugar glycosidase inhibitor scaffold with alkyl chain, estimated by analogy",776,164
+2cbv,B,5.48,18,False,5.0,low,False,"Aza-sugar-like iminocyclitol, likely glycosidase active-site inhibitor; weak estimate",762,167
+2j78,B,6.42,18,False,5.5,low,True,"Iminosugar oxime, glycosidase transition-state mimic, similar to known inhibitors",761,161
+2j7h,B,7.19,18,True,4.0,low,False,Iminosugar-like glycosidase inhibitor analog; no specific binding data recalled,748,159
+2cet,B,8.02,18,False,6.5,low,False,"Iminosugar-like glycosidase inhibitor scaffold, analogous to known glycosidase inhibitors",777,167
+3udh,B,2.85,19,False,4.5,low,False,"Small spirocyclic oxindole fragment, weak BACE1 binding typical of fragments",732,160
+3rsx,B,4.41,19,False,5.0,low,False,"Small aminonaphthalene-thiophene fragment, weak putative BACE1 binder, no direct data",735,164
+4djv,B,6.72,19,False,6.3,low,False,"Aminohydantoin-like BACE1 fragment scaffold, typical sub-µM potency range",757,162
+2vkm,B,8.74,19,False,7.8,low,False,"Peptidomimetic hydroxyethylamine BACE1 inhibitor scaffold, typical nM potency",803,167
+4gid,B,10.77,19,False,8.0,low,False,Peptidomimetic transition-state-like BACE1 inhibitor scaffold analogy,806,160
+4jfs,B,5.27,20,True,4.5,low,False,"Unfamiliar iminosugar-like ligand, no specific binding data recalled",758,156
+4j28,B,5.7,20,False,5.5,low,False,"Iminosugar-like fucosidase inhibitor scaffold, moderate affinity estimate",766,161
+2wvt,B,6.12,20,False,5.5,low,False,Iminosugar-like fucosidase inhibitor; polyhydroxylated piperidine mimics transition state,772,166
+2xii,B,7.2,20,False,6.5,low,False,"Iminosugar fucosidase-mimetic scaffold with aromatic amide, typical glycosidase inhibitor range",796,170
+4pcs,B,7.85,20,True,5.0,low,False,"Iminosugar-like fucosidase inhibitor analogy, no specific data recalled",761,158
+3rr4,B,4.55,21,True,5.0,low,False,No specific binding data recalled for this TGT analog,754,145
+1s38,B,5.15,21,False,5.0,low,False,"PreQ1-site-like aminopyrimidinone fragment, analogous TGT inhibitor scaffolds",739,167
+1r5y,B,6.46,21,False,5.0,low,False,"Small aminoquinazoline-like heterocycle, weak-to-moderate affinity for TGT-like enzyme",741,168
+3gc5,B,7.26,21,True,5.5,low,False,"PreQ1-like tricyclic scaffold resembles TGT substrate analogs, no exact data",758,162
+3ge7,B,8.7,21,False,6.0,low,False,"PreQ1-like TGT inhibitor scaffold, analogous known Zymomonas TGT ligands",766,165
+4dli,B,5.62,22,False,6.5,low,False,Quinazoline scaffold resembles known p38 MAPK inhibitors; estimate by analogy,749,163
+2zb1,B,6.32,22,False,6.3,low,False,"p38 MAPK biaryl amide inhibitor-like scaffold, moderate affinity estimate",763,163
+4f9w,B,6.94,22,False,6.5,low,False,Pyridinyl-pyridazine scaffold resembles p38 MAPK ATP-competitive inhibitors,754,168
+3e92,B,8.0,22,False,6.8,low,False,p38 MAPK biaryl inhibitor scaffold resembling known p38 chemotypes,763,161
+3e93,B,8.85,22,False,7.5,low,False,"p38 MAPK inhibitor scaffold with piperidine/benzisoxazole, typical kinase inhibitor potency",774,171
+4owm,B,2.96,23,False,4.3,low,False,PRPP-like substrate analog; weak micromolar-range binding typical of phosphoribosyl substrates,782,165
+3twp,B,3.92,23,False,4.3,low,False,"PRPP-like sugar diphosphate, weak affinity typical of charged phosphorylated substrates",783,163
+3r88,B,4.82,23,True,4.5,low,False,"PRPP-like substrate, weak phosphate-sugar binder, no specific data recalled",783,159
+4gkm,B,5.17,23,False,4.3,low,False,PRPP-like substrate analog; weak micromolar-range binding typical for phosphoribosyl substrates,782,165
+3qqs,B,5.82,23,False,4.3,low,False,PRPP-like phosphoribosyl substrate; weak-moderate affinity typical of charged sugar-phosphate ligands,783,172
+3gv9,B,2.12,24,True,4.0,low,False,No specific binding data for this weak-acid ligand vs beta-lactamase,728,154
+3gr2,B,2.52,24,True,4.0,low,False,No specific binding data; small heterocycle unlikely strong beta-lactamase inhibitor,737,160
+4kz6,B,3.1,24,True,4.0,low,False,"Small thiol-pipecolic acid fragment, weak non-specific beta-lactamase affinity",740,162
+4jxs,B,4.74,24,True,4.5,low,False,No specific binding data recalled; weak carboxylic/sulfonamide fragment-like inhibitor,747,163
+2r9w,B,5.1,24,False,4.3,low,False,"Small-molecule inhibitor fragment, weak non-covalent affinity typical for beta-lactamase scaffolds",760,169
+2hb1,B,3.8,25,False,4.3,low,False,"PTP1B small-molecule fragment with carboxylate/thiophene, weak-moderate affinity typical of fragments",745,169
+1bzc,B,4.92,25,False,6.0,low,False,"PTP1B-like difluoromethylphosphonate pTyr mimetic, moderate affinity typical",788,164
+2qbr,B,6.33,25,False,5.3,low,False,"PTP1B carboxylate/thiophene fragment-like inhibitor, moderate affinity estimate",767,164
+2qbq,B,7.44,25,False,5.3,low,False,"PTP1B active-site carboxylate/thiophene fragment, typical weak-moderate PTP1B inhibitor affinity",781,172
+2qbp,B,8.4,25,False,5.8,low,False,"PTP1B active-site carboxylate/thiophene chemotype, moderate affinity typical of such inhibitors",787,167
+1q8t,B,4.76,26,False,5.0,low,False,"Small amine/amide fragment, weak hinge-binder-like PKA inhibitor analogy",763,161
+1ydr,B,5.52,26,False,6.3,medium,True,"Isoquinoline sulfonamide PKA inhibitor class (H-series), similar to H-89 analogs",754,167
+1q8u,B,5.96,26,False,7.0,medium,True,"H8-like isoquinoline sulfonamide, known PKA inhibitor scaffold",762,160
+1ydt,B,7.32,26,False,6.3,low,False,Isoquinoline sulfonamide resembles PKA inhibitor H-89 scaffold,763,161
+3ag9,B,8.05,26,True,5.5,low,False,Peptide-like PKI/adenosine conjugate; no direct binding data recalled,857,157
+3fcq,B,2.77,27,False,3.3,low,False,Weak zinc-chelation potential modest; no specific thermolysin affinity data recalled,736,159
+1z9g,B,5.64,27,False,5.8,medium,True,Thiol-zinc chelator analogous to known thermolysin succinyl-amino acid inhibitors,743,165
+1qf1,B,7.32,27,False,7.5,medium,True,Thiorphan-like phosphoramidon analog; thiol-Zn binding peptidomimetic thermolysin inhibitor,777,174
+5tmn,B,8.04,27,False,7.8,medium,True,"Phosphonamidate peptide analog, known thermolysin inhibitor class (Cbz-Gly-P-Leu-Leu-like)",779,178
+4tmn,B,10.17,27,False,8.3,medium,True,"Phosphonamidate dipeptide analog, similar to known thermolysin inhibitors (ZFP-Leu-Ala type)",788,175
+4ddk,B,2.29,28,True,3.8,low,False,"Small weak-binding fragment-like acid, no specific SAR data recalled",736,154
+4ddh,B,3.32,28,False,4.3,low,False,"Small fragment-like carboxylic acid, weak-moderate affinity typical of PanC fragment hits",737,164
+3ivg,B,4.3,28,False,5.0,low,False,Indole/benzofuran sulfonamide fragment-like inhibitor typical of PtmS screens,763,163
+3coz,B,5.57,28,False,7.5,medium,True,"Known PanC acyl-sulfamoyl adenosine inhibitor class, nanomolar reported",789,164
+3coy,B,6.02,28,False,7.3,medium,True,"PanC sulfamoyl-adenosine inhibitor, known nanomolar PanC PS acyl-sulfamate series",792,172
+3pxf,B,4.43,29,False,4.2,low,False,"Weak sulfonic acid fragment, no known CDK2 binding motif",743,154
+4eor,B,6.3,29,False,6.5,low,False,"Purine-like CDK2 hinge-binder scaffold with sulfonamide, analogous to known ATP-competitive inhibitors",764,174
+2xnb,B,6.83,29,False,6.5,low,False,CDK2 ATP-pocket aminopyrimidine/piperazine motif typical of micromolar-nanomolar kinase inhibitors,774,177
+1pxn,B,7.15,29,False,6.5,low,False,Aminopyrimidine/thiazole CDK2 ATP-competitive inhibitor scaffold analogy,749,167
+2fvd,B,8.52,29,False,7.0,low,False,"CDK2 ATP-site aminopyrimidine inhibitor, typical nanomolar kinase chemotype",763,167
+4k77,B,6.63,30,False,6.0,low,False,"Pyrimidinone-pyridone kinase hinge binder scaffold, cyclohexylamine substituent, typical JAK1 inhibitor features",745,180
+4e5w,B,7.66,30,False,7.3,low,False,Pyrrolopyridine-fused heterocycle resembles JAK1 ATP-site inhibitor scaffolds,767,170
+4ivb,B,8.72,30,False,8.0,low,True,"Structure resembles JAK1 inhibitor chemotype (pyrrolopyridine-nitrile, baricitinib-like)",766,173
+4ivd,B,9.52,30,False,7.5,low,False,"JAK1 pyrrolopyridine scaffold resembles known JAK inhibitors, estimate by analogy",768,167
+4ivc,B,10.0,30,False,8.0,medium,True,Resembles baricitinib-like JAK1/2 inhibitor pyrrolopyrimidine scaffold with nitrile cyclohexyl,767,180
+4f09,B,6.7,31,False,6.8,low,False,"Pyrrolopyrimidine-like kinase hinge binder scaffold, typical JAK2 inhibitor chemotype",747,172
+4gfm,B,7.22,31,True,5.0,low,False,"Unrecognized dichlorophenyl amide-pyridinone scaffold, no JAK2 SAR data recalled",751,169
+4hge,B,7.92,31,False,6.8,low,False,"Pyrazolo-pyridine carboxamide kinase hinge-binder scaffold, moderate JAK2 affinity estimate",759,174
+4e6q,B,8.36,31,False,6.5,low,False,Pyrrolopyrrolopyrimidine-like scaffold resembles known JAK2 ATP-competitive inhibitors,757,173
+4jia,B,9.22,31,False,6.5,low,False,"Pyrazolo-triazine kinase hinge binder motif, moderate JAK2 affinity estimate",764,165
+2brb,B,4.86,32,False,6.3,low,False,Furanopyrimidine diarylkinase hinge-binder scaffold typical of CHK1 ATP-site inhibitors,764,172
+2br1,B,5.14,32,False,6.3,low,False,Furopyrimidine kinase hinge-binder scaffold resembling CHK1 inhibitors,772,163
+3jvr,B,5.72,32,False,6.2,low,False,Benzimidazole carbamate resembles kinase hinge binders; no direct data recalled,765,159
+3jvs,B,6.54,32,False,5.3,low,False,Acylhydrazide-urea naphthalene scaffold resembles weak-to-moderate kinase binders,771,165
+1nvq,B,8.25,32,False,8.3,medium,True,"Staurosporine-like indolocarbazole scaffold, known potent Chk1 inhibitor (UCN-01 analog)",796,173
+3acw,B,4.76,33,True,5.0,low,False,No specific binding data recalled for this CrtM-ligand pair,750,150
+4ea2,B,6.44,33,False,5.3,low,False,"Farnesyl-like chain with amine-adamantane linker, plausible CrtM inhibitor analog",776,164
+2zcr,B,6.87,33,False,5.8,low,False,bisphosphonate-like/sulfonate analog targeting prenyl substrate pocket; weak structural precedent,767,167
+2zy1,B,7.4,33,False,5.3,low,False,"Bisphosphonate-like fragment, weak-moderate affinity for prenyltransferase-type enzyme",751,166
+2zcq,B,8.82,33,False,5.8,low,False,"Phosphonate/sulfonate mimics FPP substrate, moderate affinity for CrtM-like synthase",761,167
+1bcu,B,3.28,34,True,4.5,low,False,"Diaminophenazine-like weak basic amine, no specific thrombin pocket match",736,157
+3bv9,B,5.36,34,True,3.5,low,False,"Small aldehyde warhead, weak/nonspecific protease binder, no direct data",725,157
+1oyt,B,7.24,34,False,7.8,low,False,Benzamidine-thrombin S1 pocket motif with fused bicyclic P2/P3 scaffold,781,166
+2zda,B,8.4,34,False,6.0,low,False,Benzamidine-proline-Phe peptidomimetic resembling known thrombin active-site inhibitors,769,165
+3utu,B,10.92,34,False,7.3,low,False,"Peptidomimetic with benzamidine P1 group, typical thrombin active-site inhibitor motif",798,164
+3u9q,B,4.38,35,False,4.0,low,False,"Free fatty acid, weak endogenous PPARgamma partial agonist",733,154
+2yfe,B,6.63,35,False,5.8,low,False,"PPAR-gamma partial agonist-like phenolic acid scaffold, moderate affinity estimate",777,164
+3fur,B,8.0,35,False,6.2,low,False,Diaryl sulfonamide resembles PPARgamma ligands; estimate by analogy,780,160
+3b1m,B,8.48,35,True,6.0,low,False,Unrecognized complex; structure suggests PPARγ ligand-like but no data,786,156
+2p4y,B,9.0,35,False,7.3,low,False,PPAR-gamma agonist chemotype with aryloxyacetic acid head group,791,157
+3uo4,B,6.52,36,False,6.2,low,False,"Diaminopyrimidine kinase hinge-binder scaffold, moderate estimated affinity",751,162
+3up2,B,7.4,36,False,6.3,low,False,Diaminopyrimidine kinase hinge-binder scaffold typical of moderate-affinity Aurora A inhibitors,752,172
+3e5a,B,8.23,36,False,6.8,low,False,"Kinase hinge-binding aminopyrimidine scaffold, analogous to known kinase inhibitors",777,165
+2wtv,B,8.74,36,False,8.0,low,False,"Aurora-A ATP-pocket inhibitor-like scaffold, benzodiazepine-fused kinase inhibitor analogy",859,175
+3myg,B,10.7,36,False,7.2,low,False,Kinase hinge-binding aminopyrazine scaffold typical of nanomolar kinase inhibitors,770,166
+3kgp,B,2.57,37,False,3.5,low,False,"Weak benzamidine-like fragment, low-affinity uPA active-site binder",731,156
+1c5z,B,4.01,37,False,3.3,low,True,Benzamidine weak fragment binder to trypsin-like serine protease S1 pocket,753,159
+1o5b,B,5.77,37,False,5.0,low,False,Benzothiophene amidine resembles known weak uPA active-site amidine inhibitors,738,159
+1owh,B,7.4,37,False,6.0,low,False,Amidine/benzylamine motif resembles known uPA active-site inhibitors,754,156
+1sqa,B,9.21,37,False,6.8,low,False,"Amidine-type uPA inhibitor scaffold, analogous to known benzamidine naphthalene series",765,164
+4jsz,B,2.3,38,False,7.3,medium,True,"Benzenesulfonamide is classic CA II ligand, known weak-moderate binder",729,159
+3kwa,B,4.08,38,True,3.5,low,False,Polyamine lacks sulfonamide zinc-binding group typical of CA2 inhibitors,726,162
+2weg,B,6.5,38,False,7.3,medium,True,Benzenesulfonamide-CAII zinc binding; fluorine analog of known CA inhibitors,737,165
+3ryj,B,7.8,38,False,7.3,medium,False,"Benzenesulfonamide CA2 inhibitor motif, moderate affinity analog estimate",747,163
+3dd0,B,9.0,38,False,7.8,medium,True,"Ethoxzolamide-like benzothiazole sulfonamide, classic CA2 inhibitor scaffold",740,169
+2xdl,B,3.1,39,False,4.0,low,False,"Simple benzamide fragment, weak resorcinol-like Hsp90 binder motif",755,159
+3b27,B,5.16,39,True,5.0,low,False,"Diaminotriazine scaffold resembles weak HSP90 N-domain binders, no exact data",741,162
+1yc1,B,6.17,39,False,6.3,low,False,Resorcinol-pyrazole motif resembles known HSP90 N-domain ATP-pocket binders,766,165
+3rlr,B,7.52,39,False,7.0,low,False,Pyrimidine/nitrile scaffold resembles known HSP90 N-domain ATP-competitive inhibitors,761,170
+2yki,B,9.46,39,False,7.2,low,False,"HSP90 N-terminal ATP-pocket binder with heteroaromatic pharmacophores, typical nM-range inhibitor",789,174
+1z95,B,7.12,40,False,7.8,medium,True,Hydroxyflutamide-like metabolite analog of enzalutamide/bicalutamide class AR antagonist,767,169
+3b68,B,8.4,40,False,6.8,low,False,Resembles non-steroidal AR antagonist scaffold (bicalutamide-like aryl propanamide),771,166
+3b5r,B,8.77,40,False,7.5,medium,True,Structural analog of bicalutamide/enzalutamide-class nonsteroidal AR antagonists,762,164
+3b65,B,9.27,40,False,7.5,medium,True,Structure resembles enzalutamide/RD162-class AR antagonists with nitrile-iodo arylamide,752,167
+3g0w,B,9.52,40,True,6.0,low,False,Unrecognized novel scaffold; no experimental analog data available,769,150
+4u4s,B,2.92,41,True,4.5,low,False,"Unfamiliar small sulfonamide heterocycle, no binding data recalled",745,156
+1p1q,B,4.89,41,False,6.0,medium,True,AMPA receptor GluA2 ligand-binding domain; AMPA is classic agonist,737,161
+1syi,B,5.44,41,False,6.3,low,True,AMPA receptor GluA2 LBD with AMPA-like agonist analog,752,156
+1p1n,B,6.8,41,False,5.5,low,True,"Kainate-like AMPA/GluA2 agonist, analogous to known glutamate analogs",751,161
+2al5,B,8.4,41,True,4.0,low,False,No recognized data for this small amide-pyrrolidinone ligand on GluA2,737,156
+3g2z,B,2.36,42,True,4.0,low,False,"No experimental data recalled; small tetrazole-cyclohexenone likely weak, non-specific binder",740,163
+3g31,B,2.89,42,True,3.8,low,False,"Small imide/bicyclic fragment, no known CTX-M-9a binding data",772,156
+4de2,B,4.12,42,True,4.5,low,False,No experimental data recalled; weak tetrazole/amide beta-lactamase inhibitor guess,750,162
+4de3,B,5.52,42,True,4.5,low,False,No specific binding data for this benzamide-tetrazole/beta-lactamase pair,745,157
+4de1,B,5.96,42,True,4.5,low,False,"No experimental data recalled; weak-binder-like fragment, speculative estimate",750,155
+1vso,B,4.72,43,False,6.5,low,False,Phosphonate isoxazole glutamate analog resembling ATPA/kainate-site ligands,762,162
+4dld,B,5.82,43,False,6.5,low,False,Glutamate-like analog with acidic/nitro substituents resembling GluK1 agonists,769,160
+3gbb,B,6.9,43,False,8.0,medium,True,Resembles conformationally constrained glutamate analog (LY-type) at GluK1,768,158
+3fv2,B,8.11,43,False,7.3,low,True,Conformationally restricted glutamate analog (LY-type) at kainate receptor GluK1,780,160
+3fv1,B,9.3,43,False,7.5,medium,True,Ligand resembles domoic acid/kainate-like analog at GluK1,778,155
+4mgd,B,4.69,44,False,7.0,low,True,"HPTE/DDT-like bisphenol analog, known weak-moderate ER binder",747,158
+2qe4,B,7.96,44,False,7.5,low,False,Tetrahydrochromene scaffold resembles known ER ligands/SERMs,756,157
+1qkt,B,9.04,44,False,9.5,high,True,"Estradiol is the natural high-affinity ligand for ER, Kd ~0.1-0.3 nM",768,165
+2pog,B,9.54,44,False,7.5,low,False,Phenolic tetrahydronaphthol-chroman scaffold resembles known ER ligands/phytoestrogens,754,169
+2p15,B,10.3,44,False,8.3,medium,False,"Steroidal estradiol scaffold with 17-vinyl-aryl extension, analog of known ER ligands",779,167
+2y5h,B,5.79,45,False,6.5,low,False,FXa active-site-like scaffold with aryl-oxazole; estimated by analogy,802,158
+1lpg,B,7.09,45,False,7.8,low,False,"Benzamidine-indole FXa inhibitor scaffold, structural analogy to known FXa inhibitors",779,166
+2xbv,B,8.43,45,False,8.3,medium,True,Betrixaban-like FXa inhibitor chemotype with pyridinone-biaryl pharmacophore,798,167
+1z6e,B,9.72,45,True,6.5,low,False,Unrecognized FXa-like inhibitor scaffold; estimate from typical FXa inhibitor potency range,773,167
+1mq6,B,11.15,45,False,6.5,low,False,FXa inhibitor-like chemotype; estimate from analogous serine protease inhibitor SAR,787,163
+1nc3,B,5.0,46,False,6.0,low,False,Adenosine-like nucleoside analog resembling MTAN transition-state/substrate inhibitors,761,163
+1nc1,B,6.12,46,False,7.0,low,True,"MTAN with deazaadenosine-like methylthio nucleoside inhibitor, known micromolar-nanomolar range",759,170
+1y6r,B,10.11,46,False,7.3,low,False,MTAN immucillin/transition-state-analog-like ligand resembling known nanomolar inhibitors,762,164
+4f2w,B,11.3,46,False,7.5,low,False,MTAN inhibitor resembling adenosine/immucillin-like transition-state analogs,797,159
+4f3c,B,11.82,46,False,7.5,low,False,"Transition-state-like MTAN inhibitor analog, pyrrolidine/adenine scaffold similar to known nanomolar MTAN inhibitors",793,181
+1uto,B,2.27,47,False,2.3,low,False,"Weak benzylamine-like fragment, low-affinity trypsin S1 pocket binder",725,160
+4abg,B,3.57,47,False,3.8,low,False,"Benzylamine-like weak trypsin S1 pocket binder, no specific data",735,156
+3gy4,B,5.1,47,False,3.8,medium,True,"4-aminobenzamidine, known weak-moderate trypsin benzamidine-class inhibitor",727,164
+1k1i,B,6.58,47,False,6.8,medium,False,"Benzamidine-like warhead with naphthylsulfonamide, typical trypsin S1 binder potency",774,166
+1o3f,B,7.96,47,False,6.0,low,False,Benzamidine-like scaffold known to bind trypsin S1 pocket,758,155
+2yge,B,5.06,48,False,8.0,medium,True,"Geldanamycin-like ansamycin binding Hsp82/Hsp90 N-domain, known nanomolar affinity",839,172
+2fxs,B,6.06,48,False,5.0,low,False,"Resorcinol-like HSP90 N-domain chemotype, weak-moderate affinity estimate",774,163
+2iwx,B,6.68,48,False,6.5,low,True,Chlorinated resorcylic macrolactone resembles Hsp90 N-domain binders like radicicol analogs,783,168
+2wer,B,7.05,48,False,7.3,medium,True,Macrocyclic resorcylic lactone resembles radicicol/monorden class Hsp90 N-domain binders,805,169
+2vw5,B,8.52,48,False,8.1,medium,True,Geldanamycin-class macrocyclic Hsp90/Hsp82 ansamycin binder (e.g. macbecin),830,174
+4kzq,B,6.1,49,True,4.5,low,False,Simple flavanone-like scaffold lacks known tankyrase-2 PARP-domain pharmacophore,740,166
+4kzu,B,6.5,49,False,5.3,low,False,Flavone scaffold weak nicotinamide-mimic binding at tankyrase PARP catalytic site,737,165
+4j21,B,7.41,49,False,6.0,low,False,Quinolinone-like scaffold resembles known PARP/tankyrase catalytic-domain binders,747,163
+4j3l,B,7.8,49,False,6.8,low,False,Quinolinone scaffold resembles known tankyrase PARP-domain nicotinamide-mimetic inhibitors,757,170
+3kr8,B,8.1,49,False,6.0,low,False,Nicotinamide-mimetic hydroxypyridine scaffold typical of PARP/tankyrase inhibitors,745,170
+2ymd,B,3.16,50,False,5.5,low,True,"AChBP-serotonin analog affinity, nicotinic/AChBP ligand literature",752,159
+2wnc,B,6.32,50,False,8.0,medium,True,"Tropisetron-like indole ester on AChBP, known high-affinity nicotinic ligand class",760,163
+2xys,B,7.42,50,False,7.5,medium,True,Resembles arisugacin/galantamine-like alkaloid on AChBP; literature nanomolar affinity,793,167
+2wn9,B,8.52,50,False,6.0,low,False,AChBP nicotinic-like ligand with pyridine/enamine; rough analogy to nicotinoids,763,165
+2x00,B,11.33,50,False,8.5,medium,True,"AChBP-macrolide toxin analog, resembles spirolide/pinnatoxin class binders",830,163
+3ozt,B,4.13,51,False,6.5,low,False,Nitrocatechol moiety typical of COMT inhibitors; analog of known tight binders,789,160
+3ozs,B,5.33,51,False,7.2,low,False,Nitrocatechol-based COMT inhibitor scaffold; typical nitrocatechol inhibitors bind COMT nanomolar range,794,177
+3oe5,B,6.88,51,False,6.5,low,False,"Nitrocatechol COMT pharmacophore with S-aryl thioglycoside substituent, analog inference",786,166
+3oe4,B,7.47,51,False,7.5,medium,True,"SAM/SAH-mimetic nitrocatechol COMT inhibitor, analogous to known bisubstrate inhibitors",788,174
+3nw9,B,9.0,51,False,7.8,medium,True,Adenosine-mimetic bisubstrate COMT inhibitor resembling tolcapone/dihydroxybenzamide SAM-pocket series,795,181
+3ao4,B,2.07,52,True,4.0,low,False,"No specific binding data; POL is multi-domain, ligand not a known inhibitor",740,156
+3zt2,B,2.84,52,False,4.8,low,False,Indanone-benzodioxole scaffold resembles weak HIV integrase inhibitor chemotypes,762,165
+3zsx,B,3.28,52,True,4.8,low,False,Unrecognized HIV integrase inhibitor scaffold; no binding data recalled,777,158
+4cig,B,3.67,52,False,6.2,low,False,Naphthalene dicarboxamide-like scaffold resembles HIV integrase strand-transfer inhibitor chemotypes,779,173
+3zso,B,5.12,52,True,5.0,low,False,Unrecognized HIV integrase inhibitor analog; no binding data available,794,154
+3n7a,B,3.7,53,False,4.3,low,True,"Substrate-like dehydroquinate/dehydroshikimate analog, weak micromolar enzyme-substrate affinity",754,171
+4ciw,B,4.82,53,False,4.3,low,False,Shikimate-like analog of DHQ dehydratase substrate; weak-moderate affinity estimate,775,164
+3n86,B,5.64,53,True,4.8,low,False,"Substrate-like dehydroquinate analog, weak-moderate affinity inferred by analogy",768,161
+3n76,B,6.85,53,False,5.2,low,False,Shikimate-like quinic acid analog; moderate affinity estimated from substrate-mimetic scaffold,769,166
+2xb8,B,7.59,53,False,4.3,low,False,Shikimate-like analog of DHQD substrate; weak-moderate affinity typical for such analogs,789,163
+4bkt,B,3.62,54,False,4.0,low,False,"Small fragment-like ligand, weak non-specific affinity expected; no binding data recognized",779,159
+4w9c,B,4.65,54,False,4.5,low,False,"Hydroxyproline-based fragment resembles VHL-ligand scaffold, weak affinity estimate",772,165
+4w9l,B,5.02,54,False,6.5,medium,True,Ligand resembles VHL-binding VH032-like hydroxyproline ligand for elongin B/C-VHL complex,805,171
+4w9i,B,5.96,54,False,4.8,low,True,"VHL/elongin B fragment-like hydroxyproline ligand, weak-moderate affinity typical of early VHL binders",787,171
+4w9h,B,6.73,54,False,5.8,medium,True,"VHL ligand (hydroxyproline-based) binding elongin C/VHL complex, known PROTAC warhead",785,169
+3nq9,B,4.03,55,False,3.5,low,True,Beta-lactoglobulin binds medium-chain fatty acids with weak-moderate affinity,722,162
+3ueu,B,5.24,55,False,4.3,low,True,Beta-lactoglobulin fatty acid binding; lauric acid moderate-affinity hydrophobic pocket ligand,726,172
+3uev,B,5.89,55,False,4.5,low,True,Beta-lactoglobulin binds fatty acids in calyx with micromolar affinity,728,159
+3uew,B,6.31,55,False,5.2,low,True,"Beta-lactoglobulin fatty-acid (palmitate) binding literature, calyx hydrophobic pocket",730,169
+3uex,B,6.92,55,False,5.0,low,True,"Beta-lactoglobulin binds long-chain fatty acids in hydrophobic calyx, moderate affinity",732,168
+3lka,B,2.82,56,False,5.5,low,False,"Simple arylsulfonamide weak Zn-binding MMP inhibitor motif, modest affinity expected",731,166
+3ehy,B,5.85,56,False,3.8,low,False,"Weak sulfonamide, lacks strong Zn-chelating group for MMP-12 active site",744,161
+3tsk,B,7.17,56,False,6.5,low,False,"Peptidomimetic resembling MMP substrate-based inhibitors, no direct zinc-binding group evident",787,166
+3nx7,B,8.1,56,False,6.5,low,True,"MMP-12 hydroxamate sulfonamide inhibitor class, typical micromolar-submicromolar activity",744,168
+4gr0,B,9.55,56,False,8.2,low,False,"Phosphinic pseudopeptide MMP inhibitor scaffold, zinc-binding phosphinate group on MMP-12",806,173
+3dxg,B,2.4,57,False,3.3,low,True,"RNase A binds uridine 3'/5'-monophosphate weakly, literature Kd ~mM range",767,164
+3d6q,B,3.76,57,True,3.5,low,False,Nucleoside analog weak RNase A binder; no specific binding data recalled,766,155
+1w4o,B,5.22,57,False,3.3,low,True,"RNase A with uridine 3'-monophosphate, known weak mononucleotide substrate/product analog",777,163
+1o0h,B,5.92,57,False,3.3,low,True,RNase A weakly binds ADP-like nucleotides; mM-range Ki typical,777,158
+1u1b,B,7.8,57,False,3.2,low,False,"RNase A weak affinity for dinucleotide-like/nucleotide analogs, mM range typical",844,162
+4llx,C,2.89,1,True,4.5,low,False,"Small fragment-like aminopyrimidine, low affinity typical of fragment hits",765,157
+5c28,C,5.66,1,False,6.0,low,False,"PDE10A small heteroaromatic fragment-like ligand, moderate affinity estimate",772,160
+3uuo,C,7.96,1,False,8.3,low,False,"PDE10A pyrazolopyridine-piperazine inhibitor class, typical nanomolar potency",789,164
+3ui7,C,9.0,1,False,7.5,low,False,"PDE10A pyrazolopyridine-like inhibitor, typical nM-range affinity for this chemotype",790,166
+5c2h,C,11.09,1,False,7.3,low,False,"PDE10A inhibitor chemotype with chloropyrimidine/thiazole scaffold, typical nM potency",799,168
+2v00,C,3.66,2,False,3.5,low,False,"Small fragment-like aminopyrimidinone, weak aspartic protease fragment binder",762,159
+3wz8,C,5.82,2,False,5.0,low,False,"Endothiapepsin fragment-like inhibitor, typical micromolar aspartic protease binder",770,162
+3pww,C,7.32,2,False,8.2,medium,True,"Endothiapepsin peptidomimetic transition-state inhibitor, typical nM range in PDB series",827,165
+3prs,C,7.82,2,False,9.3,medium,True,"3PRS is known endothiapepsin-pepstatin-like peptidomimetic inhibitor complex, nM-pM range",817,172
+3uri,C,9.0,2,False,4.5,low,False,"Small peptidomimetic aldehyde, weak aspartic protease fragment-like binder",755,159
+4m0z,C,5.19,3,False,6.3,low,False,"ITK pyrazole urea/carboxamide inhibitor, typical kinase fragment-like potency",771,163
+4m0y,C,6.46,3,False,6.0,low,False,"ITK kinase inhibitor, pyrazole-carboxamide fragment-like scaffold, moderate affinity estimate",765,171
+3qgy,C,7.8,3,False,7.0,low,True,ITK kinase inhibitor structure-based estimate from PDB 3qgy series,783,157
+4qd6,C,8.64,3,False,7.2,low,False,"ITK kinase inhibitor chemotype, pyrazole-aminopyrimidine sulfone, typical nM activity",799,170
+4rfm,C,10.05,3,False,7.5,low,True,"ITK inhibitor series, PDB 4RFM, typical nM-range kinase inhibitor affinity",811,165
+4cr9,C,4.1,4,False,4.3,low,False,"Small aminoquinoline fragment, weak S1-pocket binder typical of FXIa fragment screens",745,164
+4cra,C,7.22,4,False,7.5,low,False,"FXIa peptidomimetic inhibitor with amidine-like warhead, typical nM potency",792,161
+4x6p,C,8.3,4,False,7.5,low,True,"FXIa structure-based inhibitor series, typical nM potency in PDB co-crystals",802,159
+4crc,C,8.72,4,False,7.0,low,True,"FXIa tetrazole-amide peptidomimetic inhibitor series, PDB 4CRC-like co-crystal",799,170
+4ty7,C,9.52,4,False,7.5,low,False,"FXIa imidazole benzamidine-like inhibitor scaffold, typical medchem series potency",798,162
+5aba,C,2.98,5,False,4.3,low,False,"Small fragment-like ligand on p53 stabilizer pocket, weak affinity typical",775,159
+5a7b,C,3.57,5,False,4.5,low,False,Small-molecule p53 stabilizer fragment; weak/moderate affinity typical of such scaffolds,782,165
+4agn,C,3.97,5,True,4.5,low,False,"Fragment-like p53 stabilizer ligand, no quantitative binding data recalled",772,158
+4agp,C,4.69,5,True,4.5,low,False,No reliable binding data recalled for this p53-ligand complex,779,149
+4agq,C,5.01,5,True,4.8,low,False,"Small-molecule p53 stabilizer binding weak, no specific data recalled",779,155
+3bgz,C,6.26,6,False,5.0,low,False,"Diarylindole carboxylic acid Pim-1 fragment-like inhibitor, moderate affinity estimate",777,168
+3jya,C,6.89,6,False,6.0,low,False,"Pim-1 thienopyrimidinone fragment-like inhibitor, moderate affinity typical of dichlorinated hinge binders",769,175
+2c3i,C,7.6,6,True,5.5,low,False,No specific binding data recalled for this PDB complex,758,145
+4k18,C,8.96,6,False,7.3,low,False,"Pim-1 pyrazolopyrimidinone inhibitor class, typical nM-range affinity",780,163
+5dwr,C,11.22,6,False,8.0,low,False,PIM-1 aminopyridine inhibitor class; typical nM-range affinity in kinase lead series,792,164
+3mss,C,4.66,7,False,8.5,high,True,Imatinib-like compound; PDB 3mss is ABL1-imatinib analog complex,785,160
+3k5v,C,6.3,7,False,9.0,high,True,"Imatinib bound to ABL1 kinase domain, PDB 3k5v",786,156
+3pyy,C,6.86,7,False,9.0,high,True,"Imatinib analog (nicotinic for pyridinyl) bound to ABL1, PDB 3pyy",787,166
+2v7a,C,8.3,7,False,7.5,medium,True,"PDB 2v7a Abl1 pyrazole amide inhibitor, typical kinase inhibitor affinity range",814,170
+4twp,C,10.0,7,False,7.3,low,False,"ABL1 pyrazolopyridine-type kinase inhibitor, typical nM affinity class",773,162
+3wtj,C,6.53,8,False,7.3,medium,True,"AChBP with neonicotinoid-like imidacloprid analog, known nanomolar binders",756,161
+3zdg,C,7.1,8,False,6.0,low,False,AChBP carbamate ligand similar to pyridostigmine-like binder; estimate only,764,159
+3u8k,C,8.66,8,False,6.5,low,False,"AChBP nicotinic-ligand pyridine/diazepane scaffold, moderate affinity estimate",748,165
+4qac,C,9.4,8,True,6.0,low,False,AChBP surrogate for nAChR; no specific binding data recalled,769,152
+3u8n,C,10.17,8,False,6.3,low,False,"AChBP nicotinic-like ligand, diazepine amine analog, moderate affinity estimate",751,162
+1a30,C,4.3,9,True,3.5,low,False,"Small peptide fragment, lacks typical HIV protease inhibitor features; no reliable binding data",787,162
+2qnq,C,6.11,9,False,5.5,low,False,"Bis-sulfonamide pyrrolidine fragment-like inhibitor, likely moderate-affinity HIV protease/integrase binder",820,177
+1g2k,C,7.96,9,False,8.5,medium,True,"HIV-1 protease cyclic sulfamide diol inhibitor series, similar to DMP-series",815,164
+1eby,C,9.7,9,False,9.4,medium,True,"1EBY is HIV-1 protease with cyclic urea/diol inhibitor, known sub-nM Ki series",828,169
+3o9i,C,11.82,9,False,10.3,medium,True,"HIV protease with benzothiazole sulfonamide darunavir-like inhibitor, known potent class",807,164
+4lzs,C,4.8,10,False,5.0,low,False,"BRD4 fragment-like ligand with acetyl/amide pyrrole, weak-moderate affinity typical",755,167
+3u5j,C,5.61,10,False,7.3,medium,True,JQ1-like triazolothienodiazepine analog bound to BRD4 bromodomain,763,161
+4wiv,C,6.26,10,False,6.5,low,False,BRD4 bromodomain ligand resembles isoxazole/imidazopyrazine BET inhibitors,769,166
+4ogj,C,6.79,10,False,7.2,low,False,"BRD4 bromodomain inhibitor chemotype, aminopyrimidine sulfonamide, typical sub-uM affinity",788,174
+3p5o,C,7.3,10,False,6.8,medium,True,"BRD4 bromodomain with thienotriazolodiazepine-like (JQ1-analog) acetamide ligand, 3p5o",782,176
+1ps3,C,2.28,11,False,6.0,low,False,"Iminosugar-like mannosidase II inhibitor analog, moderate affinity estimate",775,160
+3dx1,C,3.58,11,False,5.5,low,False,"Cyclopentane-polyol mimics mannose, weak-moderate glycosidase inhibitor affinity",758,166
+3d4z,C,4.89,11,False,7.0,medium,True,"Imidazole-fused swainsonine-like iminosugar, known Golgi mannosidase II inhibitor class",772,168
+3dx2,C,6.82,11,False,7.3,medium,True,"Swainsonine-like sulfoxide aminocyclopentane, known GH38 mannosidase II inhibitor class",774,170
+3ejr,C,8.57,11,False,7.3,medium,True,Swainsonine-like polyhydroxy indolizidine inhibitor of GH38 mannosidase,791,165
+3l7b,C,2.4,12,False,4.3,low,False,PLP-lysine Schiff base analog at glycogen phosphorylase allosteric/catalytic site,776,164
+4eky,C,3.52,12,False,4.5,low,False,Nucleoside analog resembling GP inhibitor series at catalytic site; weak-moderate affinity typical,794,166
+3g2n,C,4.09,12,False,4.3,low,False,"PLP-lysine Schiff base analog at allosteric/catalytic site, weak millimolar affinity typical",776,166
+3syr,C,5.1,12,False,3.5,low,True,"5-fluorouridine glycoside, weak glycogen phosphorylase inhibitor, catalytic site analog",788,167
+3ebp,C,5.91,12,False,5.3,low,False,"flavonoid-like GP inhibitor binding at allosteric/catalytic site, typical micromolar range",788,164
+2w66,C,4.05,13,False,6.5,medium,True,"PUGNAc-like GlcNAc-thiazoline/NAG-analog inhibitor of GH84 O-GlcNAcase, known micromolar range",791,183
+2w4x,C,4.85,13,False,6.3,medium,True,"Streptozotocin-like glucosamine nitrosourea inhibitor of GH84 OGA, known micromolar range",791,170
+2wca,C,5.6,13,False,6.5,low,True,"PUGNAc-like oxime carbamate, known OGA/CGL inhibitor class",806,159
+2xj7,C,6.66,13,False,6.5,medium,True,"PUGNAc-like bicyclic iminosugar, known OGA/BT4395 GlcNAc-mimetic inhibitor class",793,176
+2vvn,C,7.3,13,False,6.5,medium,True,"Thiazoline GlcNAc-analog inhibitor (NAG-thiazoline-like) of GH84 OGA, known micromolar range",787,178
+3aru,C,3.22,14,True,4.0,low,False,"Caffeine-like xanthine derivative, weak nonspecific chitinase binder, no data",753,160
+3arv,C,5.64,14,True,5.0,low,False,No experimental data recalled for this specific alkaloid-chitinase complex,761,153
+3ary,C,6.0,14,True,4.5,low,False,No specific binding data recalled for this chitinase-isothiocyanate benzoxazole complex,747,160
+3arq,C,6.4,14,True,5.5,low,False,"Anthracycline-like ligand on chitinase, no binding data recalled",807,153
+3arp,C,7.15,14,False,5.5,low,False,Bis-quinolinium chitinase inhibitor; estimate from similar allosteric chitinase binders,770,164
+4ih5,C,4.11,15,True,5.0,low,False,"Small fragment-like pyrazolopyrimidine hydrazine, no specific binding data recalled",753,162
+4ih7,C,5.24,15,False,4.5,low,False,"Small fragment-like pyridinone binder, HCV NS5B allosteric site, weak affinity typical",757,164
+3cj4,C,6.51,15,False,5.3,low,False,"HCV NS5B allosteric-like fragment; moderate MW, typical weak-to-moderate binder",785,164
+4eo8,C,8.15,15,False,6.3,low,False,"HCV NS5B thumb/palm site allosteric inhibitor, typical micromolar potency class",789,162
+3gnw,C,9.1,15,False,6.8,low,False,"HCV NS5B non-nucleoside inhibitor, thumb/palm pocket binder, typical sub-uM affinity",809,171
+1gpk,C,5.37,16,False,6.5,medium,True,"1gpk PDBbind complex, known AChE inhibitor crystal structure",780,156
+1gpn,C,6.48,16,False,7.8,medium,True,"1GPN is huperzine/galanthamine-like AChE alkaloid inhibitor complex, nM range",780,166
+1h23,C,8.35,16,False,9.3,medium,True,"Bis-tacrine-like bivalent AChE inhibitor, 1h23 dual-site binder, nM-pM affinity",795,173
+1h22,C,9.1,16,False,9.3,medium,True,"Bis-tetrahydroquinolinone decamethylene linker, AChE bivalent inhibitor like bis-tacrine analogs",793,176
+1e66,C,9.89,16,False,9.3,low,True,"1e66 is TcAChE with tacrine-like bicyclic amino-chloroquinoline inhibitor, nanomolar range",779,173
+3f3a,C,4.19,17,True,3.5,low,False,"Tetradecane is a nonspecific lipidic additive, no real affinity data",732,155
+3f3c,C,6.02,17,False,4.5,low,True,"LeuT-fold transporter with fluorophenylalanine substrate, analogous to known LeuT-Leu/Phe affinities",745,173
+4mme,C,6.5,17,True,5.5,low,False,"Unfamiliar transporter-ligand pair, no binding data recalled",753,153
+3f3d,C,7.16,17,False,4.5,low,True,"LeuT-fold transporter (3f3d, MhsT/LeuT-like) with methionine substrate, moderate affinity",735,171
+3f3e,C,7.7,17,False,4.3,low,True,"LeuT transporter with leucine substrate, literature Kd range",737,150
+2wbg,C,4.45,18,False,6.2,low,True,"Iminosugar glucosidase inhibitor with alkyl chain, typical micromolar affinity",788,162
+2cbv,C,5.48,18,False,5.5,low,True,"Iminosugar-type glycosidase inhibitor, similar to known beta-glucosidase inhibitors",774,165
+2j78,C,6.42,18,False,6.5,low,True,"Iminosugar-like glycosidase inhibitor (amidoxime), typical micromolar Ki",772,163
+2j7h,C,7.19,18,False,5.5,low,False,"Iminosugar-like glycosidase inhibitor, moderate affinity typical of such scaffolds",760,163
+2cet,C,8.02,18,False,6.5,low,True,"Iminosugar glycosidase inhibitor analog, similar to known tight-binding glucosidase inhibitors",788,167
+3udh,C,2.85,19,False,4.5,low,False,"Small spiro-oxindole fragment, weak BACE1 fragment-like binder",743,157
+3rsx,C,4.41,19,False,5.0,low,False,"Small aminonaphthalene-thiophene fragment, likely BACE1 fragment-screen hit, weak affinity",747,169
+4djv,C,6.72,19,False,6.5,low,False,BACE1 aminohydantoin/imidazolidinone inhibitor class typical mid-micromolar to sub-micromolar potency,768,174
+2vkm,C,8.74,19,False,7.8,medium,True,"BACE1 hydroxyethylamine peptidomimetic inhibitor, typical nM affinity class",815,165
+4gid,C,10.77,19,False,8.5,medium,True,"BACE1 peptidomimetic inhibitor series, PDB 4GID crystal structure",817,161
+4jfs,C,5.27,20,True,4.5,low,False,"Iminosugar-like fucosidase inhibitor, weak affinity estimate without specific data",770,160
+4j28,C,5.7,20,False,6.0,low,False,"Iminosugar-benzimidazole fucosidase inhibitor, typical glycosidase inhibitor affinity range",777,169
+2wvt,C,6.12,20,False,5.5,low,False,"Iminosugar-type fucosidase inhibitor, moderate affinity typical of such glycosidase ligands",784,166
+2xii,C,7.2,20,False,6.5,low,False,Iminosugar-fluorenone conjugate resembling fucosidase inhibitor class,807,159
+4pcs,C,7.85,20,False,6.0,low,False,"Iminosugar fucosidase inhibitor, pyrrolidine scaffold typical of micromolar fucosidase inhibitors",773,174
+3rr4,C,4.55,21,False,6.0,low,False,TGT inhibitor; preQ1-like scaffold typically micromolar affinity,766,157
+1s38,C,5.15,21,False,5.8,low,False,"PreQ1-pocket TGT inhibitor analog, aminopyridinone scaffold, moderate affinity estimate",750,170
+1r5y,C,6.46,21,False,5.5,low,True,"TGT preQ1-site aminopyrimidinone analog, typical micromolar affinity reported",753,161
+3gc5,C,7.26,21,False,6.5,low,False,"TGT preQ1-site analog, typical micromolar affinity for aminomethyl-modified lin-benzoguanines",770,169
+3ge7,C,8.7,21,True,5.5,low,False,"TGT inhibitor-like preQ1 analog, no specific data recalled",778,154
+4dli,C,5.62,22,False,6.8,low,False,"p38 MAPK aminoquinazoline inhibitor scaffold, typical submicromolar affinity",760,164
+2zb1,C,6.32,22,False,7.3,low,False,"p38 MAPK oxadiazole-biphenyl inhibitor, typical nanomolar range",775,162
+4f9w,C,6.94,22,False,6.8,low,False,"p38 MAPK pyridazine/naphthalene inhibitor, typical submicromolar kinase hinge binder",766,168
+3e92,C,8.0,22,False,6.8,low,False,"p38 MAPK biaryl oxadiazole inhibitor, typical submicromolar range",774,160
+3e93,C,8.85,22,False,7.8,low,False,"p38 MAPK diarylamide/benzisoxazole inhibitor chemotype, typical nM affinity",785,166
+4owm,C,2.96,23,False,4.5,low,False,"PRPP-like substrate analog, weak native affinity typical for phosphoribosyl substrates",793,161
+3twp,C,3.92,23,False,4.3,low,True,"PRPP-like substrate analog, weak micromolar-millimolar binding typical for phosphosugars",794,163
+3r88,C,4.82,23,False,4.3,low,True,"PRPP-like ribose bisphosphate substrate, weak micromolar-millimolar affinity typical",794,164
+4gkm,C,5.17,23,False,4.3,low,False,"PRPP-like diphosphosugar, weak micromolar-range affinity typical for phosphorylated cofactor fragments",794,170
+3qqs,C,5.82,23,False,4.3,low,True,PRPP-like sugar-phosphate substrate; weak micromolar-millimolar affinity typical for PRTase substrates,795,171
+3gv9,C,2.12,24,True,4.0,low,False,Weak-binding thiophene fragment; no specific affinity data recalled,740,153
+3gr2,C,2.52,24,True,4.5,low,False,No specific affinity data recalled for this fragment-like ligand,749,149
+4kz6,C,3.1,24,True,4.5,low,False,No specific binding data recalled for this PDB ligand-protein pair,752,151
+4jxs,C,4.74,24,False,4.5,low,False,"Fragment-like carboxylic/sulfonamide ligand, weak millimolar-range beta-lactamase binder",759,168
+2r9w,C,5.1,24,False,4.5,low,False,"Small-molecule fragment-like inhibitor, weak non-covalent beta-lactamase binder estimate",772,165
+2hb1,C,3.8,25,False,4.3,low,False,"PTP1B fragment-like dicarboxylate ligand, typical weak-affinity fragment binder",757,163
+1bzc,C,4.92,25,False,5.8,low,True,"PTP1B with difluoromethylphosphonate pTyr mimetic, typical micromolar affinity",800,164
+2qbr,C,6.33,25,False,5.3,low,False,"PTP1B fragment-like carboxylic acid inhibitor, typical low-micromolar affinity",779,163
+2qbq,C,7.44,25,False,5.3,low,False,"PTP1B fragment/acid-based inhibitor, typical micromolar affinity class",793,158
+2qbp,C,8.4,25,False,6.3,medium,True,"PTP1B fragment/thiophene carboxylic acid inhibitor series, PDB 2qbp",799,165
+1q8t,C,4.76,26,False,5.2,low,False,"Small fragment-like pyridinyl-carboxamide, weak hinge binder analogy to PKA inhibitors",775,168
+1ydr,C,5.52,26,False,7.4,medium,True,"PKA with balanol-like isoquinoline sulfonamide inhibitor, known PDB complex",766,163
+1q8u,C,5.96,26,False,6.8,low,True,"Balanol-like isoquinoline sulfonamide PKA inhibitor series, moderate affinity",774,163
+1ydt,C,7.32,26,False,7.0,low,True,"H89-like isoquinoline sulfonamide PKA inhibitor series, similar to known H-series compounds",775,165
+3ag9,C,8.05,26,False,6.0,low,False,"PKA peptide-substrate-mimetic/adenosine conjugate inhibitor, moderate affinity estimate",869,168
+3fcq,C,2.77,27,False,3.5,low,False,"Small weak-binding carboxylic acid fragment, no zinc-chelating group for thermolysin",748,162
+1z9g,C,5.64,27,False,4.5,low,False,"Thiol/carboxylate zinc-binding peptidomimetic, moderate thermolysin inhibitor analogy",755,169
+1qf1,C,7.32,27,False,8.0,medium,True,Thiorphan-like phosphoramidon-site thermolysin inhibitor with Zn-binding thiol,789,167
+5tmn,C,8.04,27,False,7.1,medium,True,"PDB 5tmn phosphonamidate peptide inhibitor, known thermolysin Ki ~nM-range",791,169
+4tmn,C,10.17,27,False,8.6,medium,True,"4TMN phosphoramidon-like inhibitor; known thermolysin PDB complex, literature Ki ~nM",800,170
+4ddk,C,2.29,28,True,3.5,low,False,"Small fragment-like benzodioxole acid, likely weak fragment-screen hit",748,157
+4ddh,C,3.32,28,False,4.3,low,False,"Small fragment-like acetic acid benzofuran, weak-moderate affinity estimate",749,159
+3ivg,C,4.3,28,False,5.0,low,False,"Fragment-like indole/benzofuran sulfonamide, moderate MTB PanC inhibitor potency range",775,167
+3coz,C,5.57,28,False,7.0,medium,True,"Known PanC sulfamoyl-adenosine inhibitor series, nM-uM reported affinities",800,164
+3coy,C,6.02,28,False,7.3,medium,True,"PanC sulfamoyl-adenosine inhibitor series, known nanomolar-range pantothenate synthetase inhibitors",803,174
+3pxf,C,4.43,29,False,4.3,low,False,"CDK2 ATP-site binder weak sulfonic naphthylamine fragment, modest affinity",755,163
+4eor,C,6.3,29,False,6.8,low,False,"Purine-like CDK2 hinge binder, sulfonamide analog, moderate affinity estimate",775,163
+2xnb,C,6.83,29,False,6.8,low,False,"CDK2 ATP-competitive aminopyrimidine inhibitor, typical thiazolone/piperazine series potency",786,170
+1pxn,C,7.15,29,False,6.5,low,True,"CDK2 aminothiazole inhibitor, PDB 1pxn, typical micromolar CDK2 ATP-site binder",761,173
+2fvd,C,8.52,29,False,7.0,low,False,"CDK2 aminopyrimidine inhibitor class, typical sub-micromolar affinity",775,161
+4k77,C,6.63,30,False,6.5,low,False,"Pyrrolopyrimidine JAK1 kinase hinge-binder, cyclohexylamino substituent, typical micromolar-submicromolar inhibitor",756,185
+4e5w,C,7.66,30,False,7.5,low,False,"Pyrrolopyridine-piperidine JAK inhibitor scaffold, typical nanomolar kinase inhibitor potency",779,174
+4ivb,C,8.72,30,False,8.0,medium,True,"JAK1 pyrrolopyridine inhibitor, consistent with nM JAK1 inhibitors like baricitinib analogs",778,175
+4ivd,C,9.52,30,False,8.3,medium,True,"JAK1 pyrrolopyridine inhibitor, consistent with nM JAK1 co-crystal series",780,167
+4ivc,C,10.0,30,False,8.3,medium,True,"4IVC resembles baricitinib-like JAK1 inhibitor co-crystal, nM affinity",779,165
+4f09,C,6.7,31,False,7.3,low,False,"JAK2 pyrrolopyrimidine-type inhibitor, moderate-high affinity typical of this scaffold class",758,170
+4gfm,C,7.22,31,False,5.5,low,False,"Small fragment-like dichlorobenzamide, moderate kinase hinge binding estimate",763,160
+4hge,C,7.92,31,False,7.3,low,False,"Pyrazolopyridine carboxamide JAK2 inhibitor chemotype, typical nM affinity",770,166
+4e6q,C,8.36,31,False,6.8,low,False,"Pyrrolopyrimidine-like JAK2 hinge binder, typical micromolar-submicromolar kinase inhibitor affinity",769,177
+4jia,C,9.22,31,False,7.3,low,False,"JAK2 pyrazolo-triazine inhibitor class, typical nanomolar kinase hinge binder",775,166
+2brb,C,4.86,32,False,6.8,low,False,"Furanopyrimidine CHK1 inhibitor scaffold, typical micromolar-submicromolar kinase hinge binder",775,173
+2br1,C,5.14,32,False,6.5,low,False,"Furanopyrimidine CHK1 inhibitor scaffold, typical micromolar-range kinase hinge binder",783,169
+3jvr,C,5.72,32,False,7.0,low,False,"Chk1 inhibitor with benzimidazole carbamate, typical nM-range kinase inhibitor affinity",777,168
+3jvs,C,6.54,32,False,6.5,low,False,"Chk1 inhibitor-like urea/naphthalene scaffold, typical micromolar-range affinity",783,165
+1nvq,C,8.25,32,False,8.2,medium,True,"Staurosporine-like indolocarbazole bound to Chk1, known nanomolar inhibitor class",808,165
+3acw,C,4.76,33,False,5.5,low,False,"Small druglike fragment, moderate hydrophobic biphenyl, likely micromolar inhibitor",761,164
+4ea2,C,6.44,33,False,5.5,low,True,"CrtM inhibitor with farnesyl-like/adamantyl diamine, similar reported analogs",788,163
+2zcr,C,6.87,33,False,5.8,low,False,CrtM inhibitor with phosphonosulfonate head; analogous bisphosphonate SQS inhibitors,779,168
+2zy1,C,7.4,33,False,5.8,low,False,Bisphosphonate-like CrtM inhibitor; moderate affinity typical of such analogs,763,162
+2zcq,C,8.82,33,False,6.0,low,False,"Phosphonosulfonate FPP-mimetic inhibitor of CrtM, analogous bisphosphonate-type affinities",773,173
+1bcu,C,3.28,34,False,5.2,low,True,"1BCU is thrombin with diminazene-like diamidine inhibitor, moderate affinity",748,161
+3bv9,C,5.36,34,False,4.5,low,False,"Small peptidic aldehyde, weak thrombin active-site binder by analogy",737,156
+1oyt,C,7.24,34,False,7.3,medium,True,"1OYT thrombin bicyclic amidinopyrrolidinone inhibitor, known nanomolar series",793,167
+2zda,C,8.4,34,False,6.5,low,False,"Benzamidine-P1 peptidomimetic thrombin inhibitor, typical Phe-Pro-Arg scaffold affinity",780,176
+3utu,C,10.92,34,False,7.8,medium,False,"Benzamidine-thrombin active-site inhibitor, sulfonamide-proline scaffold typical nM range",809,168
+3u9q,C,4.38,35,False,4.3,low,True,"PPARg weak endogenous fatty-acid-like ligand, decanoic acid, low affinity",745,162
+2yfe,C,6.63,35,False,5.8,low,False,"PPARg partial agonist-like phenolic acid, moderate affinity estimate",789,156
+3fur,C,8.0,35,False,6.5,low,False,"PPARgamma sulfonamide ligand, moderate affinity typical of this chemotype",791,159
+3b1m,C,8.48,35,False,6.5,low,False,"PPARgamma synthetic agonist-like ligand, typical mid-affinity for this family",798,159
+2p4y,C,9.0,35,False,7.5,medium,False,"PPARγ indole/benzoxazole acetic-acid partial agonist, typical nM affinity class",803,164
+3uo4,C,6.52,36,False,6.5,low,False,"Diaminopyrimidine Aurora A inhibitor scaffold, moderate kinase hinge-binder affinity estimate",763,172
+3up2,C,7.4,36,False,6.8,low,False,"Aminopyrimidine kinase hinge binder, typical Aurora A inhibitor affinity range",763,163
+3e5a,C,8.23,36,False,7.0,low,False,"Diarylaminopyrimidine kinase inhibitor scaffold, typical nanomolar kinase affinity",789,167
+2wtv,C,8.74,36,False,7.5,low,False,"Aurora-A ATP-pocket inhibitor scaffold, typical nM-range kinase inhibitor potency",871,168
+3myg,C,10.7,36,False,7.3,low,True,"PDB 3MYG PIM1 kinase inhibitor co-crystal, typical nM-range aminopyrazole/imidazopyridazine inhibitor",781,183
+3kgp,C,2.57,37,False,3.5,low,False,Weak benzamidine-like fragment binding serine protease S1 pocket,743,154
+1c5z,C,4.01,37,False,3.5,low,True,"Benzamidine weak-affinity serine protease S1 pocket binder, uPA",765,157
+1o5b,C,5.77,37,False,4.8,low,False,"Small benzothiophene amidine fragment, weak S1 pocket binder like benzamidines",750,160
+1owh,C,7.4,37,False,5.5,medium,True,"uPA amidine-benzylamide inhibitor class, typical micromolar affinity reported",765,160
+1sqa,C,9.21,37,False,6.5,medium,True,"Amidine-based uPA inhibitor series, similar naphthamidine/benzylamine scaffolds bind uPA micromolar-submicromolar",777,180
+4jsz,C,2.3,38,False,7.3,medium,True,"Benzenesulfonamide-CA2 known weak sulfonamide inhibitor, literature Ki ~ sub-µM",741,173
+3kwa,C,4.08,38,False,4.0,low,False,Polyamine lacks sulfonamide zinc-binding group typical of potent CA2 inhibitors,738,164
+2weg,C,6.5,38,False,7.3,medium,True,"Fluorobenzenesulfonamide CA II inhibitor, analogous to known benzenesulfonamide binders",748,169
+3ryj,C,7.8,38,False,7.3,medium,True,"Benzenesulfonamide CA II inhibitor, typical micromolar-nanomolar affinity class",759,165
+3dd0,C,9.0,38,False,7.8,medium,True,"Ethoxzolamide-like benzothiazole sulfonamide, known CA II inhibitor class",752,164
+2xdl,C,3.1,39,False,4.5,low,False,"Small fragment-like resorcinol/benzamide, weak Hsp90 N-domain binder",767,161
+3b27,C,5.16,39,False,5.5,low,False,"Small aminotriazine HSP90 N-terminal ATP-pocket fragment-like binder, moderate affinity estimate",752,171
+1yc1,C,6.17,39,False,6.5,medium,True,"HSP90 N-terminal resorcinol-pyrazole fragment series, similar reported Kd ~uM-sub-uM",778,173
+3rlr,C,7.52,39,False,7.3,low,False,"HSP90 N-terminal ATP-pocket inhibitor, pyrimidine scaffold typical submicromolar potency",773,171
+2yki,C,9.46,39,False,7.3,medium,True,"HSP90 N-domain fragment-derived inhibitor, typical nM-range pyrrolopyridine binder",800,168
+1z95,C,7.12,40,False,7.3,medium,True,"Bicalutamide-like AR antagonist; 1Z95 co-crystal, known nM-range affinity",778,166
+3b68,C,8.4,40,False,7.2,medium,True,"Aryl propanamide AR agonist/SARM analog, PDB 3B68, typical nM affinity",782,165
+3b5r,C,8.77,40,False,8.0,medium,True,"PDB 3b5r is AR with a bicalutamide-like SARM, nM-range potent antiandrogen",774,167
+3b65,C,9.27,40,False,7.8,medium,True,Known AR crystal structure with hydroxy-propanamide SARM-like antagonist/agonist ligand,763,166
+3g0w,C,9.52,40,False,7.8,low,False,"Nonsteroidal AR ligand resembling selective androgen receptor modulators, moderate-high affinity",781,165
+4u4s,C,2.92,41,True,4.5,low,False,Unrecognized AMPA receptor ligand; no binding data recalled,757,153
+1p1q,C,4.89,41,False,6.1,medium,True,"AMPA receptor GluA2 LBD bound to AMPA agonist, known ~100-200nM affinity",749,167
+1syi,C,5.44,41,False,6.1,medium,True,"AMPA receptor GluA2 LBD with tricyclic agonist, similar to known analogs",763,162
+1p1n,C,6.8,41,False,5.8,medium,True,"GluR2 LBD with kainate-like analog, similar to known kainate affinities",763,157
+2al5,C,8.4,41,True,4.5,low,False,No specific binding data recalled for this ligand-receptor pair,748,149
+3g2z,C,2.36,42,True,4.0,low,False,"Small fragment-like ligand, no binding data recalled",752,147
+3g31,C,2.89,42,False,3.5,low,False,"Small imide fragment, likely weak/crystallographic-only binder to CTX-M-9a",783,160
+4de2,C,4.12,42,False,4.8,low,False,"Small fragment-like tetrazole/amide, weak non-covalent beta-lactamase inhibitor estimate",761,167
+4de3,C,5.52,42,False,4.8,low,False,"Small fragment-like tetrazole-benzamide, weak beta-lactamase inhibitor binding estimate",756,166
+4de1,C,5.96,42,False,5.3,low,False,"Tetrazole/amide fragment-like inhibitor, moderate affinity typical of beta-lactamase fragment hits",761,170
+1vso,C,4.72,43,False,7.0,medium,True,"ATPO/ATPA-like isoxazole phosphono agonist at GluK1, literature affinity range",773,165
+4dld,C,5.82,43,False,6.7,low,True,"GluK1 kainate receptor with known willardiine-type agonist, similar analogs ~uM affinity",780,164
+3gbb,C,6.9,43,False,7.1,low,True,"Known GluK1 kainate receptor agonist/antagonist analog, moderate nM affinity reported",780,163
+3fv2,C,8.11,43,False,6.8,low,True,GluK1 kainate receptor with dearginine analog; known moderate-affinity agonist class,792,160
+3fv1,C,9.3,43,False,7.3,medium,True,"GluK1 kainate receptor with kainate-like agonist, analogous to known GluK1-ligand complexes",790,167
+4mgd,C,4.69,44,False,6.8,low,True,"DDT-like bisphenol analog binding ER ligand pocket, moderate affinity estrogenic compound",759,165
+2qe4,C,7.96,44,False,8.3,low,False,Tetrahydrochromene phenol scaffold resembles ER ligands like 2qe4-class SERMs,768,166
+1qkt,C,9.04,44,False,9.5,high,True,"1QKT is ERalpha LBD with estradiol, known sub-nM Kd (~0.2nM)",780,165
+2pog,C,9.54,44,False,7.8,low,True,"Tetrahydrochrysene-type ERalpha ligand, similar to related THC diol/estradiol analogs",765,167
+2p15,C,10.3,44,False,8.0,medium,True,"17alpha-ethynyl/vinyl estradiol-derivative, ERalpha ligand binding domain, PDB 2p15",790,174
+2y5h,C,5.79,45,False,7.3,low,True,"FXa inhibitor co-crystal, typical nanomolar range for this chemotype",814,157
+1lpg,C,7.09,45,False,8.3,medium,True,"1LPG is a known FXa-indole benzamidine inhibitor crystal structure, nM range",791,162
+2xbv,C,8.43,45,False,8.3,medium,True,"FXa pyrrolidine diamide inhibitor series, typical nanomolar potency",810,159
+1z6e,C,9.72,45,False,8.0,medium,True,1z6e is a known factor Xa inhibitor co-crystal structure,785,154
+1mq6,C,11.15,45,False,8.3,medium,True,"1mq6 is DX-9065a-like factor Xa inhibitor series, nM range",799,159
+1nc3,C,5.0,46,False,6.5,low,True,"Known MTAN pyrazolopyrimidine nucleoside inhibitor, transition-state-like analog",773,165
+1nc1,C,6.12,46,False,6.5,low,True,"MTAN with formycin/adenosine-like transition-state analog, literature Ki range",771,157
+1y6r,C,10.11,46,False,7.8,medium,True,"MTAN with transition-state analog inhibitor, similar to immucillin-type complexes",774,159
+4f2w,C,11.3,46,False,7.2,low,False,"MTAN inhibitor resembling transition-state analogs, moderate-high affinity estimate",809,160
+4f3c,C,11.82,46,False,7.3,low,False,MTAN inhibitor resembling transition-state analogs; pyrrolidine-adenine scaffold typical of nM-µM binders,805,174
+1uto,C,2.27,47,False,2.3,low,True,"Phenethylamine weak trypsin(ogen) active-site binder, low mM Ki reported",736,161
+4abg,C,3.57,47,False,3.5,low,False,"benzylamine-like fragment, weak trypsin S1 pocket binder",746,154
+3gy4,C,5.1,47,False,4.0,medium,True,"Benzamidine-like weak trypsin S1 pocket binder, known Ki ~mid micromolar",739,165
+1k1i,C,6.58,47,False,7.3,medium,True,"Naphthylsulfonyl-amidinophenylalanine-proline trypsin inhibitor, similar to NAPAP analogs",786,175
+1o3f,C,7.96,47,False,6.5,low,False,"Benzamidine-like warhead binding trypsin S1 pocket, typical micromolar affinity",770,162
+2yge,C,5.06,48,False,7.5,medium,True,"Geldanamycin-like ansamycin bound to Hsp82/Hsp90 N-domain, known nM affinity",850,170
+2fxs,C,6.06,48,False,5.5,low,True,"Radicicol-like resorcinylic HSP90/HSP82 N-domain inhibitor, moderate micromolar affinity",786,172
+2iwx,C,6.68,48,False,6.8,medium,True,"Chlorinated resorcinylic macrolactone, Hsp90 N-domain inhibitor class like monocillin/radicicol analogs",795,177
+2wer,C,7.05,48,False,7.5,medium,True,Macrocyclic resorcylate resembles radicicol/monorden bound to Hsp90/Hsp82 N-domain,816,172
+2vw5,C,8.52,48,False,8.0,medium,True,Macrocyclic resorcinylic lactam resembling macbecin/geldanamycin-class Hsp90 N-domain binders,842,174
+4kzq,C,6.1,49,False,5.0,low,False,"Small flavanone fragment-like ligand, weak predicted PARP/tankyrase catalytic site binder",752,165
+4kzu,C,6.5,49,False,5.2,low,False,"Flavone-like PARP/tankyrase nicotinamide-pocket binder, moderate affinity estimate",749,166
+4j21,C,7.41,49,False,6.8,low,False,"Quinazolinone-like PARP/tankyrase nicotinamide-mimetic scaffold, typical micromolar-submicromolar affinity",758,178
+4j3l,C,7.8,49,False,7.0,low,True,"TNKS2 quinazolinone/nicotinamide-mimetic inhibitor series, typical submicromolar IC50",769,170
+3kr8,C,8.1,49,False,6.3,low,False,"Tankyrase PARP nicotinamide-mimetic fragment, moderate affinity typical",757,161
+2ymd,C,3.16,50,False,5.5,low,True,AChBP-serotonin analog complex; known micromolar affinity binders,764,153
+2wnc,C,6.32,50,False,8.3,medium,True,"2wnc is AChBP with tropane-indole carboxylate (like tropisetron/indole-tropane), nicotinic ligand",772,174
+2xys,C,7.42,50,False,8.0,low,True,"AChBP-Aplysia with alkaloid toxin (e.g. lycodine/himbacine-type) complex, nM range",804,171
+2wn9,C,8.52,50,False,6.5,low,False,"AChBP nicotinic ligand resembling known nicotinoid chemotypes, moderate affinity estimate",775,166
+2x00,C,11.33,50,True,7.5,low,False,Likely a complex macrolide-type AChBP ligand; no specific binding data recalled,841,158
+3ozt,C,4.13,51,False,7.3,low,False,"Nitrocatechol COMT inhibitor scaffold, typical nanomolar-micromolar affinity",801,165
+3ozs,C,5.33,51,False,7.3,medium,True,"COMT bisubstrate nitrocatechol inhibitor series, PDB 3OZS, literature nM range",806,167
+3oe5,C,6.88,51,False,7.3,medium,True,"COMT bisubstrate/nitrocatechol inhibitor series, typical nM affinity",798,161
+3oe4,C,7.47,51,False,7.8,medium,True,"COMT nitrocatechol-adenosine hybrid inhibitor, similar bisubstrate analogs in PDB",800,170
+3nw9,C,9.0,51,False,8.0,medium,True,"COMT bisubstrate inhibitor series (adenosine-dihydroxybenzamide), 3nw9 crystal structure",807,173
+3ao4,C,2.07,52,True,4.0,low,False,"Small fragment-like ligand, no specific binding data recalled",752,149
+3zt2,C,2.84,52,False,5.0,low,False,"HIV integrase inhibitor fragment-like scaffold, moderate affinity estimate",774,159
+3zsx,C,3.28,52,False,5.0,low,False,"HIV integrase LEDGF-site inhibitor-like scaffold, moderate affinity estimate",789,163
+4cig,C,3.67,52,False,6.5,low,False,"HIV integrase LEDGF-site inhibitor-like scaffold, moderate affinity estimate",790,163
+3zso,C,5.12,52,False,5.5,low,False,"HIV integrase LEDGF-site inhibitor-like scaffold, moderate affinity estimate",805,163
+3n7a,C,3.7,53,False,4.3,low,True,"Type II DHQD substrate/product analog, weak native affinity mM range",766,153
+4ciw,C,4.82,53,False,4.3,low,False,Type II DHQD with shikimate-like substrate analog; weak-to-moderate affinity typical,787,162
+3n86,C,5.64,53,False,5.3,low,False,"Type II DHQD substrate-analog inhibitor, moderate polar affinity estimate",779,159
+3n76,C,6.85,53,False,5.5,low,False,"Shikimate-like analog inhibitor of type II DHQase, moderate affinity estimate",780,160
+2xb8,C,7.59,53,False,4.8,low,False,"Type II DHQase substrate-analog inhibitor, typical micromolar affinity",801,157
+4bkt,C,3.62,54,False,4.0,low,False,"Small fragment-like ligand, likely weak-binding VHL/elongin fragment hit",791,159
+4w9c,C,4.65,54,False,5.0,low,True,"VHL/elongin ligand, hydroxyproline-based VHL-binder fragment, known scaffold moderate affinity",784,170
+4w9l,C,5.02,54,False,6.5,medium,True,"VHL-ligand (VH032-like) hydroxyproline binder, known PROTAC warhead affinity range",817,167
+4w9i,C,5.96,54,False,4.3,low,True,"4W9I is VHL-elonginC/B hydroxyproline-based ligand fragment, weak-moderate binder",799,168
+4w9h,C,6.73,54,False,5.3,low,True,"4W9H is VHL-elonginC/B hydroxyproline ligand series, early VHL ligand affinity",797,166
+3nq9,C,4.03,55,False,3.5,low,False,Beta-lactoglobulin binds fatty acids via hydrophobic calyx with weak-moderate affinity,734,167
+3ueu,C,5.24,55,False,4.3,low,True,Beta-lactoglobulin binds fatty acids (laurate) with moderate micromolar affinity,738,163
+3uev,C,5.89,55,False,4.5,low,True,Beta-lactoglobulin binds fatty acids with micromolar affinity in hydrophobic calyx,739,165
+3uew,C,6.31,55,False,4.5,low,True,"Beta-lactoglobulin palmitate binding in hydrophobic calyx, literature range",741,160
+3uex,C,6.92,55,False,4.5,low,True,"Beta-lactoglobulin fatty acid (stearic acid) binding to calyx, moderate affinity",743,165
+3lka,C,2.82,56,False,5.8,low,False,"Simple arylsulfonamide weak zinc-binder, MMP-12 typical micromolar affinity",742,164
+3ehy,C,5.85,56,False,3.5,low,False,"Small sulfonamide-alanine MMP-12 fragment, weak non-chelating zinc ligand",756,164
+3tsk,C,7.17,56,False,6.5,low,False,"MMP-12 peptide-mimetic inhibitor, non-zinc-chelating, moderate affinity estimate",799,168
+3nx7,C,8.1,56,False,6.5,low,True,"MMP-12 hydroxamate sulfonamide inhibitor, typical micromolar affinity class",756,163
+4gr0,C,9.55,56,False,8.3,low,True,"MMP-12 phosphinic peptidomimetic inhibitor, class known nanomolar binders",818,162
+3dxg,C,2.4,57,False,3.3,low,True,"RNase A with uridine 3'/5'-monophosphate, weak mM-range substrate analog binding",779,163
+3d6q,C,3.76,57,False,3.5,low,False,"RNase A weak affinity for uridine-derivative nucleoside analogs, mM range",778,158
+1w4o,C,5.22,57,False,3.3,low,True,"RNase A binds mononucleotides (uridine 3'-monophosphate) weakly, Kd~mM",789,165
+1o0h,C,5.92,57,False,3.3,low,True,"RNase A weak binding to ADP-like nucleotide, mM-range affinity typical",789,158
+1u1b,C,7.8,57,False,3.3,low,False,RNase A weak affinity for dinucleotide-like substrate analogs/cyclic nucleotide ligands,856,166
