@@ -104,10 +104,19 @@ What the PDB ID actually buys is **confidence, not accuracy**: abstention falls 
 
 ### Figures carrying pre-correction numbers
 
-`figures/casf2016_poster.png` and `figures/casf2016_size_decomposition.png` were produced before
-these corrections and still show R = +0.469, partial R = +0.355 and n = 284. They are kept for
-provenance; the corrected values live in `results/casf2016_null_decomposition_corrected.csv` and
-`figures/casf2016_null_models.png`.
+`figures/casf2016_size_decomposition.png` was produced before these corrections and still shows
+partial R = +0.355 and n = 284; the corrected values are partial R = +0.339 (ligand size removed)
+and the variance split 0.071 / 0.162 / 0.090, in
+`results/casf2016_null_decomposition_corrected.csv`.
+
+`figures/casf2016_poster.png` has been rebuilt at n = 285 (v2). It now carries all eight stages —
+the five original ones plus the multivariate null, the machine-learned scoring functions and the
+language-model axis — with 18 numbered footnotes. Every number on it is recomputed from the result
+tables in `results/`; `repro/poster_v3.py` is the script, and `results/poster_numbers.json` holds
+the exact values it drew. Two of them were previously carried as estimates and are now measured:
+exhaustiveness-32 success is read from `casf2016_sampling_summary.csv` (66.5 %, not a
+seed-mean-plus-offset guess) and PoseBusters validity is recomputed from the per-check table
+(95.8 %, not 96.1 %).
 
 ## Does ML scoring need a Linux machine?
 
