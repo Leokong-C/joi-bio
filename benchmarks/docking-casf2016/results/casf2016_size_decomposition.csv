@@ -1,0 +1,10 @@
+quantity,value
+partial R (size removed),0.343
+p value,2.7299402520861258e-09
+n,285.0
+R2 size only,0.233
+R2 Vina only,0.252
+R2 both,0.323
+unique size,0.071
+shared,0.162
+unique Vina,0.09

@@ -89,6 +89,54 @@ checks say no:
 What the PDB ID actually buys is **confidence, not accuracy**: abstention falls from 20.4 % to
 8.8 % while MAE moves 1.38 -> 1.30. That is the case for building abstention into the protocol.
 
+## Result 4 - MM/GBSA: the costliest physics method adds nothing
+
+Vina is an empirical scoring function, so the obvious objection to Result 1 is that the problem is
+Vina's approximations rather than physics-based scoring as such. We therefore rescored the crystal
+poses with minimisation-based, single-trajectory MM/GBSA - a far more expensive calculation with a
+real force field and an implicit-solvent model.
+
+Method: OpenMM 8.6.1 on CPU, receptor repaired with PDBFixer, `ff14sb_off_impropers_0.0.4` for
+protein and `openff-2.2.0` for ligand, NAGL (`openff-gnn-am1bcc-1.0.0.pt`) partial charges,
+`GBSAOBCForce` (OBC2, solvent dielectric 78.5, SA energy 2.25936 kJ/mol/nm^2), 200 minimisation
+iterations on the complex, then component energies from that one minimised geometry. Run on a
+**random 47 of the 285** (seed 42, 87 % success, 252 s per complex); the sample is random rather
+than stratified so the subset is unbiased, and all comparators below are recomputed on the same 47.
+
+| predictor | Pearson R | cost per complex |
+|---|---|---|
+| RF-Score v2 (ML) | **0.756** | 1.3 s |
+| trivial null, random forest | 0.549 | < 0.01 s |
+| ligand heavy atoms / trivial null, ridge | 0.528 | < 0.01 s |
+| **MM/GBSA** | **0.385** | **252 s** |
+| Vina | 0.368 | 94 s |
+| Vinardo | 0.329 | 94 s |
+
+MM/GBSA edges past Vina and loses heavily to the trivial null. Its unique contribution beyond the
+null is **dR^2 = 0.001 (p = 0.80)** - statistically nothing; Vina gives 0.003 (p = 0.69) and
+Vinardo 0.001 (p = 0.80) on this subset, while RF-Score v2 adds **0.271 (p = 3e-6)** at 1/200 of
+the cost.
+
+**This strengthens Result 1 rather than qualifying it.** The failure of physics-based scoring on
+CASF-2016 is not an artefact of Vina's empirical functional form: computing the energy properly,
+with a force field and implicit solvent, lands in the same place.
+
+Four implementation traps, all documented in `repro/mmgbsa_one.py`:
+
+1. `Topology.from_pdb` returns one molecule **per chain**; taking `molecules[0]` silently truncates
+   the receptor and crashes `GBSAOBCForce` with "Index out of range" (11 of the first 17 complexes).
+2. PDBFixer's `removeHeterogens` keeps free standard residues that sit in ATOM records as their own
+   chain - a zwitterionic proline in `3bv9` - and `create_interchange` then raises
+   `NonIntegralMoleculeChargeError`. Drop molecules under 60 atoms.
+3. Several deposited ligand SDFs have unspecified stereocentres, so `Molecule.from_file` needs
+   `allow_undefined_stereo=True`. MM parameters do not depend on the assignment.
+4. OpenMM kills the whole interpreter with `STATUS_ACCESS_VIOLATION` on some complexes, so each
+   complex runs in its own subprocess with a resumable JSONL log.
+
+Seven of 54 attempts failed and are listed with their errors in `results/casf2016_mmgbsa_failures.csv`
+(two `UnassignedChemistryInPDBError` on nonstandard residues, two pre-fix stereochemistry errors,
+one access violation, one timeout, one charge error).
+
 ## Corrections to earlier stages
 
 * **n = 284 -> 285.** `1a30` (tripeptide ligand Glu-Asp-Leu, excluded earlier by the
@@ -100,23 +148,16 @@ What the PDB ID actually buys is **confidence, not accuracy**: abstention falls 
   double-count **alternate locations**. Five complexes are affected: `3gv9`, `2xnb`, `2yfe`, `2al5`
   (exactly 2x) and `3prs` (50 vs 53). Verified directly: ligand `GV9` at A/364 in `3gv9` is stored
   as altloc A and altloc B, 12 atoms each, and was counted as 24. Use the SDF-derived count.
-  Vina's size-controlled partial R moves from +0.355 to **+0.339**.
+  Vina's size-controlled partial R moves from +0.355 to **+0.343** (+0.339 was the n = 284
+  value and appears in the first version of this file, the Notion page and the summary email).
 
-### Figures carrying pre-correction numbers
+### Figure provenance
 
-`figures/casf2016_size_decomposition.png` was produced before these corrections and still shows
-partial R = +0.355 and n = 284; the corrected values are partial R = +0.339 (ligand size removed)
-and the variance split 0.071 / 0.162 / 0.090, in
-`results/casf2016_null_decomposition_corrected.csv`.
-
-`figures/casf2016_poster.png` has been rebuilt at n = 285 (v2). It now carries all eight stages —
-the five original ones plus the multivariate null, the machine-learned scoring functions and the
-language-model axis — with 18 numbered footnotes. Every number on it is recomputed from the result
-tables in `results/`; `repro/poster_v3.py` is the script, and `results/poster_numbers.json` holds
-the exact values it drew. Two of them were previously carried as estimates and are now measured:
-exhaustiveness-32 success is read from `casf2016_sampling_summary.csv` (66.5 %, not a
-seed-mean-plus-offset guess) and PoseBusters validity is recomputed from the per-check table
-(95.8 %, not 96.1 %).
+Both figures that carried pre-correction numbers have been rebuilt at n = 285:
+`figures/casf2016_poster.png` (v2, eight stages) and `figures/casf2016_size_decomposition.png`
+(partial R = +0.343, variance split 0.071 / 0.162 / 0.090, total R^2 = 0.323). No figure in this
+directory now shows a superseded value. `repro/poster_v3.py` is the poster script and
+`results/poster_numbers.json` holds the 49 values it drew.
 
 ## Does ML scoring need a Linux machine?
 
@@ -140,7 +181,7 @@ Only GPU deep-learning co-folding (DiffDock, Boltz, AlphaFold3) genuinely needs 
 ## Layout
 
 ```
-results/    16 tables - the numbers behind every claim above
+results/    22 tables - the numbers behind every claim above
 figures/     8 panels - see STAGE4.md section they belong to
 repro/       REPRODUCE.md + 2 scripts, for running this on another machine
 ```
