@@ -63,9 +63,12 @@
     "auc": true,
     "bedroc": true
   },
-  "verdict": "PASS",
-  "verdict_reason": "3/3 통과: ef1, auc, bedroc",
+  "verdict": "ABSTAIN",
+  "verdict_reason": "대조군이 없다. 절대 문턱은 3/3 통과이나, 이 문턱은 벤치마크와 유사도 0.07 인 구조도 통과시킨 전력이 있다(EPAS1 대조군 3H82: EF1% 8.17, AUC 0.716, BEDROC 0.300). 또한 벤치마크 4개 중 상위 1% 진입이 0개다. 닮지 않은 구조에 같은 라이브러리를 도킹해 비교하기 전에는 이 수치가 도킹 실력인지 구조 선택 덕인지 말할 수 없다.",
   "benchmark_warning": "벤치마크 4개 중 상위 1.0%에 진입한 것이 없다. 지표가 통과하더라도 이 결과는 신뢰할 수 없다.",
   "gene": "MET",
-  "pocket_confidence": "high"
+  "pocket_confidence": "high",
+  "previous_verdict": "PASS",
+  "verdict_revised": "2026-10-23",
+  "revision_note": "게이트 개정(2026-10-23)으로 재판정. 대조군 부재 시 ABSTAIN. EPAS1 에서 잰 구조선택 기여도를 적용하면 EF1% 7.06, AUC 0.851, BEDROC 0.296 이나, 이는 유사도 0.400 에서 잰 값을 0.7195 구조에 외삽한 추정이라 근거가 약하다."
 }
