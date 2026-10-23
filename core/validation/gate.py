@@ -155,12 +155,18 @@ def evaluate(
     PASS 를 내면 그 숫자가 도킹 실력인지 구조를 잘 골라서인지 말할 수 없다.
     """
     rows = [r for r in rows if r.get("score") is not None]
+    # 스크리닝 전용 화합물은 채점에서 뺀다. 음성으로 센 것을 후보로 내놓던
+    # 순환을 끊기 위해 라이브러리를 둘로 갈랐다(library.py 참조).
+    # 분할 이전 결과에는 screen 라벨이 없으므로 이 줄은 아무 일도 하지 않는다.
+    n_screen = sum(1 for r in rows if r.get("label") == "screen")
+    rows = [r for r in rows if r.get("label") != "screen"]
     rows.sort(key=lambda r: r["score"])  # Vina는 낮을수록 좋다
     labels = [1 if r.get("label") == "known_active" else 0 for r in rows]
 
     n_act = sum(labels)
     metrics = {
         "n_compounds": len(rows),
+        "n_screen_excluded": n_screen,
         "n_known_active": n_act,
         "n_decoy": len(rows) - n_act,
         "ef1": enrichment_factor(labels, 0.01),
