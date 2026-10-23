@@ -1,0 +1,59 @@
+{
+  "gene": "EPAS1",
+  "baseline": {
+    "verdict": "PASS",
+    "ef1": 32.682,
+    "auc": 0.7717,
+    "bedroc": 0.6697
+  },
+  "cases": [
+    {
+      "case": "unit_flip",
+      "description": "활성 12/60개의 단위가 뒤바뀌어 decoy 로 재분류",
+      "verdict": "FAIL",
+      "baseline_verdict": "PASS",
+      "detected": true,
+      "ef1": 34.724,
+      "auc": 0.7186,
+      "bedroc": 0.5962,
+      "delta_ef1": 2.042
+    },
+    {
+      "case": "swap_smiles",
+      "description": "431개 레코드의 SMILES 를 서로 섞음 (스코어는 그대로)",
+      "verdict": "PASS",
+      "baseline_verdict": "PASS",
+      "detected": false,
+      "ef1": 32.682,
+      "auc": 0.7717,
+      "bedroc": 0.6697,
+      "delta_ef1": 0.0
+    },
+    {
+      "case": "stale_records",
+      "description": "활성 6/60개를 철회된 레코드로 표시 (라벨은 그대로)",
+      "verdict": "PASS",
+      "baseline_verdict": "PASS",
+      "detected": false,
+      "ef1": 32.682,
+      "auc": 0.7717,
+      "bedroc": 0.6697,
+      "delta_ef1": 0.0
+    },
+    {
+      "case": "swap_target",
+      "description": "2157개 화합물의 스코어를 다른 타깃 실행 것으로 교체",
+      "verdict": "FAIL",
+      "baseline_verdict": "PASS",
+      "detected": true,
+      "ef1": 8.17,
+      "auc": 0.7161,
+      "bedroc": 0.3005,
+      "delta_ef1": -24.512
+    }
+  ],
+  "n_cases": 4,
+  "n_detected": 2,
+  "detection_rate": 0.5,
+  "note": "미탐지는 파이프라인에 입력 무결성 검사가 없다는 뜻이다. 스코어 분별력과 입력 신뢰성은 다른 문제다."
+}
