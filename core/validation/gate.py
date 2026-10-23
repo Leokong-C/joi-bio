@@ -17,8 +17,24 @@ Joi_bio 신뢰성의 근거. 알려진 활성 화합물(known actives)을 라이
 판정
   INSUFFICIENT  활성 수가 10개 미만 → 통계적으로 무의미, 지표를 믿지 않는다
   INVALID       활성 비율이 높아 EF 임계값이 도달 불가능 → 라이브러리 재구성 필요
-  PASS          유효한 임계값 중 2개 이상 충족
+  ABSTAIN       대조군이 없다 → 판정하지 않는다
+  PASS          절대 문턱 + 대조군 대비 유의한 우위 + 벤치마크 회수
   FAIL          그 외
+
+2026-10-23 개정 — 왜 절대 문턱만으로는 안 되는가
+  EPAS1 음성 대조군(3H82, 벤치마크와 유사도 0.0714)이 세 문턱을 전부 넘었다.
+  EF1% 8.170 > 5.0, AUC 0.7161 > 0.70, BEDROC 0.3004 > 0.30.
+  벤치마크와 무관한 구조가 통과하는 문턱은 문턱이 아니다. 게다가 AUC 는
+  구조 선택 기여도가 7.2% 에 불과해(EF1% 은 75%) 사실상 편향에 면역이라,
+  2-of-3 규칙에서 거의 자동 통과한다.
+
+  그래서 문턱 숫자를 임의로 올리는 대신 판정 근거를 바꿨다. 통과하려면
+  같은 라이브러리를 닮지 않은 구조에 도킹한 대조군보다 **통계적으로 유의하게**
+  나아야 한다. 짝지은 부트스트랩으로 차이의 신뢰구간을 구해 0 을 배제하는지 본다.
+  대조군이 없으면 이 비교를 할 수 없으므로 PASS 도 FAIL 도 아닌 ABSTAIN 이다.
+
+  근거: Chaput et al. 2016, J Cheminform 8:56 — 편향 타깃을 제거하자
+  성공 타깃이 Glide 5/47, Gold 4/47 로 떨어졌다.
 """
 from __future__ import annotations
 
@@ -127,8 +143,17 @@ def benchmark_recovery(rows: list[dict], names: list[str], frac: float = 0.01) -
     }
 
 
-def evaluate(rows: list[dict], benchmark_ligands: list[str] | None = None) -> dict:
-    """도킹 결과(스코어 좋은 순 정렬)를 받아 게이트 판정을 내린다."""
+def evaluate(
+    rows: list[dict],
+    benchmark_ligands: list[str] | None = None,
+    control_rows: list[dict] | None = None,
+    n_boot: int = 2000,
+) -> dict:
+    """도킹 결과(스코어 좋은 순 정렬)를 받아 게이트 판정을 내린다.
+
+    control_rows 가 없으면 ABSTAIN. 구조 선택 편향을 분리할 수단이 없는데
+    PASS 를 내면 그 숫자가 도킹 실력인지 구조를 잘 골라서인지 말할 수 없다.
+    """
     rows = [r for r in rows if r.get("score") is not None]
     rows.sort(key=lambda r: r["score"])  # Vina는 낮을수록 좋다
     labels = [1 if r.get("label") == "known_active" else 0 for r in rows]
@@ -169,6 +194,22 @@ def evaluate(rows: list[dict], benchmark_ligands: list[str] | None = None) -> di
     passed_checks = sum(1 for v in checks.values() if v is True)
     usable_checks = sum(1 for v in checks.values() if v is not None)
 
+    # 대조군 대비 우위 — 절대 문턱만으로는 닮지 않은 구조도 통과한다
+    br = metrics["benchmark_recovery"]
+    bench_ok = not br.get("n_found_in_library") or bool(br.get("n_in_top_pct"))
+    paired = None
+    if control_rows:
+        from core.validation.stats import paired_diff
+
+        paired = paired_diff(rows, control_rows, n_boot=n_boot)
+        metrics["paired_vs_control"] = paired
+        sig = {
+            m: bool(v.get("significant") and (v.get("diff") or 0) > 0)
+            for m, v in paired.get("metrics", {}).items()
+        }
+        metrics["control_margin"] = sig
+        margin_ok = sum(1 for m in ("ef1", "bedroc") if sig.get(m)) >= 1 and sig.get("auc", False)
+
     if n_act < MIN_ACTIVES:
         metrics["verdict"] = "INSUFFICIENT"
         metrics["verdict_reason"] = (
@@ -183,22 +224,42 @@ def evaluate(rows: list[dict], benchmark_ligands: list[str] | None = None) -> di
             "활성 비율이 높으면 함께 부풀려지므로 믿을 수 없다. "
             "라이브러리를 활성 2~3% 비율로 다시 구성할 것."
         )
-    elif passed_checks >= 2:
+    elif control_rows is None:
+        metrics["verdict"] = "ABSTAIN"
+        metrics["verdict_reason"] = (
+            f"대조군이 없다. 절대 문턱은 {passed_checks}/{usable_checks} 통과이나, "
+            "이 문턱은 벤치마크와 유사도 0.07 인 구조도 통과시킨 전력이 있다"
+            "(EPAS1 대조군 3H82: EF1% 8.17, AUC 0.716, BEDROC 0.300). "
+            "닮지 않은 구조에 같은 라이브러리를 도킹해 비교하기 전에는 "
+            "이 수치가 도킹 실력인지 구조 선택 덕인지 말할 수 없다."
+        )
+    elif passed_checks >= 2 and margin_ok and bench_ok:
         metrics["verdict"] = "PASS"
         passed = [k for k, v in checks.items() if v is True]
-        metrics["verdict_reason"] = f"{passed_checks}/{usable_checks} 통과: {', '.join(passed)}"
+        margins = [m for m, v in metrics["control_margin"].items() if v]
+        metrics["verdict_reason"] = (
+            f"절대 문턱 {passed_checks}/{usable_checks} 통과: {', '.join(passed)}. "
+            f"대조군 대비 유의한 우위: {', '.join(margins)}. "
+            f"벤치마크 상위 {br['top_pct']}% 진입 {br['n_in_top_pct']}/{br['n_found_in_library']}."
+        )
     else:
         metrics["verdict"] = "FAIL"
-        failed = [k for k, v in checks.items() if v is False]
+        why = []
+        if passed_checks < 2:
+            why.append(f"절대 문턱 미달: {', '.join(k for k, v in checks.items() if v is False)}")
+        if not margin_ok:
+            lost = [m for m, v in metrics["control_margin"].items() if not v]
+            why.append(f"대조군 대비 우위가 유의하지 않음: {', '.join(lost)}")
+        if not bench_ok:
+            why.append(
+                f"벤치마크 {br['n_found_in_library']}개 중 상위 {br['top_pct']}% 진입 0개"
+            )
         metrics["verdict_reason"] = (
-            f"미달: {', '.join(failed)}. "
-            "포켓 정의, 구조 선택, 또는 이 타깃 클래스에 대한 "
+            " / ".join(why) + ". 포켓 정의, 구조 선택, 또는 이 타깃 클래스에 대한 "
             "리지드 도킹의 한계를 의심할 것."
         )
 
-    # 벤치마크 회수는 별도 경고. 지표가 통과해도 승인약을 못 찾으면
-    # 그 파이프라인은 신뢰할 수 없다.
-    br = metrics["benchmark_recovery"]
+    # 벤치마크 회수는 이제 판정에 반영된다(bench_ok). 경고는 로그 가독성용으로 남긴다.
     if br.get("n_found_in_library") and not br.get("n_in_top_pct"):
         metrics["benchmark_warning"] = (
             f"벤치마크 {br['n_found_in_library']}개 중 상위 {br['top_pct']}%에 "
@@ -214,6 +275,12 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--gene", required=True)
     ap.add_argument("--targetdir", default=None)
+    ap.add_argument(
+        "--controldir",
+        default=None,
+        help="음성 대조군 결과 폴더. 없으면 ABSTAIN 이 나온다.",
+    )
+    ap.add_argument("--n-boot", type=int, default=2000)
     args = ap.parse_args()
 
     tdir = Path(args.targetdir) if args.targetdir else root / "targets" / args.gene
@@ -235,7 +302,24 @@ def main() -> int:
     meta = json.loads(meta_path.read_text()) if meta_path.exists() else {}
     bench = meta.get("benchmark_ligands", [])
 
-    result = evaluate(rows, bench)
+    ctrl_rows: list[dict] | None = None
+    if args.controldir:
+        cdir = Path(args.controldir)
+        ctrl_rows = []
+        for shard in sorted(cdir.glob("docked_shard*.jsonl")):
+            ctrl_rows += [json.loads(l) for l in shard.read_text().splitlines() if l.strip()]
+        if not ctrl_rows:
+            callf = cdir / "docked_all.jsonl"
+            if callf.exists():
+                ctrl_rows = [
+                    json.loads(l) for l in callf.read_text().splitlines() if l.strip()
+                ]
+        if not ctrl_rows:
+            print(f"[!] 대조군 폴더에 결과가 없다: {cdir}")
+            return 1
+        print(f"    대조군 {len(ctrl_rows)}개 로드 — 짝지은 부트스트랩 {args.n_boot}회")
+
+    result = evaluate(rows, bench, control_rows=ctrl_rows, n_boot=args.n_boot)
     result["gene"] = args.gene
     result["pocket_confidence"] = meta.get("pocket", {}).get("confidence")
 
