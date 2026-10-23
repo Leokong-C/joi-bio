@@ -29,6 +29,7 @@ RDLogger.DisableLog("rdApp.*")
 CHEMBL = "https://www.ebi.ac.uk/chembl/api/data"
 TIMEOUT = 120
 ACTIVITY_CUTOFF_NM = 10000.0  # 10 uM 이하만 활성으로 인정
+SCREEN_SEED = 1023  # 스크리닝 전용 집합을 평가셋과 다른 씨드로 뽑는다
 
 _params = FilterCatalog.FilterCatalogParams()
 _params.AddCatalog(FilterCatalog.FilterCatalogParams.FilterCatalogs.PAINS)
@@ -240,7 +241,11 @@ def cap_actives(lib: list[dict], cap: int) -> tuple[list[dict], int]:
 
 
 def build(
-    uniprot: str, benchmarks: list[str], n_decoys: int, max_actives: int
+    uniprot: str,
+    benchmarks: list[str],
+    n_decoys: int,
+    max_actives: int,
+    n_screen: int = 0,
 ) -> tuple[list[dict], dict]:
     print("  [1/4] 벤치마크 리간드 수집")
     bench = fetch_benchmark_ligands(benchmarks)
@@ -256,10 +261,31 @@ def build(
     decoys = fetch_decoys(n_decoys)
     print(f"    decoy {len(decoys)}개")
 
+    # 스크리닝 전용 집합 — 평가셋과 겹치지 않는 별도 화합물.
+    #
+    # 2026-10-23 이전에는 이 구분이 없어 decoy 전체가 채점의 음성이면서 동시에
+    # 후보 추출원이었다. EPAS1·MET 양 타깃 모두 상위 20 후보가 전원 decoy 로
+    # 나왔는데, 파이프라인이 제 성능을 채점할 때 음성으로 센 바로 그 화합물을
+    # 후보로 내놓았다는 뜻이다. EF1% 가 천장에 닿으면 후보가 0개가 되므로
+    # 후보는 지표의 오차 안에만 존재했다.
+    #
+    # decoy 를 쪼개 쓰는 길도 있었으나 평가셋이 작아지면서 활성 비율이 오르고
+    # EF 천장이 내려간다(50% 분할 시 2.78%→5.41%, 천장 35.95→18.48). 기존
+    # 결과와 비교가 끊기므로 평가셋은 그대로 두고 screen 을 위에 더한다.
+    #
+    # 기본값 0 — 측정에는 screen 이 필요 없다. 후보를 뽑을 때만 명시적으로
+    # 켜고, 그만큼 도킹 비용이 더 든다.
+    screen: list[dict] = []
+    if n_screen:
+        screen = fetch_decoys(n_screen, seed=SCREEN_SEED)
+        for r in screen:
+            r["label"] = "screen"
+        print(f"    스크리닝 전용 {len(screen)}개 (도킹 비용 추가)")
+
     # 중복 제거 — 벤치마크 > 활성 > decoy 순으로 우선
     seen: dict[str, dict] = {}
     rejected: dict[str, int] = {}
-    for rec in bench + actives + decoys:
+    for rec in bench + actives + decoys + screen:
         cs = canonical(rec["smiles"])
         if cs is None:
             rejected["unparseable"] = rejected.get("unparseable", 0) + 1
@@ -276,17 +302,21 @@ def build(
         seen[cs] = rec
 
     lib, n_dropped = cap_actives(list(seen.values()), max_actives)
+
     n_act = sum(1 for r in lib if r["label"] == "known_active")
-    ratio = n_act / len(lib) if lib else 0
+    n_eval = n_act + sum(1 for r in lib if r["label"] == "decoy")
+    ratio = n_act / n_eval if n_eval else 0
     stats = {
         "active_fraction": round(ratio, 4),
         "max_reachable_ef1": round(1 / ratio, 2) if ratio else None,
         "n_actives_dropped": n_dropped,
         "max_actives_cap": max_actives,
         "n_total": len(lib),
+        "n_eval_set": n_eval,
         "n_benchmark": sum(1 for r in lib if r["source"] == "benchmark_spikein"),
         "n_known_active": sum(1 for r in lib if r["label"] == "known_active"),
         "n_decoy": sum(1 for r in lib if r["label"] == "decoy"),
+        "n_screen": sum(1 for r in lib if r["label"] == "screen"),
         "benchmarks_requested": benchmarks,
         "benchmarks_found": [
             r["query_name"] for r in lib if r["source"] == "benchmark_spikein"
@@ -303,6 +333,13 @@ def main() -> int:
     ap.add_argument("--gene", required=True)
     ap.add_argument("--uniprot")
     ap.add_argument("--n-decoys", type=int, default=2500)
+    ap.add_argument(
+        "--n-screen",
+        type=int,
+        default=0,
+        help="스크리닝 전용 화합물 수. 0이면 후보를 뽑지 않는다(측정 전용). "
+        "켜면 그만큼 도킹 비용이 늘어난다.",
+    )
     ap.add_argument(
         "--max-actives",
         type=int,
@@ -334,7 +371,9 @@ def main() -> int:
         return 1
 
     print(f"[*] {args.gene} ({uniprot}) 라이브러리 구성")
-    lib, stats = build(uniprot, benchmarks, args.n_decoys, args.max_actives)
+    lib, stats = build(
+        uniprot, benchmarks, args.n_decoys, args.max_actives, n_screen=args.n_screen
+    )
 
     (tdir / "library.jsonl").write_text(
         "\n".join(json.dumps(r, ensure_ascii=False) for r in lib)

@@ -173,7 +173,21 @@ def main() -> int:
         med = act_heavy[len(act_heavy) // 2]
         heavy_floor = int(med * args.min_heavy_frac)
 
-    novel = [r for r in rows if r.get("label") != "known_active"][: args.top_n]
+    # 후보는 스크리닝 전용 집합에서만 뽑는다.
+    #
+    # 2026-10-23 이전에는 `label != "known_active"` 로 뽑았는데, 비활성의 전부가
+    # 채점에 쓰인 decoy 였다. 그래서 EPAS1·MET 양 타깃 모두 상위 20 후보가 전원
+    # decoy 로 나왔다 — 파이프라인이 제 성능을 채점할 때 음성으로 센 바로 그
+    # 화합물들을 후보로 내놓고 있었다. 이제 screen 라벨에서만 뽑는다.
+    pool = [r for r in rows if r.get("label") == "screen"]
+    if not pool:
+        print(
+            "[!] screen 라벨이 없다 — 라이브러리 분할(2026-10-23) 이전 결과다.\n"
+            "    이 결과로는 후보를 뽑지 않는다. 채점의 음성 집합과 후보 추출원이\n"
+            "    같아 순환이 생긴다. 라이브러리를 다시 만들어 재실행할 것."
+        )
+        return 1
+    novel = pool[: args.top_n]
     out, n_small = [], 0
     for r in novel:
         p = profile(r["smiles"])
