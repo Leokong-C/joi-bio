@@ -69,9 +69,30 @@ def _get(url: str, params: dict | None = None, retries: int = 3) -> requests.Res
 
 
 def smarts_cids(smarts: str, max_records: int, label: str) -> list[str]:
-    """SMARTS 부분구조로 CID 를 찾는다."""
-    r = _get(f"{PUG}/compound/fastsubstructure/smarts/{smarts}/cids/TXT",
-             {"MaxRecords": max_records})
+    """SMARTS 부분구조로 CID 를 찾는다.
+
+    POST 로 보낸다. SMARTS 에 흔한 '#'(삼중결합)이 URL 에서는 조각 구분자라
+    경로에 넣으면 잘려 400 이 난다 — 2026-10-25 aryl_nitrile_F 가 그랬다.
+    """
+    r = None
+    for attempt in range(3):
+        try:
+            r = requests.post(
+                f"{PUG}/compound/fastsubstructure/smarts/cids/TXT",
+                data={"smarts": smarts, "MaxRecords": max_records},
+                timeout=TIMEOUT, headers=UA,
+            )
+            if r.status_code == 200:
+                break
+            if r.status_code in (503, 504):
+                time.sleep(2 ** attempt); continue
+            print(f"    [!] {label}: {r.status_code} {r.text[:120]}")
+            r = None
+            break
+        except Exception as e:
+            print(f"    [!] {label}: {type(e).__name__} {str(e)[:100]}")
+            time.sleep(2 ** attempt)
+            r = None
     time.sleep(PAUSE)
     if r is None:
         return []
@@ -80,19 +101,48 @@ def smarts_cids(smarts: str, max_records: int, label: str) -> list[str]:
     return cids
 
 
+SMILES_FIELDS = ["SMILES", "CanonicalSMILES", "ConnectivitySMILES", "IsomericSMILES"]
+
+
+def _working_smiles_field() -> str:
+    """PubChem 이 2025년에 CanonicalSMILES 를 바꿨다. 무엇이 사는지 직접 본다."""
+    for f in SMILES_FIELDS:
+        try:
+            r = requests.get(f"{PUG}/compound/cid/2244/property/{f}/JSON",
+                             timeout=30, headers=UA)
+            if r.status_code == 200 and f in r.text:
+                print(f"    SMILES 필드: {f}")
+                return f
+        except Exception:
+            pass
+        time.sleep(PAUSE)
+    print("    [!] 쓸 수 있는 SMILES 필드를 못 찾았다 — SMILES 로 시도")
+    return "SMILES"
+
+
 def fetch_properties(cids: list[str], chunk: int = 150) -> list[dict]:
     """CID 묶음에서 SMILES 와 물성을 받는다."""
-    want = "CanonicalSMILES,MolecularWeight,XLogP,HBondDonorCount,HBondAcceptorCount,RotatableBondCount"
+    sf = _working_smiles_field()
+    want = f"{sf},MolecularWeight,XLogP,HBondDonorCount,HBondAcceptorCount,RotatableBondCount"
     out: list[dict] = []
     for i in range(0, len(cids), chunk):
         part = cids[i : i + chunk]
-        r = _get(f"{PUG}/compound/cid/{','.join(part)}/property/{want}/JSON")
+        try:
+            r = requests.post(f"{PUG}/compound/cid/property/{want}/JSON",
+                              data={"cid": ",".join(part)},
+                              timeout=TIMEOUT, headers=UA)
+            if r.status_code != 200:
+                print(f"    [!] 물성 {r.status_code}: {r.text[:140]}")
+                r = None
+        except Exception as e:
+            print(f"    [!] 물성 {type(e).__name__}: {str(e)[:100]}")
+            r = None
         time.sleep(PAUSE)
         if r is None:
             continue
         try:
             for p in r.json()["PropertyTable"]["Properties"]:
-                smi = p.get("CanonicalSMILES")
+                smi = p.get(sf) or p.get("SMILES") or p.get("CanonicalSMILES")
                 if not smi:
                     continue
                 out.append(
