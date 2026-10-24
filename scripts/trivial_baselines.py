@@ -158,6 +158,30 @@ def main() -> int:
         print(f"    {label:22s} {mm['ef1']:>8} {mm['ef5']:>8} "
               f"{mm['auc']:>8} {mm['bedroc']:>8}")
 
+    # 진짜 수용 기준 — 사소한 기술자가 우리 게이트를 통과하는가.
+    #
+    # 임의의 AUC 문턱보다 이쪽이 낫다. 게이트 문턱(EF1 5.0 / AUC 0.70 /
+    # BEDROC 0.30)은 이미 이 프로젝트가 쓰는 값이고, 단백질도 구조도 안 쓴
+    # 순위가 그걸 통과한다면 그 벤치마크로는 아무것도 증명할 수 없다.
+    #
+    # 기존 ChEMBL 무작위 라이브러리는 불소 세기만으로 3/3 을 통과했다.
+    GATE = {"ef1": 5.0, "auc": 0.70, "bedroc": 0.30}
+    mx = {k: max((v[k] or 0) for v in out["baselines"].values()) for k in GATE}
+    gate_hits = [k for k, t in GATE.items() if mx[k] >= t]
+    out["gate_check"] = {
+        "thresholds": GATE,
+        "max_over_probes": mx,
+        "passed": gate_hits,
+        "n_passed": len(gate_hits),
+        "trivial_would_pass_gate": len(gate_hits) >= 2,
+    }
+    print(f"\n[*] 사소한 기술자 최고치 — EF1% {mx['ef1']:.3f} / AUC {mx['auc']:.4f} "
+          f"/ BEDROC {mx['bedroc']:.4f}")
+    if gate_hits:
+        print(f"    게이트 문턱을 넘는 것: {', '.join(gate_hits)} ({len(gate_hits)}/3)")
+    else:
+        print("    게이트 문턱을 넘는 것이 하나도 없다 — 벤치마크가 제 구실을 한다")
+
     best = max(out["baselines"].items(), key=lambda kv: kv[1]["auc"] or 0)
     worst_auc = best[1]["auc"] or 0
     note = (
@@ -167,12 +191,14 @@ def main() -> int:
     )
     if dock:
         note += f" 참고로 도킹 치료군은 {dock['auc']}."
-    passed = worst_auc <= args.max_auc
+    # 게이트를 2개 이상 넘으면 무조건 탈락. 아니면 보조 기준(AUC)으로 본다.
+    passed = (not out["gate_check"]["trivial_would_pass_gate"]) and worst_auc <= args.max_auc
     out["worst_case"] = {
         "probe": best[0],
         "auc": worst_auc,
         "threshold": args.max_auc,
         "accepted": passed,
+        "gate_check": out["gate_check"],
         "note": note,
     }
     print(f"\n[{'+' if passed else '!'}] 단일 기술자 최대 AUC {worst_auc} "
