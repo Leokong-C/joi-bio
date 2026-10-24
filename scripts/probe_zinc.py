@@ -105,10 +105,15 @@ def main() -> int:
          "output_fields": "zinc_id,smiles"},
     ))
 
-    # 2. ZINC20 — 구버전이 살아 있는지
+    # 2. ZINC20 — 구버전이 살아 있는지. .txt 가 HTML 을 돌려주므로 .csv 도 본다
     results.append(probe(
-        "zinc20_random",
-        "https://zinc20.docking.org/substances/random.txt",
+        "zinc20_random_csv",
+        "https://zinc20.docking.org/substances/random.csv",
+        {"count": 100, "output_fields": "zinc_id,smiles"},
+    ))
+    results.append(probe(
+        "zinc20_subsets",
+        "https://zinc20.docking.org/substances/subsets/drug-like.csv",
         {"count": 100},
     ))
 
@@ -159,7 +164,8 @@ def main() -> int:
             print("    (비교: EPAS1 활성 — 불소>=3 80%, 설폰 72%, 넷 모두 35%)")
             print("    (비교: ChEMBL 무작위 — 불소>=3 4.3%, 설폰 9.5%, 넷 모두 0%)")
             for k, v in census["pct"].items():
-                print(f"      {k:18s} {v:6.2f}%  ({census['counts'][k]}개)")
+                shown = f"{v:6.2f}%" if v is not None else "   n/a"
+                print(f"      {k:18s} {shown}  ({census['counts'][k]}개)")
 
     out = {"probes": results, "chemotype_census": census,
            "verdict": ("ZINC 접근 가능" if best else "ZINC 접근 불가 — 대안 필요")}
