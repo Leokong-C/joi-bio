@@ -1,0 +1,20 @@
+{
+  "n": 2157,
+  "n_active": 60,
+  "n_scaffolds": 763,
+  "folds": 5,
+  "split": "cold_scaffold",
+  "ligand_only": {
+    "ef1": 35.95,
+    "ef5": 19.306,
+    "auc": 0.99,
+    "bedroc": 0.9668
+  },
+  "docking_same_library": {
+    "ef1": 32.682,
+    "ef5": 12.316,
+    "auc": 0.7717,
+    "bedroc": 0.6697
+  },
+  "note": "리간드 지문만 쓴 모델은 수용체 구조를 보지 않으므로 구조 선택 편향이 있을 수 없다. 다만 ChEMBL 유사체 암기라는 자기 편향이 있어 골격 분할로 완화했을 뿐 제거하지는 못했다."
+}

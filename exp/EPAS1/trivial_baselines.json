@@ -1,0 +1,86 @@
+{
+  "n": 2157,
+  "n_active": 60,
+  "baselines": {
+    "fluorine_count": {
+      "description": "불소 원자 수",
+      "median_active": 3.0,
+      "median_decoy": 0.0,
+      "ef1": 26.145,
+      "ef5": 14.313,
+      "auc": 0.9114,
+      "bedroc": 0.687
+    },
+    "sulfone": {
+      "description": "설폰기 수",
+      "median_active": 1.0,
+      "median_decoy": 0.0,
+      "ef1": 4.902,
+      "ef5": 6.657,
+      "auc": 0.8045,
+      "bedroc": 0.3756
+    },
+    "nitrile": {
+      "description": "나이트릴기 수",
+      "median_active": 0.0,
+      "median_decoy": 0.0,
+      "ef1": 22.877,
+      "ef5": 8.987,
+      "auc": 0.6989,
+      "bedroc": 0.4785
+    },
+    "halogen_any": {
+      "description": "할로겐 수",
+      "median_active": 4.0,
+      "median_decoy": 0.0,
+      "ef1": 19.609,
+      "ef5": 12.316,
+      "auc": 0.8909,
+      "bedroc": 0.6156
+    },
+    "heavy_atoms": {
+      "description": "중원자 수",
+      "median_active": 27.0,
+      "median_decoy": 26.0,
+      "ef1": 3.268,
+      "ef5": 1.664,
+      "auc": 0.5798,
+      "bedroc": 0.0964
+    },
+    "tpsa": {
+      "description": "TPSA",
+      "median_active": 82.77499999999999,
+      "median_decoy": 68.00999999999999,
+      "ef1": 1.634,
+      "ef5": 0.333,
+      "auc": 0.5705,
+      "bedroc": 0.0323
+    },
+    "mw": {
+      "description": "분자량",
+      "median_active": 402.75250000000005,
+      "median_decoy": 367.55800000000005,
+      "ef1": 3.268,
+      "ef5": 0.999,
+      "auc": 0.6618,
+      "bedroc": 0.0778
+    }
+  },
+  "docking_treatment": {
+    "ef1": 32.682,
+    "ef5": 12.316,
+    "auc": 0.7717,
+    "bedroc": 0.6697
+  },
+  "docking_control": {
+    "ef1": 8.17,
+    "ef5": 5.659,
+    "auc": 0.7161,
+    "bedroc": 0.3003
+  },
+  "worst_case": {
+    "probe": "fluorine_count",
+    "auc": 0.9114,
+    "note": "'불소 원자 수' 하나만 세도 AUC 0.9114 가 나온다. 도킹 치료군은 0.7717. 단백질도 구조도 쓰지 않은 순위가 도킹과 비슷하거나 낫다면, 지표의 상당 부분은 decoy 가 활성과 물성·화학형에서 너무 다르다는 사실에서 나온 것이다."
+  }
+}
