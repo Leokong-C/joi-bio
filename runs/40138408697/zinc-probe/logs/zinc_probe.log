@@ -1,0 +1,21 @@
+   zinc22_random_druglike       status=None        0B  45.1s ConnectTimeout: HTTPSConnectionPool(host='cartblanche22.dock
+OK zinc20_random                status=200   12,306B   0.5s 
+      <!doctype html>
+      <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+   files_zinc22_index           status=None        0B  45.1s ConnectTimeout: HTTPSConnectionPool(host='files.docking.org'
+   files_root                   status=None        0B  45.1s ConnectTimeout: HTTPSConnectionPool(host='files.docking.org'
+OK pubchem_property_search      status=200      318B   1.2s 
+      4046
+      5566
+
+[*] zinc20_random 표본 0개의 화학형 분포
+    (비교: EPAS1 활성 — 불소>=3 80%, 설폰 72%, 넷 모두 35%)
+    (비교: ChEMBL 무작위 — 불소>=3 4.3%, 설폰 9.5%, 넷 모두 0%)
+Traceback (most recent call last):
+  File "/home/runner/work/joi-bio/joi-bio/scripts/probe_zinc.py", line 173, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/scripts/probe_zinc.py", line 162, in main
+    print(f"      {k:18s} {v:6.2f}%  ({census['counts'][k]}개)")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: unsupported format string passed to NoneType.__format__
