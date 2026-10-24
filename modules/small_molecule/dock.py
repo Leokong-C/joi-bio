@@ -97,9 +97,30 @@ MONATOMIC_IONS = {
     "K", "NA", "CL", "BR", "IOD", "F", "CD", "HG", "SR", "BA", "CS", "RB", "LI",
 }
 
+# 촉매 금속 — 지우면 결합 부위 자체가 사라지는 것들.
+#
+# 2026-10-25 발견. 이온 제거는 MET 대조군의 obabel 실패를 고치려고 넣었는데
+# (가스테이거 전하 부여가 고립 단원자 이온에서 깨진다), 종류를 가리지 않는다.
+# config/targets.yaml 의 CA9(탄산무수화효소 IX)는 pocket_mode=metal_site 이고
+# 활성부위 Zn2+ 에 설폰아마이드 억제제가 직접 배위한다. 그 아연을 지우면
+# 도킹할 부위가 없어진다 — 11월에 CA9 로 넓혔다면 조용히 무의미한 결과가
+# 나왔을 것이다.
+#
+# 그래서 촉매 금속은 기본적으로 남긴다. 남기면 obabel 이 깨질 수 있으므로
+# prep_receptor 가 전환에 실패하면 그때 해당 이온을 빼고 한 번 더 시도하되,
+# 뺐다는 사실을 메타데이터에 남겨 절대 해석에서 빠지지 않게 한다.
+CATALYTIC_METALS = {"ZN", "MN", "FE", "FE2", "CU", "CU1", "NI", "CO", "MG"}
 
-def strip_monatomic_ions(pdb: Path) -> tuple[Path, list[str]]:
+
+def strip_monatomic_ions(
+    pdb: Path, keep_catalytic: bool = True
+) -> tuple[Path, list[str]]:
     """Gasteiger 전하 계산을 막는 단원자 이온을 뺀 사본을 만든다.
+
+    keep_catalytic=True 면 촉매 금속(Zn, Mn, Fe, Cu, Ni, Co, Mg)은 남긴다.
+    CA9 처럼 금속 배위가 결합의 본질인 타깃에서 그 금속을 지우면 도킹할
+    부위 자체가 사라지기 때문이다. 남겨서 obabel 이 깨지면 호출부가
+    keep_catalytic=False 로 한 번 더 시도하고, 그 사실을 기록한다.
 
     왜
       2026-10-19 MET 대조군(3DKC)에서 수용체 변환이 종료코드 0 으로 끝나면서
@@ -129,17 +150,31 @@ def strip_monatomic_ions(pdb: Path) -> tuple[Path, list[str]]:
       대상인 두 팔이 똑같이 Mg 없이 준비되므로 비교 자체는 성립한다.
       절대값 해석에만 영향이 있다.
     """
+    drop = MONATOMIC_IONS - (CATALYTIC_METALS if keep_catalytic else set())
     kept, removed = [], []
     for line in pdb.read_text().splitlines():
-        if line.startswith("HETATM") and line[17:20].strip().upper() in MONATOMIC_IONS:
+        if line.startswith("HETATM") and line[17:20].strip().upper() in drop:
             removed.append(f"{line[17:20].strip()}{line[22:26].strip()}")
             continue
         kept.append(line)
     if not removed:
         return pdb, []
-    out = pdb.with_name(pdb.stem + "_noion.pdb")
+    suffix = "_noion" if keep_catalytic else "_nometal"
+    out = pdb.with_name(pdb.stem + suffix + ".pdb")
     out.write_text("\n".join(kept) + "\n")
     return out, sorted(set(removed))
+
+
+def _record_metal_stripped(pdbqt: Path, removed: list[str]) -> None:
+    """촉매 금속을 뺐다는 사실을 수용체 옆에 남긴다. 보고서가 읽어 간다."""
+    try:
+        (pdbqt.parent / "metal_stripped.json").write_text(
+            json.dumps({"metal_stripped": True, "removed": removed,
+                        "note": "촉매 금속을 제거하고 변환했다. 금속 배위는 "
+                                "모델링되지 않으므로 절대값 해석에 반영할 것."},
+                       ensure_ascii=False, indent=2))
+    except Exception:
+        pass
 
 
 def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
@@ -156,24 +191,41 @@ def prep_receptor(pdb: Path, pdbqt: Path) -> bool:
     if pdbqt.exists() and pdbqt.stat().st_size > 0:
         return True
 
-    src, removed = strip_monatomic_ions(pdb)
-    if removed:
-        print(f"    단원자 이온 {len(removed)}개 제외: {', '.join(removed)} "
-              "— Gasteiger 전하 계산이 이들에서 실패한다. 금속 배위는 "
-              "모델링되지 않으므로 절대값 해석에 반영할 것.", flush=True)
+    # 1차: 촉매 금속을 남기고 시도. CA9 처럼 금속 배위가 결합의 본질인
+    # 타깃에서 아연을 지우면 도킹할 부위가 사라진다.
+    # 2차: 그래도 obabel 이 깨지면 금속까지 빼고 한 번 더. 뺐다는 사실은
+    # metal_stripped 로 기록해 절대값 해석에서 빠지지 않게 한다.
+    r = None
+    src = pdb
+    for keep_catalytic in (True, False):
+        src, removed = strip_monatomic_ions(pdb, keep_catalytic=keep_catalytic)
+        if removed:
+            print(f"    단원자 이온 {len(removed)}개 제외: {', '.join(removed)}",
+                  flush=True)
+        if not keep_catalytic:
+            print("    [!] 촉매 금속까지 제외하고 재시도한다 — 금속 배위가 "
+                  "모델링되지 않는다. 절대값 해석에 반드시 반영할 것.",
+                  file=sys.stderr, flush=True)
+            _record_metal_stripped(pdbqt, removed)
 
-    cmd = [
-        "obabel", str(src), "-O", str(pdbqt),
-        "-xr", "-p", "7.4", "--partialcharge", "gasteiger",
-    ]
-    try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
-    except (subprocess.TimeoutExpired, FileNotFoundError) as e:
-        print(f"[!] 수용체 변환 실패: {e}", file=sys.stderr, flush=True)
-        return False
+        cmd = [
+            "obabel", str(src), "-O", str(pdbqt),
+            "-xr", "-p", "7.4", "--partialcharge", "gasteiger",
+        ]
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+        except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+            print(f"[!] 수용체 변환 실패: {e}", file=sys.stderr, flush=True)
+            return False
 
-    size = pdbqt.stat().st_size if pdbqt.exists() else 0
-    if r.returncode != 0 or size == 0:
+        size = pdbqt.stat().st_size if pdbqt.exists() else 0
+        if r.returncode == 0 and size > 0:
+            break
+        if keep_catalytic:
+            print("[!] 촉매 금속을 남긴 채로는 변환이 실패했다 — 금속을 빼고 재시도",
+                  file=sys.stderr, flush=True)
+            continue
+
         print(f"[!] 수용체 변환 실패 — obabel exit={r.returncode}, 출력 {size} 바이트",
               file=sys.stderr, flush=True)
         for stream, name in ((r.stderr, "stderr"), (r.stdout, "stdout")):
