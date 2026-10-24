@@ -1,0 +1,94 @@
+{
+  "probes": [
+    {
+      "name": "zinc22_random_druglike",
+      "url": "https://cartblanche22.docking.org/substance/random.txt",
+      "params": {
+        "count": 200,
+        "subset": "drug-like",
+        "output_fields": "zinc_id,smiles"
+      },
+      "status": null,
+      "seconds": 45.25,
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='cartblanche22.docking.org', port=443): Max retries exceeded with url: /substance/random.txt?count=200&subset=drug-like&output_fields=zinc_id%2Csmiles (Caused by ConnectTimeou"
+    },
+    {
+      "name": "zinc20_random_csv",
+      "url": "https://zinc20.docking.org/substances/random.csv",
+      "params": {
+        "count": 100,
+        "output_fields": "zinc_id,smiles"
+      },
+      "status": 200,
+      "seconds": 0.29,
+      "bytes": 12306,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://zinc20.docking.org/captcha?next=%2Fsubstances%2Frandom.csv",
+      "sample": "\n<!doctype html>\n<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->\n<!--[if lt IE 7]> <html class=\"no-js lt-ie9 lt-ie8 lt-ie7\" lang=\"en\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js lt-ie9 lt-ie8\" lang=\"en\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js lt-ie9\" lang=\"en\"> <![endif]-->\n<!--[if gt IE 8]><!-->\n    <!-- Google tag (gtag.js) -->\n<script async src"
+    },
+    {
+      "name": "zinc20_subsets",
+      "url": "https://zinc20.docking.org/substances/subsets/drug-like.csv",
+      "params": {
+        "count": 100
+      },
+      "status": 200,
+      "seconds": 0.35,
+      "bytes": 12317,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://zinc20.docking.org/captcha?next=%2Fsubstances%2Fsubsets%2Fdrug-like.csv",
+      "sample": "\n<!doctype html>\n<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->\n<!--[if lt IE 7]> <html class=\"no-js lt-ie9 lt-ie8 lt-ie7\" lang=\"en\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js lt-ie9 lt-ie8\" lang=\"en\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js lt-ie9\" lang=\"en\"> <![endif]-->\n<!--[if gt IE 8]><!-->\n    <!-- Google tag (gtag.js) -->\n<script async src"
+    },
+    {
+      "name": "files_zinc22_index",
+      "url": "https://files.docking.org/zinc22/",
+      "params": null,
+      "status": null,
+      "seconds": 45.07,
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='files.docking.org', port=443): Max retries exceeded with url: /zinc22/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='files.docking.org', port=443) at 0x7f2ed0eb8050>,"
+    },
+    {
+      "name": "files_root",
+      "url": "https://files.docking.org/",
+      "params": null,
+      "status": null,
+      "seconds": 45.04,
+      "error": "ConnectTimeout: HTTPSConnectionPool(host='files.docking.org', port=443): Max retries exceeded with url: / (Caused by ConnectTimeoutError(<HTTPSConnection(host='files.docking.org', port=443) at 0x7f2ed0ec3910>, 'Conne"
+    },
+    {
+      "name": "pubchem_property_search",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastsubstructure/smarts/FC(F)(F)c1ccccc1/cids/TXT",
+      "params": {
+        "MaxRecords": 50
+      },
+      "status": 200,
+      "seconds": 1.25,
+      "bytes": 318,
+      "content_type": "text/plain",
+      "final_url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/fastsubstructure/smarts/FC(F)(F)c1ccccc1/cids/TXT?MaxRecords=50",
+      "sample": "4046\n5566\n216239\n3352\n91699\n11784975\n3899\n2315\n2375\n3372\n3647\n3386\n5569\n84098\n3371\n3397\n33630\n115355\n644241\n5281881\n6918296\n24826799\n135413536\n3337\n5568\n34468\n62276\n2319\n16562\n33775\n41381\n62857\n39327\n6931\n71481097\n6451149\n9853053\n10311306\n2318\n3360\n4488\n4493\n35375\n66265\n91649\n156419\n5324346\n6918248\n15951529\n54684141\n"
+    }
+  ],
+  "chemotype_census": {
+    "n_parsed": 0,
+    "counts": {
+      "fluorine_ge3": 0,
+      "halogen_ge3": 0,
+      "sulfone": 0,
+      "nitrile": 0,
+      "aryl_ether": 0,
+      "F3_and_sulfone": 0,
+      "all_four": 0
+    },
+    "pct": {
+      "fluorine_ge3": null,
+      "halogen_ge3": null,
+      "sulfone": null,
+      "nitrile": null,
+      "aryl_ether": null,
+      "F3_and_sulfone": null,
+      "all_four": null
+    }
+  },
+  "verdict": "ZINC 접근 가능"
+}

@@ -1,0 +1,21 @@
+{
+  "n_parsed": 12118,
+  "counts": {
+    "fluorine_ge3": 6174,
+    "halogen_ge3": 6652,
+    "sulfone": 6177,
+    "nitrile": 3299,
+    "aryl_ether": 2968,
+    "F3_and_sulfone": 3135,
+    "all_four": 177
+  },
+  "pct": {
+    "fluorine_ge3": 50.95,
+    "halogen_ge3": 54.89,
+    "sulfone": 50.97,
+    "nitrile": 27.22,
+    "aryl_ether": 24.49,
+    "F3_and_sulfone": 25.87,
+    "all_four": 1.46
+  }
+}

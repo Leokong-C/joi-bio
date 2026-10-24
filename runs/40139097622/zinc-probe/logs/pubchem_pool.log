@@ -1,0 +1,23 @@
+[*] SMARTS 5개, 패턴당 최대 2,500개
+    aryl_CF2_or_CF3              CID 2,500개
+    aryl_sulfone                 CID 2,500개
+    aryl_nitrile_F               CID 2,500개
+    diaryl_ether_halo            CID 2,500개
+    fluorinated_sulfone          CID 2,500개
+
+[*] 고유 CID 12,118개 — 물성 수신 시작
+    SMILES 필드: SMILES
+      150개 수집
+      1,650개 수집
+      3,150개 수집
+      4,650개 수집
+      6,150개 수집
+      7,650개 수집
+      9,150개 수집
+      10,650개 수집
+      12,118개 수집
+
+[+] 풀 12,118개 → zinc_out/pubchem_pool.jsonl
+    → zinc_out/pubchem_pool_stats.json
+
+    다음: decoys.py 로 물성 매칭, 그다음 trivial_baselines.py --library 로 수용 확인

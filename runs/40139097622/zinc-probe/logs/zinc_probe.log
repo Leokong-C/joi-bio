@@ -1,0 +1,26 @@
+   zinc22_random_druglike       status=None        0B  45.2s ConnectTimeout: HTTPSConnectionPool(host='cartblanche22.dock
+OK zinc20_random_csv            status=200   12,306B   0.3s 
+      <!doctype html>
+      <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+OK zinc20_subsets               status=200   12,317B   0.3s 
+      <!doctype html>
+      <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+   files_zinc22_index           status=None        0B  45.1s ConnectTimeout: HTTPSConnectionPool(host='files.docking.org'
+   files_root                   status=None        0B  45.0s ConnectTimeout: HTTPSConnectionPool(host='files.docking.org'
+OK pubchem_property_search      status=200      318B   1.2s 
+      4046
+      5566
+
+[*] zinc20_random_csv 표본 0개의 화학형 분포
+    (비교: EPAS1 활성 — 불소>=3 80%, 설폰 72%, 넷 모두 35%)
+    (비교: ChEMBL 무작위 — 불소>=3 4.3%, 설폰 9.5%, 넷 모두 0%)
+      fluorine_ge3          n/a  (0개)
+      halogen_ge3           n/a  (0개)
+      sulfone               n/a  (0개)
+      nitrile               n/a  (0개)
+      aryl_ether            n/a  (0개)
+      F3_and_sulfone        n/a  (0개)
+      all_four              n/a  (0개)
+
+[=] ZINC 접근 가능
+    → zinc_out/zinc_probe.json
