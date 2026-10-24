@@ -1,0 +1,4 @@
+condition,n,full_accuracy,AURC,AURC_sd,AURC_random_confidence,sel_acc_at_80pct_coverage,sel_acc_sd,max_coverage_before_abstain
+A: ligand only,285,0.495,0.459,0.023,0.508,0.499,0.014,0.032
+B: + protein name,285,0.744,0.249,0.01,0.256,0.758,0.002,0.796
+C: + PDB ID,285,0.761,0.236,0.012,0.244,0.761,0.01,0.912

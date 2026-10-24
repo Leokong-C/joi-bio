@@ -1,0 +1,4 @@
+threshold_A,vina_top1_pct,rfscore_reranked_pct,best_returned_mode_pct
+1,51.8,29.8,59.6
+2,66.0,40.1,86.5
+3,75.9,53.5,94.3
