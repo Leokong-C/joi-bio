@@ -1,0 +1,41 @@
+[*] tooluniverse
+Downloading pillow (6.8MiB)
+Downloading pypdfium2 (3.6MiB)
+Downloading pygments (1.2MiB)
+Downloading rustworkx (2.3MiB)
+Downloading pdfminer-six (6.3MiB)
+Downloading pydantic-core (2.1MiB)
+Downloading tooluniverse (8.5MiB)
+Downloading pip (1.7MiB)
+Downloading pandas (11.5MiB)
+Downloading lxml (5.0MiB)
+Downloading numpy (16.0MiB)
+Downloading hf-xet (4.0MiB)
+Downloading cryptography (4.5MiB)
+Downloading beartype (1.5MiB)
+Downloading faiss-cpu (30.0MiB)
+ Downloaded pygments
+ Downloaded pip
+ Downloaded beartype
+ Downloaded rustworkx
+ Downloaded pydantic-core
+ Downloaded pypdfium2
+ Downloaded hf-xet
+ Downloaded lxml
+ Downloaded cryptography
+ Downloaded pdfminer-six
+ Downloaded pillow
+ Downloaded numpy
+ Downloaded pandas
+ Downloaded faiss-cpu
+ Downloaded tooluniverse
+Installed 109 packages in 354ms
+tu 1.5.7
+    [0] Crossref_get_work {"doi": "10.1186/s13321-016-0167-x"}
+        2.9s
+    [1] Crossref_get_work {"doi": "10.1021/ci600426e"}
+        2.1s
+    [2] find: property matched decoy set generation for virtual screening
+        3.0s
+
+[=] 3/3 성공
