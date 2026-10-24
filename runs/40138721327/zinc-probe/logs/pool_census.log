@@ -1,0 +1,10 @@
+[*] PubChem 풀 0개
+    (EPAS1 활성  — 불소>=3 80.0%, 설폰 71.7%, 넷 모두 35.0%)
+    (ChEMBL 무작위 — 불소>=3  4.3%, 설폰  9.5%, 넷 모두  0.0%)
+      fluorine_ge3       n/a%  (0개)
+      halogen_ge3        n/a%  (0개)
+      sulfone            n/a%  (0개)
+      nitrile            n/a%  (0개)
+      aryl_ether         n/a%  (0개)
+      F3_and_sulfone     n/a%  (0개)
+      all_four           n/a%  (0개)

@@ -1,0 +1,21 @@
+{
+  "n_parsed": 0,
+  "counts": {
+    "fluorine_ge3": 0,
+    "halogen_ge3": 0,
+    "sulfone": 0,
+    "nitrile": 0,
+    "aryl_ether": 0,
+    "F3_and_sulfone": 0,
+    "all_four": 0
+  },
+  "pct": {
+    "fluorine_ge3": null,
+    "halogen_ge3": null,
+    "sulfone": null,
+    "nitrile": null,
+    "aryl_ether": null,
+    "F3_and_sulfone": null,
+    "all_four": null
+  }
+}

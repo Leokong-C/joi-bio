@@ -1,0 +1,18 @@
+{
+  "patterns": {
+    "aryl_CF2_or_CF3": "c1ccccc1C(F)(F)",
+    "aryl_sulfone": "c1ccccc1S(=O)(=O)",
+    "aryl_nitrile_F": "N#Cc1cc(F)ccc1",
+    "diaryl_ether_halo": "c1ccccc1Oc1cc(F)ccc1",
+    "fluorinated_sulfone": "FC(F)S(=O)(=O)"
+  },
+  "per_pattern_cids": {
+    "aryl_CF2_or_CF3": 2500,
+    "aryl_sulfone": 2500,
+    "aryl_nitrile_F": 0,
+    "diaryl_ether_halo": 2500,
+    "fluorinated_sulfone": 2500
+  },
+  "unique_cids": 9772,
+  "fetched": 0
+}
