@@ -1,0 +1,149 @@
+name: Joi_bio tooluniverse
+
+# ToolUniverse 질의를 GitHub Actions 에서 돌린다.
+#
+# 왜 여기서 도는가
+#   ToolUniverse 는 2,700개 과학 툴을 MCP/CLI 로 감싼 것인데, 툴마다 외부 API
+#   (Crossref, PubMed, UniProt, ChEMBL, PubChem …)를 때린다. Claude 가 도는
+#   클라우드 컨테이너는 아웃바운드 허용 목록이 패키지 저장소 정도라
+#   api.crossref.org 가 CONNECT 403 으로 막힌다. 2026-10-24 확인.
+#
+#   Actions 러너는 네트워크가 열려 있다. 그리고 여기서 돌리면 실행 ID 가 붙고
+#   결과가 ci-results 에 남는다 — 이 프로젝트의 나머지 기록과 같은 규율이다.
+#
+# 비용
+#   도킹이 없다. uv 캐시가 더우면 1~2 러너분, 차가우면 3~4분.
+#   질의 수와 거의 무관하므로 한 번에 묶어 보내는 편이 싸다.
+#
+# 쓰는 법
+#   queries 에 JSON 배열을 넣는다. 각 항목은 {"tool": ..., "args": {...}} 이거나
+#   {"find": "자연어 질의"} 다.
+#
+#   [{"tool":"Crossref_get_work","args":{"doi":"10.1186/s13321-016-0167-x"}},
+#    {"find":"property matched decoy generation for virtual screening"}]
+
+on:
+  workflow_dispatch:
+    inputs:
+      queries:
+        description: "질의 JSON 배열"
+        required: true
+        default: '[{"tool":"Crossref_get_work","args":{"doi":"10.1186/s13321-016-0167-x"}}]'
+      label:
+        description: "결과 폴더 이름 (ci-results 경로에 쓰인다)"
+        required: false
+        default: "adhoc"
+      tu_version:
+        description: "tooluniverse 버전 고정. 비우면 최신"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  query:
+    name: ToolUniverse 질의
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uv 설치
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: ".github/workflows/tooluniverse.yml"
+
+      - name: 질의 실행
+        id: run
+        shell: bash
+        env:
+          PYTHONIOENCODING: utf-8
+          QUERIES: ${{ inputs.queries }}
+          TU_VERSION: ${{ inputs.tu_version }}
+        run: |
+          mkdir -p tu_out logs
+          SPEC="tooluniverse"
+          [ -n "$TU_VERSION" ] && SPEC="tooluniverse==$TU_VERSION"
+          echo "[*] $SPEC" | tee logs/tu.log
+
+          # 레지스트리를 한 번 받아 캐시에 올린다 — 이후 호출이 빨라진다
+          uvx --from "$SPEC" tu --version 2>&1 | tee -a logs/tu.log
+
+          python3 - <<'PY' 2>&1 | tee -a logs/tu.log
+          import json, os, subprocess, sys, time
+          spec = "tooluniverse" + (f"=={os.environ['TU_VERSION']}" if os.environ.get("TU_VERSION") else "")
+          try:
+              qs = json.loads(os.environ["QUERIES"])
+          except Exception as e:
+              print(f"[!] queries 가 올바른 JSON 배열이 아니다: {e}")
+              sys.exit(1)
+          if not isinstance(qs, list):
+              print("[!] queries 는 배열이어야 한다"); sys.exit(1)
+
+          results = []
+          for i, q in enumerate(qs):
+              if "find" in q:
+                  cmd = ["uvx", "--from", spec, "tu", "find", q["find"]]
+                  desc = f"find: {q['find']}"
+              elif "tool" in q:
+                  cmd = ["uvx", "--from", spec, "tu", "run", q["tool"],
+                         json.dumps(q.get("args", {}))]
+                  desc = f"{q['tool']} {json.dumps(q.get('args', {}), ensure_ascii=False)[:80]}"
+              else:
+                  results.append({"index": i, "error": "tool 도 find 도 없다", "query": q})
+                  print(f"    [{i}] 건너뜀 — tool 도 find 도 없다")
+                  continue
+
+              print(f"    [{i}] {desc}")
+              t = time.time()
+              p = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+              dt = round(time.time() - t, 1)
+              out = p.stdout.strip()
+              rec = {"index": i, "query": q, "seconds": dt, "returncode": p.returncode}
+              # tu 는 사람이 읽는 출력을 섞어 내므로 JSON 이면 파싱, 아니면 원문
+              try:
+                  rec["result"] = json.loads(out[out.index("{"):]) if "{" in out else out
+              except Exception:
+                  rec["result_raw"] = out[:20000]
+              if p.returncode != 0:
+                  rec["stderr"] = p.stderr[-2000:]
+                  print(f"        실패 rc={p.returncode} — {p.stderr.strip()[:200]}")
+              else:
+                  print(f"        {dt}s")
+              results.append(rec)
+
+          n_ok = sum(1 for r in results if r.get("returncode") == 0)
+          print(f"\n[=] {n_ok}/{len(results)} 성공")
+          with open("tu_out/results.json", "w") as f:
+              json.dump({"n": len(results), "n_ok": n_ok, "results": results},
+                        f, ensure_ascii=False, indent=2)
+          PY
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/tooluniverse-${{ inputs.label }}"
+          mkdir -p "$OUT"
+          cp -r tu_out logs "$OUT/" 2>/dev/null || true
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "tooluniverse: ${{ inputs.label }}" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tooluniverse-${{ inputs.label }}
+          path: |
+            tu_out/
+            logs/
+          retention-days: 30
