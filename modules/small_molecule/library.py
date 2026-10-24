@@ -156,8 +156,85 @@ def annotate_names(rows: list[dict], batch: int = 50) -> None:
             r["pref_name"] = names.get(r["chembl_id"], "")
 
 
+def fetch_decoy_pool(
+    actives: list[dict], n_target: int, seed: int = 42, max_pages: int = 60
+) -> list[dict]:
+    """활성의 물성 범위를 겨냥해 큰 후보 풀을 모은다.
+
+    왜 무작위로는 안 되는가 (2026-10-24)
+      기존 fetch_decoys 는 분자량 220~550 에서 무작위로 뽑았다. 그 결과
+      EPAS1 decoy 2,097개 중 불소 3개 이상이 91개뿐이었는데, 활성은 80%가
+      불소 3개 이상인 PT 계열이다. 물성 매칭을 하려 해도 풀에 맞출 상대가
+      없다 — 실제로 매칭을 돌려보니 할로겐 중앙값이 활성 4 대 decoy 0 으로
+      그대로였다.
+
+      그래서 활성의 분자량·logP 구간으로 질의를 좁히고, 필요한 만큼 깊게
+      퍼낸다. 할로겐은 ChEMBL 질의로 거를 수 없으므로 넉넉히 받아 로컬에서
+      고른다(decoys.py 가 한다).
+    """
+    mws, logps = [], []
+    for a in actives:
+        m = Chem.MolFromSmiles(a["smiles"])
+        if m is not None:
+            mws.append(Descriptors.MolWt(m))
+            logps.append(Descriptors.MolLogP(m))
+    if not mws:
+        return fetch_decoys(n_target, seed)
+
+    mws.sort()
+    logps.sort()
+    lo_mw, hi_mw = mws[len(mws) // 20], mws[-max(1, len(mws) // 20)]
+    lo_lp, hi_lp = logps[len(logps) // 20], logps[-max(1, len(logps) // 20)]
+    # 구간을 조금 넓혀 둔다 — 너무 좁으면 풀이 말라 매칭 상대가 없어진다
+    lo_mw, hi_mw = lo_mw - 60, hi_mw + 60
+    lo_lp, hi_lp = lo_lp - 1.0, hi_lp + 1.0
+    print(f"    활성 물성 구간: MW {lo_mw:.0f}~{hi_mw:.0f}, cLogP {lo_lp:.1f}~{hi_lp:.1f}")
+
+    random.seed(seed)
+    out: list[dict] = []
+    seen: set[str] = set()
+    offset = random.randint(0, 5000)
+    for _ in range(max_pages):
+        if len(out) >= n_target:
+            break
+        data = _get(
+            f"{CHEMBL}/molecule.json",
+            {
+                "molecule_properties__mw_freebase__gte": round(lo_mw),
+                "molecule_properties__mw_freebase__lte": round(hi_mw),
+                "molecule_properties__alogp__gte": round(lo_lp, 1),
+                "molecule_properties__alogp__lte": round(hi_lp, 1),
+                "max_phase__isnull": "true",
+                "limit": 1000,
+                "offset": offset,
+            },
+        )
+        mols = (data or {}).get("molecules", [])
+        if not mols:
+            break
+        for m in mols:
+            smi = (m.get("molecule_structures") or {}).get("canonical_smiles")
+            cid = m.get("molecule_chembl_id")
+            if not smi or cid in seen:
+                continue
+            seen.add(cid)
+            out.append(
+                {
+                    "smiles": smi,
+                    "chembl_id": cid,
+                    "pref_name": m.get("pref_name") or "",
+                    "label": "decoy",
+                    "source": "chembl_property_window",
+                    "protected": False,
+                }
+            )
+        offset += 1000
+    print(f"    후보 풀 {len(out)}개 ({_ + 1} 페이지)")
+    return out
+
+
 def fetch_decoys(n: int, seed: int = 42) -> list[dict]:
-    """무관한 약물유사 화합물 = decoy."""
+    """무관한 약물유사 화합물 = decoy. (물성 매칭 이전 방식 — 비교용으로 남긴다)"""
     random.seed(seed)
     out, offset = [], random.randint(0, 20000)
     while len(out) < n:
@@ -246,6 +323,8 @@ def build(
     n_decoys: int,
     max_actives: int,
     n_screen: int = 0,
+    match_decoys: bool = True,
+    pool_multiple: int = 12,
 ) -> tuple[list[dict], dict]:
     print("  [1/4] 벤치마크 리간드 수집")
     bench = fetch_benchmark_ligands(benchmarks)
@@ -258,8 +337,21 @@ def build(
     annotate_names(actives)
 
     print("  [4/4] Decoy 수집")
-    decoys = fetch_decoys(n_decoys)
-    print(f"    decoy {len(decoys)}개")
+    if match_decoys:
+        # 활성의 물성 구간에서 넉넉히 퍼낸 뒤 decoys.select 가 고른다.
+        # 배수를 크게 잡는 이유는 할로겐 매칭 때문이다 — 무작위 ChEMBL 에서
+        # 불소 3개 이상은 4% 남짓이라 풀이 작으면 맞출 상대가 없다.
+        pool = fetch_decoy_pool(actives, n_decoys * pool_multiple)
+        from modules.small_molecule.decoys import select as match_select
+
+        decoys, match_stats = match_select(
+            actives, pool, per_active=max(1, n_decoys // max(1, len(actives)))
+        )
+        print(f"    물성 매칭 decoy {len(decoys)}개")
+    else:
+        decoys = fetch_decoys(n_decoys)
+        match_stats = None
+        print(f"    무작위 decoy {len(decoys)}개 (물성 매칭 안 함)")
 
     # 스크리닝 전용 집합 — 평가셋과 겹치지 않는 별도 화합물.
     #
@@ -321,6 +413,8 @@ def build(
         "benchmarks_found": [
             r["query_name"] for r in lib if r["source"] == "benchmark_spikein"
         ],
+        "decoy_mode": "property_matched" if match_decoys else "random",
+        "decoy_match_stats": match_stats,
         "rejected_by": rejected,
         "activity_cutoff_nM": ACTIVITY_CUTOFF_NM,
     }
@@ -333,6 +427,16 @@ def main() -> int:
     ap.add_argument("--gene", required=True)
     ap.add_argument("--uniprot")
     ap.add_argument("--n-decoys", type=int, default=2500)
+    ap.add_argument(
+        "--random-decoys",
+        action="store_true",
+        help="물성 매칭 없이 무작위 decoy 를 쓴다 (2026-10-24 이전 방식). "
+        "불소만 세도 AUC 0.911 이 나오던 그 라이브러리가 된다",
+    )
+    ap.add_argument(
+        "--pool-multiple", type=int, default=12,
+        help="후보 풀을 최종 decoy 수의 몇 배로 받을지. 할로겐 매칭에 여유가 필요하다",
+    )
     ap.add_argument(
         "--n-screen",
         type=int,
@@ -372,7 +476,9 @@ def main() -> int:
 
     print(f"[*] {args.gene} ({uniprot}) 라이브러리 구성")
     lib, stats = build(
-        uniprot, benchmarks, args.n_decoys, args.max_actives, n_screen=args.n_screen
+        uniprot, benchmarks, args.n_decoys, args.max_actives,
+        n_screen=args.n_screen, match_decoys=not args.random_decoys,
+        pool_multiple=args.pool_multiple,
     )
 
     (tdir / "library.jsonl").write_text(

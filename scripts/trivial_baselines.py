@@ -60,17 +60,34 @@ def main() -> int:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--docked", required=True, help="치료군 docked_all.jsonl")
+    ap.add_argument("--docked", default=None, help="치료군 docked_all.jsonl")
+    ap.add_argument(
+        "--library",
+        default=None,
+        help="도킹 전 library.jsonl. 스코어 없이 라벨만으로 벤치마크 난이도를 잰다. "
+        "돈을 쓰기 전에 라이브러리가 쓸만한지 확인하는 용도다",
+    )
     ap.add_argument("--control", default=None, help="대조군 docked_all.jsonl")
+    ap.add_argument(
+        "--max-auc",
+        type=float,
+        default=0.60,
+        help="수용 기준. 단일 기술자 최대 AUC 가 이보다 크면 비정상 종료한다",
+    )
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
-    rows = [
-        json.loads(l)
-        for l in Path(args.docked).read_text().splitlines()
-        if l.strip()
-    ]
-    rows = [r for r in rows if r.get("smiles") and r.get("score") is not None]
+    if not args.docked and not args.library:
+        print("[!] --docked 또는 --library 중 하나는 있어야 한다")
+        return 2
+
+    src = args.docked or args.library
+    rows = [json.loads(l) for l in Path(src).read_text().splitlines() if l.strip()]
+    rows = [r for r in rows if r.get("smiles")]
+    if args.docked:
+        rows = [r for r in rows if r.get("score") is not None]
+    # 스크리닝 전용 화합물은 채점 대상이 아니다
+    rows = [r for r in rows if r.get("label") != "screen"]
 
     mols, keep = [], []
     for r in rows:
@@ -83,12 +100,14 @@ def main() -> int:
 
     out: dict = {"n": len(y), "n_active": int(y.sum()), "baselines": {}}
 
-    # 도킹 (낮을수록 좋으므로 부호를 뒤집는다)
-    dock = rank_metrics(-np.array([r["score"] for r in keep]), y)
-    out["docking_treatment"] = dock
     print(f"\n    {'베이스라인':22s} {'EF1%':>8s} {'EF5%':>8s} {'AUC':>8s} {'BEDROC':>8s}")
-    print(f"    {'도킹 (치료군)':22s} {dock['ef1']:>8} {dock['ef5']:>8} "
-          f"{dock['auc']:>8} {dock['bedroc']:>8}")
+    dock = None
+    if args.docked:
+        # 도킹 (낮을수록 좋으므로 부호를 뒤집는다)
+        dock = rank_metrics(-np.array([r["score"] for r in keep]), y)
+        out["docking_treatment"] = dock
+        print(f"    {'도킹 (치료군)':22s} {dock['ef1']:>8} {dock['ef5']:>8} "
+              f"{dock['auc']:>8} {dock['bedroc']:>8}")
 
     if args.control:
         crows = {
@@ -140,22 +159,30 @@ def main() -> int:
               f"{mm['auc']:>8} {mm['bedroc']:>8}")
 
     best = max(out["baselines"].items(), key=lambda kv: kv[1]["auc"] or 0)
+    worst_auc = best[1]["auc"] or 0
+    note = (
+        f"'{best[1]['description']}' 하나만 세도 AUC {worst_auc} 가 나온다. "
+        "단백질도 구조도 쓰지 않은 순위가 이 정도라면, 지표의 상당 부분은 "
+        "decoy 가 활성과 물성·화학형에서 너무 다르다는 사실에서 나온 것이다."
+    )
+    if dock:
+        note += f" 참고로 도킹 치료군은 {dock['auc']}."
+    passed = worst_auc <= args.max_auc
     out["worst_case"] = {
         "probe": best[0],
-        "auc": best[1]["auc"],
-        "note": (
-            f"'{best[1]['description']}' 하나만 세도 AUC {best[1]['auc']} 가 나온다. "
-            f"도킹 치료군은 {dock['auc']}. 단백질도 구조도 쓰지 않은 순위가 "
-            "도킹과 비슷하거나 낫다면, 지표의 상당 부분은 decoy 가 활성과 "
-            "물성·화학형에서 너무 다르다는 사실에서 나온 것이다."
-        ),
+        "auc": worst_auc,
+        "threshold": args.max_auc,
+        "accepted": passed,
+        "note": note,
     }
-    print(f"\n[!] {out['worst_case']['note']}")
+    print(f"\n[{'+' if passed else '!'}] 단일 기술자 최대 AUC {worst_auc} "
+          f"(기준 {args.max_auc}) — {'수용' if passed else '탈락'}")
+    print(f"    {note}")
 
     if args.out:
         Path(args.out).write_text(json.dumps(out, ensure_ascii=False, indent=2))
         print(f"\n    → {args.out}")
-    return 0
+    return 0 if passed else 1
 
 
 if __name__ == "__main__":
