@@ -59,6 +59,37 @@ def enrichment_factor(labels: list[int], frac: float) -> float | None:
     return round((hits / top_n) / (n_act / n), 3)
 
 
+def perfect_ef(n: int, n_act: int, frac: float = 0.01) -> float | None:
+    """도달 가능한 EF 의 상한 — 활성이 전부 맨 위에 왔을 때의 값.
+
+    EF 는 비율로 나누므로 천장이 있고, 그 천장은 활성 비율에 따라 바뀐다.
+    그래서 활성 비율이 다른 두 실행의 EF1% 를 나란히 놓고 비교하면 안 된다.
+    2026-10-23 에 50/50 분할을 검토하다 천장이 35.95 에서 18.48 로 바뀌는 것을
+    보고 설계를 되돌렸는데, 그건 지표 자체의 문제를 피한 것이지 푼 게 아니었다.
+
+    공식은 SieveStack 의 LIT-PCBA 감사(arXiv:2507.21404)와 같다.
+    활성이 상위 칸수보다 많으면 n/n_act 로 떨어지고(우리 경우가 대개 이쪽),
+    활성이 더 적으면 n/k 가 된다 — 활성을 다 올려도 칸이 남기 때문이다.
+    """
+    if n == 0 or n_act == 0:
+        return None
+    k = max(1, int(round(n * frac)))
+    expected = n_act * k / n
+    return round(min(n_act, k) / expected, 3) if expected else None
+
+
+def normalized_ef(ef: float | None, n: int, n_act: int, frac: float = 0.01):
+    """nEF = EF / 천장. 0~1 이라 활성 비율이 달라도 비교된다.
+
+    1.0 은 "천장에 닿았다" 는 뜻이고, 그건 보통 좋은 소식이 아니라
+    벤치마크가 너무 쉽다는 신호다.
+    """
+    top = perfect_ef(n, n_act, frac)
+    if ef is None or not top:
+        return None
+    return round(ef / top, 4)
+
+
 def roc_auc(labels: list[int]) -> float | None:
     """랭킹 기반 AUC (Mann-Whitney U). labels[0]이 최상위."""
     n_act = sum(labels)
@@ -184,9 +215,14 @@ def evaluate(
     # 어떤 성능으로도 도달 불가능해지는데, 이를 모르고 FAIL 로 읽으면
     # 파이프라인 탓을 하게 된다. 실제로 EPAS1 첫 실행에서 그랬다.
     ratio = n_act / len(rows) if rows else 0
-    max_ef1 = round(1 / ratio, 2) if ratio else None
+    max_ef1 = perfect_ef(len(rows), n_act, 0.01)
     metrics["active_fraction"] = round(ratio, 4)
     metrics["max_reachable_ef1"] = max_ef1
+
+    # 정규화 EF — 외부 보고는 이쪽을 쓴다. 활성 비율이 다른 실행끼리
+    # EF1% 를 나란히 놓으면 안 되기 때문이다 (perfect_ef 주석 참조).
+    for key, fr in (("ef1", 0.01), ("ef5", 0.05), ("ef10", 0.10)):
+        metrics[f"n{key}"] = normalized_ef(metrics[key], len(rows), n_act, fr)
     ef1_unreachable = max_ef1 is not None and THRESHOLDS["ef1"] > max_ef1
     metrics["ef1_threshold_unreachable"] = ef1_unreachable
 

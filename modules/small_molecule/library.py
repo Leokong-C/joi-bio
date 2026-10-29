@@ -24,6 +24,8 @@ import requests
 from rdkit import Chem, RDLogger
 from rdkit.Chem import Descriptors, FilterCatalog
 
+from core.validation.gate import perfect_ef as _perfect_ef
+
 RDLogger.DisableLog("rdApp.*")
 
 CHEMBL = "https://www.ebi.ac.uk/chembl/api/data"
@@ -400,7 +402,9 @@ def build(
     ratio = n_act / n_eval if n_eval else 0
     stats = {
         "active_fraction": round(ratio, 4),
-        "max_reachable_ef1": round(1 / ratio, 2) if ratio else None,
+        # 게이트와 같은 공식을 쓴다 — 두 곳이 다른 천장을 보고하면
+        # 어느 쪽이 맞는지 알 수 없게 된다.
+        "max_reachable_ef1": _perfect_ef(n_eval, n_act, 0.01),
         "n_actives_dropped": n_dropped,
         "max_actives_cap": max_actives,
         "n_total": len(lib),
