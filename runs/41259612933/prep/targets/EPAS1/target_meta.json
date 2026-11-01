@@ -1,0 +1,54 @@
+{
+  "gene": "EPAS1",
+  "uniprot": "Q99814",
+  "declared_pocket_mode": "cavity",
+  "benchmark_smiles_found": [
+    "belzutifan",
+    "PT2385",
+    "PT2399"
+  ],
+  "source": "RCSB",
+  "pdb_id": "6CZW",
+  "resolution": 1.6,
+  "ligand_match": {
+    "similarity": 0.4,
+    "ligand_smiles": "OCc1c(Br)c(Oc2cc(F)cc(Cl)c2)ccc1[S](=O)(=O)C(F)F",
+    "matched_benchmark": 2
+  },
+  "structure_selection": "forced",
+  "receptor": {
+    "chain": "A",
+    "n_atoms": 880,
+    "cofactors": [],
+    "cocrystal_ligand": {
+      "resname": "FO7",
+      "n_heavy": 24,
+      "center": [
+        24.54,
+        -0.314,
+        -10.001
+      ]
+    }
+  },
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "FO7",
+    "center": [
+      24.54,
+      -0.314,
+      -10.001
+    ],
+    "size": [
+      20.0,
+      20.0,
+      20.0
+    ],
+    "confidence": "high",
+    "note": "FO7 (24 heavy atoms) 기준"
+  },
+  "benchmark_ligands": [
+    "belzutifan",
+    "PT2385",
+    "PT2399"
+  ]
+}
