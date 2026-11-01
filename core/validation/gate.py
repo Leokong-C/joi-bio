@@ -48,6 +48,11 @@ THRESHOLDS = {"ef1": 5.0, "auc": 0.70, "bedroc": 0.30}
 MIN_ACTIVES = 10
 BEDROC_ALPHA = 20.0
 
+# 평가셋 적용률 하한. 라이브러리 대비 이 비율 미만이면 판정을 INCOMPLETE 로
+# 덮는다. 샤드 하나가 빠지면 0.875 이하가 되어 걸리고, 정상적인 리간드 준비
+# 실패(PubChem 고정본 실측 3.90%)만으로는 걸리지 않는 자리에 두었다.
+COVERAGE_MIN = 0.90
+
 
 def enrichment_factor(labels: list[int], frac: float) -> float | None:
     """labels는 스코어 좋은 순으로 정렬된 0/1 배열."""
@@ -364,6 +369,48 @@ def main() -> int:
     result = evaluate(rows, bench, control_rows=ctrl_rows, n_boot=args.n_boot)
     result["gene"] = args.gene
     result["pocket_confidence"] = meta.get("pocket", {}).get("confidence")
+
+    # 평가셋 완전성 — 샤드가 통째로 빠졌는지 본다.
+    #
+    # 왜 (2026-11-01): 위 로더는 docked_shard*.jsonl 을 찾는 대로 모으고,
+    # 몇 개를 찾았는지는 묻지 않는다. 샤드 하나가 timeout 으로 죽으면 그
+    # 샤드는 출력 파일을 아예 쓰지 못하는데(dock.py 는 전부 끝난 뒤에 쓴다),
+    # 게이트는 남은 7/8 로 태연히 EF·AUC·천장을 계산하고 PASS 를 낸다.
+    # 불완전한 평가셋에서 나온 숫자는 완전한 것과 구분되지 않으므로, 이건
+    # 조용한 실패다 — 이 저장소가 반복해서 당한 바로 그 종류다.
+    #
+    # 라이브러리 크기와 비교해 적용률을 적고, 모자라면 판정을 덮는다.
+    # 리간드 준비 실패는 정상적으로 몇 % 난다(PubChem 고정본 실측 decoy
+    # 3.90%, 활성 0%). 그래서 문턱을 0.90 으로 둔다 — 샤드 하나가 빠지면
+    # 0.875 이하로 떨어져 걸리고, 준비 실패만으로는 걸리지 않는다.
+    n_expected = None
+    lib_stats = tdir / "library_stats.json"
+    lib_file = tdir / "library.jsonl"
+    if lib_stats.exists():
+        n_expected = json.loads(lib_stats.read_text()).get("n_total")
+    if not n_expected and lib_file.exists():
+        n_expected = sum(1 for l in lib_file.read_text().splitlines() if l.strip())
+
+    if n_expected:
+        n_attempted = len(rows)
+        coverage = round(n_attempted / n_expected, 4)
+        result["eval_set_coverage"] = {
+            "n_library": n_expected,
+            "n_docking_attempted": n_attempted,
+            "n_scored": result["n_compounds"],
+            "coverage": coverage,
+            "threshold": COVERAGE_MIN,
+        }
+        if coverage < COVERAGE_MIN:
+            result["eval_set_coverage"]["complete"] = False
+            result["verdict"] = "INCOMPLETE"
+            result["verdict_reason"] = (
+                f"평가셋 불완전 — 라이브러리 {n_expected}개 중 {n_attempted}개만 "
+                f"도킹됐다(적용률 {coverage:.1%}, 문턱 {COVERAGE_MIN:.0%}). "
+                f"샤드가 통째로 빠졌을 가능성이 크다. 지표를 측정값으로 쓰지 마라."
+            )
+        else:
+            result["eval_set_coverage"]["complete"] = True
 
     scored = sorted(
         (r for r in rows if r.get("score") is not None), key=lambda r: r["score"]
