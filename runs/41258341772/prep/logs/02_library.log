@@ -1,0 +1,9 @@
+===== EPAS1 =====
+[*] exp/EPAS1/audit/library_pubchem.jsonl 에서 2,160행
+    묵은 도킹 필드 제거 60행
+    rotb 재계산 2100행
+[+] /home/runner/work/joi-bio/joi-bio/targets/EPAS1/library.jsonl
+    총 2,160 (활성 60, decoy 2100, screen 0)
+    활성비율 0.0278  EF1 천장 36.0
+    rotb 최대 8 중위 4
+    sha256 bb8bda2e799c678a1a63909a17cbfde77e35485ae7f02f5880bd62536dad7fce
