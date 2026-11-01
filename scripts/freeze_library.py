@@ -112,6 +112,16 @@ def main() -> int:
         "n_screen": n_screen,
         "active_fraction": round(n_act / n_eval, 4) if n_eval else 0,
         "max_reachable_ef1": perfect_ef(n_eval, n_act, 0.01),
+        # 이 천장은 도킹 전 전수 기준이다. 리간드 준비가 실패한 화합물은
+        # 게이트의 평가셋에서 빠지므로 실제 천장은 이보다 낮다 — PubChem
+        # 고정본은 decoy 3.90%(82/2,100)가 준비 단계에서 떨어지고 활성은
+        # 0%가 떨어져, 활성비율이 올라가고 천장이 36.0 -> 약 34.6 으로
+        # 내려간다. 5차에서 "두 곳이 다른 천장을 보고하면 어느 쪽이 맞는지
+        # 알 수 없게 된다" 고 적었으므로 권위를 명시한다.
+        "max_reachable_ef1_scope": (
+            "도킹 전 전수 기준. 실제 천장은 도킹 결과로 계산한 "
+            "validation.json 이 권위를 갖는다"
+        ),
         "decoy_mode": "pubchem_smarts_property_matched",
         "rotb_max": rotbs[0] if rotbs else None,
         "rotb_median": rotbs[len(rotbs) // 2] if rotbs else None,
