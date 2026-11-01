@@ -1,0 +1,14 @@
+[*] EPAS1 구조 선택 편향 측정
+    treatment 6CZW (FO7, 유사도 0.4, 1.6 Å)
+    control   3H82 (020, 유사도 0.0714, 1.5 Å)
+
+    AUC  treatment=0.7798  control=0.8072
+    차이 -0.0274
+
+    belzutifan       treatment 3.142%  control 14.644%  개선 11.502
+    pt2385           treatment 8.6%  control None%  개선 None
+    pt2399           treatment 0.937%  control None%  개선 None
+
+    판정: BIAS_LIKELY
+    조기 인식 지표가 최대 4.7배 차이난다 (EF1 3.921배, BEDROC 1.805배, 벤치마크 백분위 4.661배). 상위권 순위의 상당 부분이 구조 선택에서 나왔다. 두 팔을 함께 보고하고, 대조군 수치를 편향 없는 하한으로 제시할 것.
+[+] /home/runner/work/joi-bio/joi-bio/results/bias_EPAS1.json

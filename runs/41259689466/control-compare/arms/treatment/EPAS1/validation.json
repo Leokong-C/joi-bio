@@ -1,0 +1,66 @@
+{
+  "n_compounds": 1814,
+  "n_screen_excluded": 0,
+  "n_known_active": 52,
+  "n_decoy": 1762,
+  "ef1": 29.071,
+  "ef5": 11.5,
+  "ef10": 6.36,
+  "auc": 0.7798,
+  "bedroc": 0.6115,
+  "best_score": -11.963,
+  "thresholds": {
+    "ef1": 5.0,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [
+      {
+        "name": "pt2399",
+        "rank": 17,
+        "percentile": 0.937,
+        "score": -10.273,
+        "chembl_id": "CHEMBL4165848",
+        "in_top_pct": true
+      },
+      {
+        "name": "belzutifan",
+        "rank": 57,
+        "percentile": 3.142,
+        "score": -9.393,
+        "chembl_id": "CHEMBL4585668",
+        "in_top_pct": false
+      },
+      {
+        "name": "pt2385",
+        "rank": 156,
+        "percentile": 8.6,
+        "score": -8.611,
+        "chembl_id": "CHEMBL4173075",
+        "in_top_pct": false
+      }
+    ],
+    "n_requested": 3,
+    "n_found_in_library": 3,
+    "n_in_top_pct": 1,
+    "top_pct": 1.0,
+    "missing": []
+  },
+  "active_fraction": 0.0287,
+  "max_reachable_ef1": 34.885,
+  "nef1": 0.8333,
+  "nef5": 0.5769,
+  "nef10": 0.6346,
+  "ef1_threshold_unreachable": false,
+  "checks": {
+    "ef1": true,
+    "auc": true,
+    "bedroc": true
+  },
+  "verdict": "ABSTAIN",
+  "verdict_reason": "대조군이 없다. 절대 문턱은 3/3 통과이나, 이 문턱은 벤치마크와 유사도 0.07 인 구조도 통과시킨 전력이 있다(EPAS1 대조군 3H82: EF1% 8.17, AUC 0.716, BEDROC 0.300). 닮지 않은 구조에 같은 라이브러리를 도킹해 비교하기 전에는 이 수치가 도킹 실력인지 구조 선택 덕인지 말할 수 없다.",
+  "gene": "EPAS1",
+  "pocket_confidence": "high"
+}
