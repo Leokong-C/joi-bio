@@ -1,0 +1,45 @@
+{
+  "n_compounds": 38,
+  "n_screen_excluded": 0,
+  "n_known_active": 0,
+  "n_decoy": 38,
+  "ef1": null,
+  "ef5": null,
+  "ef10": null,
+  "auc": null,
+  "bedroc": null,
+  "best_score": -6.383,
+  "thresholds": {
+    "ef1": 5.0,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [],
+    "n_requested": 3,
+    "n_found_in_library": 0,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": [
+      "belzutifan",
+      "pt2385",
+      "pt2399"
+    ]
+  },
+  "active_fraction": 0.0,
+  "max_reachable_ef1": null,
+  "nef1": null,
+  "nef5": null,
+  "nef10": null,
+  "ef1_threshold_unreachable": false,
+  "checks": {
+    "ef1": false,
+    "auc": false,
+    "bedroc": false
+  },
+  "verdict": "INSUFFICIENT",
+  "verdict_reason": "활성 화합물 0개 (최소 10개 필요). 지표가 계산되더라도 통계적으로 무의미하다.",
+  "gene": "EPAS1",
+  "pocket_confidence": "high"
+}

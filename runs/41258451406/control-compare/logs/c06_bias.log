@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/joi-bio/joi-bio/core/validation/bias.py", line 226, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/core/validation/bias.py", line 199, in main
+    ts, cs = result["structures"]["treatment"], result["structures"]["control"]
+             ~~~~~~^^^^^^^^^^^^^^
+KeyError: 'structures'

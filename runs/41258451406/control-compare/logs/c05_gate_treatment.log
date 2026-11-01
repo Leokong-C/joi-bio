@@ -1,0 +1,8 @@
+[*] EPAS1 검증
+    화합물 38 (활성 0)
+    ef1      = n/a
+    ef5      = n/a
+    auc      = n/a
+    bedroc   = n/a
+    라이브러리에 없음: ['belzutifan', 'pt2385', 'pt2399']
+    판정: INSUFFICIENT — 활성 화합물 0개 (최소 10개 필요). 지표가 계산되더라도 통계적으로 무의미하다.

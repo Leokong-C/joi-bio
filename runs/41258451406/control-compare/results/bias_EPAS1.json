@@ -1,0 +1,33 @@
+{
+  "gene": "EPAS1",
+  "treatment": {
+    "n": 38,
+    "n_active": 0,
+    "auc": null,
+    "ef1": null,
+    "ef5": null,
+    "bedroc": null,
+    "best_score": -7.603,
+    "median_active": null,
+    "median_decoy": -3.426,
+    "benchmarks": {}
+  },
+  "control": {
+    "n": 38,
+    "n_active": 0,
+    "auc": null,
+    "ef1": null,
+    "ef5": null,
+    "bedroc": null,
+    "best_score": -6.383,
+    "median_active": null,
+    "median_decoy": -1.301,
+    "benchmarks": {}
+  },
+  "auc_delta": null,
+  "ef1_ratio": null,
+  "bedroc_ratio": null,
+  "benchmark_ratio_median": null,
+  "verdict": "INCOMPARABLE",
+  "verdict_reason": "두 팔을 비교할 지표를 계산할 수 없다."
+}
