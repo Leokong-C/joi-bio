@@ -1,0 +1,67 @@
+Downloading...
+  0%|          | 0.00/3.42M [00:00<?, ?iB/s] 59%|█████▉    | 2.02M/3.42M [00:00<00:00, 19.7MiB/s]100%|██████████| 3.42M/3.42M [00:00<00:00, 30.8MiB/s]
+Loading...
+Done!
+[*] m1_muscarinic_receptor_antagonists_butkiewicz — 61,756개, 활성 362 (0.586%)
+    decoy 는 추정이 아니라 실측 비활성이다
+    전수 → tdc_out/m1_muscarinic_receptor_antagonists_butkiewicz_full.jsonl
+    맞춘 부분표본 2,157개 (활성 60, 2.78%) → tdc_out/m1_muscarinic_receptor_antagonists_butkiewicz_matched.jsonl
+    ↑ 우리 EPAS1 (2,157 / 60 / 2.78%) 와 나란히 놓을 수 있는 쪽
+[*] m1_muscarinic_receptor_antagonists_butkiewicz (matched) — 2,157개 (활성 60)
+
+[1] 최대유사도 베이스라인 — 단백질도 구조도 도킹도 없이, 활성끼리의 닮음만
+      EF1%   3.268
+      nEF1%  0.0909   (1.0 = 천장)
+      AUC    0.7213
+      BEDROC 0.2232
+    → 게이트 문턱 통과: auc (1/3)
+
+[1b] 같은 골격을 참조에서 뺀 경우 — 활성 골격 60종
+      EF1% 3.268   nEF1% 0.0909   AUC 0.7223   BEDROC 0.2283
+    → 골격을 빼니 무너진다. [1] 의 통과는 같은 시리즈 유사체를
+       외운 것이었다 — 골격 분할 평가로 고칠 수 있다.
+
+[2] 동일 분자 중복 — 고유 구조 2,157 / 행 2,157
+      중복 구조 0개 (행 0개)
+      라벨이 엇갈린 중복 0개
+
+[3] 활성-decoy 유사쌍
+      Tanimoto >= 0.6 인 쌍  3
+      decoy 상한 0.35 초과 쌍  209   ← 상한이 지켜지지 않았다
+      최대 유사도 0.629  ('TDC5309618', 'TDC5307292')
+
+[4] 활성 자기유사도 — 활성군이 한 골격에 뭉쳐 있는가
+      최근접 이웃 중위값 0.3035
+      유사체(>=0.6) 가진 활성 비율 0.0
+      유사체(>=0.8) 가진 활성 비율 0.0
+
+    → tdc_out/m1_muscarinic_receptor_antagonists_butkiewicz_matched_leakage.json
+[*] m1_muscarinic_receptor_antagonists_butkiewicz (full) — 61,752개 (활성 362)
+
+[1] 최대유사도 베이스라인 — 단백질도 구조도 도킹도 없이, 활성끼리의 닮음만
+      EF1%   19.874
+      nEF1%  0.1989   (1.0 = 천장)
+      AUC    0.7476
+      BEDROC 0.3151
+    → 게이트 문턱 통과: ef1, auc, bedroc (3/3)
+    → 이 벤치마크는 기억을 보상한다. 도킹 결과를 신뢰할 수 없다.
+
+[1b] 같은 골격을 참조에서 뺀 경우 — 활성 골격 329종
+      EF1% 11.041   nEF1% 0.1105   AUC 0.7257   BEDROC 0.2516
+    → 골격을 빼도 통과한다. 활성군 자체가 벤치마크로 못 쓴다.
+
+[2] 동일 분자 중복 — 고유 구조 61,750 / 행 61,752
+      중복 구조 2개 (행 4개)
+      라벨이 엇갈린 중복 0개
+
+[3] 활성-decoy 유사쌍
+      Tanimoto >= 0.6 인 쌍  912
+      decoy 상한 0.35 초과 쌍  32499   ← 상한이 지켜지지 않았다
+      최대 유사도 1.0  ('TDC720263', 'TDC779239')
+
+[4] 활성 자기유사도 — 활성군이 한 골격에 뭉쳐 있는가
+      최근접 이웃 중위값 0.4082
+      유사체(>=0.6) 가진 활성 비율 0.2155
+      유사체(>=0.8) 가진 활성 비율 0.058
+
+    → tdc_out/m1_muscarinic_receptor_antagonists_butkiewicz_full_leakage.json

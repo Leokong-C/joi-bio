@@ -1,0 +1,61 @@
+{
+  "library": "tdc_out/m1_muscarinic_receptor_antagonists_butkiewicz_full.jsonl",
+  "label": "m1_muscarinic_receptor_antagonists_butkiewicz (full)",
+  "n": 61752,
+  "n_active": 362,
+  "max_similarity_baseline": {
+    "ef1": 19.874,
+    "ef5": 6.242,
+    "auc": 0.7476,
+    "bedroc": 0.3151,
+    "nef1": 0.1989,
+    "gate_thresholds": {
+      "ef1": 5.0,
+      "auc": 0.7,
+      "bedroc": 0.3
+    },
+    "gate_passed": [
+      "ef1",
+      "auc",
+      "bedroc"
+    ],
+    "would_pass_gate": true
+  },
+  "max_similarity_scaffold_split": {
+    "ef1": 11.041,
+    "auc": 0.7257,
+    "bedroc": 0.2516,
+    "n_active_scaffolds": 329,
+    "nef1": 0.1105,
+    "gate_passed": [
+      "ef1",
+      "auc"
+    ],
+    "would_pass_gate": true
+  },
+  "duplicates": {
+    "n_unique": 61750,
+    "n_duplicate_structures": 2,
+    "n_rows_involved": 4,
+    "n_cross_label": 0,
+    "cross_label_examples": []
+  },
+  "analog_leakage": {
+    "threshold": 0.6,
+    "n_active_decoy_pairs_over_threshold": 912,
+    "decoy_cap": 0.35,
+    "n_pairs_over_decoy_cap": 32499,
+    "max_active_decoy_tanimoto": 1.0,
+    "max_pair": [
+      "TDC720263",
+      "TDC779239"
+    ]
+  },
+  "active_self_similarity": {
+    "n_actives": 362,
+    "median_nearest_neighbour": 0.4082,
+    "mean_nearest_neighbour": 0.454,
+    "frac_with_analog_over_0.6": 0.2155,
+    "frac_with_analog_over_0.8": 0.058
+  }
+}

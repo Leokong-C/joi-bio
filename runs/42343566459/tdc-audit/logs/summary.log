@@ -1,0 +1,11 @@
+기억 베이스라인 — 상한이 있는 벤치마크 vs 없는 벤치마크
+
+벤치마크                                                  n     활성   nEF1%      AUC 게이트
+----------------------------------------------------------------------------------------
+EPAS1 PubChem 매칭 (Tanimoto 상한 0.35)             2,160     60   1.000   0.9637  PASS 3/3
+m1_muscarinic_receptor_antagonists_butkiewic   61,752    362   0.199   0.7476  PASS 3/3
+m1_muscarinic_receptor_antagonists_butkiewic    2,157     60   0.091   0.7213  1/3
+orexin1_receptor_butkiewicz (full)            218,109    233   0.270   0.7389  PASS 3/3
+orexin1_receptor_butkiewicz (matched)           2,157     60   0.364   0.6625  1/3
+
+상한이 없는 쪽에서 기억이 무너지면 진단이 맞다.

@@ -1,0 +1,58 @@
+{
+  "library": "tdc_out/orexin1_receptor_butkiewicz_matched.jsonl",
+  "label": "orexin1_receptor_butkiewicz (matched)",
+  "n": 2157,
+  "n_active": 60,
+  "max_similarity_baseline": {
+    "ef1": 13.073,
+    "ef5": 4.993,
+    "auc": 0.6625,
+    "bedroc": 0.2912,
+    "nef1": 0.3636,
+    "gate_thresholds": {
+      "ef1": 5.0,
+      "auc": 0.7,
+      "bedroc": 0.3
+    },
+    "gate_passed": [
+      "ef1"
+    ],
+    "would_pass_gate": false
+  },
+  "max_similarity_scaffold_split": {
+    "ef1": 6.536,
+    "auc": 0.5984,
+    "bedroc": 0.1783,
+    "n_active_scaffolds": 57,
+    "nef1": 0.1818,
+    "gate_passed": [
+      "ef1"
+    ],
+    "would_pass_gate": false
+  },
+  "duplicates": {
+    "n_unique": 2157,
+    "n_duplicate_structures": 0,
+    "n_rows_involved": 0,
+    "n_cross_label": 0,
+    "cross_label_examples": []
+  },
+  "analog_leakage": {
+    "threshold": 0.6,
+    "n_active_decoy_pairs_over_threshold": 5,
+    "decoy_cap": 0.35,
+    "n_pairs_over_decoy_cap": 115,
+    "max_active_decoy_tanimoto": 0.7581,
+    "max_pair": [
+      "TDC20880646",
+      "TDC25102770"
+    ]
+  },
+  "active_self_similarity": {
+    "n_actives": 60,
+    "median_nearest_neighbour": 0.2637,
+    "mean_nearest_neighbour": 0.328,
+    "frac_with_analog_over_0.6": 0.1,
+    "frac_with_analog_over_0.8": 0.0333
+  }
+}

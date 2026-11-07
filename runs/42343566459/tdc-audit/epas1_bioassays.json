@@ -1,0 +1,1420 @@
+{
+  "symbols": {
+    "EPAS1": 155,
+    "HIF2A": 0,
+    "MOP2": 0,
+    "PASD2": 0,
+    "HLF": 15,
+    "ECYT4": 0
+  },
+  "n_aids": 156,
+  "min_tested_required": 2000,
+  "assays": [
+    {
+      "aid": 624352,
+      "name": "uHTS identification of HIF-2a Inhibitors in a luminesence assay",
+      "n_tested": 363840,
+      "n_active": 2624,
+      "n_inactive": 361217,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 651580,
+      "name": "Single concentration confirmation of uHTS identification of HIF-2a Inhibitors in a luminesence assay",
+      "n_tested": 1759,
+      "n_active": 982,
+      "n_inactive": 777,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 651581,
+      "name": "Dose response confirmation of uHTS identification of HIF-2a Inhibitors in screening - selectivity counterscreen assays",
+      "n_tested": 209,
+      "n_active": 195,
+      "n_inactive": 167,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 652011,
+      "name": "SAR Analysis small molecule inhibitors of HIF-1a in a panel assay",
+      "n_tested": 61,
+      "n_active": 61,
+      "n_inactive": 52,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1804328,
+      "name": "Scintillation Proximity Assay (SPA) from US Patent US10597366B2: \"Aryl ethers and uses thereof\"",
+      "n_tested": 325,
+      "n_active": 303,
+      "n_inactive": 23,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1904,
+      "name": "siRNA Circadian Assay",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "other",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 280769,
+      "name": "Inhibition of hypoxia induced HIF1 transcriptional activity in human Hep3B cells by cell-based HRE reporter assay",
+      "n_tested": 33,
+      "n_active": 7,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 291914,
+      "name": "Inhibition of HIF1 activation in human AGS cells assessed as inhibition of hypoxia-induced luciferase expression after 1",
+      "n_tested": 13,
+      "n_active": 7,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 291915,
+      "name": "Inhibition of HIF1 activation in human Hep3B cells assessed as inhibition of hypoxia-induced luciferase expression after",
+      "n_tested": 13,
+      "n_active": 8,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 310014,
+      "name": "Inhibition of hypoxia induced HIF1-alpha protein accumulation in human Hep3B cells by Western blot",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 311376,
+      "name": "Inhibition of HIF1 activation in human T47D cells by TK-luciferase assay",
+      "n_tested": 7,
+      "n_active": 7,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 311675,
+      "name": "Inhibition of 1, 10-phenanthroline-induced HIF1 activity in human T47D cells by cell based reporter assay",
+      "n_tested": 4,
+      "n_active": 4,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 321576,
+      "name": "Inhibition of hypoxia-induced HIF1 transcriptional activation in human U251-HRE cells by luciferase reporter assay",
+      "n_tested": 3,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 327961,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human AGS cells by reporter gene assay",
+      "n_tested": 8,
+      "n_active": 4,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 330402,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells by cell based reporter gene assay",
+      "n_tested": 2,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 330403,
+      "name": "Inhibition of 1,10-phenanthroline-induced HIF1 activation in human T47D cells by cell based reporter gene assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 330404,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells at 30 uM by cell based reporter gene assay",
+      "n_tested": 4,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 333703,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells carrying pTK-HER3-luc reporter gene measured by lucife",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 333704,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells carrying pTK-HER3-luc reporter gene measured by lucife",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 333717,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human U251 cells",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 378016,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human AGS cells after 16 hrs by pGL3-HRE-luciferase reporter gene assay",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 379897,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells by reporter gene assay",
+      "n_tested": 11,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 379899,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human PC3 cells by reporter gene assay",
+      "n_tested": 11,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 401552,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells after 16 hrs by pTK-HRE3-luciferase reporter gene assa",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 401555,
+      "name": "Inhibition of 1,10-phenathroline-induced HIF1 activation in human T47D cells after 16 hrs at >=10 nM by pTK-HRE3-lucifer",
+      "n_tested": 2,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 401556,
+      "name": "Inhibition of 1,10-phenathroline-induced HIF1 activation in human T47D cells after 16 hrs at >=30 nM by pTK-HRE3-lucifer",
+      "n_tested": 2,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 402328,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells after 16 hrs by luciferase reporter gene assay",
+      "n_tested": 3,
+      "n_active": 3,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 402331,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells at 0.11 uM after 16 hrs by luciferase reporter gene as",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 402332,
+      "name": "Inhibition of 1,10-phenanthroline-induced HIF1 activation in human T47D cells at 0.11 uM after 16 hrs by luciferase repo",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 402342,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human HeLa cells by luciferase reporter gene assay",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 421968,
+      "name": "Inhibition of HIF1 activation in human U251 cells stably transfected in pGL2-TK-HRE plasmid under hypoxic condition afte",
+      "n_tested": 5,
+      "n_active": 5,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 421972,
+      "name": "Inhibition of HIF1 activation in human U251 cells stably transfected in pGL2-TK-HRE plasmid under hypoxic condition asse",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 421973,
+      "name": "Inhibition of HIF1 activation in human U251 cells stably transfected in pGL3 plasmid under hypoxic condition assessed as",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 422513,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human Hep3B cells by pGL3-HRE-luciferase reporter gene assay",
+      "n_tested": 16,
+      "n_active": 9,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 468142,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells by pTK-HRE3-luciferase reporter gene assay",
+      "n_tested": 13,
+      "n_active": 6,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 468143,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells at 30 uM by pTK-HRE3-luciferase reporter gene assay",
+      "n_tested": 13,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 468217,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells after 16 hrs by pTK-HRE3-luciferase reporter gene assa",
+      "n_tested": 2,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 468220,
+      "name": "Inhibition of 1,10-phenanthroline-induced HIF1 activation in human T47D cells after 16 hrs by pTK-HRE3-luciferase report",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 470844,
+      "name": "Inhibition of 1,10-phenanthroline-induced HIF1 activation in human PC3 cells after 16 hrs by pTK-HRE3-luciferase reporte",
+      "n_tested": 4,
+      "n_active": 3,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 470845,
+      "name": "Inhibition of 1,10-phenanthroline-induced HIF1 activation in human T47D cells expressing pGL3 construct after 16 hrs by ",
+      "n_tested": 4,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 470846,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human PC3 cells after 16 hrs by pTK-HRE3-luciferase reporter gene assay",
+      "n_tested": 4,
+      "n_active": 3,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 470864,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells after 16 hrs by pTK-HRE3-luciferase reporter gene assa",
+      "n_tested": 4,
+      "n_active": 4,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 470865,
+      "name": "Inhibition of 1,10-phenanthroline-induced HIF1 activation in human T47D cells after 16 hrs by pTK-HRE3-luciferase report",
+      "n_tested": 4,
+      "n_active": 3,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 470866,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells at 30 uM after 16 hrs by pTK-HRE3-luciferase reporter ",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 470868,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells expressing pGL3 construct after 16 hrs by reporter gen",
+      "n_tested": 4,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 480173,
+      "name": "Inhibition of chemical hypoxia-induced HIF1 activation in human T47D cells in presence of 1, 10-phenanthrolin by HRE3-TK",
+      "n_tested": 2,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 480174,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells in presence of 1% O2 by HRE3-TK-luc reporter assay",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 480175,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human PC3 cells by HRE3-TK-luc reporter assay",
+      "n_tested": 2,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549937,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells by HRE3-TK-luciferase reporter gene assay",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549938,
+      "name": "Inhibition of 1, 10-phenanthroline-induced HIF1 activation in human T47D cells by HRE3-TK-luciferase reporter gene assay",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549940,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human PC3 cells by HRE3-TK-luciferase reporter gene assay",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549941,
+      "name": "Inhibition of 1, 10-phenanthroline-induced HIF1 activation in human PC3 cells by HRE3-TK-luciferase reporter gene assay",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549942,
+      "name": "Inhibition of HIF1-mediated secreted VEGF expression in hypoxia-stimulated human T47D cells by HRE3-TK-luciferase report",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549943,
+      "name": "Inhibition of HIF1-mediated induction of secreted VEGF level in hypoxia-stimulated human T47D cells by ELISA",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549945,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human T47D cells after 48 hrs by SRB assay",
+      "n_tested": 2,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549946,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human SK-BR-3 cells after 48 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549947,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human MDA-MB-231 cells after 48 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549948,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human PC3 cells after 48 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549949,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human T47D cells at 20 uM after 48 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549950,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human SK-BR-3 cells at 20 uM after 48 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549951,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human MDA-MB-231 cells at 20 uM after 48 hrs by SRB assa",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549952,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human PC3 cells at 20 uM after 48 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549953,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human T47D cells at 0.31 to 20 uM after 48 hrs by SRB as",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549954,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human SK-BR-3 cells at 0.31 to 20 uM after 48 hrs by SRB",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549955,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human MDA-MB-231 cells at 0.31 to 20 uM after 48 hrs by ",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549956,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human PC3 cells at 0.31 to 20 uM after 48 hrs by SRB ass",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549957,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human SK-BR-3 cells up to 20 uM after 16 hrs by SRB assa",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549958,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human T47D cells up to 20 uM after 16 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549959,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human MDA-MB-231 cells up to 20 uM after 16 hrs by SRB a",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549960,
+      "name": "Inhibition of HIF1-mediated proliferation of hypoxia-stimulated human PC3 cells up to 20 uM after 16 hrs by SRB assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549963,
+      "name": "Inhibition of HIF1-mediated migration of human MDA-MB-231 cells at 20 uM by wound healing assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 549971,
+      "name": "Inhibition of HIF1-mediated induction of secreted VEGF level in 1, 10-phenanthroline-stimulated human T47D cells by ELIS",
+      "n_tested": 2,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 587080,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells expressing pGL3 construct after 16 hrs by cell-based l",
+      "n_tested": 21,
+      "n_active": 20,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 587081,
+      "name": "Inhibition of 1,10-phenanthrolin-induced HIF1 activation in human T47D cells expressing pGL3 construct after 16 hrs by c",
+      "n_tested": 21,
+      "n_active": 18,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 617384,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human LN229 cells expressing HRE-AP reporter gene assessed as HRE remai",
+      "n_tested": 47,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 617385,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human LN229 cells expressing HRE-AP reporter gene at 2.5 uM preincubate",
+      "n_tested": 32,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 617386,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human LN229 cells expressing HRE-AP reporter gene at 5 uM preincubated ",
+      "n_tested": 32,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 617387,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human LN229 cells expressing HRE-AP reporter gene at 10 uM preincubated",
+      "n_tested": 32,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 617388,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human LN229 cells expressing HRE-AP reporter gene preincubated for 1 hr",
+      "n_tested": 8,
+      "n_active": 8,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 624099,
+      "name": "An siRNA screen for human genes that are involved in human papilloma virus (HPV) E2 transcriptional repression of the E6",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "other",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 624357,
+      "name": "Summary assay for small molecule inhibitors of HIF-2a",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "summary",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 627147,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells after 16 hrs by HRE3-TK-luciferase reporter gene assay",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 627148,
+      "name": "Inhibition of 1, 10-phenanthroline-induced HIF1 activation in human T47D cells after 16 hrs by HRE3-TK-luciferase report",
+      "n_tested": 2,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 641889,
+      "name": "Inhibition of HIF1 in human LN229 cells after 1 hr preincubation under hypoxic condition measured after 24 hrs by lucife",
+      "n_tested": 56,
+      "n_active": 47,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 651810,
+      "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Dharmacon Library)",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 651811,
+      "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Ambion Library)",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 672169,
+      "name": "Inhibition of HIF1 transcriptional activity in human LN229 cells expressing VEGF-HRE-V6R and coexpressing luciferase, la",
+      "n_tested": 15,
+      "n_active": 14,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 672170,
+      "name": "Inhibition of HIF1 transcriptional activity in human LN229 cells expressing VEGF-HRE-V6R and coexpressing lac Z gene at ",
+      "n_tested": 3,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 678350,
+      "name": "Inhibition of HIF1 transactivation in human U2OS cells after 4 hrs by luciferase reporter gene assay",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 678351,
+      "name": "Inhibition of HIF1 transactivation in human U2OS cells after 4 hrs by luciferase reporter gene assay relative to untreat",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 690557,
+      "name": "Inhibition of 1,10-phenanthroline-induced HIF1 activation in human T47D cells after 16 hrs by HRE3-TK-luciferase reporte",
+      "n_tested": 7,
+      "n_active": 6,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 690558,
+      "name": "Inhibition of hypoxia-induced HIF1 activation in human T47D cells after 16 hrs by HRE3-TK-luciferase reporter gene assay",
+      "n_tested": 7,
+      "n_active": 4,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 707849,
+      "name": "Inhibition of HIF2alpha in human 786-0 cells expressing truncated HIF1alpha assessed as reduction in luciferase activity",
+      "n_tested": 12,
+      "n_active": 6,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 716167,
+      "name": "Inhibition of Serine/threonine-protein kinase mTOR complex 1-mediated HIF1alpha RNA translation in human MCF7 cells pret",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 723284,
+      "name": "Binding affinity to PAS-B domain of HIF-2alpha S304M mutant (unknown origin) by isothermal calorimetry analysis",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 723542,
+      "name": "Binding affinity to wild type PAS-B domain of HIF-2alpha (unknown origin) by isothermal calorimetry analysis",
+      "n_tested": 22,
+      "n_active": 20,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 726051,
+      "name": "Inhibition of hypoxia-induced HIF1 transcriptional activity in human T47D cells by luciferase reporter gene assay",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 743121,
+      "name": "Druggable Genome siRNA Screen for Enhancers of Camptothecin in MDA-MB-231 Breast Cancer Cells",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 743454,
+      "name": "RNAi screen for vorinostat resistance genes - Primary Screen",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1053208,
+      "name": "A screen to identify the genes that modify the response of osteosarcoma to doxorubicin in mouse - Primary Screen",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1117281,
+      "name": "A whole genome RNAi screen highlights components of the ER/Golgi as a prominent source of resistance to immunotoxin-medi",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1159506,
+      "name": "Identification of proteins required for the processing of the EWS-FLI1 nascent transcript",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "other",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1159578,
+      "name": "A screen to identify genes that regulate lymphatic endothelial cell migration - Primary Screen",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1159584,
+      "name": "A screen to identify synthetic lethal interactions with E-cadherin in an MCF10A isogenic cell line",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1188631,
+      "name": "Inhibition of HIF1 signaling in human U251 cells expressing VEGF by VEGF promoter-driven PLAP reporter gene assay",
+      "n_tested": 35,
+      "n_active": 30,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1194017,
+      "name": "Inhibition of HIF1 in human HT1080 cells transfected with 5xHRE/pGL3/VEGF/E1b reporter plasmid pre-incubated for 1 hr fo",
+      "n_tested": 13,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1194019,
+      "name": "Inhibition of HIF1-mediated carbonic anhydrase 9 gene expression in human HT1080 cells at 1 to 100 uM after 4 hrs by rea",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1224826,
+      "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse m",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "summary",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1224828,
+      "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse m",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "summary",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1224830,
+      "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced TNF-alpha response in human macrophages_Prim",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "summary",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1236143,
+      "name": "Binding affinity to wild type His6-Gbeta1-fused HIF-2alpha PAS-B domain (240 to 350) (unknown origin) expressed in Esche",
+      "n_tested": 44,
+      "n_active": 33,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1236144,
+      "name": "Binding affinity to His6-Gbeta1-fused HIF-2alpha PAS-B domain S304M mutant (240 to 350) (unknown origin) expressed in Es",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1236145,
+      "name": "Ratio of Kd for His6-Gbeta1-fused HIF-2alpha PAS-B domain S304M mutant (240 to 350) (unknown origin) to Kd for wild type",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1236147,
+      "name": "Binding affinity to wild type GST-tagged HIF-2alpha PAS-B S304M mutant (240 to 350) (unknown origin) expressed in Escher",
+      "n_tested": 20,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1236148,
+      "name": "Binding affinity to wild type GST-tagged HIF-2alpha PAS-B (240 to 350) (unknown origin) expressed in Escherichia coli as",
+      "n_tested": 20,
+      "n_active": 10,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1236149,
+      "name": "Inhibition of HIF-2alpha in human Hep3B cells assessed as downregulation of EPO mRNA expression by RT-PCR analysis",
+      "n_tested": 1,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1251678,
+      "name": "Inhibition of HIF1 in human HEK293T cells transfected with pGL3-5HRE-VEGF and pRL-SV40 after 24 hrs by dual luciferase r",
+      "n_tested": 13,
+      "n_active": 12,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1251679,
+      "name": "Inhibition of HIF1 in human HEK293T cells transfected with pGL3-5HRE-VEGF and pRL-SV40 after 24 hrs by dual luciferase r",
+      "n_tested": 13,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1330282,
+      "name": "Inhibition of hypoxia-induced HIF1 transcriptional activity in human HeLa cells measured after 12 hrs by luciferase repo",
+      "n_tested": 13,
+      "n_active": 6,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1363249,
+      "name": "Binding affinity to His-tagged HIF-2alpha PAS-B domain (unknown origin) after 2 hrs by scintillation proximity assay",
+      "n_tested": 54,
+      "n_active": 47,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1363250,
+      "name": "Antagonist activity at HIF-2alpha in human 786-O cells co-expressing HIF responsive element after 24 hrs by ONE-Glo luci",
+      "n_tested": 32,
+      "n_active": 31,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1363251,
+      "name": "Antagonist activity at HIF-2alpha in human 786-O cells assessed as reduction in VEGFA concentration after 24 hrs by ELIS",
+      "n_tested": 5,
+      "n_active": 5,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1363296,
+      "name": "Antagonist activity at HIF-2alpha in human 786-O cells assessed as free plasma adjusted EC50 for reduction in VEGFA conc",
+      "n_tested": 5,
+      "n_active": 5,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1508588,
+      "name": "RNAi screen for vemurafenib enhancer genes in BRAFV600 melanoma - Primary Screen",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1516132,
+      "name": "Inhibition of HIF-2alpha (unknown origin) expressed in human 786-O cells assessed as reduction in VEGFA level incubated ",
+      "n_tested": 2,
+      "n_active": 2,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1516157,
+      "name": "Inhibition of N-(3-Chlorophenyl-4,6-t2)-4-nitrobenzo[c][1,2,5]oxadiazol-5-amine binding to his-tagged HIF-2alpha PAS-B d",
+      "n_tested": 10,
+      "n_active": 9,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1516158,
+      "name": "Inhibition of HIF-2alpha (unknown origin) expressed in human 786-O cells measured after 24 hrs by one-glo luciferase rep",
+      "n_tested": 8,
+      "n_active": 8,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1516159,
+      "name": "Potency index, ratio of PT2385 EC50 to test compound EC50 for inhibition of HIF-2alpha (unknown origin) expressed in hum",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1658250,
+      "name": "Inhibition of human recombinant His6Gb1-tagged HIF2alpha PAS B domain (240 to 350 residues)/human recombinant His6/FLAG-",
+      "n_tested": 6,
+      "n_active": 5,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1658251,
+      "name": "Inhibition of HIF2-alpha in human 786-0 cells cells harboring HRE-Luc2P reporter construct incubated for 48 hrs by ONE-G",
+      "n_tested": 6,
+      "n_active": 1,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774463,
+      "name": "Agonist activity at HIF-2alpha (unknown origin) expressed in 786-O cells at 2 uM measured after 24 hrs by HRE based luci",
+      "n_tested": 36,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774464,
+      "name": "Agonist activity at HIF-2alpha (unknown origin) expressed in 786-O cells at 20 uM measured after 24 hrs by HRE based luc",
+      "n_tested": 36,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774465,
+      "name": "Agonist activity at HIF-2alpha (unknown origin) expressed in 786-O cells measured after 24 hrs by HRE based luciferase r",
+      "n_tested": 36,
+      "n_active": 11,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774470,
+      "name": "Agonist activity at HIF-2 in human 786-O cells assessed as increase in EPO level after 24 hrs by qPCR analysis",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774471,
+      "name": "Agonist activity at HIF-2 in human 786-O cells assessed as increase in VEGF level after 24 hrs by qPCR analysis",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774472,
+      "name": "Agonist activity at HIF-2 in human 786-O cells assessed as increase in GULT1 level after 24 hrs by qPCR analysis",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774473,
+      "name": "Agonist activity at HIF-2 in human 786-O cells assessed as increase in cyclin D1 level after 24 hrs by qPCR analysis",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1774474,
+      "name": "Agonist activity at HIF-2 in human 786-O cells assessed as fold increase in EPO level at 10 uM after 24 hrs by qPCR anal",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1917752,
+      "name": "Induction of HIF-2alpha stabilization in human Hep3B cells assessed as HIF-1alpha level at 1 to 100 uM incubated for 24 ",
+      "n_tested": 3,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1917754,
+      "name": "Induction of HIF-2alpha stabilization in human Hep3B cells assessed as HIF-1alpha level at 16 to 1000 nM incubated for 2",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936946,
+      "name": "Binding affinity to HIF-2alpha/ARNT (unknown origin) assessed as change in melting temperature at 10 uM by protein therm",
+      "n_tested": 34,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936947,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells expressing HRE luciferase reporter gene assessed as ",
+      "n_tested": 27,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936948,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in NDRG1 transcription level at",
+      "n_tested": 10,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936949,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in VEGFA transcription level at",
+      "n_tested": 10,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936950,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in GLUT1 transcription level at",
+      "n_tested": 10,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936951,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in PGK1 transcription level at ",
+      "n_tested": 10,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936952,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in NDRG1 transcription level at",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936953,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in NDRG1 transcription level at",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936954,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in VEGFA transcription level at",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1936955,
+      "name": "Agonist activity at human HIF-2alpha expressed in human 786-0 cells assessed as increase in VEGFA transcription level at",
+      "n_tested": 1,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1975371,
+      "name": "Inhibition of human recombinant N-terminal His6Gb1-TEV-GEFKGL-tagged HIF-2alpha PAS-B domain (240 to 350 residues)/human",
+      "n_tested": 40,
+      "n_active": 36,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1975372,
+      "name": "Inhibition of HIF-2alpha transcriptional activity in human 786-0 cells transfected with HRE-luc2P assessed as decrease i",
+      "n_tested": 41,
+      "n_active": 19,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1975373,
+      "name": "Inhibition of HIF-2alpha transcriptional activity in human 786-0 cells assessed as decrease in VEGF production incubated",
+      "n_tested": 40,
+      "n_active": 16,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1975374,
+      "name": "Binding affinity to human recombinant HIF-2alpha (240 to 350 residues) assessed as as dissociation constant by ITC analy",
+      "n_tested": 40,
+      "n_active": 20,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 2061059,
+      "name": "Scintillation Proximal Assay (SPA) from US Patent US12226405B2: \"Compounds and compositions for inhibiting the activity ",
+      "n_tested": 114,
+      "n_active": 114,
+      "n_inactive": 0,
+      "activity_outcome_method": "confirmatory",
+      "symbol": "EPAS1"
+    },
+    {
+      "aid": 1117357,
+      "name": "InfectX: Pathogen infection siRNA screens",
+      "n_tested": 0,
+      "n_active": 0,
+      "n_inactive": 0,
+      "activity_outcome_method": "screening",
+      "symbol": "HLF"
+    }
+  ],
+  "n_usable": 1,
+  "verdict": "쓸 수 있다 — AID 624352 에 실측 비활성 361,217개"
+}

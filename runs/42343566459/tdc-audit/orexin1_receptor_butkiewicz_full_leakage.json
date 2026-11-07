@@ -1,0 +1,85 @@
+{
+  "library": "tdc_out/orexin1_receptor_butkiewicz_full.jsonl",
+  "label": "orexin1_receptor_butkiewicz (full)",
+  "n": 218109,
+  "n_active": 233,
+  "max_similarity_baseline": {
+    "ef1": 27.04,
+    "ef5": 8.327,
+    "auc": 0.7389,
+    "bedroc": 0.3799,
+    "nef1": 0.2704,
+    "gate_thresholds": {
+      "ef1": 5.0,
+      "auc": 0.7,
+      "bedroc": 0.3
+    },
+    "gate_passed": [
+      "ef1",
+      "auc",
+      "bedroc"
+    ],
+    "would_pass_gate": true
+  },
+  "max_similarity_scaffold_split": {
+    "ef1": 14.164,
+    "auc": 0.6738,
+    "bedroc": 0.2471,
+    "n_active_scaffolds": 207,
+    "nef1": 0.1416,
+    "gate_passed": [
+      "ef1"
+    ],
+    "would_pass_gate": false
+  },
+  "duplicates": {
+    "n_unique": 217160,
+    "n_duplicate_structures": 710,
+    "n_rows_involved": 1659,
+    "n_cross_label": 2,
+    "cross_label_examples": [
+      {
+        "smiles": "CCSc1ccc(C2C3C(=O)N(CC)C(=O)C3C3(C(=O)OC)CCCCN23)cc1OC",
+        "labels": [
+          "decoy",
+          "known_active"
+        ],
+        "ids": [
+          "TDC24981452",
+          "TDC53312881"
+        ]
+      },
+      {
+        "smiles": "CC(C)(C)OC(=O)CC1CC=CCC(CC(=O)NC(CO)Cc2ccccc2)C(=O)NC(C(C)(C)C)COC1=O",
+        "labels": [
+          "decoy",
+          "decoy",
+          "known_active"
+        ],
+        "ids": [
+          "TDC44201953",
+          "TDC44201628",
+          "TDC44201634"
+        ]
+      }
+    ]
+  },
+  "analog_leakage": {
+    "threshold": 0.6,
+    "n_active_decoy_pairs_over_threshold": 1095,
+    "decoy_cap": 0.35,
+    "n_pairs_over_decoy_cap": 48497,
+    "max_active_decoy_tanimoto": 1.0,
+    "max_pair": [
+      "TDC2212701",
+      "TDC4256680"
+    ]
+  },
+  "active_self_similarity": {
+    "n_actives": 233,
+    "median_nearest_neighbour": 0.3788,
+    "mean_nearest_neighbour": 0.4337,
+    "frac_with_analog_over_0.6": 0.2189,
+    "frac_with_analog_over_0.8": 0.0687
+  }
+}

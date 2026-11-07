@@ -1,0 +1,171 @@
+[1] 유전자명·별칭으로 어세이 찾기
+    EPAS1    AID 155개
+    HIF2A    AID 0개
+    MOP2     AID 0개
+    PASD2    AID 0개
+    HLF      AID 15개
+    ECYT4    AID 0개
+
+[2] 고유 AID 156개 — 규모 확인 (최대 200개)
+    AID      1904  시험        0  활성      0  비활성        0  siRNA Circadian Assay
+    AID    280769  시험       33  활성      7  비활성        0  Inhibition of hypoxia induced HIF1 transcrip
+    AID    291914  시험       13  활성      7  비활성        0  Inhibition of HIF1 activation in human AGS c
+    AID    291915  시험       13  활성      8  비활성        0  Inhibition of HIF1 activation in human Hep3B
+    AID    310014  시험        1  활성      0  비활성        0  Inhibition of hypoxia induced HIF1-alpha pro
+    AID    311376  시험        7  활성      7  비활성        0  Inhibition of HIF1 activation in human T47D 
+    AID    311675  시험        4  활성      4  비활성        0  Inhibition of 1, 10-phenanthroline-induced H
+    AID    321576  시험        3  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 transcrip
+    AID    327961  시험        8  활성      4  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    330402  시험        2  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    330403  시험        1  활성      0  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    330404  시험        4  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    333703  시험        1  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    333704  시험        1  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    333717  시험        1  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    378016  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    379897  시험       11  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    379899  시험       11  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    401552  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    401555  시험        2  활성      0  비활성        0  Inhibition of 1,10-phenathroline-induced HIF
+    AID    401556  시험        2  활성      0  비활성        0  Inhibition of 1,10-phenathroline-induced HIF
+    AID    402328  시험        3  활성      3  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    402331  시험        1  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    402332  시험        1  활성      0  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    402342  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    421968  시험        5  활성      5  비활성        0  Inhibition of HIF1 activation in human U251 
+    AID    421972  시험        1  활성      0  비활성        0  Inhibition of HIF1 activation in human U251 
+    AID    421973  시험        1  활성      0  비활성        0  Inhibition of HIF1 activation in human U251 
+    AID    422513  시험       16  활성      9  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468142  시험       13  활성      6  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468143  시험       13  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468217  시험        2  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468220  시험        1  활성      0  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470844  시험        4  활성      3  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470845  시험        4  활성      2  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470846  시험        4  활성      3  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    470864  시험        4  활성      4  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    470865  시험        4  활성      3  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470866  시험        1  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    470868  시험        4  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    480173  시험        2  활성      0  비활성        0  Inhibition of chemical hypoxia-induced HIF1 
+    AID    480174  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    480175  시험        2  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    549937  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    549938  시험        2  활성      2  비활성        0  Inhibition of 1, 10-phenanthroline-induced H
+    AID    549940  시험        1  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    549941  시험        1  활성      1  비활성        0  Inhibition of 1, 10-phenanthroline-induced H
+    AID    549942  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated secreted VEGF ex
+    AID    549943  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated induction of sec
+    AID    549945  시험        2  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549946  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549947  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549948  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549949  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549950  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549951  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549952  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549953  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549954  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549955  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549956  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549957  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549958  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549959  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549960  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated proliferation of
+    AID    549963  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated migration of hum
+    AID    549971  시험        2  활성      0  비활성        0  Inhibition of HIF1-mediated induction of sec
+    AID    587080  시험       21  활성     20  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    587081  시험       21  활성     18  비활성        0  Inhibition of 1,10-phenanthrolin-induced HIF
+    AID    617384  시험       47  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    617385  시험       32  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    617386  시험       32  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    617387  시험       32  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    617388  시험        8  활성      8  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    624099  시험        0  활성      0  비활성        0  An siRNA screen for human genes that are inv
+    AID    624352  시험  363,840  활성  2,624  비활성  361,217  uHTS identification of HIF-2a Inhibitors in 
+    AID    624357  시험        0  활성      0  비활성        0  Summary assay for small molecule inhibitors 
+    AID    627147  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    627148  시험        2  활성      1  비활성        0  Inhibition of 1, 10-phenanthroline-induced H
+    AID    641889  시험       56  활성     47  비활성        0  Inhibition of HIF1 in human LN229 cells afte
+    AID    651580  시험    1,759  활성    982  비활성      777  Single concentration confirmation of uHTS id
+    AID    651581  시험      209  활성    195  비활성      167  Dose response confirmation of uHTS identific
+    AID    651810  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for r
+    AID    651811  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for r
+    AID    652011  시험       61  활성     61  비활성       52  SAR Analysis small molecule inhibitors of HI
+    AID    672169  시험       15  활성     14  비활성        0  Inhibition of HIF1 transcriptional activity 
+    AID    672170  시험        3  활성      0  비활성        0  Inhibition of HIF1 transcriptional activity 
+    AID    678350  시험        1  활성      0  비활성        0  Inhibition of HIF1 transactivation in human 
+    AID    678351  시험        1  활성      0  비활성        0  Inhibition of HIF1 transactivation in human 
+    AID    690557  시험        7  활성      6  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    690558  시험        7  활성      4  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    707849  시험       12  활성      6  비활성        0  Inhibition of HIF2alpha in human 786-0 cells
+    AID    716167  시험        1  활성      1  비활성        0  Inhibition of Serine/threonine-protein kinas
+    AID    723284  시험        1  활성      0  비활성        0  Binding affinity to PAS-B domain of HIF-2alp
+    AID    723542  시험       22  활성     20  비활성        0  Binding affinity to wild type PAS-B domain o
+    AID    726051  시험        1  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 transcrip
+    AID    743121  시험        0  활성      0  비활성        0  Druggable Genome siRNA Screen for Enhancers 
+    AID    743454  시험        0  활성      0  비활성        0  RNAi screen for vorinostat resistance genes 
+    AID   1053208  시험        0  활성      0  비활성        0  A screen to identify the genes that modify t
+    AID   1117281  시험        0  활성      0  비활성        0  A whole genome RNAi screen highlights compon
+    AID   1159506  시험        0  활성      0  비활성        0  Identification of proteins required for the 
+    AID   1159578  시험        0  활성      0  비활성        0  A screen to identify genes that regulate lym
+    AID   1159584  시험        0  활성      0  비활성        0  A screen to identify synthetic lethal intera
+    AID   1188631  시험       35  활성     30  비활성        0  Inhibition of HIF1 signaling in human U251 c
+    AID   1194017  시험       13  활성      2  비활성        0  Inhibition of HIF1 in human HT1080 cells tra
+    AID   1194019  시험        1  활성      0  비활성        0  Inhibition of HIF1-mediated carbonic anhydra
+    AID   1224826  시험        0  활성      0  비활성        0  Genome-wide siRNA screen of genes regulating
+    AID   1224828  시험        0  활성      0  비활성        0  Genome-wide siRNA screen of genes regulating
+    AID   1224830  시험        0  활성      0  비활성        0  Genome-wide siRNA screen of genes regulating
+    AID   1236143  시험       44  활성     33  비활성        0  Binding affinity to wild type His6-Gbeta1-fu
+    AID   1236144  시험        1  활성      1  비활성        0  Binding affinity to His6-Gbeta1-fused HIF-2a
+    AID   1236145  시험        1  활성      0  비활성        0  Ratio of Kd for His6-Gbeta1-fused HIF-2alpha
+    AID   1236147  시험       20  활성      0  비활성        0  Binding affinity to wild type GST-tagged HIF
+    AID   1236148  시험       20  활성     10  비활성        0  Binding affinity to wild type GST-tagged HIF
+    AID   1236149  시험        1  활성      1  비활성        0  Inhibition of HIF-2alpha in human Hep3B cell
+    AID   1251678  시험       13  활성     12  비활성        0  Inhibition of HIF1 in human HEK293T cells tr
+    AID   1251679  시험       13  활성      0  비활성        0  Inhibition of HIF1 in human HEK293T cells tr
+    AID   1330282  시험       13  활성      6  비활성        0  Inhibition of hypoxia-induced HIF1 transcrip
+    AID   1363249  시험       54  활성     47  비활성        0  Binding affinity to His-tagged HIF-2alpha PA
+    AID   1363250  시험       32  활성     31  비활성        0  Antagonist activity at HIF-2alpha in human 7
+    AID   1363251  시험        5  활성      5  비활성        0  Antagonist activity at HIF-2alpha in human 7
+    AID   1363296  시험        5  활성      5  비활성        0  Antagonist activity at HIF-2alpha in human 7
+    AID   1508588  시험        0  활성      0  비활성        0  RNAi screen for vemurafenib enhancer genes i
+    AID   1516132  시험        2  활성      2  비활성        0  Inhibition of HIF-2alpha (unknown origin) ex
+    AID   1516157  시험       10  활성      9  비활성        0  Inhibition of N-(3-Chlorophenyl-4,6-t2)-4-ni
+    AID   1516158  시험        8  활성      8  비활성        0  Inhibition of HIF-2alpha (unknown origin) ex
+    AID   1516159  시험        1  활성      0  비활성        0  Potency index, ratio of PT2385 EC50 to test 
+    AID   1658250  시험        6  활성      5  비활성        0  Inhibition of human recombinant His6Gb1-tagg
+    AID   1658251  시험        6  활성      1  비활성        0  Inhibition of HIF2-alpha in human 786-0 cell
+    AID   1774463  시험       36  활성      0  비활성        0  Agonist activity at HIF-2alpha (unknown orig
+    AID   1774464  시험       36  활성      0  비활성        0  Agonist activity at HIF-2alpha (unknown orig
+    AID   1774465  시험       36  활성     11  비활성        0  Agonist activity at HIF-2alpha (unknown orig
+    AID   1774470  시험        1  활성      0  비활성        0  Agonist activity at HIF-2 in human 786-O cel
+    AID   1774471  시험        1  활성      0  비활성        0  Agonist activity at HIF-2 in human 786-O cel
+    AID   1774472  시험        1  활성      0  비활성        0  Agonist activity at HIF-2 in human 786-O cel
+    AID   1774473  시험        1  활성      0  비활성        0  Agonist activity at HIF-2 in human 786-O cel
+    AID   1774474  시험        1  활성      0  비활성        0  Agonist activity at HIF-2 in human 786-O cel
+    AID   1804328  시험      325  활성    303  비활성       23  Scintillation Proximity Assay (SPA) from US 
+    AID   1917752  시험        3  활성      0  비활성        0  Induction of HIF-2alpha stabilization in hum
+    AID   1917754  시험        1  활성      0  비활성        0  Induction of HIF-2alpha stabilization in hum
+    AID   1936946  시험       34  활성      0  비활성        0  Binding affinity to HIF-2alpha/ARNT (unknown
+    AID   1936947  시험       27  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936948  시험       10  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936949  시험       10  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936950  시험       10  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936951  시험       10  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936952  시험        1  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936953  시험        1  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936954  시험        1  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1936955  시험        1  활성      0  비활성        0  Agonist activity at human HIF-2alpha express
+    AID   1975371  시험       40  활성     36  비활성        0  Inhibition of human recombinant N-terminal H
+    AID   1975372  시험       41  활성     19  비활성        0  Inhibition of HIF-2alpha transcriptional act
+    AID   1975373  시험       40  활성     16  비활성        0  Inhibition of HIF-2alpha transcriptional act
+    AID   1975374  시험       40  활성     20  비활성        0  Binding affinity to human recombinant HIF-2a
+    AID   2061059  시험      114  활성    114  비활성        0  Scintillation Proximal Assay (SPA) from US P
+    AID   1117357  시험        0  활성      0  비활성        0  InfectX: Pathogen infection siRNA screens
+
+[3] 판정 — 시험 2,000개 이상이고 비활성이 있는 어세이
+    1개 있다. 가장 큰 것: AID 624352, 비활성 361,217개
+    → 이걸로 decoy 를 바꾸면 Tanimoto 상한을 걸 이유가 없어진다
+
+    → tdc_out/epas1_bioassays.json
