@@ -80,14 +80,15 @@
    "random_split": 0.641,
    "n_train_per_fold": 256
   },
-  "gain_from_157x_more_training_data": {
-   "target_disjoint": 0.049,
-   "target_overlapping": 0.038
-  },
   "gain_from_seeing_the_target": {
    "internal": 0.139,
    "external": 0.128
   },
-  "interpretation": "Seeing the target in training is worth about three times a 157-fold increase in training ligands. The floor is set by what the split allows the model to memorise, not by how much data it has."
+  "interpretation": "Seeing the target in training is worth about three times a 175-fold increase in training ligands (256 -> 44,754). The floor is set by what the split allows the model to memorise, not by how much data it has.",
+  "training_size_ratio": 175,
+  "gain_from_more_training_data": {
+   "target_disjoint": 0.049,
+   "target_overlapping": 0.038
+  }
  }
 }
