@@ -1,0 +1,55 @@
+[1] 유전자명·별칭으로 어세이 찾기
+    EPAS1    AID 155개
+    HIF2A    AID 0개
+    MOP2     AID 0개
+    PASD2    AID 0개
+    HLF      AID 15개
+    ECYT4    AID 0개
+
+[2] 고유 AID 156개 — 규모 확인 (최대 40개)
+    AID      1904  시험        0  활성      0  비활성        0  siRNA Circadian Assay
+    AID    280769  시험       33  활성      7  비활성        0  Inhibition of hypoxia induced HIF1 transcrip
+    AID    291914  시험       13  활성      7  비활성        0  Inhibition of HIF1 activation in human AGS c
+    AID    291915  시험       13  활성      8  비활성        0  Inhibition of HIF1 activation in human Hep3B
+    AID    310014  시험        1  활성      0  비활성        0  Inhibition of hypoxia induced HIF1-alpha pro
+    AID    311376  시험        7  활성      7  비활성        0  Inhibition of HIF1 activation in human T47D 
+    AID    311675  시험        4  활성      4  비활성        0  Inhibition of 1, 10-phenanthroline-induced H
+    AID    321576  시험        3  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 transcrip
+    AID    327961  시험        8  활성      4  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    330402  시험        2  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    330403  시험        1  활성      0  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    330404  시험        4  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    333703  시험        1  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    333704  시험        1  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    333717  시험        1  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    378016  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    379897  시험       11  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    379899  시험       11  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    401552  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    401555  시험        2  활성      0  비활성        0  Inhibition of 1,10-phenathroline-induced HIF
+    AID    401556  시험        2  활성      0  비활성        0  Inhibition of 1,10-phenathroline-induced HIF
+    AID    402328  시험        3  활성      3  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    402331  시험        1  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    402332  시험        1  활성      0  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    402342  시험        2  활성      2  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    421968  시험        5  활성      5  비활성        0  Inhibition of HIF1 activation in human U251 
+    AID    421972  시험        1  활성      0  비활성        0  Inhibition of HIF1 activation in human U251 
+    AID    421973  시험        1  활성      0  비활성        0  Inhibition of HIF1 activation in human U251 
+    AID    422513  시험       16  활성      9  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468142  시험       13  활성      6  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468143  시험       13  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468217  시험        2  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    468220  시험        1  활성      0  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470844  시험        4  활성      3  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470845  시험        4  활성      2  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470846  시험        4  활성      3  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    470864  시험        4  활성      4  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    470865  시험        4  활성      3  비활성        0  Inhibition of 1,10-phenanthroline-induced HI
+    AID    470866  시험        1  활성      0  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+    AID    470868  시험        4  활성      1  비활성        0  Inhibition of hypoxia-induced HIF1 activatio
+
+[3] 판정 — 시험 2,000개 이상이고 비활성이 있는 어세이
+    없다. 가장 큰 것도 비활성 0개
+    → 쓸 만한 규모의 어세이가 없다 — EPAS1 에서는 이 경로가 막힌다. 타깃을 옮기거나 다른 방법을 찾아야 한다
+
+    → tdc_out/epas1_bioassays.json

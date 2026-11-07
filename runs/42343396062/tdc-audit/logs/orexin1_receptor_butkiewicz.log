@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/home/runner/work/joi-bio/joi-bio/scripts/tdc_to_library.py", line 106, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/scripts/tdc_to_library.py", line 44, in main
+    from tdc.single_pred import HTS
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/tdc/__init__.py", line 2, in <module>
+    from .oracles import Oracle
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/tdc/oracles.py", line 21, in <module>
+    pkg_resources.get_distribution("scikit-learn").version)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pkg_resources/__init__.py", line 527, in get_distribution
+    dist = get_provider(dist)
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pkg_resources/__init__.py", line 414, in get_provider
+    return working_set.find(moduleOrReq) or require(str(moduleOrReq))[0]
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pkg_resources/__init__.py", line 1066, in require
+    needed = self.resolve(parse_requirements(requirements))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pkg_resources/__init__.py", line 893, in resolve
+    dist = self._resolve_dist(
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/pkg_resources/__init__.py", line 934, in _resolve_dist
+    raise DistributionNotFound(req, requirers)
+pkg_resources.DistributionNotFound: The 'scikit-learn' distribution was not found and is required by the application
