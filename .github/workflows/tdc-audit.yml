@@ -1,0 +1,130 @@
+name: Joi_bio TDC 누수 감사
+
+# 다섯 번째 교란의 원인 진단을 시험한다. 도킹 없음 — 10~25 러너분.
+#
+# 진단: 기억 베이스라인이 도킹을 이기는 원인은 decoys.select 의 Tanimoto
+# 상한 0.35 가 만든 간격이다. 상한 아래에 decoy 를 묶어두면 그 위는 전부
+# 활성이라 문턱 하나로 갈린다.
+#
+# 시험: 상한이 없는 벤치마크에서 기억 베이스라인이 무너지는가. TDC 의
+# Butkiewicz HTS 셋은 decoy 가 추정이 아니라 실측 비활성이라 상한이 없다.
+# 무너지면 진단이 맞고, 안 무너지면 내 진단이 틀린 것이다.
+#
+# Claude 가 도는 컨테이너는 Harvard Dataverse 와 PubChem 이 모두 막혀 있어
+# (프록시 403) 여기서만 된다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      datasets:
+        description: "TDC HTS 데이터셋 (쉼표 구분)"
+        required: false
+        default: "orexin1_receptor_butkiewicz,m1_muscarinic_receptor_antagonists_butkiewicz"
+      probe_epas1:
+        description: "PubChem BioAssay 에서 EPAS1 어세이도 찾을지 (true/false)"
+        required: false
+        default: "true"
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    name: TDC 누수 감사
+    runs-on: ubuntu-latest
+    # 넉넉하게 준다. 11-01 에 timeout 을 예산에 맞춰 조였다가 샤드 7개를
+    # 잃었다. 이 작업은 도킹이 없어 실소비가 작으므로 상한을 조일 이유가 없다.
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"   # PyTDC 가 3.13 에서 소스 빌드에 실패한다
+
+      - name: 의존성
+        run: |
+          pip install --quiet "numpy<2" "pandas<3" "rdkit<2024.3.1" requests
+          pip install --quiet --no-deps PyTDC
+          pip install --quiet tqdm fuzzywuzzy seaborn dataclasses-json \
+            "setuptools<81" huggingface_hub
+
+      - name: EPAS1 어세이 탐침 (PubChem BioAssay)
+        if: inputs.probe_epas1 == 'true'
+        shell: bash
+        run: |
+          mkdir -p logs tdc_out
+          set -o pipefail
+          python -u scripts/probe_epas1_bioassay.py \
+            --out tdc_out/epas1_bioassays.json 2>&1 | tee logs/epas1_probe.log
+
+      - name: 데이터셋 변환 + 감사
+        shell: bash
+        run: |
+          mkdir -p logs tdc_out
+          set -o pipefail
+          IFS=',' read -ra SETS <<< "${{ inputs.datasets }}"
+          for s in "${SETS[@]}"; do
+            s="$(echo "$s" | xargs)"
+            echo "=============== $s ==============="
+            python -u scripts/tdc_to_library.py --name "$s" \
+              --data-dir tdc_raw \
+              --out-full "tdc_out/${s}_full.jsonl" \
+              --out-matched "tdc_out/${s}_matched.jsonl" 2>&1 | tee -a "logs/${s}.log"
+            for v in matched full; do
+              echo "--- $s ($v) ---"
+              python -u scripts/leakage_audit.py \
+                --library "tdc_out/${s}_${v}.jsonl" \
+                --label "$s ($v)" \
+                --out "tdc_out/${s}_${v}_leakage.json" 2>&1 | tee -a "logs/${s}.log" || true
+            done
+          done
+
+      - name: 한 표로 모으기
+        if: always()
+        shell: bash
+        run: |
+          python -u - <<'EOF' 2>&1 | tee logs/summary.log
+          import json, glob, os
+          print("기억 베이스라인 — 상한이 있는 벤치마크 vs 없는 벤치마크\n")
+          print(f"{'벤치마크':46s} {'n':>8s} {'활성':>6s} {'nEF1%':>7s} {'AUC':>8s} {'게이트'}")
+          print("-"*88)
+          print(f"{'EPAS1 PubChem 매칭 (Tanimoto 상한 0.35)':44s} {2160:8,d} {60:6d} "
+                f"{1.000:7.3f} {0.9637:8.4f}  PASS 3/3")
+          for f in sorted(glob.glob("tdc_out/*_leakage.json")):
+              d = json.load(open(f))
+              m = d["max_similarity_baseline"]
+              g = f"PASS {len(m['gate_passed'])}/3" if m["would_pass_gate"] else f"{len(m['gate_passed'])}/3"
+              print(f"{d['label'][:44]:44s} {d['n']:8,d} {d['n_active']:6d} "
+                    f"{(m['nef1'] or 0):7.3f} {(m['auc'] or 0):8.4f}  {g}")
+          print("\n상한이 없는 쪽에서 기억이 무너지면 진단이 맞다.")
+          EOF
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/tdc-audit"
+          mkdir -p "$OUT"
+          # 라이브러리 원본은 크므로 감사 결과와 로그만 올린다
+          cp tdc_out/*_leakage.json tdc_out/*.json "$OUT/" 2>/dev/null || true
+          cp -r logs "$OUT/" 2>/dev/null || true
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "tdc leakage audit" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tdc-audit
+          path: |
+            tdc_out/
+            logs/
+          retention-days: 30
