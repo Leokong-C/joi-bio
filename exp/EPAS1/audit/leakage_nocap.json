@@ -1,0 +1,62 @@
+{
+  "library": "exp/EPAS1/audit/library_nocap.jsonl",
+  "label": "EPAS1 nocap",
+  "n": 2160,
+  "n_active": 60,
+  "max_similarity_baseline": {
+    "ef1": 21.273,
+    "ef5": 12.333,
+    "auc": 0.926,
+    "bedroc": 0.6369,
+    "nef1": 0.5909,
+    "gate_thresholds": {
+      "ef1": 5.0,
+      "auc": 0.7,
+      "bedroc": 0.3
+    },
+    "gate_passed": [
+      "ef1",
+      "auc",
+      "bedroc"
+    ],
+    "would_pass_gate": true
+  },
+  "max_similarity_scaffold_split": {
+    "ef1": 21.273,
+    "auc": 0.8947,
+    "bedroc": 0.5609,
+    "n_active_scaffolds": 22,
+    "nef1": 0.5909,
+    "gate_passed": [
+      "ef1",
+      "auc",
+      "bedroc"
+    ],
+    "would_pass_gate": true
+  },
+  "duplicates": {
+    "n_unique": 2160,
+    "n_duplicate_structures": 0,
+    "n_rows_involved": 0,
+    "n_cross_label": 0,
+    "cross_label_examples": []
+  },
+  "analog_leakage": {
+    "threshold": 0.6,
+    "n_active_decoy_pairs_over_threshold": 722,
+    "decoy_cap": 0.35,
+    "n_pairs_over_decoy_cap": 5925,
+    "max_active_decoy_tanimoto": 0.8824,
+    "max_pair": [
+      "CHEMBL4585668",
+      "PUBCHEM117947068"
+    ]
+  },
+  "active_self_similarity": {
+    "n_actives": 60,
+    "median_nearest_neighbour": 0.7945,
+    "mean_nearest_neighbour": 0.75,
+    "frac_with_analog_over_0.6": 0.8667,
+    "frac_with_analog_over_0.8": 0.4667
+  }
+}
