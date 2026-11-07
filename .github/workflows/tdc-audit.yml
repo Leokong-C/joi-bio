@@ -44,7 +44,10 @@ jobs:
 
       - name: 의존성
         run: |
-          pip install --quiet "numpy<2" "pandas<3" "rdkit<2024.3.1" requests
+          # scikit-learn 은 PyTDC 의 oracles 가 pkg_resources 로 버전을 조회해서
+          # 쓴다 — 없으면 import 단계에서 DistributionNotFound 로 죽는다.
+          # 로컬에는 이미 있어서 --no-deps 로 넘어갔던 것이 여기서 드러났다.
+          pip install --quiet "numpy<2" "pandas<3" "rdkit<2024.3.1" requests scikit-learn
           pip install --quiet --no-deps PyTDC
           pip install --quiet tqdm fuzzywuzzy seaborn dataclasses-json \
             "setuptools<81" huggingface_hub
@@ -55,7 +58,9 @@ jobs:
         run: |
           mkdir -p logs tdc_out
           set -o pipefail
-          python -u scripts/probe_epas1_bioassay.py \
+          # 156개 전수. 1차(40개)에서 전부 비활성 0 이었지만, "EPAS1 에 실측
+          # 비활성이 없다" 는 결론을 표본으로 내리면 안 된다.
+          python -u scripts/probe_epas1_bioassay.py --max-aids 200 \
             --out tdc_out/epas1_bioassays.json 2>&1 | tee logs/epas1_probe.log
 
       - name: 데이터셋 변환 + 감사
