@@ -201,6 +201,8 @@ jobs:
             OUT="$DEST/runs/${GITHUB_RUN_ID}/dock-${{ matrix.gene }}-${{ matrix.shard }}"
             mkdir -p "$OUT"
             cp -r logs/* "$OUT/" 2>/dev/null || true
+            # 잘린 샤드의 부분 결과. 남아 있다 = 그 샤드는 완주하지 못했다
+            cp targets/*/partial_shard*.jsonl "$OUT/" 2>/dev/null || true
             cd "$DEST"
             git add -A
             git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
@@ -214,7 +216,9 @@ jobs:
         if: always()
         with:
           name: docked-${{ matrix.gene }}-${{ matrix.shard }}
-          path: targets/${{ matrix.gene }}/docked_shard*.jsonl
+          path: |
+            targets/${{ matrix.gene }}/docked_shard*.jsonl
+            targets/${{ matrix.gene }}/partial_shard*.jsonl
           retention-days: 7
           if-no-files-found: warn
 

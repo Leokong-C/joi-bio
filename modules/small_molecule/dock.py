@@ -388,11 +388,31 @@ def main() -> int:
         (str(rec_pdbqt), pocket["center"], pocket["size"], r, args.exhaustiveness)
         for r in shard_lib
     ]
+    # 한 리간드가 끝날 때마다 바로 쓴다.
+    #
+    # 왜: 예전에는 샤드의 리간드를 **전부** 끝낸 뒤에야 출력을 썼다. 그래서
+    # 취소된 샤드는 산출물이 0 이었고, 2026-10 과 2026-11 두 달 모두 전체
+    # 러너 소비의 46% 가 그렇게 날아갔다 (10월 2,554분, 11월 1,194분).
+    #
+    # 이름을 `partial_shard*` 로 둔 이유: 하류 네 곳이
+    # `docked_shard*.jsonl` 글롭으로 샤드를 모은다. 부분 파일이 그 글롭에
+    # 걸리면 불완전하고 정렬도 안 된 데이터가 **조용히** 평가셋에 섞인다 —
+    # 이 프로젝트가 잡아내려고 만들어진 바로 그 종류의 실패다.
+    #
+    # 완주하면 정렬된 docked_shard 를 쓰고 부분 파일을 지운다. 그러므로
+    # **partial_shard 파일이 남아 있다 = 그 샤드는 잘렸다** 는 신호다.
+    partial = tdir / f"partial_shard{args.shard}.jsonl"
+    partial.unlink(missing_ok=True)
+
     results, t0 = [], time.time()
+    pf = partial.open("w")
     with ProcessPoolExecutor(max_workers=workers) as ex:
         futures = [ex.submit(dock_one, j) for j in jobs]
         for i, f in enumerate(as_completed(futures), 1):
-            results.append(f.result())
+            r = f.result()
+            results.append(r)
+            pf.write(json.dumps(r, ensure_ascii=False) + "\n")
+            pf.flush()  # 버퍼에 남으면 취소 시 그대로 사라진다
             if i % 100 == 0 or i == len(futures):
                 el = time.time() - t0
                 rate = i / el if el else 0
@@ -403,10 +423,14 @@ def main() -> int:
                     flush=True,
                 )
 
+    pf.close()
+
     scored = [r for r in results if r.get("score") is not None]
     scored.sort(key=lambda r: r["score"])
     out = tdir / f"docked_shard{args.shard}.jsonl"
-    out.write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in scored))
+    out.write_text("\n".join(json.dumps(r, ensure_ascii=False) for r in scored) + "\n")
+    # 완주했으므로 부분 파일을 지운다 — 남아 있으면 '잘린 샤드' 신호다
+    partial.unlink(missing_ok=True)
 
     errs: dict[str, int] = {}
     for r in results:
