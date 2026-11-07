@@ -1,0 +1,93 @@
+{
+ "project": "HEADROOM",
+ "dataset": "CASF-2016 core set, n=285, 57 targets",
+ "floor": {
+  "regime": "target-disjoint (GroupKFold-10 by target, trained only within the 285)",
+  "LigandBias": {
+   "R": 0.502,
+   "n_features": 205,
+   "features": "all RDKit 2D descriptors"
+  },
+  "ProteinBias": {
+   "R": 0.241,
+   "n_features": 21,
+   "features": "20 amino-acid residue counts of the 16 A pocket + total"
+  },
+  "BothBias": {
+   "R": 0.534,
+   "n_features": 226
+  },
+  "note": "Durant et al. (Bioinformatics 41(2) btaf040) report that bias-only baselines reach state-of-the-art on CASF-2016 when trained on PDBbind General (~19k complexes), i.e. in the target-OVERLAPPING regime. The floor therefore depends on the split, not on the model."
+ },
+ "ceiling": {
+  "headline": [
+   0.88,
+   0.9
+  ],
+  "replicate_only": 0.882,
+  "kramer_2012": 0.9,
+  "optimistic_cross_source": 0.964,
+  "why_not_0.964": "20.1% of matched BindingDB Ki/Kd records sit within 0.02 log units of the PDBbind label - the same primary measurement, not an independent one"
+ },
+ "predictors_n285": {
+  "Vina": 0.502,
+  "Vinardo": 0.428,
+  "ligand_heavy_atoms": 0.482,
+  "null_ridge_14desc": 0.526,
+  "null_rf_14desc": 0.547,
+  "RFScore_v1": 0.713,
+  "RFScore_v2": 0.741
+ },
+ "usable_band_target_disjoint": 0.346,
+ "findings": [
+  "Vina (0.502) and Vinardo (0.428) both fall below BothBias (0.534), a model that never sees the protein-ligand interaction.",
+  "LigandBias with 205 descriptors (0.502) is no better than the earlier 14-descriptor null (0.547) - the floor is set by the split, not the feature count.",
+  "ProteinBias alone is 0.241 under a target-disjoint split, versus near state-of-the-art in the literature's target-overlapping split: the gap IS the memorisation of target identity.",
+  "RF-Score v1/v2 (0.713/0.741) clear the target-disjoint floor but were trained on PDBbind refined, which overlaps CASF targets, so they belong to the overlapping regime where the floor is far higher."
+ ],
+ "split_effect": {
+  "design": "identical 285 complexes, identical features, identical RandomForest; only the CV split changes",
+  "LigandBias": {
+   "target_disjoint": 0.502,
+   "random_split": 0.641,
+   "gain": 0.139
+  },
+  "ProteinBias": {
+   "target_disjoint": 0.241,
+   "random_split": 0.509,
+   "gain": 0.268
+  },
+  "BothBias": {
+   "target_disjoint": 0.534,
+   "random_split": 0.685,
+   "gain": 0.151
+  },
+  "interpretation": "ProteinBias more than doubles purely from seeing the same target in training - pocket composition acts as a target lookup key, not a physical descriptor. Usable band shrinks from 0.35 (target unseen) to 0.20 (target seen), and shrinks further in the literature regime where bias-only baselines train on ~19k complexes."
+ },
+ "data_path": {
+  "pdbbind_general_labels": "NOT OBTAINABLE - www.pdbbind-cn.org and its Aliyun mirror are off the allowlist, Zenodo and Hugging Face are off the allowlist",
+  "toolboxsf": "github.com/guydurant/toolboxsf is reachable but ships only code and a 19,078-line PDB code list, no labels and no structures; it has NO LICENSE file",
+  "rcsb_substitute": "insufficient - in a random sample of 24 PDBbind codes RCSB carried a binding-affinity annotation for 9 (37.5%) and Ki/Kd for only 2 (8.3%), though ligand SMILES reached 92% and UniProt 100%; RCSB affinity provenance is itself BindingDB",
+  "feasible_alternative": "train LigandBias on the 258,749 BindingDB Ki/Kd/IC50 records already on disk (184,762 molecules over 65 of the 78 CASF targets, excluding the 210 matched CASF molecules) - ligand-only features need no structures, so this reproduces the external-training target-overlapping regime"
+ },
+ "external_floor": {
+  "source": "BindingDB Ki/Kd, 44,754 (target, molecule) pairs over 58 targets, CASF molecules excluded",
+  "features": "ligand-only RDKit 2D descriptors (200 usable after dropping Ipc and non-finite columns)",
+  "target_overlapping_R": 0.679,
+  "target_disjoint_LOTO_R": 0.551,
+  "internal_comparison": {
+   "target_disjoint": 0.502,
+   "random_split": 0.641,
+   "n_train_per_fold": 256
+  },
+  "gain_from_157x_more_training_data": {
+   "target_disjoint": 0.049,
+   "target_overlapping": 0.038
+  },
+  "gain_from_seeing_the_target": {
+   "internal": 0.139,
+   "external": 0.128
+  },
+  "interpretation": "Seeing the target in training is worth about three times a 157-fold increase in training ligands. The floor is set by what the split allows the model to memorise, not by how much data it has."
+ }
+}
