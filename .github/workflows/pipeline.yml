@@ -213,23 +213,25 @@ jobs:
         run: |
           set -e
           DEST=$RUNNER_TEMP/ci
-          for i in 1 2 3 4 5; do
+          # cd 하지 않는다. 예전 루프는 cd "$DEST" 뒤 다음 회차에서 그 디렉터리를
+          # 지워 "Unable to read current working directory" 로 죽었다. 샤드 8개일
+          # 때는 충돌이 드물어 안 드러났고, 16개로 올리자 바로 터졌다.
+          for i in $(seq 1 12); do
             rm -rf "$DEST"
             git clone --quiet --depth 1 --branch ci-results \
-              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST" || { sleep 5; continue; }
             OUT="$DEST/runs/${GITHUB_RUN_ID}/dock-${{ matrix.gene }}-${{ matrix.shard }}"
             mkdir -p "$OUT"
             cp -r logs/* "$OUT/" 2>/dev/null || true
             # 잘린 샤드의 부분 결과. 남아 있다 = 그 샤드는 완주하지 못했다
             cp targets/*/partial_shard*.jsonl "$OUT/" 2>/dev/null || true
-            cd "$DEST"
-            git add -A
-            git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            git -C "$DEST" add -A
+            git -C "$DEST" -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
               commit -q -m "dock logs: run ${GITHUB_RUN_ID} ${{ matrix.gene }} shard ${{ matrix.shard }}" || exit 0
-            # 샤드 4개가 동시에 push 하므로 충돌 시 재시도
-            if git push --quiet origin ci-results; then exit 0; fi
-            sleep $((RANDOM % 20 + 5))
+            if git -C "$DEST" push --quiet origin ci-results; then exit 0; fi
+            sleep $(( (RANDOM % 25) + 5 ))
           done
+          echo "[!] ci-results push 를 12회 재시도했으나 실패했다. 아티팩트에는 남아 있다."
 
       - uses: actions/upload-artifact@v4
         if: always()
