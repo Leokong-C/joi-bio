@@ -1,0 +1,7 @@
+model,n_features,disjoint,disjoint_s,exposed,exposed_s
+ProteinBias (AA counts 21),21,0.241,7,0.509,7
+ESM2-650M pocket (1280),1280,0.179,47,0.371,48
+ESM2 + AA counts,1301,0.191,48,0.386,46
+LigandBias (205),205,0.502,8,0.641,8
+BothBias = Lig + AA counts,226,0.534,8,0.685,8
+Lig + ESM2,1485,0.439,50,0.608,50

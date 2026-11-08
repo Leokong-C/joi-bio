@@ -1,0 +1,7 @@
+model,disjoint,exposed
+ESM2 -> PCA8 -> RF,0.117,0.324
+ESM2 -> PCA16 -> RF,0.09,0.332
+ESM2 -> PCA32 -> RF,0.129,0.361
+ESM2 -> PCA64 -> RF,0.129,0.37
+ESM2 -> Ridge (linear),0.112,0.33
+AA counts -> Ridge (linear),0.195,0.359
