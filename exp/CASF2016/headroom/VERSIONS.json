@@ -1,0 +1,18 @@
+{
+ "pinned_for_numeric_reproducibility": {
+  "python": "3.11.17",
+  "rdkit": "2026.09.1",
+  "numpy": "2.4.6",
+  "scipy": "1.17.1",
+  "pandas": "3.0.6",
+  "scikit-learn": "1.9.1",
+  "matplotlib": "3.11.2"
+ },
+ "captured_on": "2026-11-07",
+ "captured_platform": "Windows-10-10.0.26200-SP0",
+ "why": "RandomForest tie-breaking and RDKit descriptor definitions can change between releases. The floor numbers (0.502 / 0.241 / 0.534 and the random-split counterparts) were produced with these exact versions; a different scikit-learn or RDKit may shift the third decimal.",
+ "not_pinned": [
+  "AutoDock Vina 1.2.7 (re-docking is seed-dependent regardless of version)",
+  "Open Babel (preprocessing is nondeterministic)"
+ ]
+}
