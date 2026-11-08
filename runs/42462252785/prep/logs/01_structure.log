@@ -1,0 +1,8 @@
+===== EPAS1 =====
+[*] EPAS1 (Q99814) 구조 준비
+    벤치마크 SMILES 3개 확보 → 구조 선택 기준으로 사용
+    구조 강제 지정: 6CZW
+      유사도=0.400 res=1.6
+    source=RCSB pdb=6CZW res=1.6 chain=A atoms=880
+    pocket=cocrystal_ligand (high) center=[24.54, -0.314, -10.001] size=[20.0, 20.0, 20.0]
+    FO7 (24 heavy atoms) 기준
