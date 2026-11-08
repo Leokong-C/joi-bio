@@ -23,6 +23,18 @@ on:
         description: "Vina exhaustiveness (높을수록 정확·느림)"
         required: false
         default: "8"
+      pdb_id:
+        description: "수용체 PDB ID 강제 지정. 비우면 자동 선택. 두 팔 비교를 재현하려면 반드시 고정한다 (치료군 = 6CZW)"
+        required: false
+        default: ""
+      library_path:
+        description: "미리 만들어 둔 라이브러리 jsonl. 지정하면 ChEMBL 재질의 대신 이 파일을 고정해 쓴다"
+        required: false
+        default: ""
+      dock_timeout:
+        description: "도킹 작업당 timeout(분). 비용 상한 = 작업 수 x 이 값"
+        required: false
+        default: "220"
 
 # 로그와 결과를 ci-results 브랜치로 되돌려 보낸다.
 # Actions 로그는 blob 스토리지에 있어 API로 읽기 어렵기 때문이다.
@@ -106,7 +118,9 @@ jobs:
           set -o pipefail
           for g in $(echo '${{ steps.genes.outputs.list }}' | python -c "import sys,json;print(' '.join(json.load(sys.stdin)))"); do
             echo "===== $g =====" | tee -a logs/01_structure.log
-            python -m core.structure.fetch --gene "$g" 2>&1 | tee -a logs/01_structure.log
+            PDBARG=""
+            if [ -n "${{ inputs.pdb_id }}" ]; then PDBARG="--pdb-id ${{ inputs.pdb_id }}"; fi
+            python -m core.structure.fetch --gene "$g" $PDBARG 2>&1 | tee -a logs/01_structure.log
           done
 
       - name: Stage 02 — 라이브러리 구성
@@ -117,9 +131,14 @@ jobs:
           set -o pipefail
           for g in $(echo '${{ steps.genes.outputs.list }}' | python -c "import sys,json;print(' '.join(json.load(sys.stdin)))"); do
             echo "===== $g =====" | tee -a logs/02_library.log
-            python -m modules.small_molecule.library --gene "$g" \
-              --n-decoys ${{ inputs.n_decoys }} \
-              --max-actives ${{ inputs.max_actives }} 2>&1 | tee -a logs/02_library.log
+            if [ -n "${{ inputs.library_path }}" ]; then
+              python scripts/freeze_library.py --gene "$g" \
+                --library "${{ inputs.library_path }}" 2>&1 | tee -a logs/02_library.log
+            else
+              python -m modules.small_molecule.library --gene "$g" \
+                --n-decoys ${{ inputs.n_decoys }} \
+                --max-actives ${{ inputs.max_actives }} 2>&1 | tee -a logs/02_library.log
+            fi
           done
 
       - name: 로그·메타데이터를 ci-results 브랜치로
@@ -155,12 +174,12 @@ jobs:
     name: 도킹
     needs: prep
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: ${{ fromJSON(inputs.dock_timeout) }}
     strategy:
       fail-fast: false
       matrix:
         gene: ${{ fromJson(needs.prep.outputs.genes) }}
-        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     steps:
       - uses: actions/checkout@v4
 
@@ -181,7 +200,7 @@ jobs:
           set -o pipefail
           python -u -m modules.small_molecule.dock \
             --gene ${{ matrix.gene }} \
-            --shard ${{ matrix.shard }} --n-shards 8 \
+            --shard ${{ matrix.shard }} --n-shards 16 \
             --max-ligands ${{ inputs.max_ligands }} \
             --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
             | tee logs/03_dock_${{ matrix.gene }}_${{ matrix.shard }}.log

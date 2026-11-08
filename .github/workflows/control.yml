@@ -38,6 +38,14 @@ on:
         description: "샤드당 리간드 상한 (0=전체). 수용체가 Vina 를 통과하는지 싸게 확인할 때 1~2 로 둔다"
         required: false
         default: "0"
+      library_path:
+        description: "미리 만들어 둔 라이브러리 jsonl. treatment 와 같은 파일을 넣어야 비교가 성립한다"
+        required: false
+        default: ""
+      dock_timeout:
+        description: "도킹 작업당 timeout(분). 비용 상한 = 작업 수 x 이 값"
+        required: false
+        default: "220"
 
 permissions:
   contents: write
@@ -67,9 +75,15 @@ jobs:
         shell: bash -el {0}
         run: |
           set -o pipefail
-          python -m modules.small_molecule.library --gene ${{ inputs.gene }} \
-            --n-decoys ${{ inputs.n_decoys }} \
-            --max-actives ${{ inputs.max_actives }} 2>&1 | tee logs/c02_library.log
+          if [ -n "${{ inputs.library_path }}" ]; then
+            # 고정 파일을 쓴다. sha256 이 treatment 와 같아야 비교가 성립한다.
+            python scripts/freeze_library.py --gene ${{ inputs.gene }} \
+              --library "${{ inputs.library_path }}" 2>&1 | tee logs/c02_library.log
+          else
+            python -m modules.small_molecule.library --gene ${{ inputs.gene }} \
+              --n-decoys ${{ inputs.n_decoys }} \
+              --max-actives ${{ inputs.max_actives }} 2>&1 | tee logs/c02_library.log
+          fi
 
       - name: 로그를 ci-results 로
         if: always()
@@ -100,11 +114,11 @@ jobs:
     name: 대조군 도킹
     needs: prep
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: ${{ fromJSON(inputs.dock_timeout) }}
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     steps:
       - uses: actions/checkout@v4
       - uses: mamba-org/setup-micromamba@v2
@@ -124,7 +138,7 @@ jobs:
 
           set -o pipefail
           python -u -m modules.small_molecule.dock --gene ${{ inputs.gene }} \
-            --shard ${{ matrix.shard }} --n-shards 8 \
+            --shard ${{ matrix.shard }} --n-shards 16 \
             --max-ligands ${{ inputs.max_ligands }} \
             --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
             | tee -a "$L"

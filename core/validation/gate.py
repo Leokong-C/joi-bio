@@ -49,6 +49,12 @@ MIN_ACTIVES = 10
 BEDROC_ALPHA = 20.0
 
 
+# 평가셋 완전성 문턱. 적용률이 이 아래면 판정을 INCOMPLETE 로 덮는다.
+# 샤드 하나가 빠지면 0.875 이하가 되어 걸리고, 정상적인 리간드 준비
+# 실패(PubChem 고정본 실측 3.90%)만으로는 걸리지 않는 자리에 두었다.
+COVERAGE_MIN = 0.90
+
+
 def enrichment_factor(labels: list[int], frac: float) -> float | None:
     """labels는 스코어 좋은 순으로 정렬된 0/1 배열."""
     n, n_act = len(labels), sum(labels)
@@ -364,6 +370,45 @@ def main() -> int:
     result = evaluate(rows, bench, control_rows=ctrl_rows, n_boot=args.n_boot)
     result["gene"] = args.gene
     result["pocket_confidence"] = meta.get("pocket", {}).get("confidence")
+
+    # 평가셋 완전성 — 샤드가 통째로 빠져도 지표는 멀쩡해 보인다.
+    # 조용한 실패다. 이 저장소가 반복해서 당한 바로 그 종류다.
+    #
+    # 2026-11-01 이 그랬다: 치료군 7/8, 대조군 2/8 로 compare 를 돌렸더니
+    # BIAS_LIKELY 가 나왔고 **대조군 AUC 가 치료군보다 높았다**. 부호가
+    # 뒤집힌 것이다. 활성 14개 표본의 잡음이었다.
+    #
+    # 문턱 0.90: 샤드 하나가 빠지면 0.875 이하로 떨어져 걸리고, 정상적인
+    # 리간드 준비 실패(PubChem 고정본 실측 decoy 3.90%, 활성 0%)만으로는
+    # 걸리지 않는 자리다.
+    n_expected = None
+    lib_stats = tdir / "library_stats.json"
+    lib_file = tdir / "library.jsonl"
+    if lib_stats.exists():
+        n_expected = json.loads(lib_stats.read_text()).get("n_total")
+    if not n_expected and lib_file.exists():
+        n_expected = sum(1 for l in lib_file.read_text().splitlines() if l.strip())
+
+    if n_expected:
+        n_attempted = len(rows)
+        coverage = round(n_attempted / n_expected, 4)
+        result["eval_set_coverage"] = {
+            "n_library": n_expected,
+            "n_docking_attempted": n_attempted,
+            "n_scored": result.get("n_compounds"),
+            "coverage": coverage,
+            "threshold": COVERAGE_MIN,
+            "complete": coverage >= COVERAGE_MIN,
+        }
+        if coverage < COVERAGE_MIN:
+            result["verdict"] = "INCOMPLETE"
+            result["verdict_reason"] = (
+                f"평가셋 불완전 — 라이브러리 {n_expected}개 중 {n_attempted}개만 "
+                f"도킹됐다(적용률 {coverage:.1%}, 문턱 {COVERAGE_MIN:.0%}). "
+                f"샤드가 통째로 빠졌을 가능성이 크다. 지표를 측정값으로 쓰지 마라."
+            )
+            print(f"[!] {result['verdict_reason']}")
+
 
     scored = sorted(
         (r for r in rows if r.get("score") is not None), key=lambda r: r["score"]
