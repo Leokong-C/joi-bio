@@ -1,0 +1,10 @@
+    수용체 PDBQT 원자 1,140개
+    수용체 원자 타입: {'C': 512, 'HD': 206, 'OA': 179, 'N': 147, 'A': 78, 'NA': 9, 'S': 9}
+    사전 점검 OK (프로브 리간드 28줄)
+    수용체 사전 점검: set_receptor + compute_vina_maps ...
+    수용체 사전 점검 OK
+[*] EPAS1 도킹: 1 리간드 (활성 0) 샤드 10/16, 워커 4
+    박스 center=[9.222, -9.701, 5.874] size=[20.0, 20.0, 20.0] (cocrystal_ligand)
+    1/1  2.4분 경과, 잔여 ~0.0분
+[+] 성공 1/1 → docked_shard9.jsonl
+    최고 스코어: 7.01 kcal/mol (PUBCHEM5717)
