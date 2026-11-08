@@ -92,3 +92,60 @@ C:\Users\sso03\.claude-science\orgs\03c00401-07e6-4964-a511-acfb42a28cca
 ## 한 줄 요약
 
 **이어받을 때 보는 곳은 `github.com/Leokong-C/joi-bio` → `headroom/pipeline` 브랜치 → `exp/CASF2016/headroom/` 하나입니다.** 나머지 셋은 이 PC·이 대화의 사본입니다.
+
+---
+
+## 번들 — 작업공간 전체 (2026-11-08)
+
+`exp/CASF2016/headroom/bundles/`. 작업공간 전체를 압축해 넣었습니다. **634.6 MB → 203.1 MB.**
+이제 로컬에만 있는 것은 없습니다.
+
+| 묶음 | 압축 | 원본 | 멤버 | 내용 |
+| --- | ---: | ---: | ---: | --- |
+| `casf.tar.gz` | 33.9 MB | 137.2 MB | 869 | 구조 · 포켓 · 트리밍 수용체 |
+| `rfscore.tar.gz.part{00,01}` | 58.5 MB | 58.4 MB | 3 | RF-Score v1/v2/v3 학습 모델 |
+| `dock.tar.gz` | 28.8 MB | 136.9 MB | 1,271 | Vina 도킹 포즈 전량 |
+| `tables.tar.gz` | 23.9 MB | 85.0 MB | 62 | 결과 CSV · JSON 전부 |
+| `tu_staging.tar.gz` | 23.5 MB | 39.2 MB | 2,300 | ToolUniverse 스킬 작업물 |
+| `bdb_features.tar.gz` | 23.2 MB | 83.0 MB | 2 | BindingDB 특징 행렬 · 학습셋 |
+| `mmgbsa.tar.gz` | 8.3 MB | 39.5 MB | 58 | MM/GBSA 궤적 |
+| `push.tar.gz` | 2.3 MB | 2.7 MB | 32 | 게시용 그림 · 문서 |
+| `rerank.tar.gz` | 0.2 MB | 1.6 MB | 65 | 포즈 재순위 산출물 |
+| `bin.tar.gz` | 0.5 MB | 1.2 MB | 2 | AutoDock Vina 1.2.7 실행파일 (Apache-2.0) |
+
+`MANIFEST.json`에 파일별 SHA-256이 있습니다. **복원됐는지를 말이 아니라 해시로 확인하십시오.**
+
+### 복원
+
+```bash
+cd exp/CASF2016/headroom/bundles
+cat rfscore.tar.gz.part00 rfscore.tar.gz.part01 > rfscore.tar.gz   # 분할 합치기
+python - <<'EOF'
+import hashlib, json, os, tarfile, glob
+man = {m["file"]: m for m in json.load(open("MANIFEST.json"))}
+for f in sorted(man):
+    if os.path.exists(f):
+        h = hashlib.sha256(open(f,"rb").read()).hexdigest()
+        print(("OK  " if h == man[f]["sha256"] else "FAIL"), f)
+for f in glob.glob("*.tar.gz"):
+    tarfile.open(f).extractall("../../../..")      # 저장소 루트로 풀림
+EOF
+```
+
+Windows PowerShell에서 분할을 합칠 때는 `cmd /c copy /b rfscore.tar.gz.part00+rfscore.tar.gz.part01 rfscore.tar.gz`를 씁니다 — PowerShell의 `Get-Content`는 바이너리를 망칩니다.
+
+**무결성 확인(2026-11-08, 커밋 `5f58203f`)** — 두 단계로 검사했습니다.
+
+1. 묶음 11개를 전부 열어 모든 멤버를 끝까지 읽어 CRC 검사 — **4,664개 멤버, 손상 0건**, 분할본도 합쳐서 정상 해제.
+2. GitHub에서 12개 블롭을 **다시 내려받아 SHA-256과 바이트 길이를 대조 — 11/11 일치, 불일치 0건.**
+
+2단계가 핵심입니다. 올렸다는 말이 아니라, 내려받아 복원되는 것을 해시로 확인한 기록입니다.
+
+### 저장소에 없는 것 — 하나뿐입니다
+
+`articles/` 7.0 MB — 출판된 논문 PDF 4편(`10.1093_bioinformatics_btaf040`, `10.1371_journal.pone.0061007`,
+`10.1038_s41746-026-02477-w`, `10.1039_d6sc01189f`). 비공개 저장소라도 **출판사 저작물을 재배포하는 형태**가
+되므로 넣지 않습니다. DOI는 `PRIOR_ART.md`에 있으니 각자 내려받으면 됩니다.
+
+`casf.tar.gz`에는 CASF-2016 구조가 들어 있습니다. **이 저장소를 비공개로 유지하는 것이 전제**이며,
+`casf_index.csv`(CoreSet.dat 유래)의 재배포 가능 여부 확인은 여전히 미결입니다.
