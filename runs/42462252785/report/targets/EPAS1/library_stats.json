@@ -1,0 +1,21 @@
+{
+  "frozen_from": "exp/EPAS1/audit/library_pubchem.jsonl",
+  "frozen_label": "library_pubchem.jsonl",
+  "sha256": "bb8bda2e799c678a1a63909a17cbfde77e35485ae7f02f5880bd62536dad7fce",
+  "n_total": 2160,
+  "n_eval_set": 2160,
+  "n_known_active": 60,
+  "n_decoy": 2100,
+  "n_screen": 0,
+  "active_fraction": 0.0278,
+  "max_reachable_ef1": 36.0,
+  "max_reachable_ef1_scope": "도킹 전 전수 기준. 실제 천장은 도킹 결과로 계산한 validation.json 이 권위를 갖는다",
+  "decoy_mode": "pubchem_smarts_property_matched",
+  "rotb_max": 8,
+  "rotb_median": 4,
+  "normalize_notes": {
+    "rotb_recomputed": 2100,
+    "stale_stripped": 60,
+    "unparseable": 0
+  }
+}
