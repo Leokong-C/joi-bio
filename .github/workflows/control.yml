@@ -61,6 +61,11 @@ jobs:
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
+          # 버전을 고정한다. 'latest' 는 micro.mamba.pm API 로 해석되는데
+          # 2026-11-08 에 그 엔드포인트가 HTTP 504 를 반복해서 돌려줬고
+          # 탐침 18개 작업 중 8개가 거기서 죽었다. 구체적 버전을 주면
+          # github.com/mamba-org/micromamba-releases 에서 받는다.
+          micromamba-version: "2.10.0-0"
           cache-environment: true
 
       - name: 구조 강제 지정
@@ -124,6 +129,11 @@ jobs:
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
+          # 버전을 고정한다. 'latest' 는 micro.mamba.pm API 로 해석되는데
+          # 2026-11-08 에 그 엔드포인트가 HTTP 504 를 반복해서 돌려줬고
+          # 탐침 18개 작업 중 8개가 거기서 죽었다. 구체적 버전을 주면
+          # github.com/mamba-org/micromamba-releases 에서 받는다.
+          micromamba-version: "2.10.0-0"
           cache-environment: true
       - uses: actions/download-artifact@v4
         with:
@@ -190,6 +200,11 @@ jobs:
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: environment.yml
+          # 버전을 고정한다. 'latest' 는 micro.mamba.pm API 로 해석되는데
+          # 2026-11-08 에 그 엔드포인트가 HTTP 504 를 반복해서 돌려줬고
+          # 탐침 18개 작업 중 8개가 거기서 죽었다. 구체적 버전을 주면
+          # github.com/mamba-org/micromamba-releases 에서 받는다.
+          micromamba-version: "2.10.0-0"
           cache-environment: true
 
       - name: 대조군 결과 수집
