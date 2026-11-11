@@ -17,6 +17,10 @@ on:
         description: "TDC HTS 이름 (쉼표 구분) 또는 ALL_BUTKIEWICZ"
         required: false
         default: "ALL_BUTKIEWICZ"
+      seeds:
+        description: "부분표본 씨앗 (쉼표 구분) — 판정이 추출에 흔들리는지 본다"
+        required: false
+        default: "1023,7,4242,88,31337"
 
 permissions:
   contents: write
@@ -51,6 +55,7 @@ jobs:
           set -o pipefail
           python -u scripts/screen_targets.py \
             --names "${{ inputs.names }}" \
+            --seeds "${{ inputs.seeds }}" \
             --data-dir tdc_raw \
             --out out/screen_targets.json 2>&1 | tee logs/screen.log
 

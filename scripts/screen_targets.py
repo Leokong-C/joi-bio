@@ -98,7 +98,7 @@ def gate_metrics(rows: list[dict]) -> dict:
     return m
 
 
-def screen_one(name: str, data_dir: str, seed: int) -> dict:
+def screen_one(name: str, data_dir: str, seeds: list[int]) -> dict:
     import warnings
     warnings.filterwarnings("ignore")
     from tdc.single_pred import HTS
@@ -130,25 +130,51 @@ def screen_one(name: str, data_dir: str, seed: int) -> dict:
           f"골격 {res['n_active_scaffolds_all']}종")
 
     # --- EPAS1 과 나란히 놓을 수 있는 부분표본 ---
-    rng = random.Random(seed)
+    # 활성 60개를 무엇으로 뽑느냐에 판정이 흔들린다. 씨앗 하나로 추천하면
+    # 10-29 에 한 실수(단일 측정으로 원인을 단정)를 되풀이하는 것이다.
     acts = [p for p in pairs if p[1] == 1]
     decs = [p for p in pairs if p[1] == 0]
     na = min(EPAS1_ACTIVES, len(acts))
     nd = min(EPAS1_N - na, len(decs))
-    sub = rng.sample(acts, na) + rng.sample(decs, nd)
-    res["matched"] = {"n": na + nd, "n_active": na,
-                      "short_of_epas1": na < EPAS1_ACTIVES or nd < EPAS1_N - na}
 
-    rows = build_rows(sub)
-    res["matched"]["memorisation"] = gate_metrics(rows)
-    sb = max_sim_baseline_scaffold_split(rows)
-    res["matched"]["n_active_scaffolds"] = sb["n_active_scaffolds"]
+    runs, first_rows = [], None
+    for sd in seeds:
+        rng = random.Random(sd)
+        sub = rng.sample(acts, na) + rng.sample(decs, nd)
+        rows = build_rows(sub)
+        if first_rows is None:
+            first_rows = rows
+        met = gate_metrics(rows)
+        met["seed"] = sd
+        runs.append(met)
+        print(f"      seed {sd:>5d} — nEF1% {met['nef1']}  AUC {met['auc']}  "
+              f"BEDROC {met['bedroc']}  게이트 {len(met['gate_passed'])}/3")
 
-    m = res["matched"]["memorisation"]
-    verdict = "실격 — 기억이 게이트 통과" if m["would_pass_gate"] else "합격 후보"
+    aucs = sorted(r["auc"] or 0 for r in runs)
+    n_pass = sum(1 for r in runs if r["would_pass_gate"])
+    res["matched"] = {
+        "n": na + nd, "n_active": na,
+        "short_of_epas1": na < EPAS1_ACTIVES or nd < EPAS1_N - na,
+        "seeds": runs,
+        "auc_min": aucs[0], "auc_max": aucs[-1],
+        "auc_median": aucs[len(aucs) // 2],
+        "gate_pass_count": n_pass, "n_seeds": len(runs),
+    }
+    # 대표값은 중앙값 씨앗. 표에 폭을 함께 실어 흔들림을 숨기지 않는다
+    med = res["matched"]["auc_median"]
+    res["matched"]["memorisation"] = next(r for r in runs if (r["auc"] or 0) == med)
+    res["matched"]["n_active_scaffolds"] = \
+        max_sim_baseline_scaffold_split(first_rows)["n_active_scaffolds"]
+
+    if n_pass == 0:
+        verdict = "합격 후보"
+    elif n_pass == len(runs):
+        verdict = "실격 — 기억이 게이트 통과"
+    else:
+        verdict = f"불안정 — 씨앗 {len(runs)}개 중 {n_pass}개에서 통과"
     res["verdict"] = verdict
-    print(f"    기억 베이스라인 — nEF1% {m['nef1']}  AUC {m['auc']}  "
-          f"BEDROC {m['bedroc']}  → {verdict}")
+    print(f"    → AUC 중앙 {res['matched']['auc_median']} "
+          f"(폭 {aucs[0]}~{aucs[-1]})  {verdict}")
     return res
 
 
@@ -158,8 +184,10 @@ def main() -> int:
                     help="쉼표 구분 TDC HTS 이름, 또는 ALL_BUTKIEWICZ")
     ap.add_argument("--data-dir", default="tdc_raw")
     ap.add_argument("--out", default="screen_targets.json")
-    ap.add_argument("--seed", type=int, default=1023)
+    ap.add_argument("--seeds", default="1023,7,4242",
+                    help="부분표본 씨앗 (쉼표 구분). 판정이 추출에 흔들리는지 본다")
     args = ap.parse_args()
+    seeds = [int(s) for s in args.seeds.split(",") if s.strip()]
 
     if args.names.strip() == "ALL_BUTKIEWICZ":
         from tdc.utils import retrieve_dataset_names
@@ -172,7 +200,7 @@ def main() -> int:
     results, failed = [], []
     for n in names:
         try:
-            results.append(screen_one(n, args.data_dir, args.seed))
+            results.append(screen_one(n, args.data_dir, seeds))
         except Exception as e:          # 하나가 죽어도 나머지는 잰다
             print(f"    [!] {n} 실패: {type(e).__name__}: {e}")
             failed.append({"target": n, "error": f"{type(e).__name__}: {e}"})
@@ -183,7 +211,8 @@ def main() -> int:
            "active_self_similarity_all": {"median_nearest_neighbour": 0.795,
                                           "frac_with_analog_over_0.6": 0.87},
            "matched": {"memorisation": {"nef1": 1.000, "auc": 0.9637,
-                                        "would_pass_gate": True}},
+                                        "would_pass_gate": True},
+                       "auc_median": 0.9637, "auc_min": 0.9637, "auc_max": 0.9637},
            "verdict": "실격 — 기억이 게이트 통과"}
 
     out = {"reference": ref, "screened": results, "failed": failed}
@@ -191,21 +220,25 @@ def main() -> int:
 
     print(f"\n\n{'=' * 100}\n순위 — 기억 베이스라인 AUC 가 낮을수록 좋은 타깃이다\n{'=' * 100}")
     print(f"{'타깃':42s} {'활성':>7s} {'골격':>6s} {'중위NN':>7s} "
-          f"{'≥0.6':>6s} {'기억AUC':>8s} {'판정'}")
-    print("-" * 100)
-    rank = sorted(results, key=lambda r: r["matched"]["memorisation"]["auc"] or 0)
+          f"{'≥0.6':>6s} {'기억AUC 중앙':>11s} {'폭':>15s}  {'판정'}")
+    print("-" * 118)
+    rank = sorted(results, key=lambda r: r["matched"]["auc_median"] or 0)
     for r in [ref] + rank:
         s = r["active_self_similarity_all"]
-        mm = r["matched"]["memorisation"]
+        mt = r["matched"]
         print(f"{r['target'][:42]:42s} {r['n_active_total']:7,d} "
               f"{r.get('n_active_scaffolds_all', '-'):>6} "
               f"{s.get('median_nearest_neighbour', 0):7.3f} "
               f"{s.get('frac_with_analog_over_0.6', 0):6.2f} "
-              f"{(mm['auc'] or 0):8.4f}  {r['verdict']}")
+              f"{(mt['auc_median'] or 0):11.4f} "
+              f"{mt['auc_min']:7.4f}~{mt['auc_max']:<7.4f}  {r['verdict']}")
     for f in failed:
         print(f"{f['target'][:42]:42s} {'—':>7} {'—':>6} {'—':>7} {'—':>6} "
-              f"{'—':>8}  측정 실패: {f['error'][:40]}")
-    print(f"\n합격 후보 {sum(1 for r in results if not r['matched']['memorisation']['would_pass_gate'])}종 "
+              f"{'—':>11} {'—':>15}  측정 실패: {f['error'][:40]}")
+    n_ok = sum(1 for r in results if r["matched"]["gate_pass_count"] == 0)
+    n_mix = sum(1 for r in results
+                if 0 < r["matched"]["gate_pass_count"] < r["matched"]["n_seeds"])
+    print(f"\n씨앗 {len(seeds)}개 전부에서 합격 {n_ok}종 / 불안정 {n_mix}종 "
           f"/ 측정 {len(results)}종 / 실패 {len(failed)}종")
     print(f"→ {args.out}")
     return 0
