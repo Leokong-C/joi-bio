@@ -155,7 +155,9 @@ def probe(gene: str) -> dict:
             errs += 1
     holo = [e for e in entries if e["ligands"]]
     xray = [e for e in holo if "X-RAY" in (e["method"] or "").upper()]
-    em = [e for e in holo if "ELECTRON" in (e["method"] or "").upper()]
+    # RCSB 는 'EM' 으로 돌려준다. 'ELECTRON' 만 보면 전부 0 이 된다
+    em = [e for e in holo if any(k in (e["method"] or "").upper()
+                                 for k in ("ELECTRON", "EM"))]
     good = [e for e in holo if e["resolution"] and e["resolution"] <= 3.0]
 
     out.update({
@@ -179,8 +181,10 @@ def probe(gene: str) -> dict:
 
 # 리간드가 붙어 있다고 알려진 항목. 여기서 0 이 나오면 탐침이 고장난 것이지
 # 구조가 없는 것이 아니다. 11-11 에 두 번 연속 조용히 틀린 수를 냈다.
-SELFTEST = {"6WJC": "CHRM1 아세틸콜린", "1RFF": "TDP1 바나듐산",
-            "7CR0": "KCNQ2 리간드 결합"}
+# 7CR0 은 비중합체 엔티티가 0 이라 점검 항목으로 부적절했다 — 탐침이 아니라
+# 내 항목 선정이 틀렸다. KCNQ2 는 8IZY(9MF)로 바꾼다.
+SELFTEST = {"6WJC": "CHRM1 아세틸콜린 자리", "1RFF": "TDP1 결합 리간드",
+            "8IZY": "KCNQ2 리간드 결합"}
 
 
 def selftest() -> bool:
