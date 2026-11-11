@@ -31,6 +31,7 @@ import requests
 UNIPROT = "https://rest.uniprot.org/uniprotkb/search"
 RCSB_SEARCH = "https://search.rcsb.org/rcsbsearch/v2/query"
 RCSB_ENTRY = "https://data.rcsb.org/rest/v1/core/entry/"
+RCSB_CHEMCOMP = "https://data.rcsb.org/rest/v1/core/chemcomp/"
 
 # 결정화·동결 보호제. 분자량만으로는 안 걸러진다
 BUFFERS = {
@@ -74,21 +75,46 @@ def pdb_ids(acc: str) -> list[str]:
     return [h["identifier"] for h in r.json().get("result_set", [])]
 
 
+_MW: dict[str, float | None] = {}
+
+
+def ligand_mw(comp: str) -> float | None:
+    """화학성분의 분자량. 이온·완충제를 이름으로만 거르면 샌다 —
+    11-11 1차 탐침에서 나트륨(NA)이 리간드로 세어져 오렉신1 의 홀로 수가
+    부풀었다. 선언만 해 두고 쓰지 않은 하한을 실제로 적용한다."""
+    if comp in _MW:
+        return _MW[comp]
+    try:
+        r = requests.get(RCSB_CHEMCOMP + comp, timeout=30)
+        r.raise_for_status()
+        _MW[comp] = r.json().get("chem_comp", {}).get("formula_weight")
+    except Exception:
+        _MW[comp] = None
+    return _MW[comp]
+
+
 def entry_detail(pdb: str) -> dict:
     r = requests.get(RCSB_ENTRY + pdb, timeout=60)
     r.raise_for_status()
     j = r.json()
-    res = (j.get("rcsb_entry_info", {}).get("resolution_combined") or [None])[0]
-    method = ",".join(j.get("rcsb_entry_info", {}).get("experimental_method", "")
-                      if isinstance(j.get("rcsb_entry_info", {})
-                                    .get("experimental_method"), str)
-                      else j.get("rcsb_entry_info", {}).get("experimental_method", []) or [])
-    ligs = [c for c in (j.get("rcsb_entry_info", {})
-                        .get("nonpolymer_bound_components") or [])
-            if c not in BUFFERS]
-    return {"pdb_id": pdb, "resolution": res,
-            "method": method or j.get("exptl", [{}])[0].get("method", ""),
-            "ligands": ligs}
+    info = j.get("rcsb_entry_info", {})
+    res = (info.get("resolution_combined") or [None])[0]
+
+    # experimental_method 는 문자열이고 experimental_method_count 와 짝이다.
+    # 리스트로 보고 join 하면 글자가 쉼표로 쪼개진다 (1차 탐침의 'X,-,r,a,y')
+    method = info.get("experimental_method")
+    if not isinstance(method, str):
+        method = ", ".join(e.get("method", "") for e in j.get("exptl", []) or [])
+
+    ligs = []
+    for c in (info.get("nonpolymer_bound_components") or []):
+        if c in BUFFERS:
+            continue
+        mw = ligand_mw(c)
+        if mw is None or mw < MIN_LIGAND_MW:
+            continue
+        ligs.append(c)
+    return {"pdb_id": pdb, "resolution": res, "method": method or "", "ligands": ligs}
 
 
 def probe(gene: str) -> dict:
@@ -109,21 +135,23 @@ def probe(gene: str) -> dict:
         except Exception:
             errs += 1
     holo = [e for e in entries if e["ligands"]]
-    xray = [e for e in holo if e["resolution"] and "X-RAY" in (e["method"] or "").upper()]
-    good = [e for e in xray if e["resolution"] <= 3.0]
+    xray = [e for e in holo if "X-RAY" in (e["method"] or "").upper()]
+    em = [e for e in holo if "ELECTRON" in (e["method"] or "").upper()]
+    good = [e for e in holo if e["resolution"] and e["resolution"] <= 3.0]
 
     out.update({
         "n_examined": len(entries), "n_fetch_errors": errs,
-        "n_holo": len(holo), "n_holo_xray": len(xray),
-        "n_holo_xray_le_3A": len(good),
+        "n_holo": len(holo), "n_holo_xray": len(xray), "n_holo_em": len(em),
+        "n_holo_le_3A": len(good),
         "best": sorted(
             ({"pdb_id": e["pdb_id"], "resolution": e["resolution"],
               "method": e["method"], "ligands": e["ligands"][:4]} for e in holo),
             key=lambda e: (e["resolution"] is None, e["resolution"] or 99))[:8],
     })
     out["c4_pass"] = out["n_holo"] >= 2
-    print(f"    홀로 {out['n_holo']}개 (X선 {out['n_holo_xray']}, 3.0 A 이하 "
-          f"{out['n_holo_xray_le_3A']}) → C4 {'통과' if out['c4_pass'] else '실패'}")
+    print(f"    홀로 {out['n_holo']}개 (X선 {out['n_holo_xray']}, cryo-EM "
+          f"{out['n_holo_em']}, 3.0 A 이하 {out['n_holo_le_3A']}) "
+          f"→ C4 {'통과' if out['c4_pass'] else '실패'}")
     for e in out["best"][:4]:
         print(f"      {e['pdb_id']}  {e['resolution']} A  {e['method'][:18]:18s} "
               f"{','.join(e['ligands'])}")
@@ -148,16 +176,16 @@ def main() -> int:
         json.dump(res, f, ensure_ascii=False, indent=2)
 
     print(f"\n{'유전자':10s} {'UniProt':10s} {'PDB':>5s} {'홀로':>5s} "
-          f"{'X선':>5s} {'<=3A':>5s}  C4")
-    print("-" * 62)
+          f"{'X선':>5s} {'cryoEM':>7s} {'<=3A':>5s}  C4")
+    print("-" * 70)
     for r in res:
         if "error" in r:
             print(f"{r['gene']:10s} {'—':10s} {'—':>5s} {'—':>5s} {'—':>5s} "
-                  f"{'—':>5s}  측정 실패")
+                  f"{'—':>7s} {'—':>5s}  측정 실패")
             continue
         print(f"{r['gene']:10s} {r['accession']:10s} {r['n_pdb_total']:5d} "
-              f"{r['n_holo']:5d} {r['n_holo_xray']:5d} {r['n_holo_xray_le_3A']:5d}  "
-              f"{'통과' if r['c4_pass'] else '실패'}")
+              f"{r['n_holo']:5d} {r['n_holo_xray']:5d} {r['n_holo_em']:7d} "
+              f"{r['n_holo_le_3A']:5d}  {'통과' if r['c4_pass'] else '실패'}")
     print(f"→ {args.out}")
     return 0
 
