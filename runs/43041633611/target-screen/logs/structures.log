@@ -1,0 +1,26 @@
+[*] CHRM1 (P11229) — PDB 7개: Muscarinic acetylcholine receptor M1
+    홀로 0개 (X선 0, cryo-EM 0, 3.0 A 이하 0) → C4 실패
+[*] HCRTR1 (O43613) — PDB 14개: Orexin/Hypocretin receptor type 1
+    홀로 0개 (X선 0, cryo-EM 0, 3.0 A 이하 0) → C4 실패
+[*] TDP1 (Q9NUW8) — PDB 48개: Tyrosyl-DNA phosphodiesterase 1
+    홀로 10개 (X선 10, cryo-EM 0, 3.0 A 이하 10) → C4 통과
+      8V0C  1.62 A  X-ray              YE3
+      9B3B  1.62 A  X-ray              A1AIM
+      8UV1  1.83 A  X-ray              XK6
+      8UZZ  1.93 A  X-ray              YA5
+[*] STK33 (Q9BYT3) — PDB 1개: Serine/threonine-protein kinase 33
+    홀로 0개 (X선 0, cryo-EM 0, 3.0 A 이하 0) → C4 실패
+[*] KCNQ2 (O43526) — PDB 58개: Potassium voltage-gated channel subfamily KQT member 2
+    홀로 0개 (X선 0, cryo-EM 0, 3.0 A 이하 0) → C4 실패
+[*] SLC5A7 (Q9GZV3) — PDB 12개: High affinity choline transporter 1
+    홀로 0개 (X선 0, cryo-EM 0, 3.0 A 이하 0) → C4 실패
+
+유전자        UniProt      PDB    홀로    X선  cryoEM  <=3A  C4
+----------------------------------------------------------------------
+CHRM1      P11229         7     0     0       0     0  실패
+HCRTR1     O43613        14     0     0       0     0  실패
+TDP1       Q9NUW8        48    10    10       0    10  통과
+STK33      Q9BYT3         1     0     0       0     0  실패
+KCNQ2      O43526        58     0     0       0     0  실패
+SLC5A7     Q9GZV3        12     0     0       0     0  실패
+→ out/structures.json
