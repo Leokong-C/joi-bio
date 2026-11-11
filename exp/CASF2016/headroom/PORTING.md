@@ -79,8 +79,7 @@ pip이 Windows ACL 오류(`WinError 5 ... source_docs`)로 깨지면** 환경을
 **정정 (2026-11-11).** 이 절은 `casf_index.csv`도 손으로 옮기라고 적고 있었으나
 **틀렸습니다.** 그 파일은 번들 안에 들어 있습니다 — `bundles/casf.tar.gz`를 풀면
 `casf/index.csv`로 나옵니다(285행 · 57 타깃). 같은 데이터가
-`stage4-extended-benchmark` 브랜치의
-`benchmarks/docking-casf2016/casf2016_core_index.csv`에도 있고, 두 벌을 대조한
+`stage1-4/casf2016_core_index.csv`에도 있고, 두 벌을 대조한
 결과 `code`·`logKa`·`target`·`resolution`이 전부 일치합니다(부동소수점 표기만 다름).
 `03_floor.py`가 요구하는 컬럼이 정확히 이 셋입니다.
 
@@ -154,7 +153,7 @@ CASF-2016 작업은 **한 줄기**입니다. git 이력만 끊겨 있습니다.
 | `headroom/pipeline` | #6 (열림) | 5단계 이후. **위 둘의 자손이 아니라** `main`의 다른 지점에서 갈라짐 |
 
 **산출물은 그대로 넘어왔습니다.** stage4 브랜치의
-`benchmarks/docking-casf2016/casf2016_docking_results.csv`와 이 브랜치
+`stage1-4/casf2016_docking_results.csv`와 이 브랜치
 `bundles/dock.tar.gz` 속 같은 파일이 **sha256까지 바이트 단위로 동일**합니다
 (`e3e82e73…`, 284행). MM/GBSA · 포즈 재순위 · RF-Score · LLM 결과도 `mmgbsa` ·
 `rerank` · `rfscore` · `tables` 번들에 실려 있습니다. 따라서 **이 번들만 복원하면
@@ -167,6 +166,27 @@ CASF-2016 작업은 **한 줄기**입니다. git 이력만 끊겨 있습니다.
 재현에는 준비된 PDBQT 보관이 필요하다** — 는 이 문서에 없는 내용입니다.
 
 `main`에는 셋 중 어느 것도 병합돼 있지 않습니다. #1·#3·#4·#5·#6 전부 열린 상태입니다.
+
+## 7-2. 재현성 — 두 가지를 구분하십시오 (stage1-4/repro/REPRODUCE.md 흡수)
+
+| 무엇 | 재현되는가 |
+| --- | --- |
+| 바닥·천장·ESM-2 수치 | **예** — 보관된 특징·결과에서 재계산하면 셋째 자리까지 일치 |
+| 도킹 점수 비트 수준 | **아니오** — 아래 |
+
+**Open Babel은 극성 수소를 프로세스마다 다르게 배치합니다.** 한 수용체 PDBQT
+4,190줄 중 **26줄**이 두 번의 준비 사이에서 달라졌습니다(Ser/Cys에 붙는 H).
+보관된 수용체로 재채점하면 −8.479 kcal/mol이 나오지만, 새로 준비한 수용체는
+−8.355를 냅니다. **Vina 자체는 결정적입니다** — 비결정성은 전처리에 있습니다.
+
+따라서 **비트 수준 재현에는 파이프라인이 아니라 준비된 PDBQT 파일의 보관이
+필요합니다.** 번들의 `dock/prep`이 그 보관본입니다. 재도킹을 다시 돌리지 말라는
+§5의 경고와 같은 뿌리입니다.
+
+시드를 바꾸면 성공률이 SD 0.41 pt로 흔들리고 27건의 판정이 뒤집힙니다.
+
+전체 재현 키트(정확한 패키지 버전, Vina 실행파일 해시, 실측 소요시간)는
+`stage1-4/repro/REPRODUCE.md`에 있습니다.
 
 ## 8. 무엇이 이전되지 않는가
 
