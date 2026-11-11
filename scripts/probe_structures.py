@@ -32,6 +32,7 @@ UNIPROT = "https://rest.uniprot.org/uniprotkb/search"
 RCSB_SEARCH = "https://search.rcsb.org/rcsbsearch/v2/query"
 RCSB_ENTRY = "https://data.rcsb.org/rest/v1/core/entry/"
 RCSB_CHEMCOMP = "https://data.rcsb.org/rest/v1/core/chemcomp/"
+RCSB_NONPOLY = "https://data.rcsb.org/rest/v1/core/nonpolymer_entity/"
 
 # 결정화·동결 보호제. 분자량만으로는 안 걸러진다
 BUFFERS = {
@@ -106,15 +107,33 @@ def entry_detail(pdb: str) -> dict:
     if not isinstance(method, str):
         method = ", ".join(e.get("method", "") for e in j.get("exptl", []) or [])
 
+    # 리간드 성분 ID 를 모은다. nonpolymer_bound_components 는 비어 있는
+    # 항목이 많아 (11-11 2차 탐침에서 KCNQ2 58개가 전부 0으로 나왔다)
+    # 비중합체 엔티티를 직접 훑는 쪽을 1순위로 둔다.
+    comps: list[str] = []
+    ids = (j.get("rcsb_entry_container_identifiers", {})
+            .get("non_polymer_entity_ids") or [])
+    for eid in ids:
+        try:
+            e = requests.get(f"{RCSB_NONPOLY}{pdb}/{eid}", timeout=30).json()
+            c = (e.get("pdbx_entity_nonpoly", {}) or {}).get("comp_id")
+            if c:
+                comps.append(c)
+        except Exception:
+            pass
+    if not comps:
+        comps = list(info.get("nonpolymer_bound_components") or [])
+
     ligs = []
-    for c in (info.get("nonpolymer_bound_components") or []):
+    for c in dict.fromkeys(comps):
         if c in BUFFERS:
             continue
         mw = ligand_mw(c)
         if mw is None or mw < MIN_LIGAND_MW:
             continue
         ligs.append(c)
-    return {"pdb_id": pdb, "resolution": res, "method": method or "", "ligands": ligs}
+    return {"pdb_id": pdb, "resolution": res, "method": method or "",
+            "n_nonpoly_entities": len(ids), "ligands": ligs}
 
 
 def probe(gene: str) -> dict:
@@ -158,11 +177,38 @@ def probe(gene: str) -> dict:
     return out
 
 
+# 리간드가 붙어 있다고 알려진 항목. 여기서 0 이 나오면 탐침이 고장난 것이지
+# 구조가 없는 것이 아니다. 11-11 에 두 번 연속 조용히 틀린 수를 냈다.
+SELFTEST = {"6WJC": "CHRM1 아세틸콜린", "1RFF": "TDP1 바나듐산",
+            "7CR0": "KCNQ2 리간드 결합"}
+
+
+def selftest() -> bool:
+    print("[*] 자체 점검 — 리간드가 있다고 알려진 항목에서 리간드가 나오는가")
+    ok = True
+    for pdb, what in SELFTEST.items():
+        try:
+            e = entry_detail(pdb)
+            found = bool(e["ligands"])
+            print(f"    {pdb} ({what}): 비중합체 엔티티 "
+                  f"{e.get('n_nonpoly_entities', '?')}개 → "
+                  f"리간드 {e['ligands'] or '없음'}  {'OK' if found else '[!] 0'}")
+            ok &= found
+        except Exception as ex:
+            print(f"    {pdb}: 조회 실패 {type(ex).__name__}: {ex}")
+            ok = False
+    if not ok:
+        print("    [!] 점검 실패 — 아래 숫자를 믿지 말 것")
+    return ok
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--genes", required=True, help="사람 유전자 기호, 쉼표 구분")
     ap.add_argument("--out", default="structures.json")
     args = ap.parse_args()
+
+    healthy = selftest()
 
     res = []
     for g in [s.strip() for s in args.genes.split(",") if s.strip()]:
@@ -173,7 +219,8 @@ def main() -> int:
             res.append({"gene": g, "error": f"{type(e).__name__}: {e}"})
 
     with open(args.out, "w") as f:
-        json.dump(res, f, ensure_ascii=False, indent=2)
+        json.dump({"selftest_passed": healthy, "targets": res},
+                  f, ensure_ascii=False, indent=2)
 
     print(f"\n{'유전자':10s} {'UniProt':10s} {'PDB':>5s} {'홀로':>5s} "
           f"{'X선':>5s} {'cryoEM':>7s} {'<=3A':>5s}  C4")
