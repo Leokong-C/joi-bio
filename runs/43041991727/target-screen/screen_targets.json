@@ -1,0 +1,76 @@
+{
+  "reference": {
+    "target": "EPAS1 (현행, Tanimoto 상한 0.35 decoy)",
+    "reference": true,
+    "n_total": 2160,
+    "n_active_total": 60,
+    "active_self_similarity_all": {
+      "median_nearest_neighbour": 0.795,
+      "frac_with_analog_over_0.6": 0.87
+    },
+    "matched": {
+      "memorisation": {
+        "nef1": 1.0,
+        "auc": 0.9637,
+        "would_pass_gate": true
+      },
+      "auc_median": 0.9637,
+      "auc_min": 0.9637,
+      "auc_max": 0.9637
+    },
+    "verdict": "실격 — 기억이 게이트 통과"
+  },
+  "screened": [
+    {
+      "target": "m1_muscarinic_receptor_agonists_butkiewicz",
+      "n_total": 61833,
+      "n_active_total": 187,
+      "active_fraction_total": 0.003024,
+      "active_self_similarity_all": {
+        "n_actives": 187,
+        "median_nearest_neighbour": 0.3158,
+        "mean_nearest_neighbour": 0.3941,
+        "frac_with_analog_over_0.6": 0.1979,
+        "frac_with_analog_over_0.8": 0.0588
+      },
+      "n_active_scaffolds_all": 162,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "seeds": [
+          {
+            "ef1": 9.805,
+            "auc": 0.5417,
+            "bedroc": 0.22,
+            "nef1": 0.2727,
+            "gate_passed": [
+              "ef1"
+            ],
+            "would_pass_gate": false,
+            "seed": 1023
+          }
+        ],
+        "auc_min": 0.5417,
+        "auc_max": 0.5417,
+        "auc_median": 0.5417,
+        "gate_pass_count": 0,
+        "n_seeds": 1,
+        "memorisation": {
+          "ef1": 9.805,
+          "auc": 0.5417,
+          "bedroc": 0.22,
+          "nef1": 0.2727,
+          "gate_passed": [
+            "ef1"
+          ],
+          "would_pass_gate": false,
+          "seed": 1023
+        },
+        "n_active_scaffolds": 58
+      },
+      "verdict": "합격 후보"
+    }
+  ],
+  "failed": []
+}
