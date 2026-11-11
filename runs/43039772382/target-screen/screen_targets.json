@@ -1,0 +1,308 @@
+{
+  "reference": {
+    "target": "EPAS1 (현행, Tanimoto 상한 0.35 decoy)",
+    "reference": true,
+    "n_total": 2160,
+    "n_active_total": 60,
+    "active_self_similarity_all": {
+      "median_nearest_neighbour": 0.795,
+      "frac_with_analog_over_0.6": 0.87
+    },
+    "matched": {
+      "memorisation": {
+        "nef1": 1.0,
+        "auc": 0.9637,
+        "would_pass_gate": true
+      }
+    },
+    "verdict": "실격 — 기억이 게이트 통과"
+  },
+  "screened": [
+    {
+      "target": "cav3_t-type_calcium_channels_butkiewicz",
+      "n_total": 100875,
+      "n_active_total": 703,
+      "active_fraction_total": 0.006969,
+      "active_self_similarity_all": {
+        "n_actives": 703,
+        "median_nearest_neighbour": 0.5088,
+        "mean_nearest_neighbour": 0.5423,
+        "frac_with_analog_over_0.6": 0.377,
+        "frac_with_analog_over_0.8": 0.1337
+      },
+      "n_active_scaffolds_all": 576,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 9.805,
+          "auc": 0.7392,
+          "bedroc": 0.2823,
+          "nef1": 0.2727,
+          "gate_passed": [
+            "ef1",
+            "auc"
+          ],
+          "would_pass_gate": true
+        },
+        "n_active_scaffolds": 58
+      },
+      "verdict": "실격 — 기억이 게이트 통과"
+    },
+    {
+      "target": "choline_transporter_butkiewicz",
+      "n_total": 302306,
+      "n_active_total": 252,
+      "active_fraction_total": 0.000834,
+      "active_self_similarity_all": {
+        "n_actives": 252,
+        "median_nearest_neighbour": 0.4255,
+        "mean_nearest_neighbour": 0.4887,
+        "frac_with_analog_over_0.6": 0.369,
+        "frac_with_analog_over_0.8": 0.1389
+      },
+      "n_active_scaffolds_all": 204,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 13.073,
+          "auc": 0.6547,
+          "bedroc": 0.3322,
+          "nef1": 0.3636,
+          "gate_passed": [
+            "ef1",
+            "bedroc"
+          ],
+          "would_pass_gate": true
+        },
+        "n_active_scaffolds": 57
+      },
+      "verdict": "실격 — 기억이 게이트 통과"
+    },
+    {
+      "target": "kcnq2_potassium_channel_butkiewicz",
+      "n_total": 302405,
+      "n_active_total": 213,
+      "active_fraction_total": 0.000704,
+      "active_self_similarity_all": {
+        "n_actives": 213,
+        "median_nearest_neighbour": 0.4222,
+        "mean_nearest_neighbour": 0.4643,
+        "frac_with_analog_over_0.6": 0.2629,
+        "frac_with_analog_over_0.8": 0.0704
+      },
+      "n_active_scaffolds_all": 168,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 9.805,
+          "auc": 0.7194,
+          "bedroc": 0.2283,
+          "nef1": 0.2727,
+          "gate_passed": [
+            "ef1",
+            "auc"
+          ],
+          "would_pass_gate": true
+        },
+        "n_active_scaffolds": 58
+      },
+      "verdict": "실격 — 기억이 게이트 통과"
+    },
+    {
+      "target": "m1_muscarinic_receptor_agonists_butkiewicz",
+      "n_total": 61833,
+      "n_active_total": 187,
+      "active_fraction_total": 0.003024,
+      "active_self_similarity_all": {
+        "n_actives": 187,
+        "median_nearest_neighbour": 0.3158,
+        "mean_nearest_neighbour": 0.3941,
+        "frac_with_analog_over_0.6": 0.1979,
+        "frac_with_analog_over_0.8": 0.0588
+      },
+      "n_active_scaffolds_all": 162,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 9.805,
+          "auc": 0.5417,
+          "bedroc": 0.22,
+          "nef1": 0.2727,
+          "gate_passed": [
+            "ef1"
+          ],
+          "would_pass_gate": false
+        },
+        "n_active_scaffolds": 58
+      },
+      "verdict": "합격 후보"
+    },
+    {
+      "target": "m1_muscarinic_receptor_antagonists_butkiewicz",
+      "n_total": 61756,
+      "n_active_total": 362,
+      "active_fraction_total": 0.005862,
+      "active_self_similarity_all": {
+        "n_actives": 362,
+        "median_nearest_neighbour": 0.4082,
+        "mean_nearest_neighbour": 0.454,
+        "frac_with_analog_over_0.6": 0.2155,
+        "frac_with_analog_over_0.8": 0.058
+      },
+      "n_active_scaffolds_all": 329,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 3.268,
+          "auc": 0.7216,
+          "bedroc": 0.2235,
+          "nef1": 0.0909,
+          "gate_passed": [
+            "auc"
+          ],
+          "would_pass_gate": false
+        },
+        "n_active_scaffolds": 60
+      },
+      "verdict": "합격 후보"
+    },
+    {
+      "target": "orexin1_receptor_butkiewicz",
+      "n_total": 218158,
+      "n_active_total": 233,
+      "active_fraction_total": 0.001068,
+      "active_self_similarity_all": {
+        "n_actives": 233,
+        "median_nearest_neighbour": 0.3788,
+        "mean_nearest_neighbour": 0.4337,
+        "frac_with_analog_over_0.6": 0.2189,
+        "frac_with_analog_over_0.8": 0.0687
+      },
+      "n_active_scaffolds_all": 207,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 13.073,
+          "auc": 0.6623,
+          "bedroc": 0.2922,
+          "nef1": 0.3636,
+          "gate_passed": [
+            "ef1"
+          ],
+          "would_pass_gate": false
+        },
+        "n_active_scaffolds": 57
+      },
+      "verdict": "합격 후보"
+    },
+    {
+      "target": "potassium_ion_channel_kir2.1_butkiewicz",
+      "n_total": 301493,
+      "n_active_total": 172,
+      "active_fraction_total": 0.00057,
+      "active_self_similarity_all": {
+        "n_actives": 172,
+        "median_nearest_neighbour": 0.3868,
+        "mean_nearest_neighbour": 0.4311,
+        "frac_with_analog_over_0.6": 0.2384,
+        "frac_with_analog_over_0.8": 0.0233
+      },
+      "n_active_scaffolds_all": 129,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 14.7,
+          "auc": 0.6895,
+          "bedroc": 0.308,
+          "nef1": 0.4091,
+          "gate_passed": [
+            "ef1",
+            "bedroc"
+          ],
+          "would_pass_gate": true
+        },
+        "n_active_scaffolds": 53
+      },
+      "verdict": "실격 — 기억이 게이트 통과"
+    },
+    {
+      "target": "serine_threonine_kinase_33_butkiewicz",
+      "n_total": 319792,
+      "n_active_total": 172,
+      "active_fraction_total": 0.000538,
+      "active_self_similarity_all": {
+        "n_actives": 172,
+        "median_nearest_neighbour": 0.4917,
+        "mean_nearest_neighbour": 0.4889,
+        "frac_with_analog_over_0.6": 0.3721,
+        "frac_with_analog_over_0.8": 0.0349
+      },
+      "n_active_scaffolds_all": 130,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 27.741,
+          "auc": 0.7332,
+          "bedroc": 0.4991,
+          "nef1": 0.7727,
+          "gate_passed": [
+            "ef1",
+            "auc",
+            "bedroc"
+          ],
+          "would_pass_gate": true
+        },
+        "n_active_scaffolds": 50
+      },
+      "verdict": "실격 — 기억이 게이트 통과"
+    },
+    {
+      "target": "tyrosyl-dna_phosphodiesterase_butkiewicz",
+      "n_total": 341365,
+      "n_active_total": 281,
+      "active_fraction_total": 0.000823,
+      "active_self_similarity_all": {
+        "n_actives": 280,
+        "median_nearest_neighbour": 0.4045,
+        "mean_nearest_neighbour": 0.4688,
+        "frac_with_analog_over_0.6": 0.2964,
+        "frac_with_analog_over_0.8": 0.1179
+      },
+      "n_active_scaffolds_all": 232,
+      "matched": {
+        "n": 2157,
+        "n_active": 60,
+        "short_of_epas1": false,
+        "memorisation": {
+          "ef1": 6.536,
+          "auc": 0.6371,
+          "bedroc": 0.2212,
+          "nef1": 0.1818,
+          "gate_passed": [
+            "ef1"
+          ],
+          "would_pass_gate": false
+        },
+        "n_active_scaffolds": 57
+      },
+      "verdict": "합격 후보"
+    }
+  ],
+  "failed": []
+}
