@@ -1,0 +1,167 @@
+[
+  {
+    "gene": "CHRM1",
+    "accession": "P11229",
+    "protein": "Muscarinic acetylcholine receptor M1",
+    "n_reviewed_hits": 1,
+    "n_pdb_total": 7,
+    "n_examined": 7,
+    "n_fetch_errors": 0,
+    "n_holo": 1,
+    "n_holo_xray": 0,
+    "n_holo_xray_le_3A": 0,
+    "best": [
+      {
+        "pdb_id": "6WJC",
+        "resolution": 2.55,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "ACM"
+        ]
+      }
+    ],
+    "c4_pass": false
+  },
+  {
+    "gene": "HCRTR1",
+    "accession": "O43613",
+    "protein": "Orexin/Hypocretin receptor type 1",
+    "n_reviewed_hits": 1,
+    "n_pdb_total": 14,
+    "n_examined": 14,
+    "n_fetch_errors": 0,
+    "n_holo": 4,
+    "n_holo_xray": 0,
+    "n_holo_xray_le_3A": 0,
+    "best": [
+      {
+        "pdb_id": "6TOD",
+        "resolution": 2.11,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "NA"
+        ]
+      },
+      {
+        "pdb_id": "6TOS",
+        "resolution": 2.13,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "NA"
+        ]
+      },
+      {
+        "pdb_id": "6TO7",
+        "resolution": 2.26,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "NA"
+        ]
+      },
+      {
+        "pdb_id": "6TQ4",
+        "resolution": 2.299,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "NA"
+        ]
+      }
+    ],
+    "c4_pass": true
+  },
+  {
+    "gene": "TDP1",
+    "accession": "Q9NUW8",
+    "protein": "Tyrosyl-DNA phosphodiesterase 1",
+    "n_reviewed_hits": 1,
+    "n_pdb_total": 48,
+    "n_examined": 48,
+    "n_fetch_errors": 0,
+    "n_holo": 14,
+    "n_holo_xray": 0,
+    "n_holo_xray_le_3A": 0,
+    "best": [
+      {
+        "pdb_id": "8V0C",
+        "resolution": 1.62,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "YE3"
+        ]
+      },
+      {
+        "pdb_id": "9B3B",
+        "resolution": 1.62,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "A1AIM"
+        ]
+      },
+      {
+        "pdb_id": "1RFF",
+        "resolution": 1.7,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "VO4"
+        ]
+      },
+      {
+        "pdb_id": "8UV1",
+        "resolution": 1.83,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "XK6"
+        ]
+      },
+      {
+        "pdb_id": "8UZZ",
+        "resolution": 1.93,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "YA5"
+        ]
+      },
+      {
+        "pdb_id": "1MU7",
+        "resolution": 2.0,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "WO4"
+        ]
+      },
+      {
+        "pdb_id": "1RGT",
+        "resolution": 2.0,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "OTR",
+          "OTS",
+          "VO4"
+        ]
+      },
+      {
+        "pdb_id": "1MU9",
+        "resolution": 2.05,
+        "method": "X,-,r,a,y",
+        "ligands": [
+          "VO4"
+        ]
+      }
+    ],
+    "c4_pass": true
+  },
+  {
+    "gene": "STK33",
+    "accession": "Q9BYT3",
+    "protein": "Serine/threonine-protein kinase 33",
+    "n_reviewed_hits": 1,
+    "n_pdb_total": 1,
+    "n_examined": 1,
+    "n_fetch_errors": 0,
+    "n_holo": 0,
+    "n_holo_xray": 0,
+    "n_holo_xray_le_3A": 0,
+    "best": [],
+    "c4_pass": false
+  }
+]

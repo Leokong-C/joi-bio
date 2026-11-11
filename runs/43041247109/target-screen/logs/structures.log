@@ -1,0 +1,25 @@
+[*] CHRM1 (P11229) — PDB 7개: Muscarinic acetylcholine receptor M1
+    홀로 1개 (X선 0, 3.0 A 이하 0) → C4 실패
+      6WJC  2.55 A  X,-,r,a,y          ACM
+[*] HCRTR1 (O43613) — PDB 14개: Orexin/Hypocretin receptor type 1
+    홀로 4개 (X선 0, 3.0 A 이하 0) → C4 통과
+      6TOD  2.11 A  X,-,r,a,y          NA
+      6TOS  2.13 A  X,-,r,a,y          NA
+      6TO7  2.26 A  X,-,r,a,y          NA
+      6TQ4  2.299 A  X,-,r,a,y          NA
+[*] TDP1 (Q9NUW8) — PDB 48개: Tyrosyl-DNA phosphodiesterase 1
+    홀로 14개 (X선 0, 3.0 A 이하 0) → C4 통과
+      8V0C  1.62 A  X,-,r,a,y          YE3
+      9B3B  1.62 A  X,-,r,a,y          A1AIM
+      1RFF  1.7 A  X,-,r,a,y          VO4
+      8UV1  1.83 A  X,-,r,a,y          XK6
+[*] STK33 (Q9BYT3) — PDB 1개: Serine/threonine-protein kinase 33
+    홀로 0개 (X선 0, 3.0 A 이하 0) → C4 실패
+
+유전자        UniProt      PDB    홀로    X선  <=3A  C4
+--------------------------------------------------------------
+CHRM1      P11229         7     1     0     0  실패
+HCRTR1     O43613        14     4     0     0  통과
+TDP1       Q9NUW8        48    14     0     0  통과
+STK33      Q9BYT3         1     0     0     0  실패
+→ out/structures.json
