@@ -1,7 +1,7 @@
 # 다른 PC로 이관하기 — HEADROOM 체크리스트
 
 이 문서 하나로 새 PC에서 처음부터 돌릴 수 있게 썼습니다. 저장소 경로는
-`exp/CASF2016/headroom/` (PR #6).
+`exp/FLOOR/headroom/` (PR #6).
 
 ## 1. 옮겨야 하는 것 / 다시 받으면 되는 것
 
@@ -21,7 +21,7 @@
 ## 2. 환경
 
 ```bash
-conda env create -f exp/CASF2016/headroom/environment.yml
+conda env create -f exp/FLOOR/headroom/environment.yml
 conda activate headroom
 ```
 
@@ -64,7 +64,7 @@ PoseBusters, ODDT가 필요합니다. 이 저장소의 `repro/REPRODUCE.md`에 �
 ## 5. 실행 순서
 
 ```bash
-cd exp/CASF2016/headroom
+cd exp/FLOOR/headroom
 python 01_pull.py      --index casf_index.csv --work work
 python featurize.py    --in casf_smiles.csv --out casf_features.csv
 python 02_ceiling.py   --index casf_index.csv --smiles casf_smiles.csv --work work

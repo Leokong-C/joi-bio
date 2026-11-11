@@ -1,6 +1,6 @@
 # 다른 컴퓨터로 옮기기
 
-<!-- exp/CASF2016/headroom/PORTING.md · 2026-11-08 -->
+<!-- exp/FLOOR/headroom/PORTING.md · 2026-11-08 -->
 
 HEADROOM은 **GitHub 한 곳에서 전부 복원됩니다.** 로컬 작업공간은 사본이고 유휴 시 삭제됩니다.
 이 문서는 새 PC에서 0부터 같은 수치를 내는 절차입니다.
@@ -21,7 +21,7 @@ HEADROOM은 **GitHub 한 곳에서 전부 복원됩니다.** 로컬 작업공간
 ```bash
 git clone https://github.com/Leokong-C/joi-bio
 cd joi-bio && git checkout headroom/pipeline
-cd exp/CASF2016/headroom
+cd exp/FLOOR/headroom
 ```
 
 ## 2. 번들 복원 — 해시로 확인하고 풀기

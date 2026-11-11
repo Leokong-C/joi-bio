@@ -8,7 +8,7 @@ CEO 결정 (2026-10-24): **A — 스크리닝 신뢰도를 상위 목적으로 �
 
 | 현재 (이 브랜치) | 병합 후 (`main` 기준) |
 | --- | --- |
-| `benchmarks/docking-casf2016/` | **`exp/CASF2016/`** |
+| `benchmarks/docking-casf2016/` | **`exp/FLOOR/`** |
 
 `main`은 사례를 `exp/<이름>/` 아래 둔다 — 현재 `exp/EPAS1/`, `exp/MET/`가 있다. CASF-2016은
 타깃이 아니라 벤치마크 집합이지만, "하나의 평가 사례"라는 점에서 같은 층위이므로 같은
@@ -18,7 +18,7 @@ CEO 결정 (2026-10-24): **A — 스크리닝 신뢰도를 상위 목적으로 �
 
 1. **PR #4** (`node_modules` 추적 해제) — 트리를 가볍게 해 둔다. 다른 PR과 충돌하지 않는다.
 2. **PR #1** (`docking-benchmark-casf2016` → `main`) — 이때 `benchmarks/docking-casf2016/`을
-   `exp/CASF2016/`으로 옮긴다. 경로 변경은 병합 시점에 한 번만 한다.
+   `exp/FLOOR/`으로 옮긴다. 경로 변경은 병합 시점에 한 번만 한다.
 3. **PR #3** (`stage4-extended-benchmark` → `docking-benchmark-casf2016`) — #1이 `main`으로
    들어간 뒤 `main` 기준으로 재기준(rebase)된다.
 

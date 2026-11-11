@@ -1,6 +1,6 @@
 # 단백질 모델 축 — 설치 재검토와 ESM-2 결과
 
-<!-- exp/CASF2016/headroom/PLM.md · 2026-11-08 -->
+<!-- exp/FLOOR/headroom/PLM.md · 2026-11-08 -->
 
 AlphaFold2 · ESMFold2 · Boltz-2 · ESM-2 네 개를 검토해 **실제로 돌아가는 하나만** 돌렸습니다.
 

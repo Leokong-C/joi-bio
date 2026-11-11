@@ -302,7 +302,7 @@ sPyRMSD 0.9.0 · PoseBusters 0.6.5 · ODDT 0.4 · gemmi 0.7.5가 필요하다.
 ## 5. 저장소 구성
 
 ```
-exp/CASF2016/headroom/
+exp/FLOOR/headroom/
 ├── README.md               이 문서
 ├── BACKEND.md              GitHub 을 백그라운드로 쓰는 설계
 ├── SPEC.md                 틀의 정의

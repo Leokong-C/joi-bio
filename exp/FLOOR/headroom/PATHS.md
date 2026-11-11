@@ -1,6 +1,6 @@
 # 파일 위치 루트
 
-<!-- exp/CASF2016/headroom/PATHS.md · 2026-11-08 -->
+<!-- exp/FLOOR/headroom/PATHS.md · 2026-11-08 -->
 
 HEADROOM의 파일은 **네 군데**에 있습니다. 이 중 **영속적인 것은 GitHub 하나뿐**입니다.
 나머지 셋은 이 PC·이 대화에 묶여 있어서, 다른 공간에서 이어받을 때는 ①만 보면 됩니다.
@@ -12,7 +12,7 @@ HEADROOM의 파일은 **네 군데**에 있습니다. 이 중 **영속적인 것
 ```
 github.com/Leokong-C/joi-bio
   └─ branch: headroom/pipeline        (PR #6, 25 files)
-       └─ exp/CASF2016/headroom/      ← 모든 것의 루트
+       └─ exp/FLOOR/headroom/      ← 모든 것의 루트
 ```
 
 | 경로 | 내용 |
@@ -33,7 +33,7 @@ github.com/Leokong-C/joi-bio
 ```bash
 git clone https://github.com/Leokong-C/joi-bio
 cd joi-bio && git checkout headroom/pipeline
-cd exp/CASF2016/headroom
+cd exp/FLOOR/headroom
 conda env create -f environment.yml && conda activate headroom
 python -c "import tarfile,glob; [tarfile.open(f).extractall('.') for f in glob.glob('data/*.tar.gz')]"
 python featurize.py && python 03_floor.py
@@ -91,13 +91,13 @@ C:\Users\sso03\.claude-science\orgs\03c00401-07e6-4964-a511-acfb42a28cca
 
 ## 한 줄 요약
 
-**이어받을 때 보는 곳은 `github.com/Leokong-C/joi-bio` → `headroom/pipeline` 브랜치 → `exp/CASF2016/headroom/` 하나입니다.** 나머지 셋은 이 PC·이 대화의 사본입니다.
+**이어받을 때 보는 곳은 `github.com/Leokong-C/joi-bio` → `headroom/pipeline` 브랜치 → `exp/FLOOR/headroom/` 하나입니다.** 나머지 셋은 이 PC·이 대화의 사본입니다.
 
 ---
 
 ## 번들 — 작업공간 전체 (2026-11-08)
 
-`exp/CASF2016/headroom/bundles/`. 작업공간 전체를 압축해 넣었습니다. **634.6 MB → 203.1 MB.**
+`exp/FLOOR/headroom/bundles/`. 작업공간 전체를 압축해 넣었습니다. **634.6 MB → 203.1 MB.**
 이제 로컬에만 있는 것은 없습니다.
 
 | 묶음 | 압축 | 원본 | 멤버 | 내용 |
@@ -118,7 +118,7 @@ C:\Users\sso03\.claude-science\orgs\03c00401-07e6-4964-a511-acfb42a28cca
 ### 복원
 
 ```bash
-cd exp/CASF2016/headroom/bundles
+cd exp/FLOOR/headroom/bundles
 cat rfscore.tar.gz.part00 rfscore.tar.gz.part01 > rfscore.tar.gz   # 분할 합치기
 python - <<'EOF'
 import hashlib, json, os, tarfile, glob
