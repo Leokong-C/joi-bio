@@ -1,0 +1,7 @@
+source,version,as_of,note
+CASF-2016 core set,CASF-2016 (고정),2018 발표,285 복합체 · 57 타깃. 갱신본 없음
+PDBbind,v2016 (CASF-2016 기준),2016,General/Refined 최신판은 pdbbind-cn.org 등록 필요 · 허용 목록 밖
+ChEMBL,ChEMBL_37,2026-05-01,"활성 24,527,044 · 화합물 2,921,148 · 타깃 18,552 (API status 확인)"
+BindingDB,REST에 버전 미노출,2026-10-25 수집,"78 접근번호 · 258,749건 · 75 MB. 월 단위 갱신이므로 재수집 시 수치 변동 가능"
+RCSB PDB,상시 갱신,조회 시점,PDB→UniProt 매핑 285/285 성공. 친화도 주석 출처는 BindingDB라 독립 아님
+TDC (Therapeutics Data Commons),데이터 호스트 접근 가능 (2026-11-07 승인),2026-11-07 확인,dataverse.harvard.edu 승인 완료(HEAD 202 응답 확인) — PyTDC 데이터셋 수신 가능. tdcommons.ai(문서 사이트)는 여전히 차단이나 데이터 수신에는 불필요. DTI 데이터셋(BindingDB_Ki/Kd/IC50·DAVIS·KIBA)으로 천장 추정의 독립 출처 교차검증 가능

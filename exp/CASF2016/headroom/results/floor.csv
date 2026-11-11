@@ -1,0 +1,4 @@
+model,n_features,R
+LigandBias,205,0.502
+ProteinBias,21,0.241
+BothBias,226,0.534

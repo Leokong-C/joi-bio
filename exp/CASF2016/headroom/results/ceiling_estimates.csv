@@ -1,0 +1,6 @@
+estimate,n,sigma_e,ceiling_R,note
+A_no_filter,133,0.547,0.964,어제 보고. BindingDB 레코드의 20.1%가 라벨과 0.02 이내 — 같은 측정치가 섞여 낙관적
+B_drop_agreeing,66,1.062,0.842,편향된 필터 — 일치하는 레코드를 제거하면 불일치만 남아 산포가 부풀려짐. 보고하지 않음
+C_drop_annotation_errors,133,0.351,0.985,|d|>=2.5 제거(Kalliokoski: 주로 주석 오류). 상한 쪽 추정
+D_both,61,0.573,0.952,B의 편향을 물려받음. 보고하지 않음
+E_replicate_only,45,0.972,0.882,BindingDB 내부 복제만 사용 — 라벨을 전혀 쓰지 않으므로 공유 측정치 오염에서 자유로움
