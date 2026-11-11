@@ -21,6 +21,10 @@ on:
         description: "부분표본 씨앗 (쉼표 구분) — 판정이 추출에 흔들리는지 본다"
         required: false
         default: "1023,7,4242,88,31337"
+      genes:
+        description: "구조 가용성(C4)을 볼 사람 유전자 기호. 비우면 건너뛴다"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -58,6 +62,14 @@ jobs:
             --seeds "${{ inputs.seeds }}" \
             --data-dir tdc_raw \
             --out out/screen_targets.json 2>&1 | tee logs/screen.log
+
+      - name: 구조 가용성 (C4)
+        if: inputs.genes != ''
+        shell: bash
+        run: |
+          set -o pipefail
+          python -u scripts/probe_structures.py --genes "${{ inputs.genes }}" \
+            --out out/structures.json 2>&1 | tee logs/structures.log
 
       - name: 결과를 ci-results 로
         if: always()
