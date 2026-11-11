@@ -1,0 +1,88 @@
+name: Joi_bio 타깃 선별 (새 파이프라인)
+
+# **화합물이 아니라 타깃을 고르는 실행이다.** 도킹 없음.
+#
+# 2026-11-07 에 EPAS1 이 벤치마크로 실격했다. 원인은 decoy 규칙이 아니라
+# 활성군 자체가 한 화학 시리즈였다는 것이다(중위 NN 0.795, 87% 가 0.6 이상
+# 유사체 보유). 그래서 타깃을 옮기기로 했고, 옮길 후보를 **같은 잣대로**
+# 미리 재는 것이 이 워크플로다.
+#
+# Claude 가 도는 컨테이너는 Harvard Dataverse 와 PubChem 이 프록시 403 으로
+# 막혀 있어 데이터 수집은 여기서만 된다. 공개 저장소라 Actions 는 무료다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      names:
+        description: "TDC HTS 이름 (쉼표 구분) 또는 ALL_BUTKIEWICZ"
+        required: false
+        default: "ALL_BUTKIEWICZ"
+
+permissions:
+  contents: write
+
+jobs:
+  screen:
+    name: 타깃 선별
+    runs-on: ubuntu-latest
+    # 도킹이 없어 실소비가 작다. 11-01 에 timeout 을 예산에 맞춰 조였다가
+    # 샤드 7개를 잃었다 — 상한을 조일 이유가 없는 작업에서는 조이지 않는다.
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"   # PyTDC 가 3.13 에서 소스 빌드에 실패한다
+
+      - name: 의존성
+        run: |
+          # scikit-learn 은 PyTDC 의 oracles 가 pkg_resources 로 버전을 조회한다.
+          # 없으면 import 단계에서 DistributionNotFound 로 죽는다 (11-07 실측).
+          pip install --quiet "numpy<2" "pandas<3" "rdkit<2024.3.1" requests scikit-learn
+          pip install --quiet --no-deps PyTDC
+          pip install --quiet tqdm fuzzywuzzy seaborn dataclasses-json \
+            "setuptools<81" huggingface_hub
+
+      - name: 선별
+        shell: bash
+        run: |
+          mkdir -p logs out
+          set -o pipefail
+          python -u scripts/screen_targets.py \
+            --names "${{ inputs.names }}" \
+            --data-dir tdc_raw \
+            --out out/screen_targets.json 2>&1 | tee logs/screen.log
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/target-screen"
+          mkdir -p "$OUT"
+          cp -r out/. "$OUT/" 2>/dev/null || true
+          cp -r logs "$OUT/" 2>/dev/null || true
+          # cd 하지 않는다 — 11-10 에 재시도 루프가 자기 cwd 를 지웠다
+          git -C "$DEST" add -A
+          git -C "$DEST" -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "target screen" || exit 0
+          for i in $(seq 1 12); do
+            git -C "$DEST" push --quiet origin ci-results && break
+            sleep $(( (RANDOM % 25) + 5 ))
+            git -C "$DEST" pull --quiet --rebase origin ci-results || true
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: target-screen
+          path: |
+            out/
+            logs/
+          retention-days: 30
