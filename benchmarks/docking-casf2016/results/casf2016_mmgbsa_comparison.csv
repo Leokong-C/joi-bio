@@ -1,0 +1,8 @@
+predictor,n,pearson_R,spearman,resid_SD,within_rho,n_targets
+RF-Score v2 (ML),47,0.756,0.779,1.5,0.75,2
+trivial null (forest),47,0.549,0.592,1.92,0.75,2
+ligand heavy atoms,47,0.528,0.544,1.95,0.65,2
+trivial null (ridge),47,0.528,0.527,1.95,0.75,2
+"MM/GBSA (minimised, OBC2)",47,0.385,0.419,2.12,0.15,2
+Vina,47,0.368,0.612,2.13,0.15,2
+Vinardo,47,0.329,0.455,2.16,-0.05,2

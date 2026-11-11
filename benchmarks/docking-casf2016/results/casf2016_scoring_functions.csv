@@ -1,0 +1,4 @@
+predictor,pearson_R,p,spearman,resid_SD_log,partial_R_size_removed,within_target_mean_rho,within_target_n,rho_ge_0.9_pct
+Vina,0.495,6.2e-19,0.551,1.89,0.355,0.43,57,15.8
+Vinardo,0.423,9.1e-14,0.471,1.97,0.318,0.4,57,7.0
+ligand heavy atoms (null),0.469,5.8e-17,0.493,1.92,,0.557,56,14.0

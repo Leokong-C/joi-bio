@@ -1,0 +1,11 @@
+{
+ "n": 282,
+ "failed": 2,
+ "median_rmsd_vina": 0.973,
+ "median_rmsd_rfscore": 2.676,
+ "rf_kept_vina_pose_pct": 40.4,
+ "rescued": 15,
+ "broken": 88,
+ "net": -73,
+ "mean_rank_of_best_pose_by_rfscore": 0.0
+}

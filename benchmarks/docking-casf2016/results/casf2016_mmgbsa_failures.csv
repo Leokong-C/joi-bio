@@ -1,0 +1,16 @@
+code,error
+3gv9,"crash rc=3221225725: duceOp` instead
+  if isinstance(obj, functools._lru_cache_wrapper) and obj.__module__.startswith(""openff.interchange""):
+"
+1lpg,"UndefinedStereochemistryError: Unable to make OFFMol from RDMol: RDMol has unspecified stereochemistry. RDMol name: IMABonds with undefined stereochemistry are:
+ - Bond 28 (atoms 21-23 of element (C-N"
+1ps3,"UnassignedChemistryInPDBError: Some bonds or atoms in the input could not be identified.
+
+Hint: The following residues have the right numbers of the right elements to match a substructure with the sam"
+1sqa,"UndefinedStereochemistryError: Unable to make OFFMol from RDMol: RDMol has unspecified stereochemistry. RDMol name: UI1Bonds with undefined stereochemistry are:
+ - Bond 31 (atoms 26-27 of element (C-N"
+2xbv,"UnassignedChemistryInPDBError: Some bonds or atoms in the input could not be identified.
+
+Hint: The following residues have the right numbers of the right elements to match a substructure with the sam"
+3zsx,timeout 2700 s
+3u8k,timeout 2700 s

@@ -1,0 +1,7 @@
+predictor,controlled_for,partial_R,p,unique_R2_added,R2_predictor_alone,R2_control_alone
+Vina,ligand size,0.343,2.7299402520861258e-09,0.09,0.252,0.233
+Vina,trivial null (forest),0.242,3.5988569227278284e-05,0.041,0.252,0.299
+Vinardo,ligand size,0.3,2.4319353425406563e-07,0.069,0.183,0.233
+Vinardo,trivial null (forest),0.195,0.0009305616783694052,0.027,0.183,0.299
+RF-Score v2,ligand size,0.643,1.3197064118097067e-34,0.317,0.55,0.233
+RF-Score v2,trivial null (forest),0.598,4.563711246324369e-29,0.251,0.55,0.299

@@ -1,0 +1,38 @@
+{
+ "10.1038/s41573-026-01496-2": {
+  "title": "Artificial intelligence in drug discovery — what it is, where we stand and the path forward",
+  "venue": "Nature Reviews Drug Discovery",
+  "year": 2026,
+  "type": "journal-article"
+ },
+ "10.1039/d6sc01189f": {
+  "title": "Black-box data: a new paradigm for biomedicine in the AI era",
+  "venue": "Chemical Science",
+  "year": 2026,
+  "type": "journal-article"
+ },
+ "10.1016/j.drudis.2026.104828": {
+  "title": "An IQ consortium cross-industry survey and perspective on AI/ML adoption in translational and ADME sciences",
+  "venue": "Drug Discovery Today",
+  "year": 2026,
+  "type": "journal-article"
+ },
+ "10.1016/j.cell.2026.08.052": {
+  "title": "Toward autonomous science with agentic artificial intelligence",
+  "venue": "Cell",
+  "year": 2026,
+  "type": "journal-article"
+ },
+ "10.1016/j.eclinm.2026.104196": {
+  "title": "Artificial intelligence in clinical trials—state of the evidence, gaps, and next steps",
+  "venue": "eClinicalMedicine",
+  "year": 2026,
+  "type": "journal-article"
+ },
+ "10.1038/s41746-026-02477-w": {
+  "title": "Methodological and regulatory considerations for causal AI in drug development",
+  "venue": "npj Digital Medicine",
+  "year": 2026,
+  "type": "journal-article"
+ }
+}
