@@ -1,0 +1,482 @@
+{
+  "selftest_passed": true,
+  "targets": [
+    {
+      "gene": "CHRM1",
+      "accession": "P11229",
+      "protein": "Muscarinic acetylcholine receptor M1",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 7,
+      "n_examined": 7,
+      "n_fetch_errors": 0,
+      "n_holo": 7,
+      "n_holo_xray": 5,
+      "n_holo_em": 2,
+      "n_holo_le_3A": 5,
+      "best": [
+        {
+          "pdb_id": "6ZFZ",
+          "resolution": 2.17,
+          "method": "X-ray",
+          "ligands": [
+            "QJT"
+          ]
+        },
+        {
+          "pdb_id": "6ZG4",
+          "resolution": 2.33,
+          "method": "X-ray",
+          "ligands": [
+            "QK8"
+          ]
+        },
+        {
+          "pdb_id": "6ZG9",
+          "resolution": 2.5,
+          "method": "X-ray",
+          "ligands": [
+            "QK2"
+          ]
+        },
+        {
+          "pdb_id": "6WJC",
+          "resolution": 2.55,
+          "method": "X-ray",
+          "ligands": [
+            "OIN"
+          ]
+        },
+        {
+          "pdb_id": "5CXV",
+          "resolution": 2.7,
+          "method": "X-ray",
+          "ligands": [
+            "0HK"
+          ]
+        },
+        {
+          "pdb_id": "6OIJ",
+          "resolution": 3.3,
+          "method": "EM",
+          "ligands": [
+            "IXO"
+          ]
+        },
+        {
+          "pdb_id": "9JEA",
+          "resolution": 3.4,
+          "method": "EM",
+          "ligands": [
+            "A1EBT"
+          ]
+        }
+      ],
+      "c4_pass": true
+    },
+    {
+      "gene": "HCRTR1",
+      "accession": "O43613",
+      "protein": "Orexin/Hypocretin receptor type 1",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 14,
+      "n_examined": 14,
+      "n_fetch_errors": 0,
+      "n_holo": 14,
+      "n_holo_xray": 14,
+      "n_holo_em": 0,
+      "n_holo_le_3A": 11,
+      "best": [
+        {
+          "pdb_id": "6TOD",
+          "resolution": 2.11,
+          "method": "X-ray",
+          "ligands": [
+            "7MA",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TOS",
+          "resolution": 2.13,
+          "method": "X-ray",
+          "ligands": [
+            "NRE",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TOT",
+          "resolution": 2.22,
+          "method": "X-ray",
+          "ligands": [
+            "NRK",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TO7",
+          "resolution": 2.26,
+          "method": "X-ray",
+          "ligands": [
+            "SUV",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TQ4",
+          "resolution": 2.299,
+          "method": "X-ray",
+          "ligands": [
+            "NV8",
+            "PGW",
+            "SOG"
+          ]
+        },
+        {
+          "pdb_id": "6TP6",
+          "resolution": 2.338,
+          "method": "X-ray",
+          "ligands": [
+            "NT5",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TQ6",
+          "resolution": 2.546,
+          "method": "X-ray",
+          "ligands": [
+            "NVH",
+            "PGW",
+            "SOG"
+          ]
+        },
+        {
+          "pdb_id": "6TQ9",
+          "resolution": 2.655,
+          "method": "X-ray",
+          "ligands": [
+            "NVN",
+            "SOG",
+            "PGW"
+          ]
+        }
+      ],
+      "c4_pass": true
+    },
+    {
+      "gene": "TDP1",
+      "accession": "Q9NUW8",
+      "protein": "Tyrosyl-DNA phosphodiesterase 1",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 48,
+      "n_examined": 48,
+      "n_fetch_errors": 0,
+      "n_holo": 42,
+      "n_holo_xray": 42,
+      "n_holo_em": 0,
+      "n_holo_le_3A": 42,
+      "best": [
+        {
+          "pdb_id": "6N0D",
+          "resolution": 1.453,
+          "method": "X-ray",
+          "ligands": [
+            "K8J"
+          ]
+        },
+        {
+          "pdb_id": "6N0N",
+          "resolution": 1.477,
+          "method": "X-ray",
+          "ligands": [
+            "KAY"
+          ]
+        },
+        {
+          "pdb_id": "6W7J",
+          "resolution": 1.489,
+          "method": "X-ray",
+          "ligands": [
+            "TGM"
+          ]
+        },
+        {
+          "pdb_id": "6N19",
+          "resolution": 1.501,
+          "method": "X-ray",
+          "ligands": [
+            "K8V"
+          ]
+        },
+        {
+          "pdb_id": "6N0R",
+          "resolution": 1.544,
+          "method": "X-ray",
+          "ligands": [
+            "K8D"
+          ]
+        },
+        {
+          "pdb_id": "7UFZ",
+          "resolution": 1.559,
+          "method": "X-ray",
+          "ligands": [
+            "N7U"
+          ]
+        },
+        {
+          "pdb_id": "7UFY",
+          "resolution": 1.584,
+          "method": "X-ray",
+          "ligands": [
+            "N8I"
+          ]
+        },
+        {
+          "pdb_id": "8V0C",
+          "resolution": 1.62,
+          "method": "X-ray",
+          "ligands": [
+            "YE3"
+          ]
+        }
+      ],
+      "c4_pass": true
+    },
+    {
+      "gene": "STK33",
+      "accession": "Q9BYT3",
+      "protein": "Serine/threonine-protein kinase 33",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 1,
+      "n_examined": 1,
+      "n_fetch_errors": 0,
+      "n_holo": 1,
+      "n_holo_xray": 1,
+      "n_holo_em": 0,
+      "n_holo_le_3A": 1,
+      "best": [
+        {
+          "pdb_id": "8VF6",
+          "resolution": 2.7,
+          "method": "X-ray",
+          "ligands": [
+            "A1AAY"
+          ]
+        }
+      ],
+      "c4_pass": false
+    },
+    {
+      "gene": "KCNQ2",
+      "accession": "O43526",
+      "protein": "Potassium voltage-gated channel subfamily KQT member 2",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 58,
+      "n_examined": 58,
+      "n_fetch_errors": 0,
+      "n_holo": 48,
+      "n_holo_xray": 0,
+      "n_holo_em": 48,
+      "n_holo_le_3A": 16,
+      "best": [
+        {
+          "pdb_id": "22BF",
+          "resolution": 2.5,
+          "method": "EM",
+          "ligands": [
+            "A1EY8"
+          ]
+        },
+        {
+          "pdb_id": "22BG",
+          "resolution": 2.5,
+          "method": "EM",
+          "ligands": [
+            "A1EY8"
+          ]
+        },
+        {
+          "pdb_id": "8IZY",
+          "resolution": 2.5,
+          "method": "EM",
+          "ligands": [
+            "9MF"
+          ]
+        },
+        {
+          "pdb_id": "22BE",
+          "resolution": 2.6,
+          "method": "EM",
+          "ligands": [
+            "A1EY8"
+          ]
+        },
+        {
+          "pdb_id": "22BI",
+          "resolution": 2.6,
+          "method": "EM",
+          "ligands": [
+            "A1EY8"
+          ]
+        },
+        {
+          "pdb_id": "22AZ",
+          "resolution": 2.7,
+          "method": "EM",
+          "ligands": [
+            "A1E3Q"
+          ]
+        },
+        {
+          "pdb_id": "8J03",
+          "resolution": 2.7,
+          "method": "EM",
+          "ligands": [
+            "P0T"
+          ]
+        },
+        {
+          "pdb_id": "8J04",
+          "resolution": 2.7,
+          "method": "EM",
+          "ligands": [
+            "9MF"
+          ]
+        }
+      ],
+      "c4_pass": true
+    },
+    {
+      "gene": "SLC5A7",
+      "accession": "Q9GZV3",
+      "protein": "High affinity choline transporter 1",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 12,
+      "n_examined": 12,
+      "n_fetch_errors": 0,
+      "n_holo": 6,
+      "n_holo_xray": 0,
+      "n_holo_em": 6,
+      "n_holo_le_3A": 2,
+      "best": [
+        {
+          "pdb_id": "8ZQO",
+          "resolution": 2.8,
+          "method": "EM",
+          "ligands": [
+            "HC6"
+          ]
+        },
+        {
+          "pdb_id": "9BFK",
+          "resolution": 2.85,
+          "method": "EM",
+          "ligands": [
+            "A1AOW"
+          ]
+        },
+        {
+          "pdb_id": "8ZQP",
+          "resolution": 3.1,
+          "method": "EM",
+          "ligands": [
+            "A1AOW"
+          ]
+        },
+        {
+          "pdb_id": "8J74",
+          "resolution": 3.6,
+          "method": "EM",
+          "ligands": [
+            "AV0",
+            "R16",
+            "HC6"
+          ]
+        },
+        {
+          "pdb_id": "8J75",
+          "resolution": 3.6,
+          "method": "EM",
+          "ligands": [
+            "HC6"
+          ]
+        },
+        {
+          "pdb_id": "9BIM",
+          "resolution": 3.67,
+          "method": "EM",
+          "ligands": [
+            "HC6"
+          ]
+        }
+      ],
+      "c4_pass": true
+    },
+    {
+      "gene": "KCNJ2",
+      "accession": "P63252",
+      "protein": "Inward rectifier potassium channel 2",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 3,
+      "n_examined": 3,
+      "n_fetch_errors": 0,
+      "n_holo": 1,
+      "n_holo_xray": 1,
+      "n_holo_em": 0,
+      "n_holo_le_3A": 1,
+      "best": [
+        {
+          "pdb_id": "6SPZ",
+          "resolution": 2.08,
+          "method": "X-ray",
+          "ligands": [
+            "GSH"
+          ]
+        }
+      ],
+      "c4_pass": false
+    },
+    {
+      "gene": "CACNA1G",
+      "accession": "O43497",
+      "protein": "Voltage-dependent T-type calcium channel subunit alpha-1G",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 2,
+      "n_examined": 2,
+      "n_fetch_errors": 0,
+      "n_holo": 2,
+      "n_holo_xray": 0,
+      "n_holo_em": 2,
+      "n_holo_le_3A": 0,
+      "best": [
+        {
+          "pdb_id": "6KZP",
+          "resolution": 3.1,
+          "method": "EM",
+          "ligands": [
+            "NAG",
+            "DZR",
+            "3PE"
+          ]
+        },
+        {
+          "pdb_id": "6KZO",
+          "resolution": 3.3,
+          "method": "EM",
+          "ligands": [
+            "NAG",
+            "3PE"
+          ]
+        }
+      ],
+      "c4_pass": true
+    }
+  ]
+}

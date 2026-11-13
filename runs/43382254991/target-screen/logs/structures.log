@@ -1,0 +1,56 @@
+[*] 자체 점검 — 리간드가 있다고 알려진 항목에서 리간드가 나오는가
+    6WJC (CHRM1 아세틸콜린 자리): 비중합체 엔티티 3개 → 리간드 ['OIN']  OK
+    1RFF (TDP1 결합 리간드): 비중합체 엔티티 2개 → 리간드 ['SPM']  OK
+    8IZY (KCNQ2 리간드 결합): 비중합체 엔티티 1개 → 리간드 ['9MF']  OK
+[*] CHRM1 (P11229) — PDB 7개: Muscarinic acetylcholine receptor M1
+    홀로 7개 (X선 5, cryo-EM 2, 3.0 A 이하 5) → C4 통과
+      6ZFZ  2.17 A  X-ray              QJT
+      6ZG4  2.33 A  X-ray              QK8
+      6ZG9  2.5 A  X-ray              QK2
+      6WJC  2.55 A  X-ray              OIN
+[*] HCRTR1 (O43613) — PDB 14개: Orexin/Hypocretin receptor type 1
+    홀로 14개 (X선 14, cryo-EM 0, 3.0 A 이하 11) → C4 통과
+      6TOD  2.11 A  X-ray              7MA,SOG,PGW
+      6TOS  2.13 A  X-ray              NRE,SOG,PGW
+      6TOT  2.22 A  X-ray              NRK,SOG,PGW
+      6TO7  2.26 A  X-ray              SUV,SOG,PGW
+[*] TDP1 (Q9NUW8) — PDB 48개: Tyrosyl-DNA phosphodiesterase 1
+    홀로 42개 (X선 42, cryo-EM 0, 3.0 A 이하 42) → C4 통과
+      6N0D  1.453 A  X-ray              K8J
+      6N0N  1.477 A  X-ray              KAY
+      6W7J  1.489 A  X-ray              TGM
+      6N19  1.501 A  X-ray              K8V
+[*] STK33 (Q9BYT3) — PDB 1개: Serine/threonine-protein kinase 33
+    홀로 1개 (X선 1, cryo-EM 0, 3.0 A 이하 1) → C4 실패
+      8VF6  2.7 A  X-ray              A1AAY
+[*] KCNQ2 (O43526) — PDB 58개: Potassium voltage-gated channel subfamily KQT member 2
+    홀로 48개 (X선 0, cryo-EM 48, 3.0 A 이하 16) → C4 통과
+      22BF  2.5 A  EM                 A1EY8
+      22BG  2.5 A  EM                 A1EY8
+      8IZY  2.5 A  EM                 9MF
+      22BE  2.6 A  EM                 A1EY8
+[*] SLC5A7 (Q9GZV3) — PDB 12개: High affinity choline transporter 1
+    홀로 6개 (X선 0, cryo-EM 6, 3.0 A 이하 2) → C4 통과
+      8ZQO  2.8 A  EM                 HC6
+      9BFK  2.85 A  EM                 A1AOW
+      8ZQP  3.1 A  EM                 A1AOW
+      8J74  3.6 A  EM                 AV0,R16,HC6
+[*] KCNJ2 (P63252) — PDB 3개: Inward rectifier potassium channel 2
+    홀로 1개 (X선 1, cryo-EM 0, 3.0 A 이하 1) → C4 실패
+      6SPZ  2.08 A  X-ray              GSH
+[*] CACNA1G (O43497) — PDB 2개: Voltage-dependent T-type calcium channel subunit alpha-1G
+    홀로 2개 (X선 0, cryo-EM 2, 3.0 A 이하 0) → C4 통과
+      6KZP  3.1 A  EM                 NAG,DZR,3PE
+      6KZO  3.3 A  EM                 NAG,3PE
+
+유전자        UniProt      PDB    홀로    X선  cryoEM  <=3A  C4
+----------------------------------------------------------------------
+CHRM1      P11229         7     7     5       2     5  통과
+HCRTR1     O43613        14    14    14       0    11  통과
+TDP1       Q9NUW8        48    42    42       0    42  통과
+STK33      Q9BYT3         1     1     1       0     1  실패
+KCNQ2      O43526        58    48     0      48    16  통과
+SLC5A7     Q9GZV3        12     6     0       6     2  통과
+KCNJ2      P63252         3     1     1       0     1  실패
+CACNA1G    O43497         2     2     0       2     0  통과
+→ out/structures.json
