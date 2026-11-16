@@ -53,6 +53,18 @@ jobs:
           pip install --quiet tqdm fuzzywuzzy seaborn dataclasses-json \
             "setuptools<81" huggingface_hub
 
+      - name: 게이트 자체 점검
+        shell: bash
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          # 아래 누수 감사와 사소한 기술자 판정은 게이트 문턱으로 내려진다.
+          # 문턱 쪽이 조용히 어긋나 있으면 그 판정이 거짓 안심이 된다 —
+          # THRESHOLDS 의 키를 바꾼 뒤 하류가 m.get("nef1") 을 내지 않으면
+          # `or 0` 에 걸려 "기억이 게이트를 통과하지 못한다" 로 깎인다.
+          # 그 경로를 여기서 막는다.
+          python scripts/gate_selfcheck.py 2>&1 | tee logs/00_gate_selfcheck.log
+
       - name: 구축
         shell: bash
         run: |
