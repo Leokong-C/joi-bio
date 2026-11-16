@@ -1,0 +1,1 @@
+{"chembl_id": "TDC24978896", "label": "decoy", "measured_inactive": true, "mw": 479.57, "pains": false, "pref_name": "", "rotb": 11, "smiles": "CCOc1ccc(S(=O)(=O)NCCC(=O)NCC(c2ccc(F)cc2)N2CCOCC2)cc1", "source": "tdc_hts", "score": -9.154, "pose_spread": 0.463, "ligand_efficiency": 0.2774}
