@@ -1,0 +1,10 @@
+===== HCRTR1 =====
+[*] exp/HCRTR1/library_eval.jsonl 에서 5,000행
+    묵은 도킹 필드 제거 0행
+    rotb 재계산 0행
+    [!] SMILES 파싱 실패로 제외 1행
+[+] /home/runner/work/joi-bio/joi-bio/targets/HCRTR1/library.jsonl
+    총 4,999 (활성 140, decoy 4859, screen 0)
+    활성비율 0.0280  EF1 천장 35.707
+    rotb 최대 34 중위 5
+    sha256 a020ae99e8aec902df39e237664d3508b7df223e5a4cb91016a9fad46521762e
