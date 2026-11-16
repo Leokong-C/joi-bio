@@ -1,0 +1,52 @@
+===== 씨앗 7 =====
+Downloading...
+  0%|          | 0.00/12.7M [00:00<?, ?iB/s]  1%|          | 69.6k/12.7M [00:00<00:23, 530kiB/s]  3%|▎         | 331k/12.7M [00:00<00:08, 1.38MiB/s] 11%|█         | 1.34M/12.7M [00:00<00:02, 4.62MiB/s] 40%|███▉      | 5.08M/12.7M [00:00<00:00, 16.1MiB/s] 75%|███████▍  | 9.50M/12.7M [00:00<00:00, 23.4MiB/s]100%|██████████| 12.7M/12.7M [00:00<00:00, 20.8MiB/s]
+Loading...
+Done!
+[*] orexin1_receptor_butkiewicz — 218,158개, 활성 233 (0.107%)
+    decoy 는 추정이 아니라 실측 비활성이다
+    전수 → lib_out/orexin1_receptor_butkiewicz_full.jsonl
+    맞춘 부분표본 2,157개 (활성 60, 2.78%) → lib_out/orexin1_receptor_butkiewicz_matched_seed7.jsonl
+    ↑ 우리 EPAS1 (2,157 / 60 / 2.78%) 와 나란히 놓을 수 있는 쪽
+===== 씨앗 88 =====
+Found local copy...
+Loading...
+Done!
+[*] orexin1_receptor_butkiewicz — 218,158개, 활성 233 (0.107%)
+    decoy 는 추정이 아니라 실측 비활성이다
+    전수 → lib_out/orexin1_receptor_butkiewicz_full.jsonl
+    맞춘 부분표본 2,157개 (활성 60, 2.78%) → lib_out/orexin1_receptor_butkiewicz_matched_seed88.jsonl
+    ↑ 우리 EPAS1 (2,157 / 60 / 2.78%) 와 나란히 놓을 수 있는 쪽
+===== 씨앗 1023 =====
+Found local copy...
+Loading...
+Done!
+[*] orexin1_receptor_butkiewicz — 218,158개, 활성 233 (0.107%)
+    decoy 는 추정이 아니라 실측 비활성이다
+    전수 → lib_out/orexin1_receptor_butkiewicz_full.jsonl
+    맞춘 부분표본 2,157개 (활성 60, 2.78%) → lib_out/orexin1_receptor_butkiewicz_matched_seed1023.jsonl
+    ↑ 우리 EPAS1 (2,157 / 60 / 2.78%) 와 나란히 놓을 수 있는 쪽
+===== 씨앗 4242 =====
+Found local copy...
+Loading...
+Done!
+[*] orexin1_receptor_butkiewicz — 218,158개, 활성 233 (0.107%)
+    decoy 는 추정이 아니라 실측 비활성이다
+    전수 → lib_out/orexin1_receptor_butkiewicz_full.jsonl
+    맞춘 부분표본 2,157개 (활성 60, 2.78%) → lib_out/orexin1_receptor_butkiewicz_matched_seed4242.jsonl
+    ↑ 우리 EPAS1 (2,157 / 60 / 2.78%) 와 나란히 놓을 수 있는 쪽
+===== 씨앗 31337 =====
+Found local copy...
+Loading...
+Done!
+[*] orexin1_receptor_butkiewicz — 218,158개, 활성 233 (0.107%)
+    decoy 는 추정이 아니라 실측 비활성이다
+    전수 → lib_out/orexin1_receptor_butkiewicz_full.jsonl
+    맞춘 부분표본 2,157개 (활성 60, 2.78%) → lib_out/orexin1_receptor_butkiewicz_matched_seed31337.jsonl
+    ↑ 우리 EPAS1 (2,157 / 60 / 2.78%) 와 나란히 놓을 수 있는 쪽
+--- 만들어진 부분표본 ---
+-rw-r--r-- 1 runner runner 471909 Nov 16 10:56 lib_out/orexin1_receptor_butkiewicz_matched_seed1023.jsonl
+-rw-r--r-- 1 runner runner 472561 Nov 16 10:56 lib_out/orexin1_receptor_butkiewicz_matched_seed31337.jsonl
+-rw-r--r-- 1 runner runner 472424 Nov 16 10:56 lib_out/orexin1_receptor_butkiewicz_matched_seed4242.jsonl
+-rw-r--r-- 1 runner runner 472681 Nov 16 10:56 lib_out/orexin1_receptor_butkiewicz_matched_seed7.jsonl
+-rw-r--r-- 1 runner runner 470891 Nov 16 10:56 lib_out/orexin1_receptor_butkiewicz_matched_seed88.jsonl

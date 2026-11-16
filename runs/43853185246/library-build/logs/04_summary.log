@@ -1,0 +1,22 @@
+누수 감사 — 기억(최대유사도) 베이스라인
+
+라벨                                                nEF1%      AUC   BEDROC  게이트
+------------------------------------------------------------------------------
+orexin1_receptor_butkiewicz (full)               0.2704   0.7389   0.3799  탈락(기억 통과)
+orexin1_receptor_butkiewicz (matched, seed 102   0.3636   0.6625   0.2912  통과(기억 실패)
+orexin1_receptor_butkiewicz (matched, seed 313   0.2727   0.6194   0.2136  통과(기억 실패)
+orexin1_receptor_butkiewicz (matched, seed 424   0.2727    0.625   0.2315  통과(기억 실패)
+orexin1_receptor_butkiewicz (matched, seed 7)    0.2727   0.6045   0.1858  통과(기억 실패)
+orexin1_receptor_butkiewicz (matched, seed 88)   0.2727   0.6013   0.1988  통과(기억 실패)
+
+골격 분할 — 기억이 아니라 일반화를 묻는다
+
+orexin1_receptor_butkiewicz (full)             nEF1%   0.1416 AUC   0.6738  활성골격 207
+orexin1_receptor_butkiewicz (matched, seed 102 nEF1%   0.1818 AUC   0.5984  활성골격 57
+orexin1_receptor_butkiewicz (matched, seed 313 nEF1%   0.2727 AUC   0.6199  활성골격 60
+orexin1_receptor_butkiewicz (matched, seed 424 nEF1%   0.0909 AUC   0.5867  활성골격 57
+orexin1_receptor_butkiewicz (matched, seed 7)  nEF1%   0.0909 AUC   0.5781  활성골격 58
+orexin1_receptor_butkiewicz (matched, seed 88) nEF1%   0.2727 AUC   0.5899  활성골격 59
+
+기억 베이스라인은 새 타깃에서도 같은 표에 싣는다 —
+타깃 교체는 이 교란을 없애지 않고 줄인다.
