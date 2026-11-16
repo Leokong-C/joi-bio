@@ -235,12 +235,19 @@ jobs:
           echo "control:";   ls arms/control/$G   | tee -a logs/c04_collect.log
           echo "treatment:"; ls arms/treatment/$G | tee -a logs/c04_collect.log
 
+      - name: 게이트 자체 점검
+        shell: bash -el {0}
+        run: |
+          set -o pipefail
+          python scripts/gate_selfcheck.py 2>&1 | tee logs/c05_gate_selfcheck.log
+
       - name: 대조군 검증 게이트
         shell: bash -el {0}
         run: |
           set +e
           python -m core.validation.gate --gene ${{ inputs.gene }} \
-            --targetdir arms/control/${{ inputs.gene }} 2>&1 | tee logs/c05_gate_control.log
+            --targetdir arms/control/${{ inputs.gene }} \
+            --arm control 2>&1 | tee logs/c05_gate_control.log
           python -m core.validation.gate --gene ${{ inputs.gene }} \
             --targetdir arms/treatment/${{ inputs.gene }} 2>&1 | tee logs/c05_gate_treatment.log
           exit 0

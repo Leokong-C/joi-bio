@@ -43,14 +43,23 @@ PROBES = {
 
 def rank_metrics(scores: np.ndarray, labels: np.ndarray, seed: int = 0) -> dict:
     """높을수록 좋은 점수로 내림차순 정렬해 지표를 낸다. 동점은 무작위."""
-    from core.validation.gate import bedroc, enrichment_factor, roc_auc
+    from core.validation.gate import (
+        bedroc,
+        enrichment_factor,
+        normalized_ef,
+        roc_auc,
+    )
 
     jitter = np.random.RandomState(seed).rand(len(scores)) * 1e-6
     order = np.argsort(-(scores + jitter))
     lab = [int(labels[i]) for i in order]
+    ef1 = enrichment_factor(lab, 0.01)
     return {
-        "ef1": enrichment_factor(lab, 0.01),
+        "ef1": ef1,
         "ef5": enrichment_factor(lab, 0.05),
+        # nEF1% — 게이트가 판정에 쓰는 지표다. 여기서 같이 내지 않으면
+        # 아래 gate_check 가 기억 베이스라인을 게이트 잣대로 잴 수 없다.
+        "nef1": normalized_ef(ef1, len(lab), sum(lab), 0.01),
         "auc": roc_auc(lab),
         "bedroc": bedroc(lab),
     }
@@ -160,12 +169,16 @@ def main() -> int:
 
     # 진짜 수용 기준 — 사소한 기술자가 우리 게이트를 통과하는가.
     #
-    # 임의의 AUC 문턱보다 이쪽이 낫다. 게이트 문턱(EF1 5.0 / AUC 0.70 /
-    # BEDROC 0.30)은 이미 이 프로젝트가 쓰는 값이고, 단백질도 구조도 안 쓴
-    # 순위가 그걸 통과한다면 그 벤치마크로는 아무것도 증명할 수 없다.
+    # 임의의 AUC 문턱보다 이쪽이 낫다. 게이트 문턱은 이미 이 프로젝트가 쓰는
+    # 값이고, 단백질도 구조도 안 쓴 순위가 그걸 통과한다면 그 벤치마크로는
+    # 아무것도 증명할 수 없다.
     #
     # 기존 ChEMBL 무작위 라이브러리는 불소 세기만으로 3/3 을 통과했다.
-    GATE = {"ef1": 5.0, "auc": 0.70, "bedroc": 0.30}
+    #
+    # 문턱을 여기에 베껴 적지 않는다. 예전에는 {"ef1": 5.0, ...} 를 복제해
+    # 뒀는데, 게이트를 nEF1% 로 바꾸는 순간 두 곳이 조용히 어긋나 "기억이
+    # 게이트를 통과하는가" 라는 이 판정 자체가 낡은 잣대로 돌아간다.
+    from core.validation.gate import THRESHOLDS as GATE
     mx = {k: max((v[k] or 0) for v in out["baselines"].values()) for k in GATE}
     gate_hits = [k for k, t in GATE.items() if mx[k] >= t]
     out["gate_check"] = {
@@ -175,8 +188,12 @@ def main() -> int:
         "n_passed": len(gate_hits),
         "trivial_would_pass_gate": len(gate_hits) >= 2,
     }
-    print(f"\n[*] 사소한 기술자 최고치 — EF1% {mx['ef1']:.3f} / AUC {mx['auc']:.4f} "
-          f"/ BEDROC {mx['bedroc']:.4f}")
+    # 게이트 키를 그대로 돌며 찍는다 — 키를 손으로 적으면 문턱이 바뀔 때
+    # KeyError 로 죽거나(운이 좋으면) 낡은 지표를 찍는다(운이 나쁘면).
+    print(
+        "\n[*] 사소한 기술자 최고치 — "
+        + " / ".join(f"{k} {mx[k]:.4f}" for k in GATE)
+    )
     if gate_hits:
         print(f"    게이트 문턱을 넘는 것: {', '.join(gate_hits)} ({len(gate_hits)}/3)")
     else:

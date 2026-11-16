@@ -42,11 +42,35 @@ import json
 import math
 from pathlib import Path
 
-THRESHOLDS = {"ef1": 5.0, "auc": 0.70, "bedroc": 0.30}
-# 임계값은 활성 비율 2~3% 인 통상적 벤치마크를 전제로 한다.
-# 활성 비율이 높으면 EF 상한이 임계값 아래로 내려가고 AUC/BEDROC 도 부풀려진다.
+THRESHOLDS = {"nef1": 0.40, "auc": 0.70, "bedroc": 0.30}
+# nEF1% 는 EF1% 를 그 라이브러리의 천장으로 나눈 값(0~1)이라 활성 비율이
+# 달라도 비교된다. 절대 EF1% 5.0 을 쓰던 자리를 대신한다 — 그 문턱은 기억
+# 베이스라인만으로 45회 측정 중 41회(91%) 를 통과시켜 변별하지 못했다
+# (docs/target-selection.md, ci-results run 43040414978).
+#
+# 0.40 의 근거. 선정 타깃 오렉신1 의 기억 베이스라인은 5씨앗 전부 0.364
+# 이하이고, 실제 도킹 치료군은 0.773(MET 39216466282)~0.833(EPAS1
+# 41259689466) 이다. 그 사이에 둔 값이다.
+#
+# 한계를 같이 적는다 — 9타깃을 모두 모으면 0.40 에서도 기억이 53% 통과하고,
+# 기억 최고치(0.864, 콜린수송체)는 도킹 치료군보다 높다. 이 문턱 하나로
+# 교란이 사라지지 않으므로 기억 베이스라인은 계속 같은 표에 싣는다.
+#
+# 대조군에는 이 문턱을 적용하지 않는다(CEO 결정 11-16). 대조군은 편향 없는
+# 하한이라 enrichment 가 낮은 것이 설계대로이며(EPAS1 대조군 nEF1% 0.200),
+# 같은 잣대로 재면 거의 항상 미달해 규칙 2 의 양팔 보고를 막는다.
+# 수치는 그대로 산출한다 — 판정만 면제한다.
 MIN_ACTIVES = 10
 BEDROC_ALPHA = 20.0
+
+# 활성 비율 상한. 넘으면 AUC/BEDROC 이 함께 부풀려져 어떤 지표도 믿을 수 없다.
+#
+# 예전에는 이 검사가 "EF1% 천장이 절대 문턱 5.0 아래로 내려갔는가" 로 간접
+# 구현돼 있었다. 천장은 활성이 상위 1% 칸보다 많을 때 1/활성비율 이므로 그
+# 조건은 활성 비율 20% 초과와 같았다. nEF1% 는 그 천장으로 나눈 값이라 도달
+# 불가가 원리적으로 사라지고, 간접 검사도 함께 조용히 죽는다. 같은 지점을
+# 직접 적어 안전장치를 남긴다.
+ACTIVE_FRACTION_MAX = 0.20
 
 
 # 평가셋 완전성 문턱. 적용률이 이 아래면 판정을 INCOMPLETE 로 덮는다.
@@ -185,11 +209,17 @@ def evaluate(
     benchmark_ligands: list[str] | None = None,
     control_rows: list[dict] | None = None,
     n_boot: int = 2000,
+    arm: str = "treatment",
 ) -> dict:
     """도킹 결과(스코어 좋은 순 정렬)를 받아 게이트 판정을 내린다.
 
     control_rows 가 없으면 ABSTAIN. 구조 선택 편향을 분리할 수단이 없는데
     PASS 를 내면 그 숫자가 도킹 실력인지 구조를 잘 골라서인지 말할 수 없다.
+
+    arm="control" 은 음성 대조군 팔 자체를 재는 경우다. 절대 문턱의 PASS
+    요구를 면제하고 CONTROL_REFERENCE 를 낸다 — 지표는 모두 그대로 낸다.
+    대조군을 치료군과 같은 잣대로 떨어뜨리면 편향 없는 하한을 보고할 수
+    없게 된다(THRESHOLDS 주석 참조).
     """
     rows = [r for r in rows if r.get("score") is not None]
     # 스크리닝 전용 화합물은 채점에서 뺀다. 음성으로 센 것을 후보로 내놓던
@@ -229,15 +259,19 @@ def evaluate(
     # EF1% 를 나란히 놓으면 안 되기 때문이다 (perfect_ef 주석 참조).
     for key, fr in (("ef1", 0.01), ("ef5", 0.05), ("ef10", 0.10)):
         metrics[f"n{key}"] = normalized_ef(metrics[key], len(rows), n_act, fr)
-    ef1_unreachable = max_ef1 is not None and THRESHOLDS["ef1"] > max_ef1
-    metrics["ef1_threshold_unreachable"] = ef1_unreachable
+    # nEF1% 는 천장으로 나눈 값이라 문턱 도달 불가가 없다. 과거 간접 검사가
+    # 쓰던 필드는 하류 보고가 참조하므로 False 로 남기고, 활성 비율 과다는
+    # ACTIVE_FRACTION_MAX 로 직접 본다.
+    metrics["ef1_threshold_unreachable"] = False
+    active_fraction_too_high = ratio > ACTIVE_FRACTION_MAX
+    metrics["active_fraction_too_high"] = active_fraction_too_high
 
     checks = {
         k: (metrics[k] is not None and metrics[k] >= v) for k, v in THRESHOLDS.items()
     }
-    if ef1_unreachable:
-        checks["ef1"] = None  # 판정에서 제외 — 통과도 미달도 아니다
     metrics["checks"] = checks
+    metrics["arm"] = arm
+    metrics["thresholds_applied"] = arm != "control"
 
     passed_checks = sum(1 for v in checks.values() if v is True)
     usable_checks = sum(1 for v in checks.values() if v is not None)
@@ -264,20 +298,30 @@ def evaluate(
             f"활성 화합물 {n_act}개 (최소 {MIN_ACTIVES}개 필요). "
             "지표가 계산되더라도 통계적으로 무의미하다."
         )
-    elif ef1_unreachable and usable_checks < 3:
+    elif active_fraction_too_high:
         metrics["verdict"] = "INVALID"
         metrics["verdict_reason"] = (
-            f"활성 비율 {100 * ratio:.1f}% — EF1% 이론적 최대가 {max_ef1}이라 "
-            f"임계값 {THRESHOLDS['ef1']}에 도달할 수 없다. 남은 지표(AUC, BEDROC)도 "
-            "활성 비율이 높으면 함께 부풀려지므로 믿을 수 없다. "
+            f"활성 비율 {100 * ratio:.1f}% — 상한 {100 * ACTIVE_FRACTION_MAX:.0f}% 초과. "
+            f"EF1% 천장이 {max_ef1} 까지 내려앉고 AUC/BEDROC 도 함께 부풀려지므로 "
+            "nEF1% 로 정규화해도 지표를 믿을 수 없다. "
             "라이브러리를 활성 2~3% 비율로 다시 구성할 것."
+        )
+    elif arm == "control":
+        metrics["verdict"] = "CONTROL_REFERENCE"
+        metrics["verdict_reason"] = (
+            f"음성 대조군 팔 — 절대 문턱의 PASS 요구를 적용하지 않는다. "
+            f"nEF1% {metrics['nef1']}, AUC {metrics['auc']}, BEDROC {metrics['bedroc']} 는 "
+            "편향 없는 하한으로 치료군과 같은 표에 싣는다. 대조군이 낮은 것은 설계대로이며 "
+            "결함이 아니다 — 치료군이 이보다 유의하게 높은지가 판정 대상이다."
         )
     elif control_rows is None:
         metrics["verdict"] = "ABSTAIN"
         metrics["verdict_reason"] = (
             f"대조군이 없다. 절대 문턱은 {passed_checks}/{usable_checks} 통과이나, "
             "이 문턱은 벤치마크와 유사도 0.07 인 구조도 통과시킨 전력이 있다"
-            "(EPAS1 대조군 3H82: EF1% 8.17, AUC 0.716, BEDROC 0.300). "
+            "(EPAS1 대조군 3H82: EF1% 8.17, AUC 0.716, BEDROC 0.300 — 당시 절대 "
+            "EF1% 5.0 문턱을 넘었다. nEF1% 0.40 으로 바꾼 뒤 이 사례는 0.200 으로 "
+            "미달하지만, 문턱 하나로 구조 선택 편향을 분리할 수 없다는 점은 그대로다). "
             "닮지 않은 구조에 같은 라이브러리를 도킹해 비교하기 전에는 "
             "이 수치가 도킹 실력인지 구조 선택 덕인지 말할 수 없다."
         )
@@ -329,6 +373,14 @@ def main() -> int:
         help="음성 대조군 결과 폴더. 없으면 ABSTAIN 이 나온다.",
     )
     ap.add_argument("--n-boot", type=int, default=2000)
+    ap.add_argument(
+        "--arm",
+        default="treatment",
+        choices=["treatment", "control"],
+        help="평가하는 팔. control 이면 절대 문턱의 PASS 요구를 면제하고 "
+        "CONTROL_REFERENCE 를 낸다 — 지표는 그대로 낸다. 대조군은 편향 없는 "
+        "하한이라 치료군과 같은 잣대로 떨어뜨리면 양팔 보고가 막힌다.",
+    )
     args = ap.parse_args()
 
     tdir = Path(args.targetdir) if args.targetdir else root / "targets" / args.gene
@@ -367,7 +419,9 @@ def main() -> int:
             return 1
         print(f"    대조군 {len(ctrl_rows)}개 로드 — 짝지은 부트스트랩 {args.n_boot}회")
 
-    result = evaluate(rows, bench, control_rows=ctrl_rows, n_boot=args.n_boot)
+    result = evaluate(
+        rows, bench, control_rows=ctrl_rows, n_boot=args.n_boot, arm=args.arm
+    )
     result["gene"] = args.gene
     result["pocket_confidence"] = meta.get("pocket", {}).get("confidence")
 
