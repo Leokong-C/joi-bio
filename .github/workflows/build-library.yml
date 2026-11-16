@@ -1,0 +1,112 @@
+name: Joi_bio 라이브러리 구축
+
+# 선정된 타깃의 평가셋·스크리닝셋을 만들고 **바로 누수 감사까지 돌린다.**
+# 감사를 통과하지 못한 라이브러리로 도킹하면 돈과 시간만 태운다 —
+# 10-24 에 불소만 세도 AUC 0.911 이 나오는 벤치마크로 한참 갔다.
+#
+# TDC 는 Harvard Dataverse 에서 받는데 Claude 컨테이너는 프록시 403 이다.
+# 여기서만 된다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: "TDC HTS 이름"
+        required: true
+        default: "orexin1_receptor_butkiewicz"
+      gene:
+        description: "exp/<GENE>/ 에 쓴다"
+        required: true
+        default: "HCRTR1"
+      eval_n:
+        description: "평가셋 크기"
+        required: false
+        default: "5000"
+      screen_n:
+        description: "스크리닝셋 크기"
+        required: false
+        default: "5000"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: 라이브러리 구축
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"   # PyTDC 가 3.13 에서 소스 빌드에 실패한다
+
+      - name: 의존성
+        run: |
+          pip install --quiet "numpy<2" "pandas<3" "rdkit<2024.3.1" requests scikit-learn
+          pip install --quiet --no-deps PyTDC
+          pip install --quiet tqdm fuzzywuzzy seaborn dataclasses-json \
+            "setuptools<81" huggingface_hub
+
+      - name: 구축
+        shell: bash
+        run: |
+          mkdir -p logs
+          set -o pipefail
+          python -u scripts/build_library.py \
+            --dataset "${{ inputs.dataset }}" --gene "${{ inputs.gene }}" \
+            --eval-n "${{ inputs.eval_n }}" --screen-n "${{ inputs.screen_n }}" \
+            --data-dir tdc_raw 2>&1 | tee logs/build.log
+
+      - name: 누수 감사 — 평가셋
+        shell: bash
+        run: |
+          set -o pipefail
+          # 실패해도 멈추지 않는다. 판정 자체가 산출물이다
+          python -u scripts/leakage_audit.py \
+            --library "exp/${{ inputs.gene }}/library_eval.jsonl" \
+            --label "${{ inputs.gene }} 평가셋" \
+            --out "exp/${{ inputs.gene }}/leakage_eval.json" \
+            2>&1 | tee logs/leakage.log || true
+
+      - name: 사소한 기술자 베이스라인
+        shell: bash
+        run: |
+          set -o pipefail
+          python -u scripts/trivial_baselines.py \
+            --library "exp/${{ inputs.gene }}/library_eval.jsonl" \
+            --out "exp/${{ inputs.gene }}/trivial_eval.json" \
+            2>&1 | tee logs/trivial.log || true
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/build-library"
+          mkdir -p "$OUT"
+          cp -r logs "$OUT/" 2>/dev/null || true
+          cp "exp/${{ inputs.gene }}"/*.json "$OUT/" 2>/dev/null || true
+          git -C "$DEST" add -A
+          git -C "$DEST" -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "build library ${{ inputs.gene }}" || exit 0
+          for i in $(seq 1 12); do
+            git -C "$DEST" push --quiet origin ci-results && break
+            sleep $(( (RANDOM % 25) + 5 ))
+            git -C "$DEST" pull --quiet --rebase origin ci-results || true
+          done
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: library-${{ inputs.gene }}
+          path: |
+            exp/${{ inputs.gene }}/
+            logs/
+          retention-days: 30
