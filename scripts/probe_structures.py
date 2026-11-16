@@ -44,6 +44,21 @@ BUFFERS = {
 }
 MIN_LIGAND_MW = 150.0
 
+# 당사슬·지질·계면활성제. 분자량 150 을 넘지만 **리간드가 아니다** —
+# 당사슬은 단백질에 붙은 글리코실화이고, 지질과 계면활성제는 막단백질을
+# 녹이려고 넣은 것이다. 11-16 에 SPAM1 의 '홀로 1개'가 NAG 하나였다.
+GLYCANS_LIPIDS = {
+    # 당사슬
+    "NAG", "NDG", "A2G", "BMA", "MAN", "BGC", "GLC", "GAL", "GLA", "FUC",
+    "FUL", "SIA", "NGA", "XYS", "RIB", "RAM", "GCU", "IDS", "SGN",
+    # 지질
+    "3PE", "PEE", "PCW", "PC1", "POV", "PX4", "PGT", "PEF", "PSC", "CDL",
+    "DGA", "LPP", "PEV", "MYR", "PIO", "PGW", "LHG", "PLC", "SPH",
+    # 계면활성제
+    "SOG", "BOG", "BNG", "LMU", "DAO", "UND", "OCT", "HEZ", "TRD", "7PE",
+    "P33", "PG0", "1PG", "2PG", "F09", "JEF", "MC3",
+}
+
 
 def uniprot_accession(gene: str) -> dict:
     r = requests.get(UNIPROT, timeout=60, params={
@@ -126,7 +141,7 @@ def entry_detail(pdb: str) -> dict:
 
     ligs = []
     for c in dict.fromkeys(comps):
-        if c in BUFFERS:
+        if c in BUFFERS or c in GLYCANS_LIPIDS:
             continue
         mw = ligand_mw(c)
         if mw is None or mw < MIN_LIGAND_MW:
@@ -183,21 +198,28 @@ def probe(gene: str) -> dict:
 # 구조가 없는 것이 아니다. 11-11 에 두 번 연속 조용히 틀린 수를 냈다.
 # 7CR0 은 비중합체 엔티티가 0 이라 점검 항목으로 부적절했다 — 탐침이 아니라
 # 내 항목 선정이 틀렸다. KCNQ2 는 8IZY(9MF)로 바꾼다.
-SELFTEST = {"6WJC": "CHRM1 아세틸콜린 자리", "1RFF": "TDP1 결합 리간드",
-            "8IZY": "KCNQ2 리간드 결합"}
+# True = 리간드가 나와야 맞다, False = 0 이 나와야 맞다.
+# 음성 항목이 없으면 '리간드가 아닌 것을 리간드로 세는' 결함을 못 잡는다 —
+# 11-16 에 그걸로 한 번 틀렸다.
+SELFTEST = {"6WJC": ("CHRM1 아세틸콜린 자리", True),
+            "1RFF": ("TDP1 결합 리간드", True),
+            "8IZY": ("KCNQ2 리간드 결합", True),
+            "9JUB": ("SPAM1 — 당사슬만 있다, 0 이 맞다", False)}
 
 
 def selftest() -> bool:
     print("[*] 자체 점검 — 리간드가 있다고 알려진 항목에서 리간드가 나오는가")
     ok = True
-    for pdb, what in SELFTEST.items():
+    for pdb, (what, expect) in SELFTEST.items():
         try:
             e = entry_detail(pdb)
             found = bool(e["ligands"])
+            good = (found == expect)
             print(f"    {pdb} ({what}): 비중합체 엔티티 "
                   f"{e.get('n_nonpoly_entities', '?')}개 → "
-                  f"리간드 {e['ligands'] or '없음'}  {'OK' if found else '[!] 0'}")
-            ok &= found
+                  f"리간드 {e['ligands'] or '없음'}  "
+                  f"{'OK' if good else '[!] 기대와 다르다'}")
+            ok &= good
         except Exception as ex:
             print(f"    {pdb}: 조회 실패 {type(ex).__name__}: {ex}")
             ok = False
