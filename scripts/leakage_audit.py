@@ -163,6 +163,7 @@ def analog_leak(rows: list[dict]) -> dict:
         "n_active_decoy_pairs_over_threshold": n_over,
         "decoy_cap": DECOY_CAP,
         "n_pairs_over_decoy_cap": n_over_cap,
+        "cap_applies": None,   # main 에서 실측 여부를 보고 채운다
         "max_active_decoy_tanimoto": round(worst, 4),
         "max_pair": worst_pair,
     }
@@ -276,8 +277,16 @@ def main() -> int:
     out["analog_leakage"] = a
     print(f"\n[3] 활성-decoy 유사쌍")
     print(f"      Tanimoto >= {ANALOG_T} 인 쌍  {a.get('n_active_decoy_pairs_over_threshold')}")
-    print(f"      decoy 상한 {DECOY_CAP} 초과 쌍  {a.get('n_pairs_over_decoy_cap')}", end="")
-    print("   ← 상한이 지켜지지 않았다" if a.get("n_pairs_over_decoy_cap") else "   (상한 지켜짐)")
+    # 상한은 **추정** decoy 를 고를 때 거는 것이다. 비활성이 실측이면 애초에
+    # 걸 이유가 없으므로 초과 쌍은 위반이 아니라 정상이다. 11-16 에 이 문구가
+    # 실측 비활성 라이브러리에서 "상한이 지켜지지 않았다" 로 찍혀 오해를 불렀다.
+    measured = sum(1 for r in rows if r.get("measured_inactive"))
+    n_over = a.get("n_pairs_over_decoy_cap") or 0
+    print(f"      decoy 상한 {DECOY_CAP} 초과 쌍  {n_over}", end="")
+    if measured:
+        print(f"   (비활성이 실측이라 상한을 걸지 않는다 — 위반 아님)")
+    else:
+        print("   ← 상한이 지켜지지 않았다" if n_over else "   (상한 지켜짐)")
     print(f"      최대 유사도 {a.get('max_active_decoy_tanimoto')}  {a.get('max_pair')}")
 
     # 4. 활성 자기유사도
