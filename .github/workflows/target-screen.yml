@@ -25,6 +25,10 @@ on:
         description: "구조 가용성(C4)을 볼 사람 유전자 기호. 비우면 건너뛴다"
         required: false
         default: ""
+      bioassay:
+        description: "실측 비활성(C3)을 볼 타깃. '라벨=별칭1|별칭2' 쉼표 구분. 비우면 건너뛴다"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -62,6 +66,15 @@ jobs:
             --seeds "${{ inputs.seeds }}" \
             --data-dir tdc_raw \
             --out out/screen_targets.json 2>&1 | tee logs/screen.log
+
+      - name: 실측 비활성 (C3)
+        if: inputs.bioassay != ''
+        shell: bash
+        run: |
+          mkdir -p logs out
+          set -o pipefail
+          python -u scripts/probe_bioassay.py --targets "${{ inputs.bioassay }}" \
+            --out out/bioassay.json 2>&1 | tee logs/bioassay.log
 
       - name: 구조 가용성 (C4)
         if: inputs.genes != ''
