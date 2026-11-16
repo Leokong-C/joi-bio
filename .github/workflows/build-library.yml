@@ -84,6 +84,26 @@ jobs:
             --out "exp/${{ inputs.gene }}/trivial_eval.json" \
             2>&1 | tee logs/trivial.log || true
 
+      - name: 라이브러리를 main 에 커밋
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # 파이프라인은 체크아웃된 저장소에서 library_path 를 읽는다.
+          # 아티팩트로만 남기면 다음 실행이 찾지 못한다 — 11-16 에 탐침
+          # 양팔이 여기서 죽었다. 빌드는 시드가 고정이라 재현되므로
+          # 산출물을 저장소에 둔다.
+          set -e
+          git config user.name joi-bio-ci
+          git config user.email ci@joi-bio
+          git add -f "exp/${{ inputs.gene }}"/*.jsonl "exp/${{ inputs.gene }}"/*.json
+          git commit -q -m "라이브러리 ${{ inputs.gene }} — run ${GITHUB_RUN_ID}" || exit 0
+          for i in $(seq 1 10); do
+            git push --quiet origin HEAD:main && break
+            sleep $(( (RANDOM % 20) + 5 ))
+            git pull --quiet --rebase origin main || true
+          done
+
       - name: 결과를 ci-results 로
         if: always()
         shell: bash
