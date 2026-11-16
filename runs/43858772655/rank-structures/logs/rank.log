@@ -1,0 +1,48 @@
+[1] 벤치마크 리간드 ['suvorexant', 'lemborexant', 'daridorexant']
+    [+] 벤치마크 확보: suvorexant → CHEMBL1083659
+    [+] 벤치마크 확보: lemborexant → CHEMBL3545367
+    [+] 벤치마크 확보: daridorexant → CHEMBL4297590
+    suvorexant       → CHEMBL1083659  Cc1ccc(-n2nccn2)c(C(=O)N2CCN(c3nc4cc(Cl)ccc4o3)CC[C@H]2C)c1
+    lemborexant      → CHEMBL3545367  Cc1ncc(OC[C@@]2(c3cccc(F)c3)C[C@H]2C(=O)Nc2ccc(F)cn2)c(C)n1
+    daridorexant     → CHEMBL4297590  COc1ccc(-n2nccn2)c(C(=O)N2CCC[C@@]2(C)c2nc3c(C)c(Cl)ccc3[nH]
+
+[2] O43613 구조 전수 평가 (최대 30개)
+    RCSB 검색 14건 (쿼리 형태 1)
+    RCSB 후보 14개
+      6TOD  PGW   heavy  51  res 2.11  유사도 0.060
+      6TOS  PGW   heavy  51  res 2.13  유사도 0.060
+      6TOT  PGW   heavy  51  res 2.22  유사도 0.060
+      6TO7  PGW   heavy  51  res 2.26  유사도 0.060
+      6TQ4  PGW   heavy  51  res 2.3  유사도 0.060
+      6TP6  PGW   heavy  51  res 2.34  유사도 0.060
+      6TQ6  PGW   heavy  51  res 2.55  유사도 0.060
+      6TQ9  PGW   heavy  51  res 2.66  유사도 0.060
+      6TQ7  PGW   heavy  51  res 2.66  유사도 0.060
+      4ZJ8  SUV   heavy  32  res 2.75  유사도 1.000
+      4ZJC  4OT   heavy  32  res 2.83  유사도 0.196
+      6TP4  PGW   heavy  51  res 3.01  유사도 0.060
+      6TP3  PGW   heavy  51  res 3.04  유사도 0.060
+      6V9S  JHC   heavy  35  res 3.5  유사도 0.641
+
+[3] 순위 — 파이프라인 선택 기준 (유사도 구간 → 해상도 → 유사도)
+      순위 PDB    리간드        해상도     유사도    구간
+       1 4ZJ8   SUV       2.75   1.000     0  ← 치료군
+       2 6V9S   JHC        3.5   0.641     0
+       3 6TOD   PGW       2.11   0.060     2
+       4 6TOS   PGW       2.13   0.060     2
+       5 6TOT   PGW       2.22   0.060     2
+       6 6TO7   PGW       2.26   0.060     2
+       7 6TQ4   PGW        2.3   0.060     2
+       8 6TP6   PGW       2.34   0.060     2
+       9 6TQ6   PGW       2.55   0.060     2
+      10 6TQ9   PGW       2.66   0.060     2
+      11 6TQ7   PGW       2.66   0.060     2
+      12 4ZJC   4OT       2.83   0.196     2
+      13 6TP4   PGW       3.01   0.060     2
+      14 6TP3   PGW       3.04   0.060     2  ← 대조군 후보
+
+[4] 양팔 제안
+    치료군  4ZJ8  SUV  res 2.75  유사도 1.000
+    대조군  6TP3  PGW  res 3.04  유사도 0.060
+    유사도 차이 0.940
+    → out/structure_ranking_HCRTR1.json
