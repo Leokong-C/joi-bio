@@ -126,3 +126,18 @@ targets:
     benchmark_ligands: [MK-7145, VU591]
     priority: 10
     risk: "이온채널. 결합 부위 정의가 어려움."
+
+  # ---------- B. 벤치마크 검증용 (신장 질환 아님) ----------
+  # 2026-11-16 추가. 이 항목은 신장 타깃 10개에 속하지 않는다.
+  # EPAS1 이 벤치마크로 실격(기억 베이스라인 AUC 0.9637)한 뒤, "도킹이
+  # 작동하는가" 를 물을 수 있는 타깃으로 선별을 거쳐 고른 것이다.
+  # 선별 근거: docs/target-selection.md
+  - gene: HCRTR1
+    alias: OX1R
+    uniprot: O43613
+    class: gpcr
+    disease: none_benchmark_only
+    rationale: "Butkiewicz HTS 실측 비활성 216,927개. 기억 베이스라인 0/3, 사소한 기술자 최대 AUC 0.550. X선 홀로 구조 14개로 양팔 비교가 가능하다."
+    pocket_mode: cavity
+    benchmark_ligands: [suvorexant, lemborexant, daridorexant]
+    priority: 1

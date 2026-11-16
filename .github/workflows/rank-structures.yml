@@ -1,0 +1,66 @@
+name: Joi_bio 구조 순위 (양팔 선정)
+
+# 치료군·대조군을 **파이프라인 자신의 선택 기준으로** 정한다.
+# 눈으로 고르면 "구조 선택이 숫자를 얼마나 바꾸는가" 를 재는 설계가 깨진다.
+#
+# select_structure 는 충분히 닮은 구조를 찾으면 멈추므로, 양팔을 정하려면
+# 멈추지 않고 전부 평가해야 한다. 그 역할의 스크립트를 돌린다.
+#
+# RCSB·ChEMBL 이 Claude 컨테이너에서 프록시 403 이라 여기서만 된다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      gene:
+        description: "config/targets.yaml 의 gene"
+        required: true
+        default: "HCRTR1"
+      max_download:
+        description: "평가할 구조 수 상한"
+        required: false
+        default: "30"
+
+permissions:
+  contents: write
+
+jobs:
+  rank:
+    name: 구조 순위
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 의존성
+        run: pip install --quiet "numpy<2" "rdkit<2024.3.1" requests pyyaml
+      - name: 순위
+        shell: bash
+        run: |
+          mkdir -p logs out
+          set -o pipefail
+          python -u scripts/rank_structures.py --gene "${{ inputs.gene }}" \
+            --max-download "${{ inputs.max_download }}" \
+            --out "out/structure_ranking_${{ inputs.gene }}.json" 2>&1 \
+            | tee logs/rank.log
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/rank-structures"
+          mkdir -p "$OUT"; cp -r out/. logs "$OUT/" 2>/dev/null || true
+          git -C "$DEST" add -A
+          git -C "$DEST" -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "rank structures ${{ inputs.gene }}" || exit 0
+          for i in $(seq 1 12); do
+            git -C "$DEST" push --quiet origin ci-results && break
+            sleep $(( (RANDOM % 25) + 5 ))
+            git -C "$DEST" pull --quiet --rebase origin ci-results || true
+          done

@@ -45,7 +45,7 @@ on:
       dock_timeout:
         description: "도킹 작업당 timeout(분). 비용 상한 = 작업 수 x 이 값"
         required: false
-        default: "220"
+        default: "300"
 
 permissions:
   contents: write
@@ -123,7 +123,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     steps:
       - uses: actions/checkout@v4
       - uses: mamba-org/setup-micromamba@v2
@@ -148,7 +148,7 @@ jobs:
 
           set -o pipefail
           python -u -m modules.small_molecule.dock --gene ${{ inputs.gene }} \
-            --shard ${{ matrix.shard }} --n-shards 16 \
+            --shard ${{ matrix.shard }} --n-shards 32 \
             --max-ligands ${{ inputs.max_ligands }} \
             --exhaustiveness ${{ inputs.exhaustiveness }} 2>&1 \
             | tee -a "$L"
