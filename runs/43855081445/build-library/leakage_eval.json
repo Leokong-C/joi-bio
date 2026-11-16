@@ -1,0 +1,54 @@
+{
+  "library": "exp/HCRTR1/library_eval.jsonl",
+  "label": "HCRTR1 평가셋",
+  "n": 5000,
+  "n_active": 140,
+  "max_similarity_baseline": {
+    "ef1": 4.286,
+    "ef5": 5.0,
+    "auc": 0.6967,
+    "bedroc": 0.2811,
+    "nef1": 0.12,
+    "gate_thresholds": {
+      "nef1": 0.4,
+      "auc": 0.7,
+      "bedroc": 0.3
+    },
+    "gate_passed": [],
+    "would_pass_gate": false
+  },
+  "max_similarity_scaffold_split": {
+    "ef1": 7.143,
+    "auc": 0.6894,
+    "bedroc": 0.2667,
+    "n_active_scaffolds": 137,
+    "nef1": 0.2,
+    "gate_passed": [],
+    "would_pass_gate": false
+  },
+  "duplicates": {
+    "n_unique": 5000,
+    "n_duplicate_structures": 0,
+    "n_rows_involved": 0,
+    "n_cross_label": 0,
+    "cross_label_examples": []
+  },
+  "analog_leakage": {
+    "threshold": 0.6,
+    "n_active_decoy_pairs_over_threshold": 12,
+    "decoy_cap": 0.35,
+    "n_pairs_over_decoy_cap": 577,
+    "max_active_decoy_tanimoto": 0.7812,
+    "max_pair": [
+      "TDC1604503",
+      "TDC1915584"
+    ]
+  },
+  "active_self_similarity": {
+    "n_actives": 140,
+    "median_nearest_neighbour": 0.311,
+    "mean_nearest_neighbour": 0.3352,
+    "frac_with_analog_over_0.6": 0.0,
+    "frac_with_analog_over_0.8": 0.0
+  }
+}
