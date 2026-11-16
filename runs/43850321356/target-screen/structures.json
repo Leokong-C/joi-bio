@@ -1,0 +1,101 @@
+{
+  "selftest_passed": true,
+  "targets": [
+    {
+      "gene": "HCRTR1",
+      "accession": "O43613",
+      "protein": "Orexin/Hypocretin receptor type 1",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 14,
+      "n_examined": 14,
+      "n_fetch_errors": 0,
+      "n_holo": 14,
+      "n_holo_xray": 14,
+      "n_holo_em": 0,
+      "n_holo_le_3A": 11,
+      "best": [
+        {
+          "pdb_id": "6TOD",
+          "resolution": 2.11,
+          "method": "X-ray",
+          "ligands": [
+            "7MA",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TOS",
+          "resolution": 2.13,
+          "method": "X-ray",
+          "ligands": [
+            "NRE",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TOT",
+          "resolution": 2.22,
+          "method": "X-ray",
+          "ligands": [
+            "NRK",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TO7",
+          "resolution": 2.26,
+          "method": "X-ray",
+          "ligands": [
+            "SUV",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TQ4",
+          "resolution": 2.299,
+          "method": "X-ray",
+          "ligands": [
+            "NV8",
+            "PGW",
+            "SOG"
+          ]
+        },
+        {
+          "pdb_id": "6TP6",
+          "resolution": 2.338,
+          "method": "X-ray",
+          "ligands": [
+            "NT5",
+            "SOG",
+            "PGW"
+          ]
+        },
+        {
+          "pdb_id": "6TQ6",
+          "resolution": 2.546,
+          "method": "X-ray",
+          "ligands": [
+            "NVH",
+            "PGW",
+            "SOG"
+          ]
+        },
+        {
+          "pdb_id": "6TQ9",
+          "resolution": 2.655,
+          "method": "X-ray",
+          "ligands": [
+            "NVN",
+            "SOG",
+            "PGW"
+          ]
+        }
+      ],
+      "c4_pass": true
+    }
+  ]
+}

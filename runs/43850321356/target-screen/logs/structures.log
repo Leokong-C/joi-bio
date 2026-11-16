@@ -1,0 +1,15 @@
+[*] 자체 점검 — 리간드가 있다고 알려진 항목에서 리간드가 나오는가
+    6WJC (CHRM1 아세틸콜린 자리): 비중합체 엔티티 3개 → 리간드 ['OIN']  OK
+    1RFF (TDP1 결합 리간드): 비중합체 엔티티 2개 → 리간드 ['SPM']  OK
+    8IZY (KCNQ2 리간드 결합): 비중합체 엔티티 1개 → 리간드 ['9MF']  OK
+[*] HCRTR1 (O43613) — PDB 14개: Orexin/Hypocretin receptor type 1
+    홀로 14개 (X선 14, cryo-EM 0, 3.0 A 이하 11) → C4 통과
+      6TOD  2.11 A  X-ray              7MA,SOG,PGW
+      6TOS  2.13 A  X-ray              NRE,SOG,PGW
+      6TOT  2.22 A  X-ray              NRK,SOG,PGW
+      6TO7  2.26 A  X-ray              SUV,SOG,PGW
+
+유전자        UniProt      PDB    홀로    X선  cryoEM  <=3A  C4
+----------------------------------------------------------------------
+HCRTR1     O43613        14    14    14       0    11  통과
+→ out/structures.json
