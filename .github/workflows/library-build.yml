@@ -1,0 +1,223 @@
+name: Joi_bio 라이브러리 구축 (신규 타깃)
+
+# 타깃을 갈아끼운 새 파이프라인의 1~2단계. 도킹 없음 — 15~35 러너분.
+#
+# 왜 별도 워크플로인가. tdc-audit.yml 은 "기억이 무너지는가" 를 묻는 감사이고
+# 라이브러리 원본을 일부러 버린다(크다는 이유로 *.json 만 ci-results 로 올린다).
+# 도킹에 넘길 라이브러리가 남지 않으므로 3단계로 갈 수 없다. 여기서는 맞춘
+# 부분표본과 고정본을 보존한다 — 전수는 여전히 버린다(수십만 개).
+#
+# 순서를 바꾸지 않는다. 누수 감사에서 막히면 고정본을 만들지 않고 멈춘다.
+# 규모를 먼저 키우면 편향만 증폭된다.
+#
+# 씨앗 하나로 판정하지 않는다. 타깃 선별에서 TDC 는 씨앗 1개로 "합격" 이었다가
+# 5개로 재니 4개에서 탈락했다. 부분표본 추출이 판정을 흔드는지 같이 본다.
+#
+# Claude 컨테이너는 Harvard Dataverse·PubChem 이 프록시 403 이라 여기서만 된다.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dataset:
+        description: "TDC HTS 데이터셋"
+        required: false
+        default: "orexin1_receptor_butkiewicz"
+      gene:
+        description: "고정본을 둘 타깃 디렉터리 이름"
+        required: false
+        default: "HCRTR1"
+      seeds:
+        description: "부분표본 씨앗 (쉼표 구분). 판정은 여러 씨앗으로 확인한다"
+        required: false
+        default: "7,88,1023,4242,31337"
+      freeze_seed:
+        description: "도킹에 쓸 고정본의 씨앗. seeds 안에 있어야 한다"
+        required: false
+        default: "1023"
+      match_n:
+        description: "맞춘 부분표본 크기 (EPAS1 평가셋과 같게)"
+        required: false
+        default: "2157"
+      match_actives:
+        description: "맞춘 부분표본의 활성 수"
+        required: false
+        default: "60"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: 라이브러리 구축 + 누수 감사
+    runs-on: ubuntu-latest
+    # 넉넉하게 준다. 11-01 에 timeout 을 예산에 맞춰 170분으로 조였다가 샤드
+    # 7개를 잃었고 실제 지출은 승인액의 30% 였다. 도킹이 없어 실소비가 작다.
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"   # PyTDC 가 3.13 에서 소스 빌드에 실패한다
+
+      - name: 의존성
+        run: |
+          # tdc-audit.yml 과 같은 조합. scikit-learn 은 PyTDC 의 oracles 가
+          # pkg_resources 로 버전을 조회해서 쓴다 — 없으면 import 에서 죽는다.
+          # vina·openbabel·meeko 는 여기서 쓰지 않는다(도킹 없음). pip 로 받으면
+          # 빌드가 깨지므로 도킹 워크플로에서는 conda 로만 받는다.
+          pip install --quiet "numpy<2" "pandas<3" "rdkit<2024.3.1" requests scikit-learn
+          pip install --quiet --no-deps PyTDC
+          pip install --quiet tqdm fuzzywuzzy seaborn dataclasses-json \
+            "setuptools<81" huggingface_hub
+
+      - name: 게이트 자체 점검
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p logs lib_out
+          # 누수 감사는 게이트 문턱으로 판정한다. 문턱 쪽이 조용히 어긋나 있으면
+          # 감사 결과가 거짓 안심이 되므로 먼저 본다.
+          python scripts/gate_selfcheck.py 2>&1 | tee logs/00_gate_selfcheck.log
+
+      - name: 1단계 — 라이브러리 구축 (씨앗마다 부분표본)
+        shell: bash
+        run: |
+          set -o pipefail
+          S="${{ inputs.dataset }}"
+          IFS=',' read -ra SEEDS <<< "${{ inputs.seeds }}"
+          for seed in "${SEEDS[@]}"; do
+            seed="$(echo "$seed" | xargs)"
+            echo "===== 씨앗 $seed =====" | tee -a "logs/01_library.log"
+            # 전수는 매 씨앗 같으므로 한 번만 쓰고 덮어쓴다 — 보존하지 않는다
+            python -u scripts/tdc_to_library.py --name "$S" \
+              --data-dir tdc_raw \
+              --seed "$seed" \
+              --match-n "${{ inputs.match_n }}" \
+              --match-actives "${{ inputs.match_actives }}" \
+              --out-full "lib_out/${S}_full.jsonl" \
+              --out-matched "lib_out/${S}_matched_seed${seed}.jsonl" \
+                2>&1 | tee -a "logs/01_library.log"
+          done
+          echo "--- 만들어진 부분표본 ---" | tee -a "logs/01_library.log"
+          ls -la lib_out/*_matched_seed*.jsonl | tee -a "logs/01_library.log"
+
+      - name: 2단계 — 누수 감사 (씨앗 전부). 막히면 여기서 멈춘다
+        id: audit
+        shell: bash
+        run: |
+          set -o pipefail
+          S="${{ inputs.dataset }}"
+          IFS=',' read -ra SEEDS <<< "${{ inputs.seeds }}"
+          FAILED=""
+          for seed in "${SEEDS[@]}"; do
+            seed="$(echo "$seed" | xargs)"
+            echo "===== 씨앗 $seed =====" | tee -a "logs/02_leakage.log"
+            # leakage_audit.py 는 기억이 게이트를 통과하면 1 을 낸다.
+            # || true 로 삼키지 않는다 — 삼키면 교란을 안고 도킹으로 간다.
+            if python -u scripts/leakage_audit.py \
+                 --library "lib_out/${S}_matched_seed${seed}.jsonl" \
+                 --label "${S} (matched, seed ${seed})" \
+                 --out "lib_out/${S}_matched_seed${seed}_leakage.json" \
+                   2>&1 | tee -a "logs/02_leakage.log"; then
+              echo "    씨앗 $seed — 기억이 게이트를 넘지 못한다 (통과)" \
+                | tee -a "logs/02_leakage.log"
+            else
+              echo "    씨앗 $seed — 기억이 게이트를 넘는다 (탈락)" \
+                | tee -a "logs/02_leakage.log"
+              FAILED="$FAILED $seed"
+            fi
+          done
+          # 전수에도 한 번 — 그 벤치마크의 실제 성질
+          python -u scripts/leakage_audit.py \
+            --library "lib_out/${S}_full.jsonl" \
+            --label "${S} (full)" \
+            --out "lib_out/${S}_full_leakage.json" \
+              2>&1 | tee -a "logs/02_leakage.log" || true
+          if [ -n "$FAILED" ]; then
+            echo "leaked=$FAILED" >> "$GITHUB_OUTPUT"
+            echo "[!] 기억이 게이트를 넘은 씨앗:$FAILED" | tee -a "logs/02_leakage.log"
+            echo "[!] 여기서 막히면 도킹은 의미가 없다 — 고정본을 만들지 않는다." \
+              | tee -a "logs/02_leakage.log"
+            exit 1
+          fi
+          echo "leaked=" >> "$GITHUB_OUTPUT"
+
+      - name: 고정본 — 도킹 입력 (누수 감사 통과 후에만)
+        shell: bash
+        run: |
+          set -o pipefail
+          S="${{ inputs.dataset }}"
+          FS="${{ inputs.freeze_seed }}"
+          mkdir -p "targets/${{ inputs.gene }}"
+          # rotb 를 다시 세고 묵은 도킹 필드를 지우고 sha256 을 찍는다.
+          # rotb 가 없으면 dock.py 의 부하 분산이 조용히 실패해 무거운 리간드가
+          # 한 샤드에 몰린다 — EPAS1 1차에서 샤드 3개를 타임아웃으로 잃은 경로다.
+          python -u scripts/freeze_library.py \
+            --library "lib_out/${S}_matched_seed${FS}.jsonl" \
+            --gene "${{ inputs.gene }}" \
+            --targetdir "targets/${{ inputs.gene }}" \
+            --label "${S} (matched, seed ${FS})" \
+              2>&1 | tee logs/03_freeze.log
+          ls -la "targets/${{ inputs.gene }}/" | tee -a logs/03_freeze.log
+
+      - name: 요약
+        if: always()
+        shell: bash
+        run: |
+          python - <<'EOF' 2>&1 | tee logs/04_summary.log
+          import glob, json
+          print("누수 감사 — 기억(최대유사도) 베이스라인\n")
+          hdr = f"{'라벨':46s} {'nEF1%':>8} {'AUC':>8} {'BEDROC':>8}  게이트"
+          print(hdr); print("-" * len(hdr))
+          for f in sorted(glob.glob("lib_out/*_leakage.json")):
+              d = json.load(open(f))
+              m = d.get("max_similarity_baseline", {})
+              g = "통과(기억 실패)" if not m.get("would_pass_gate") else "탈락(기억 통과)"
+              print(f"{str(d.get('label'))[:46]:46s} {str(m.get('nef1')):>8} "
+                    f"{str(m.get('auc')):>8} {str(m.get('bedroc')):>8}  {g}")
+          print("\n골격 분할 — 기억이 아니라 일반화를 묻는다\n")
+          for f in sorted(glob.glob("lib_out/*_leakage.json")):
+              d = json.load(open(f))
+              m = d.get("max_similarity_scaffold_split", {})
+              if not m:
+                  continue
+              print(f"{str(d.get('label'))[:46]:46s} nEF1% {str(m.get('nef1')):>8} "
+                    f"AUC {str(m.get('auc')):>8}  활성골격 {m.get('n_active_scaffolds')}")
+          print("\n기억 베이스라인은 새 타깃에서도 같은 표에 싣는다 —")
+          print("타깃 교체는 이 교란을 없애지 않고 줄인다.")
+          EOF
+
+      - name: 결과를 ci-results 로
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          DEST=$RUNNER_TEMP/ci
+          git clone --quiet --depth 1 --branch ci-results \
+            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$DEST"
+          OUT="$DEST/runs/${GITHUB_RUN_ID}/library-build"
+          mkdir -p "$OUT/lib" "$OUT/targets"
+          # 전수 jsonl 은 올리지 않는다 — 수십만 개다. 맞춘 부분표본(2,157개)과
+          # 고정본은 도킹에 넘겨야 하므로 보존한다. tdc-audit.yml 이 이걸
+          # 버려서 3단계로 갈 수 없었다.
+          cp lib_out/*_leakage.json "$OUT/lib/" 2>/dev/null || true
+          cp lib_out/*_matched_seed*.jsonl "$OUT/lib/" 2>/dev/null || true
+          cp -r "targets/${{ inputs.gene }}" "$OUT/targets/" 2>/dev/null || true
+          cp -r logs "$OUT/" 2>/dev/null || true
+          cd "$DEST" && git add -A
+          git -c user.name=joi-bio-ci -c user.email=ci@joi-bio \
+            commit -q -m "library build ${{ inputs.dataset }} -> ${{ inputs.gene }}" || exit 0
+          git push --quiet origin ci-results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: library-build
+          path: |
+            lib_out/
+            targets/
+            logs/
+          retention-days: 30
