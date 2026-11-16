@@ -1,0 +1,56 @@
+{
+  "n_compounds": 62,
+  "n_screen_excluded": 0,
+  "n_known_active": 0,
+  "n_decoy": 62,
+  "ef1": null,
+  "ef5": null,
+  "ef10": null,
+  "auc": null,
+  "bedroc": null,
+  "best_score": -10.551,
+  "thresholds": {
+    "nef1": 0.4,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [],
+    "n_requested": 3,
+    "n_found_in_library": 0,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": [
+      "daridorexant",
+      "lemborexant",
+      "suvorexant"
+    ]
+  },
+  "active_fraction": 0.0,
+  "max_reachable_ef1": null,
+  "nef1": null,
+  "nef5": null,
+  "nef10": null,
+  "ef1_threshold_unreachable": false,
+  "active_fraction_too_high": false,
+  "checks": {
+    "nef1": false,
+    "auc": false,
+    "bedroc": false
+  },
+  "arm": "control",
+  "thresholds_applied": false,
+  "verdict": "INCOMPLETE",
+  "verdict_reason": "평가셋 불완전 — 라이브러리 4999개 중 62개만 도킹됐다(적용률 1.2%, 문턱 90%). 샤드가 통째로 빠졌을 가능성이 크다. 지표를 측정값으로 쓰지 마라.",
+  "gene": "HCRTR1",
+  "pocket_confidence": "high",
+  "eval_set_coverage": {
+    "n_library": 4999,
+    "n_docking_attempted": 62,
+    "n_scored": 62,
+    "coverage": 0.0124,
+    "threshold": 0.9,
+    "complete": false
+  }
+}
