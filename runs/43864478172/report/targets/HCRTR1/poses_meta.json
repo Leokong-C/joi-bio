@@ -1,0 +1,219 @@
+{
+  "gene": "HCRTR1",
+  "pdb_id": "6TOT",
+  "resolution": 2.22,
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "NRK",
+    "center": [
+      24.527,
+      0.498,
+      95.04
+    ],
+    "size": [
+      20.0,
+      20.8,
+      20.0
+    ],
+    "confidence": "high",
+    "note": "NRK (30 heavy atoms) 기준"
+  },
+  "reference_ligand": "NRK",
+  "compounds": [
+    {
+      "name": "TDC44246999",
+      "chembl_id": "TDC44246999",
+      "group": "top_hit",
+      "screen_score": -11.588,
+      "pose_scores": [
+        -11.58,
+        -11.34,
+        -11.25
+      ],
+      "n_poses": 1,
+      "smiles": "CCN(CC1NC(Cc2ccccc2)(C(=O)OC)C2C(=O)N(Cc3ccccc3)C(=O)C12)S(=O)(=O)c1ccc(OC(F)(F)F)cc1"
+    },
+    {
+      "name": "TDC9556031",
+      "chembl_id": "TDC9556031",
+      "group": "top_hit",
+      "screen_score": -10.541,
+      "pose_scores": [
+        -10.5,
+        -10.41,
+        -10.07
+      ],
+      "n_poses": 1,
+      "smiles": "COC(=O)C1CCC(C)C(c2ccc(C)cc2)N1C(=O)c1ccc(/C=N\\OC(C)c2cn(C(CO)Cc3ccccc3)nn2)cc1"
+    },
+    {
+      "name": "TDC1967831",
+      "chembl_id": "TDC1967831",
+      "group": "top_hit",
+      "screen_score": -9.924,
+      "pose_scores": [
+        -10.0,
+        -9.87,
+        -9.35
+      ],
+      "n_poses": 1,
+      "smiles": "CCOP(=O)(OCC)c1cccc(OP(=O)(c2cccc([N+](=O)[O-])c2)c2cccc([N+](=O)[O-])c2)c1"
+    },
+    {
+      "name": "TDC2450211",
+      "chembl_id": "TDC2450211",
+      "group": "top_hit",
+      "screen_score": -9.857,
+      "pose_scores": [
+        -9.86,
+        -9.69,
+        -9.27
+      ],
+      "n_poses": 1,
+      "smiles": "COc1cc(-c2nnc(CSc3nnc(Nc4ccc(Oc5ccccc5)cc4)s3)o2)cc(OC)c1OC"
+    },
+    {
+      "name": "TDC9541975",
+      "chembl_id": "TDC9541975",
+      "group": "top_hit",
+      "screen_score": -9.703,
+      "pose_scores": [
+        -9.8,
+        -9.4,
+        -9.2
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc(OCCNC(=O)c2ccccc2OCC(=O)Nc2ccc(NC(C)=O)cc2)cc1"
+    },
+    {
+      "name": "TDC24980764",
+      "chembl_id": "TDC24980764",
+      "group": "top_hit",
+      "screen_score": -9.54,
+      "pose_scores": [
+        -9.79,
+        -9.55,
+        -9.4
+      ],
+      "n_poses": 1,
+      "smiles": "CCOc1ccc(CCNC(=O)COC(=O)c2ccc(F)c(S(=O)(=O)N3CCOCC3)c2)cc1OCC"
+    },
+    {
+      "name": "TDC44201429",
+      "chembl_id": "TDC44201429",
+      "group": "top_hit",
+      "screen_score": -9.461,
+      "pose_scores": [
+        -9.53,
+        -9.29,
+        -9.27
+      ],
+      "n_poses": 1,
+      "smiles": "C=CCC(CC(=O)N(CCO)Cc1ccccc1)C(=O)NC(COC(=O)C(CC=C)Cc1ccc(F)cc1)Cc1ccccc1"
+    },
+    {
+      "name": "TDC9549815",
+      "chembl_id": "TDC9549815",
+      "group": "top_hit",
+      "screen_score": -9.333,
+      "pose_scores": [
+        -8.18,
+        -8.09,
+        -8.07
+      ],
+      "n_poses": 1,
+      "smiles": "C#CCOCCOCCOCCNc1nc(N2CCN(C(=O)Cn3cc(CCCC[NH3+])nn3)CC2)nc(N2CCN(C(=O)C(C(C)C)n3cc(CCO)nn3)CC2)n1"
+    },
+    {
+      "name": "TDC3242371",
+      "chembl_id": "TDC3242371",
+      "group": "top_hit",
+      "screen_score": -9.213,
+      "pose_scores": [
+        -9.39,
+        -9.06,
+        -8.88
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc(-c2cc(CCCC(=O)NCCc3ccc(OC)cc3OC)no2)cc1"
+    },
+    {
+      "name": "TDC2390823",
+      "chembl_id": "TDC2390823",
+      "group": "top_hit",
+      "screen_score": -9.212,
+      "pose_scores": [
+        -9.21,
+        -8.94,
+        -8.86
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc(CCNC(=O)COc2ccc(N(C)S(=O)(=O)c3ccc(C)cc3)cc2)cc1OC"
+    },
+    {
+      "name": "TDC24817899",
+      "chembl_id": "TDC24817899",
+      "group": "top_hit",
+      "screen_score": -9.194,
+      "pose_scores": [
+        -8.66,
+        -8.61,
+        -8.53
+      ],
+      "n_poses": 1,
+      "smiles": "CCCN(CC(=O)Nc1ccccc1OC)C(=O)c1cc(S(=O)(=O)NCc2ccccc2)ccc1C"
+    },
+    {
+      "name": "TDC16188440",
+      "chembl_id": "TDC16188440",
+      "group": "top_hit",
+      "screen_score": -9.188,
+      "pose_scores": [
+        -9.01,
+        -8.84,
+        -8.76
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc(CCN(C)Cc2nc(Cc3ccc(OC)c(OC)c3)no2)cc1OC"
+    },
+    {
+      "name": "TDC2250010",
+      "chembl_id": "TDC2250010",
+      "group": "top_hit",
+      "screen_score": -9.035,
+      "pose_scores": [
+        -9.04,
+        -8.65,
+        -8.51
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc(N(CC(=O)NCCSCc2ccc(C)cc2)S(=O)(=O)c2ccccc2)cc1"
+    },
+    {
+      "name": "TDC20860090",
+      "chembl_id": "TDC20860090",
+      "group": "top_hit",
+      "screen_score": -8.8,
+      "pose_scores": [
+        -8.78,
+        -8.74,
+        -8.55
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc(-c2nc(CSCC(=O)NCCCN3CCCC3=O)c(C)o2)cc1OC"
+    },
+    {
+      "name": "TDC1737219",
+      "chembl_id": "TDC1737219",
+      "group": "top_hit",
+      "screen_score": -8.8,
+      "pose_scores": [
+        -9.08,
+        -8.29,
+        -8.21
+      ],
+      "n_poses": 1,
+      "smiles": "COc1ccc(N(CC(=O)NCCSc2ccccn2)S(=O)(=O)c2ccccc2)cc1OC"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/joi-bio/joi-bio/core/report/build.py", line 198, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/core/report/build.py", line 189, in main
+    body = "\n".join(target_section(t, troot / t["gene"]) for t in targets)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/core/report/build.py", line 189, in <genexpr>
+    body = "\n".join(target_section(t, troot / t["gene"]) for t in targets)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/joi-bio/joi-bio/core/report/build.py", line 69, in target_section
+    lines.append(f"| EF1% | {fmt('ef1')} | ≥ {val['thresholds']['ef1']} |")
+                                              ~~~~~~~~~~~~~~~~~^^^^^^^
+KeyError: 'ef1'
