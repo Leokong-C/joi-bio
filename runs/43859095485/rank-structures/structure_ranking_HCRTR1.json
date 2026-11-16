@@ -1,0 +1,150 @@
+{
+  "gene": "HCRTR1",
+  "uniprot": "O43613",
+  "benchmark_ligands": [
+    "suvorexant",
+    "lemborexant",
+    "daridorexant"
+  ],
+  "benchmark_resolved": [
+    "CHEMBL1083659",
+    "CHEMBL3545367",
+    "CHEMBL4297590"
+  ],
+  "n_rcsb": 14,
+  "n_holo": 14,
+  "n_apo": 0,
+  "failed": [],
+  "holo_ranked": [
+    {
+      "pdb_id": "6TOT",
+      "resolution": 2.22,
+      "ligand": "NRK",
+      "n_heavy": 30,
+      "similarity": 1.0,
+      "ligand_smiles": "Cc1ncc(OC[C@]2(C[C@H]2C(=O)Nc3ccc(F)cn3)c4cccc(F)c4)c(C)n1"
+    },
+    {
+      "pdb_id": "6TO7",
+      "resolution": 2.26,
+      "ligand": "SUV",
+      "n_heavy": 32,
+      "similarity": 1.0,
+      "ligand_smiles": "C[C@@H]1CCN(CCN1C(=O)c2cc(C)ccc2n3nccn3)c4oc5ccc(Cl)cc5n4"
+    },
+    {
+      "pdb_id": "4ZJ8",
+      "resolution": 2.75,
+      "ligand": "SUV",
+      "n_heavy": 32,
+      "similarity": 1.0,
+      "ligand_smiles": "C[C@@H]1CCN(CCN1C(=O)c2cc(C)ccc2n3nccn3)c4oc5ccc(Cl)cc5n4"
+    },
+    {
+      "pdb_id": "6TP3",
+      "resolution": 3.04,
+      "ligand": "NS2",
+      "n_heavy": 32,
+      "similarity": 0.7714,
+      "ligand_smiles": "COc1ccc(n2nccn2)c(c1)C(=O)N3CCC[C@@]3(C)c4[nH]c5c(C)c(Cl)ccc5n4"
+    },
+    {
+      "pdb_id": "6V9S",
+      "resolution": 3.5,
+      "ligand": "JHC",
+      "n_heavy": 35,
+      "similarity": 0.641,
+      "ligand_smiles": "CC[C@H](C)[C@H]1CN(CCCN1C(=O)c2cc(C)ccc2n3nccn3)c4oc5ccc(Cl)cc5n4"
+    },
+    {
+      "pdb_id": "6TP6",
+      "resolution": 2.34,
+      "ligand": "NT5",
+      "n_heavy": 31,
+      "similarity": 0.2796,
+      "ligand_smiles": "C[C@@H]1CC[C@@H](COc2ccc(F)cn2)CN1C(=O)c3cc(C)ccc3c4ncccn4"
+    },
+    {
+      "pdb_id": "6TOS",
+      "resolution": 2.13,
+      "ligand": "NRE",
+      "n_heavy": 27,
+      "similarity": 0.2316,
+      "ligand_smiles": "COc1c(F)cccc1C(=O)N2C[C@@H](C)CC[C@H]2CNc3ccc(Br)cn3"
+    },
+    {
+      "pdb_id": "6TOD",
+      "resolution": 2.11,
+      "ligand": "7MA",
+      "n_heavy": 32,
+      "similarity": 0.1471,
+      "ligand_smiles": "CCN(Cc1cccnc1)C(=O)CN(c2ccc(OC)nc2)[S](=O)(=O)c3ccccc3C"
+    },
+    {
+      "pdb_id": "6TQ4",
+      "resolution": 2.3,
+      "ligand": "NV8",
+      "n_heavy": 28,
+      "similarity": 0.2353,
+      "ligand_smiles": "O=[S](=O)(N1CCCC12CCN(CC2)c3oc4ccccc4n3)c5ccccc5"
+    },
+    {
+      "pdb_id": "6TQ6",
+      "resolution": 2.55,
+      "ligand": "NVH",
+      "n_heavy": 33,
+      "similarity": 0.15,
+      "ligand_smiles": "C[S](=O)(=O)c1cncc(c1)N2C(=O)N(Cc3c(F)cc(F)cc3F)c4ncccc4[S]2(=O)=O"
+    },
+    {
+      "pdb_id": "6TQ9",
+      "resolution": 2.66,
+      "ligand": "NVN",
+      "n_heavy": 26,
+      "similarity": 0.2,
+      "ligand_smiles": "CN(C)c1ccc(NC(=O)Nc2cc(C)nc3c(F)cc(F)cc23)cc1"
+    },
+    {
+      "pdb_id": "6TQ7",
+      "resolution": 2.66,
+      "ligand": "NVK",
+      "n_heavy": 24,
+      "similarity": 0.1798,
+      "ligand_smiles": "Cc1oc2cc(NC(=O)Nc3ccnc4cccnc34)ccc2n1"
+    },
+    {
+      "pdb_id": "4ZJC",
+      "resolution": 2.83,
+      "ligand": "4OT",
+      "n_heavy": 32,
+      "similarity": 0.1961,
+      "ligand_smiles": "Cc1sc(c2ccccc2F)c(n1)C(=O)N3CCC[C@H]3Cc4oc(nn4)c5ccccc5"
+    },
+    {
+      "pdb_id": "6TP4",
+      "resolution": 3.01,
+      "ligand": "NRZ",
+      "n_heavy": 27,
+      "similarity": 0.2135,
+      "ligand_smiles": "COc1ccc(cc1)[S](=O)(=O)N2CCC[C@H]2C(=O)Nc3cc(C)cc(C)c3"
+    }
+  ],
+  "apo": [],
+  "treatment": {
+    "pdb_id": "6TOT",
+    "resolution": 2.22,
+    "ligand": "NRK",
+    "n_heavy": 30,
+    "similarity": 1.0,
+    "ligand_smiles": "Cc1ncc(OC[C@]2(C[C@H]2C(=O)Nc3ccc(F)cn3)c4cccc(F)c4)c(C)n1"
+  },
+  "control": {
+    "pdb_id": "6TP4",
+    "resolution": 3.01,
+    "ligand": "NRZ",
+    "n_heavy": 27,
+    "similarity": 0.2135,
+    "ligand_smiles": "COc1ccc(cc1)[S](=O)(=O)N2CCC[C@H]2C(=O)Nc3cc(C)cc(C)c3"
+  },
+  "similarity_gap": 0.7865
+}
