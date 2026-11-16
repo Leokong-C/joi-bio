@@ -211,11 +211,19 @@ def parse_pdb(text: str) -> dict:
 
 
 def find_druglike_ligands(hetatms: list[dict], min_heavy: int = 12) -> list[dict]:
-    """공결정 리간드 후보를 무거운 것부터 반환. 용매·금속은 제외."""
+    """공결정 리간드 후보를 무거운 것부터 반환. 용매·금속·당사슬·지질은 제외.
+
+    **당사슬과 지질을 빼는 것이 크기로 고르는 것보다 먼저다.** 인지질 PGW 는
+    중원자 51개로 웬만한 약보다 크다. 2026-11-16 에 오렉신1 구조 14개 중
+    11개에서 PGW 가 실제 길항제(32개)를 제치고 1순위가 됐고, `define_pocket`
+    이 그 중심으로 박스를 잡으므로 포켓이 아닌 막 쪽에 도킹할 뻔했다.
+    """
+    from core.structure.nonligand import NON_LIGAND
+
     groups: dict[tuple, list[dict]] = {}
     for a in hetatms:
         rn = a["resname"]
-        if rn in SOLVENT or rn in COFACTOR_KEEP:
+        if rn in SOLVENT or rn in COFACTOR_KEEP or rn in NON_LIGAND:
             continue
         groups.setdefault((rn, a["chain"], a["resseq"]), []).append(a)
 

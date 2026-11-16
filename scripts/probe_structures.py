@@ -47,17 +47,10 @@ MIN_LIGAND_MW = 150.0
 # 당사슬·지질·계면활성제. 분자량 150 을 넘지만 **리간드가 아니다** —
 # 당사슬은 단백질에 붙은 글리코실화이고, 지질과 계면활성제는 막단백질을
 # 녹이려고 넣은 것이다. 11-16 에 SPAM1 의 '홀로 1개'가 NAG 하나였다.
-GLYCANS_LIPIDS = {
-    # 당사슬
-    "NAG", "NDG", "A2G", "BMA", "MAN", "BGC", "GLC", "GAL", "GLA", "FUC",
-    "FUL", "SIA", "NGA", "XYS", "RIB", "RAM", "GCU", "IDS", "SGN",
-    # 지질
-    "3PE", "PEE", "PCW", "PC1", "POV", "PX4", "PGT", "PEF", "PSC", "CDL",
-    "DGA", "LPP", "PEV", "MYR", "PIO", "PGW", "LHG", "PLC", "SPH",
-    # 계면활성제
-    "SOG", "BOG", "BNG", "LMU", "DAO", "UND", "OCT", "HEZ", "TRD", "7PE",
-    "P33", "PG0", "1PG", "2PG", "F09", "JEF", "MC3",
-}
+import sys as _sys
+from pathlib import Path as _Path
+_sys.path.insert(0, str(_Path(__file__).resolve().parents[1]))
+from core.structure.nonligand import NON_LIGAND as GLYCANS_LIPIDS  # 한 곳에서 관리한다
 
 
 def uniprot_accession(gene: str) -> dict:
