@@ -102,6 +102,9 @@ def main() -> int:
     ap.add_argument("--screen-n", type=int, default=5000)
     ap.add_argument("--data-dir", default="tdc_raw")
     ap.add_argument("--out-dir", default=None)
+    ap.add_argument("--active-max-sim", type=float, default=0.0,
+                    help="평가셋 활성끼리 이 Tanimoto 이상으로 닮지 않게 고른다. "
+                         "0 이면 끄고 무작위로 뽑는다")
     ap.add_argument("--seed", type=int, default=1023)
     args = ap.parse_args()
 
@@ -127,7 +130,36 @@ def main() -> int:
     rng.shuffle(acts)
     rng.shuffle(decs)
 
-    n_eval_act = min(round(args.eval_n * args.eval_active_fraction), len(acts))
+    want_act = min(round(args.eval_n * args.eval_active_fraction), len(acts))
+    dropped_sim = 0
+    if args.active_max_sim > 0:
+        # 활성끼리 닮은 쌍이 평가셋에 같이 들어가면, 단백질 없이 "활성과
+        # 닮았나"만 세는 기억 베이스라인이 그 쌍을 서로 찾아낸다. 11-16 에
+        # 활성 140개로 재니 바로 그 이유로 게이트를 3/3 통과했다.
+        # 탈락한 활성은 버리지 않고 스크리닝셋으로 보낸다 — 거기서는
+        # 숨은 양성으로 쓸모가 있다.
+        from rdkit import Chem, DataStructs, RDLogger
+        from rdkit.Chem import rdFingerprintGenerator
+        RDLogger.DisableLog("rdApp.*")
+        fpgen = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=4096)
+        picked, picked_fp, rest = [], [], []
+        for r in acts:
+            fp = fpgen.GetFingerprint(Chem.MolFromSmiles(r["smiles"]))
+            too_close = bool(picked_fp) and max(
+                DataStructs.BulkTanimotoSimilarity(fp, picked_fp)) >= args.active_max_sim
+            if too_close:
+                dropped_sim += 1          # 닮아서 뺀 것만 센다
+                rest.append(r)
+            elif len(picked) < want_act:
+                picked.append(r)
+                picked_fp.append(fp)
+            else:
+                rest.append(r)            # 자리가 차서 남은 것 — 닮아서가 아니다
+        print(f"    활성 다양성 필터 (Tanimoto < {args.active_max_sim}): "
+              f"{len(picked)}개 선택, 닮아서 뺀 것 {dropped_sim}개, "
+              f"자리가 차서 남은 것 {len(rest) - dropped_sim}개")
+        acts = picked + rest          # 앞쪽 picked 만 평가셋에 들어간다
+    n_eval_act = min(want_act, len(acts))
     n_eval_dec = min(args.eval_n - n_eval_act, len(decs))
     ev = acts[:n_eval_act] + decs[:n_eval_dec]
 
@@ -154,6 +186,8 @@ def main() -> int:
         "gene": args.gene, "dataset": args.dataset, "seed": args.seed,
         "source_rows": len(pairs), "unique_rows": len(rows), "qc": qc,
         "pains_flagged": sum(1 for r in rows if r["pains"]),
+        "active_max_sim": args.active_max_sim,
+        "actives_moved_to_screen_by_similarity": dropped_sim,
         "eval": {"n_total": len(ev), "n_active": n_eval_act,
                  "active_fraction": round(n_eval_act / len(ev), 5),
                  "sha256": h_ev, "file": "library_eval.jsonl"},

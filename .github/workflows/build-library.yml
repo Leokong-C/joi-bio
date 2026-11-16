@@ -26,6 +26,10 @@ on:
         description: "스크리닝셋 크기"
         required: false
         default: "5000"
+      active_max_sim:
+        description: "평가셋 활성끼리 이 Tanimoto 이상 닮지 않게. 0이면 끈다"
+        required: false
+        default: "0"
 
 permissions:
   contents: write
@@ -57,6 +61,7 @@ jobs:
           python -u scripts/build_library.py \
             --dataset "${{ inputs.dataset }}" --gene "${{ inputs.gene }}" \
             --eval-n "${{ inputs.eval_n }}" --screen-n "${{ inputs.screen_n }}" \
+            --active-max-sim "${{ inputs.active_max_sim }}" \
             --data-dir tdc_raw 2>&1 | tee logs/build.log
 
       - name: 누수 감사 — 평가셋
