@@ -1,0 +1,113 @@
+{
+  "n": 5000,
+  "n_active": 140,
+  "baselines": {
+    "fluorine_count": {
+      "description": "불소 원자 수",
+      "median_active": 0.0,
+      "median_decoy": 0.0,
+      "ef1": 0.0,
+      "ef5": 0.286,
+      "nef1": 0.0,
+      "auc": 0.4687,
+      "bedroc": 0.0275
+    },
+    "sulfone": {
+      "description": "설폰기 수",
+      "median_active": 0.0,
+      "median_decoy": 0.0,
+      "ef1": 1.429,
+      "ef5": 0.571,
+      "nef1": 0.04,
+      "auc": 0.4983,
+      "bedroc": 0.0525
+    },
+    "nitrile": {
+      "description": "나이트릴기 수",
+      "median_active": 0.0,
+      "median_decoy": 0.0,
+      "ef1": 2.857,
+      "ef5": 1.286,
+      "nef1": 0.08,
+      "auc": 0.4979,
+      "bedroc": 0.0859
+    },
+    "halogen_any": {
+      "description": "할로겐 수",
+      "median_active": 0.0,
+      "median_decoy": 0.0,
+      "ef1": 0.0,
+      "ef5": 0.286,
+      "nef1": 0.0,
+      "auc": 0.4661,
+      "bedroc": 0.0349
+    },
+    "heavy_atoms": {
+      "description": "중원자 수",
+      "median_active": 26.0,
+      "median_decoy": 25.0,
+      "ef1": 2.143,
+      "ef5": 1.286,
+      "nef1": 0.06,
+      "auc": 0.55,
+      "bedroc": 0.0857
+    },
+    "tpsa": {
+      "description": "TPSA",
+      "median_active": 66.955,
+      "median_decoy": 72.70000000000002,
+      "ef1": 0.714,
+      "ef5": 0.429,
+      "nef1": 0.02,
+      "auc": 0.4407,
+      "bedroc": 0.0415
+    },
+    "mw": {
+      "description": "분자량",
+      "median_active": 362.4290000000001,
+      "median_decoy": 358.4190000000001,
+      "ef1": 2.143,
+      "ef5": 1.286,
+      "nef1": 0.06,
+      "auc": 0.5388,
+      "bedroc": 0.097
+    }
+  },
+  "gate_check": {
+    "thresholds": {
+      "nef1": 0.4,
+      "auc": 0.7,
+      "bedroc": 0.3
+    },
+    "max_over_probes": {
+      "nef1": 0.08,
+      "auc": 0.55,
+      "bedroc": 0.097
+    },
+    "passed": [],
+    "n_passed": 0,
+    "trivial_would_pass_gate": false
+  },
+  "worst_case": {
+    "probe": "heavy_atoms",
+    "auc": 0.55,
+    "threshold": 0.6,
+    "accepted": true,
+    "gate_check": {
+      "thresholds": {
+        "nef1": 0.4,
+        "auc": 0.7,
+        "bedroc": 0.3
+      },
+      "max_over_probes": {
+        "nef1": 0.08,
+        "auc": 0.55,
+        "bedroc": 0.097
+      },
+      "passed": [],
+      "n_passed": 0,
+      "trivial_would_pass_gate": false
+    },
+    "note": "'중원자 수' 하나만 세도 AUC 0.55 가 나온다. 단백질도 구조도 쓰지 않은 순위가 이 정도라면, 지표의 상당 부분은 decoy 가 활성과 물성·화학형에서 너무 다르다는 사실에서 나온 것이다."
+  }
+}

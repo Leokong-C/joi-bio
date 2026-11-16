@@ -1,0 +1,29 @@
+{
+  "gene": "HCRTR1",
+  "dataset": "orexin1_receptor_butkiewicz",
+  "seed": 1023,
+  "source_rows": 218158,
+  "unique_rows": 217160,
+  "qc": {
+    "unparseable": 49,
+    "duplicates": 949,
+    "label_conflicts": 2
+  },
+  "pains_flagged": 11609,
+  "active_max_sim": 0.6,
+  "actives_moved_to_screen_by_similarity": 23,
+  "eval": {
+    "n_total": 5000,
+    "n_active": 140,
+    "active_fraction": 0.028,
+    "sha256": "68567a142989cb9850c6eb75a9ac9f52fc37a622b1113a6d74a4e105cb588e76",
+    "file": "library_eval.jsonl"
+  },
+  "screen": {
+    "n_total": 5000,
+    "n_active": 93,
+    "sha256": "1c7cddd57625de9c6e311bb9b1a7438a6382bf70f930e7fbf984a9445614851c",
+    "file": "library_screen.jsonl"
+  },
+  "disjoint_verified": true
+}
