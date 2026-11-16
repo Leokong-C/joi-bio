@@ -1,0 +1,506 @@
+[
+  {
+    "label": "PH20",
+    "symbols": {
+      "SPAM1": 16,
+      "PH20": 0,
+      "PH-20": 0,
+      "HEL-S-96": 0
+    },
+    "n_aids": 16,
+    "min_tested_required": 2000,
+    "assays": [
+      {
+        "aid": 1904,
+        "name": "siRNA Circadian Assay",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 624099,
+        "name": "An siRNA screen for human genes that are involved in human papilloma virus (HPV) E2 transcriptional repression of the E6 and E7 oncogenes",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 651810,
+        "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Dharmacon Library)",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 651811,
+        "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Ambion Library)",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 743121,
+        "name": "Druggable Genome siRNA Screen for Enhancers of Camptothecin in MDA-MB-231 Breast Cancer Cells",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 743454,
+        "name": "RNAi screen for vorinostat resistance genes - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1053208,
+        "name": "A screen to identify the genes that modify the response of osteosarcoma to doxorubicin in mouse - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1117281,
+        "name": "A whole genome RNAi screen highlights components of the ER/Golgi as a prominent source of resistance to immunotoxin-mediated cytotoxicity",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1117357,
+        "name": "InfectX: Pathogen infection siRNA screens",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1159506,
+        "name": "Identification of proteins required for the processing of the EWS-FLI1 nascent transcript",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1159578,
+        "name": "A screen to identify genes that regulate lymphatic endothelial cell migration - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1159584,
+        "name": "A screen to identify synthetic lethal interactions with E-cadherin in an MCF10A isogenic cell line",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1224826,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse macrophages_Primary s",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1224828,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse macrophages_Primary s",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1224830,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced TNF-alpha response in human macrophages_Primary screen TNF reado",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      },
+      {
+        "aid": 1508588,
+        "name": "RNAi screen for vemurafenib enhancer genes in BRAFV600 melanoma - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "SPAM1"
+      }
+    ],
+    "n_usable": 0,
+    "total_inactive_seen": 0,
+    "max_inactive_single_assay": 0,
+    "verdict": "C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다. 최대 비활성 0개",
+    "c3_pass": false
+  },
+  {
+    "label": "HYAL1",
+    "symbols": {
+      "HYAL1": 21
+    },
+    "n_aids": 21,
+    "min_tested_required": 2000,
+    "assays": [
+      {
+        "aid": 1799581,
+        "name": "Stains-all Assay from Article 10.1111/j.1747-0285.2007.00590.x: \"New potent indole derivatives as hyaluronidase inhibitors.\"",
+        "n_tested": 9,
+        "n_active": 0,
+        "n_inactive": 9,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1799582,
+        "name": "Morgan-Elson Assay from Article 10.1111/j.1747-0285.2007.00590.x: \"New potent indole derivatives as hyaluronidase inhibitors.\"",
+        "n_tested": 5,
+        "n_active": 0,
+        "n_inactive": 5,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1904,
+        "name": "siRNA Circadian Assay",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 477408,
+        "name": "Inhibition of hyaluronidase",
+        "n_tested": 8,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 614066,
+        "name": "Inhibition of bovine testes hyaluronidase after 30 mins at pH 5 by turbidimetric analysis",
+        "n_tested": 1,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 624099,
+        "name": "An siRNA screen for human genes that are involved in human papilloma virus (HPV) E2 transcriptional repression of the E6 and E7 oncogenes",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 651810,
+        "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Dharmacon Library)",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 651811,
+        "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Ambion Library)",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 743454,
+        "name": "RNAi screen for vorinostat resistance genes - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 766636,
+        "name": "Inhibition of bovine testes hyaluronidase using hyaluronic acid as substrate assessed as residual activity at 100 uM by nephelometric method",
+        "n_tested": 22,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1053208,
+        "name": "A screen to identify the genes that modify the response of osteosarcoma to doxorubicin in mouse - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1117281,
+        "name": "A whole genome RNAi screen highlights components of the ER/Golgi as a prominent source of resistance to immunotoxin-mediated cytotoxicity",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1117357,
+        "name": "InfectX: Pathogen infection siRNA screens",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1159506,
+        "name": "Identification of proteins required for the processing of the EWS-FLI1 nascent transcript",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1159578,
+        "name": "A screen to identify genes that regulate lymphatic endothelial cell migration - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1159584,
+        "name": "A screen to identify synthetic lethal interactions with E-cadherin in an MCF10A isogenic cell line",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1224826,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse macrophages_Primary s",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1224828,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse macrophages_Primary s",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1224830,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced TNF-alpha response in human macrophages_Primary screen TNF reado",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1352346,
+        "name": "Inhibition of bovine testes hyaluronidase using hyaluronic acid as substrate preincubated for 10 mins in dark followed by incubation with su",
+        "n_tested": 1,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      },
+      {
+        "aid": 1508588,
+        "name": "RNAi screen for vemurafenib enhancer genes in BRAFV600 melanoma - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL1"
+      }
+    ],
+    "n_usable": 0,
+    "total_inactive_seen": 14,
+    "max_inactive_single_assay": 9,
+    "verdict": "C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다. 최대 비활성 9개",
+    "c3_pass": false
+  },
+  {
+    "label": "HYAL2",
+    "symbols": {
+      "HYAL2": 20
+    },
+    "n_aids": 20,
+    "min_tested_required": 2000,
+    "assays": [
+      {
+        "aid": 1904,
+        "name": "siRNA Circadian Assay",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 614066,
+        "name": "Inhibition of bovine testes hyaluronidase after 30 mins at pH 5 by turbidimetric analysis",
+        "n_tested": 1,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 624099,
+        "name": "An siRNA screen for human genes that are involved in human papilloma virus (HPV) E2 transcriptional repression of the E6 and E7 oncogenes",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 651810,
+        "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Dharmacon Library)",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 651811,
+        "name": "Genome-wide high-content siRNA screens for regulators of Parkin translocation in selective mitophagy (Ambion Library)",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 743121,
+        "name": "Druggable Genome siRNA Screen for Enhancers of Camptothecin in MDA-MB-231 Breast Cancer Cells",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 743454,
+        "name": "RNAi screen for vorinostat resistance genes - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 743458,
+        "name": "RNAi screen for vorinostat resistance genes - Secondary Deconvolution Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 766636,
+        "name": "Inhibition of bovine testes hyaluronidase using hyaluronic acid as substrate assessed as residual activity at 100 uM by nephelometric method",
+        "n_tested": 22,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1053208,
+        "name": "A screen to identify the genes that modify the response of osteosarcoma to doxorubicin in mouse - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1117281,
+        "name": "A whole genome RNAi screen highlights components of the ER/Golgi as a prominent source of resistance to immunotoxin-mediated cytotoxicity",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1117357,
+        "name": "InfectX: Pathogen infection siRNA screens",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1159506,
+        "name": "Identification of proteins required for the processing of the EWS-FLI1 nascent transcript",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1159578,
+        "name": "A screen to identify genes that regulate lymphatic endothelial cell migration - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1159584,
+        "name": "A screen to identify synthetic lethal interactions with E-cadherin in an MCF10A isogenic cell line",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1224826,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse macrophages_Primary s",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1224828,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced NF-kappaB and TNF-alpha responses in mouse macrophages_Primary s",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1224830,
+        "name": "Genome-wide siRNA screen of genes regulating the Lipopolysaccharide-induced TNF-alpha response in human macrophages_Primary screen TNF reado",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1352346,
+        "name": "Inhibition of bovine testes hyaluronidase using hyaluronic acid as substrate preincubated for 10 mins in dark followed by incubation with su",
+        "n_tested": 1,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      },
+      {
+        "aid": 1508588,
+        "name": "RNAi screen for vemurafenib enhancer genes in BRAFV600 melanoma - Primary Screen",
+        "n_tested": 0,
+        "n_active": 0,
+        "n_inactive": 0,
+        "symbol": "HYAL2"
+      }
+    ],
+    "n_usable": 0,
+    "total_inactive_seen": 0,
+    "max_inactive_single_assay": 0,
+    "verdict": "C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다. 최대 비활성 0개",
+    "c3_pass": false
+  }
+]

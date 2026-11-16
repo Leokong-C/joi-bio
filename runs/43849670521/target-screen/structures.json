@@ -1,0 +1,59 @@
+{
+  "selftest_passed": true,
+  "targets": [
+    {
+      "gene": "SPAM1",
+      "accession": "P38567",
+      "protein": "Hyaluronidase PH-20",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 1,
+      "n_examined": 1,
+      "n_fetch_errors": 0,
+      "n_holo": 1,
+      "n_holo_xray": 0,
+      "n_holo_em": 1,
+      "n_holo_le_3A": 0,
+      "best": [
+        {
+          "pdb_id": "9JUB",
+          "resolution": 3.1,
+          "method": "EM",
+          "ligands": [
+            "NAG"
+          ]
+        }
+      ],
+      "c4_pass": false
+    },
+    {
+      "gene": "HYAL1",
+      "accession": "Q12794",
+      "protein": "Hyaluronidase-1",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 1,
+      "n_examined": 1,
+      "n_fetch_errors": 0,
+      "n_holo": 0,
+      "n_holo_xray": 0,
+      "n_holo_em": 0,
+      "n_holo_le_3A": 0,
+      "best": [],
+      "c4_pass": false
+    },
+    {
+      "gene": "HYAL2",
+      "accession": "Q12891",
+      "protein": "Hyaluronidase-2",
+      "n_reviewed_hits": 1,
+      "n_pdb_total": 0,
+      "n_examined": 0,
+      "n_fetch_errors": 0,
+      "n_holo": 0,
+      "n_holo_xray": 0,
+      "n_holo_em": 0,
+      "n_holo_le_3A": 0,
+      "best": [],
+      "c4_pass": false
+    }
+  ]
+}

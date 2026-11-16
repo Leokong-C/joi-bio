@@ -1,0 +1,80 @@
+
+========================================================================
+[*] PH20 — 별칭 SPAM1, PH20, PH-20, HEL-S-96
+========================================================================
+    SPAM1        AID 16개
+    PH20         AID 0개
+    PH-20        AID 0개
+    HEL-S-96     AID 0개
+
+    고유 AID 16개 — 규모 확인 (최대 120개)
+      AID      1904  시험        0  활성      0  비활성        0  siRNA Circadian Assay
+      AID    624099  시험        0  활성      0  비활성        0  An siRNA screen for human genes that are invol
+      AID    651810  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for reg
+      AID    651811  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for reg
+      AID    743121  시험        0  활성      0  비활성        0  Druggable Genome siRNA Screen for Enhancers of
+      AID    743454  시험        0  활성      0  비활성        0  RNAi screen for vorinostat resistance genes - 
+      AID   1053208  시험        0  활성      0  비활성        0  A screen to identify the genes that modify the
+      AID   1117281  시험        0  활성      0  비활성        0  A whole genome RNAi screen highlights componen
+      AID   1117357  시험        0  활성      0  비활성        0  InfectX: Pathogen infection siRNA screens
+      AID   1159506  시험        0  활성      0  비활성        0  Identification of proteins required for the pr
+      AID   1159578  시험        0  활성      0  비활성        0  A screen to identify genes that regulate lymph
+      AID   1159584  시험        0  활성      0  비활성        0  A screen to identify synthetic lethal interact
+      … 외 4개
+
+    [=] C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다. 최대 비활성 0개
+
+========================================================================
+[*] HYAL1 — 별칭 HYAL1
+========================================================================
+    HYAL1        AID 21개
+
+    고유 AID 21개 — 규모 확인 (최대 120개)
+      AID   1799581  시험        9  활성      0  비활성        9  Stains-all Assay from Article 10.1111/j.1747-0
+      AID   1799582  시험        5  활성      0  비활성        5  Morgan-Elson Assay from Article 10.1111/j.1747
+      AID      1904  시험        0  활성      0  비활성        0  siRNA Circadian Assay
+      AID    477408  시험        8  활성      0  비활성        0  Inhibition of hyaluronidase
+      AID    614066  시험        1  활성      0  비활성        0  Inhibition of bovine testes hyaluronidase afte
+      AID    624099  시험        0  활성      0  비활성        0  An siRNA screen for human genes that are invol
+      AID    651810  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for reg
+      AID    651811  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for reg
+      AID    743454  시험        0  활성      0  비활성        0  RNAi screen for vorinostat resistance genes - 
+      AID    766636  시험       22  활성      0  비활성        0  Inhibition of bovine testes hyaluronidase usin
+      AID   1053208  시험        0  활성      0  비활성        0  A screen to identify the genes that modify the
+      AID   1117281  시험        0  활성      0  비활성        0  A whole genome RNAi screen highlights componen
+      … 외 9개
+
+    [=] C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다. 최대 비활성 9개
+
+========================================================================
+[*] HYAL2 — 별칭 HYAL2
+========================================================================
+    HYAL2        AID 20개
+
+    고유 AID 20개 — 규모 확인 (최대 120개)
+      AID      1904  시험        0  활성      0  비활성        0  siRNA Circadian Assay
+      AID    614066  시험        1  활성      0  비활성        0  Inhibition of bovine testes hyaluronidase afte
+      AID    624099  시험        0  활성      0  비활성        0  An siRNA screen for human genes that are invol
+      AID    651810  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for reg
+      AID    651811  시험        0  활성      0  비활성        0  Genome-wide high-content siRNA screens for reg
+      AID    743121  시험        0  활성      0  비활성        0  Druggable Genome siRNA Screen for Enhancers of
+      AID    743454  시험        0  활성      0  비활성        0  RNAi screen for vorinostat resistance genes - 
+      AID    743458  시험        0  활성      0  비활성        0  RNAi screen for vorinostat resistance genes - 
+      AID    766636  시험       22  활성      0  비활성        0  Inhibition of bovine testes hyaluronidase usin
+      AID   1053208  시험        0  활성      0  비활성        0  A screen to identify the genes that modify the
+      AID   1117281  시험        0  활성      0  비활성        0  A whole genome RNAi screen highlights componen
+      AID   1117357  시험        0  활성      0  비활성        0  InfectX: Pathogen infection siRNA screens
+      … 외 8개
+
+    [=] C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다. 최대 비활성 0개
+
+
+======================================================================================
+C3 — 실측 비활성이 있는가
+======================================================================================
+타깃                 AID         최대 비활성/어세이       쓸만한 어세이  판정
+--------------------------------------------------------------------------------------
+PH20                16                  0             0  C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다.
+HYAL1               21                  9             0  C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다.
+HYAL2               20                  0             0  C3 실패 — 시험 2,000개 이상이면서 비활성이 있는 어세이가 없다.
+→ out/bioassay.json
