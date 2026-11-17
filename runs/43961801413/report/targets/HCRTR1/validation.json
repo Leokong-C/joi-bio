@@ -1,0 +1,56 @@
+{
+  "n_compounds": 4999,
+  "n_screen_excluded": 0,
+  "n_known_active": 140,
+  "n_decoy": 4859,
+  "ef1": 2.857,
+  "ef5": 2.428,
+  "ef10": 2.0,
+  "auc": 0.617,
+  "bedroc": 0.1371,
+  "best_score": -13.395,
+  "thresholds": {
+    "nef1": 0.4,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [],
+    "n_requested": 3,
+    "n_found_in_library": 0,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": [
+      "daridorexant",
+      "lemborexant",
+      "suvorexant"
+    ]
+  },
+  "active_fraction": 0.028,
+  "max_reachable_ef1": 35.707,
+  "nef1": 0.08,
+  "nef5": 0.1214,
+  "nef10": 0.2,
+  "ef1_threshold_unreachable": false,
+  "active_fraction_too_high": false,
+  "checks": {
+    "nef1": false,
+    "auc": false,
+    "bedroc": false
+  },
+  "arm": "treatment",
+  "thresholds_applied": true,
+  "verdict": "ABSTAIN",
+  "verdict_reason": "대조군이 없다. 절대 문턱은 0/3 통과이나, 이 문턱은 벤치마크와 유사도 0.07 인 구조도 통과시킨 전력이 있다(EPAS1 대조군 3H82: EF1% 8.17, AUC 0.716, BEDROC 0.300 — 당시 절대 EF1% 5.0 문턱을 넘었다. nEF1% 0.40 으로 바꾼 뒤 이 사례는 0.200 으로 미달하지만, 문턱 하나로 구조 선택 편향을 분리할 수 없다는 점은 그대로다). 닮지 않은 구조에 같은 라이브러리를 도킹해 비교하기 전에는 이 수치가 도킹 실력인지 구조 선택 덕인지 말할 수 없다.",
+  "gene": "HCRTR1",
+  "pocket_confidence": "high",
+  "eval_set_coverage": {
+    "n_library": 4999,
+    "n_docking_attempted": 4999,
+    "n_scored": 4999,
+    "coverage": 1.0,
+    "threshold": 0.9,
+    "complete": true
+  }
+}
