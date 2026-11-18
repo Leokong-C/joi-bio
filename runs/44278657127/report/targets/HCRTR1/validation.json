@@ -1,0 +1,56 @@
+{
+  "n_compounds": 64,
+  "n_screen_excluded": 0,
+  "n_known_active": 16,
+  "n_decoy": 48,
+  "ef1": 0.0,
+  "ef5": 1.333,
+  "ef10": 2.0,
+  "auc": 0.6367,
+  "bedroc": 0.4187,
+  "best_score": -10.409,
+  "thresholds": {
+    "nef1": 0.4,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [],
+    "n_requested": 3,
+    "n_found_in_library": 0,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": [
+      "daridorexant",
+      "lemborexant",
+      "suvorexant"
+    ]
+  },
+  "active_fraction": 0.25,
+  "max_reachable_ef1": 4.0,
+  "nef1": 0.0,
+  "nef5": 0.3332,
+  "nef10": 0.5,
+  "ef1_threshold_unreachable": false,
+  "active_fraction_too_high": true,
+  "checks": {
+    "nef1": false,
+    "auc": false,
+    "bedroc": true
+  },
+  "arm": "treatment",
+  "thresholds_applied": true,
+  "verdict": "INVALID",
+  "verdict_reason": "활성 비율 25.0% — 상한 20% 초과. EF1% 천장이 4.0 까지 내려앉고 AUC/BEDROC 도 함께 부풀려지므로 nEF1% 로 정규화해도 지표를 믿을 수 없다. 라이브러리를 활성 2~3% 비율로 다시 구성할 것.",
+  "gene": "HCRTR1",
+  "pocket_confidence": "high",
+  "eval_set_coverage": {
+    "n_library": 64,
+    "n_docking_attempted": 64,
+    "n_scored": 64,
+    "coverage": 1.0,
+    "threshold": 0.9,
+    "complete": true
+  }
+}
