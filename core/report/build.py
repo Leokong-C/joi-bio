@@ -64,15 +64,41 @@ def target_section(t: dict, tdir: Path) -> str:
         f"**검증: {VERDICT_MARK.get(val['verdict'], val['verdict'])}** — {val['verdict_reason']}"
     )
     lines.append("")
+    # 문턱 키를 손으로 적지 않는다. 절대 EF1% 를 nEF1% 로 바꿨을 때 이 줄이
+    # KeyError: 'ef1' 로 죽었고(run 43961801413), 도킹 32샤드가 전부 끝난 뒤
+    # 보고서 생성에서 멈춰 판정이 기록되지 않았다. 게이트가 쓰는 키를 그대로
+    # 조회하고, 문턱이 없는 지표는 참고값으로 찍는다.
+    thr = val.get("thresholds", {})
+    tfmt = lambda k: f"≥ {thr[k]}" if k in thr else "—"
     lines.append("| 지표 | 값 | 임계값 |")
     lines.append("| --- | --- | --- |")
-    lines.append(f"| EF1% | {fmt('ef1')} | ≥ {val['thresholds']['ef1']} |")
-    lines.append(f"| EF5% | {fmt('ef5')} | — |")
-    lines.append(f"| AUC | {fmt('auc')} | ≥ {val['thresholds']['auc']} |")
-    lines.append(f"| BEDROC | {fmt('bedroc')} | ≥ {val['thresholds']['bedroc']} |")
+    for key, label in (
+        ("ef1", "EF1%"),
+        ("nef1", "nEF1%"),
+        ("ef5", "EF5%"),
+        ("auc", "AUC"),
+        ("bedroc", "BEDROC"),
+    ):
+        lines.append(f"| {label} | {fmt(key)} | {tfmt(key)} |")
+    # 게이트가 판정에 쓰는 문턱인데 위 표에 자리가 없는 것이 있으면 적는다.
+    # 조용히 빠지면 "무엇으로 판정했는가" 가 보고서에서 사라진다.
+    missing = [k for k in thr if k not in ("ef1", "nef1", "ef5", "auc", "bedroc")]
+    for k in missing:
+        lines.append(f"| {k} | {fmt(k)} | ≥ {thr[k]} |")
     lines.append(
         f"| 화합물 수 | {val['n_compounds']} (활성 {val['n_known_active']}) | 활성 ≥ {val['min_actives_required']} |"
     )
+
+    # 대조군은 절대 문턱의 PASS 요구에서 면제된다. 그 사실을 보고서에 적지
+    # 않으면 낮은 수치가 결함으로 읽힌다 — 대조군은 편향 없는 하한이므로
+    # 낮은 것이 설계대로다.
+    if val.get("thresholds_applied") is False:
+        lines.append("")
+        lines.append(
+            "> 이 팔은 **음성 대조군**이다. 위 임계값의 PASS 요구를 적용하지 않았고 "
+            "지표만 산출했다. 대조군 enrichment 가 낮은 것은 설계대로이며 결함이 아니다 — "
+            "치료군이 이보다 유의하게 높은지가 판정 대상이다."
+        )
 
     br = val.get("benchmark_recovery", {})
     if br.get("checked"):

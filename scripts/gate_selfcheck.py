@@ -128,7 +128,63 @@ check(
     f"{ru['verdict']}",
 )
 
-print("\n[7] 실측 대조 — ci-results 에서 읽은 값과 맞는가")
+print("\n[7] 보고서 생성이 현재 문턱으로 죽지 않는가")
+# run 43961801413 에서 core/report/build.py 가 val['thresholds']['ef1'] 을
+# 손으로 조회해 KeyError 로 죽었다. 도킹 32샤드가 전부 끝난 뒤 보고서에서
+# 멈춰 판정이 기록되지 않았다. [2] 의 소스 검사는 scripts/ 만 봤기 때문에
+# 이 경로를 놓쳤다 — 여기서는 실제로 렌더링해 본다.
+import json as _json  # noqa: E402
+import tempfile  # noqa: E402
+
+from core.report.build import target_section  # noqa: E402
+
+_TARGET = {
+    "gene": "SELFCHECK",
+    "disease": "자체 점검",
+    "class": "receptor",
+    "rationale": "게이트 자체 점검용 합성 입력",
+}
+_META = {
+    "source": "SELFCHECK",
+    "pdb_id": "0XXX",
+    "receptor": {"chain": "A", "n_atoms": 1},
+    "pocket": {"mode": "cocrystal_ligand", "confidence": "high", "note": "합성"},
+}
+
+
+def _write_case(p: Path, verdict: dict) -> None:
+    (p / "target_meta.json").write_text(_json.dumps(_META), encoding="utf-8")
+    (p / "validation.json").write_text(_json.dumps(verdict), encoding="utf-8")
+
+
+_probe = evaluate(rows_with_actives_on_top(2000, 60, 30), [])
+with tempfile.TemporaryDirectory() as _td:
+    _p = Path(_td)
+    _write_case(_p, _probe)
+    try:
+        _out = target_section(_TARGET, _p)
+        check("치료군 판정으로 보고서가 렌더링된다", bool(_out), f"{len(_out)}자")
+        for _k in THRESHOLDS:
+            check(f"보고서에 {_k} 문턱이 적힌다", str(THRESHOLDS[_k]) in _out)
+    except Exception as _e:
+        check("치료군 판정으로 보고서가 렌더링된다", False, f"{type(_e).__name__}: {_e}")
+
+_probe_c = evaluate(rows_with_actives_on_top(2000, 60, 0), [], arm="control")
+with tempfile.TemporaryDirectory() as _td:
+    _p = Path(_td)
+    _write_case(_p, _probe_c)
+    try:
+        _outc = target_section(_TARGET, _p)
+        check("대조군 판정으로도 보고서가 렌더링된다", bool(_outc))
+        check(
+            "보고서가 대조군 면제를 밝힌다",
+            "음성 대조군" in _outc,
+            "면제를 적지 않으면 낮은 수치가 결함으로 읽힌다",
+        )
+    except Exception as _e:
+        check("대조군 판정으로도 보고서가 렌더링된다", False, f"{type(_e).__name__}: {_e}")
+
+print("\n[8] 실측 대조 — ci-results 에서 읽은 값과 맞는가")
 # EPAS1 치료군 41259689466: n=1814, 활성 52, EF1% 29.071 -> nEF1% 0.833
 # EPAS1 대조군 41259689466: n=519,  활성 14, EF1%  7.414 -> nEF1% 0.200
 for label, n, na, ef1, want in (
