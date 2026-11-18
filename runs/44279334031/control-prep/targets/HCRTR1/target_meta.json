@@ -1,0 +1,54 @@
+{
+  "gene": "HCRTR1",
+  "uniprot": "O43613",
+  "declared_pocket_mode": "cavity",
+  "benchmark_smiles_found": [
+    "suvorexant",
+    "lemborexant",
+    "daridorexant"
+  ],
+  "source": "RCSB",
+  "pdb_id": "6TP4",
+  "resolution": 3.01,
+  "ligand_match": {
+    "similarity": 0.2135,
+    "ligand_smiles": "COc1ccc(cc1)[S](=O)(=O)N2CCC[C@H]2C(=O)Nc3cc(C)cc(C)c3",
+    "matched_benchmark": 2
+  },
+  "structure_selection": "forced",
+  "receptor": {
+    "chain": "A",
+    "n_atoms": 2397,
+    "cofactors": [],
+    "cocrystal_ligand": {
+      "resname": "NRZ",
+      "n_heavy": 27,
+      "center": [
+        55.096,
+        -0.292,
+        29.554
+      ]
+    }
+  },
+  "pocket": {
+    "mode": "cocrystal_ligand",
+    "reference_ligand": "NRZ",
+    "center": [
+      55.096,
+      -0.292,
+      29.554
+    ],
+    "size": [
+      20.0,
+      24.4,
+      20.0
+    ],
+    "confidence": "high",
+    "note": "NRZ (27 heavy atoms) 기준"
+  },
+  "benchmark_ligands": [
+    "suvorexant",
+    "lemborexant",
+    "daridorexant"
+  ]
+}
