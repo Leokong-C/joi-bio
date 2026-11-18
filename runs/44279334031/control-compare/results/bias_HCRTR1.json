@@ -1,0 +1,55 @@
+{
+  "gene": "HCRTR1",
+  "treatment": {
+    "n": 4999,
+    "n_active": 140,
+    "auc": 0.617,
+    "ef1": 2.857,
+    "ef5": 2.428,
+    "bedroc": 0.1371,
+    "best_score": -13.395,
+    "median_active": -9.009,
+    "median_decoy": -8.559,
+    "benchmarks": {}
+  },
+  "control": {
+    "n": 4999,
+    "n_active": 140,
+    "auc": 0.6404,
+    "ef1": 2.142,
+    "ef5": 2.714,
+    "bedroc": 0.1525,
+    "best_score": -12.573,
+    "median_active": -9.018,
+    "median_decoy": -8.534,
+    "benchmarks": {}
+  },
+  "auc_delta": -0.0234,
+  "ef1_ratio": 1.334,
+  "bedroc_ratio": 0.899,
+  "benchmark_ratio_median": null,
+  "early_recognition_ratios": {
+    "ef1": 1.334,
+    "bedroc": 0.899,
+    "benchmark_percentile": null
+  },
+  "verdict": "BIAS_LOW",
+  "verdict_reason": "조기 인식 지표 차이가 최대 1.3배에 그친다. 구조 선택이 순위를 거의 바꾸지 않았다.",
+  "benchmark_comparison": [],
+  "structures": {
+    "treatment": {
+      "pdb_id": "6TOT",
+      "resolution": 2.22,
+      "similarity": 1.0,
+      "selection": "forced",
+      "ligand": "NRK"
+    },
+    "control": {
+      "pdb_id": "6TP4",
+      "resolution": 3.01,
+      "similarity": 0.2135,
+      "selection": "forced",
+      "ligand": "NRZ"
+    }
+  }
+}

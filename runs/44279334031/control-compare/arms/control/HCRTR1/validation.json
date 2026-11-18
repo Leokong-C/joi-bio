@@ -1,0 +1,56 @@
+{
+  "n_compounds": 4999,
+  "n_screen_excluded": 0,
+  "n_known_active": 140,
+  "n_decoy": 4859,
+  "ef1": 2.142,
+  "ef5": 2.714,
+  "ef10": 2.357,
+  "auc": 0.6404,
+  "bedroc": 0.1525,
+  "best_score": -12.573,
+  "thresholds": {
+    "nef1": 0.4,
+    "auc": 0.7,
+    "bedroc": 0.3
+  },
+  "min_actives_required": 10,
+  "benchmark_recovery": {
+    "checked": [],
+    "n_requested": 3,
+    "n_found_in_library": 0,
+    "n_in_top_pct": 0,
+    "top_pct": 1.0,
+    "missing": [
+      "daridorexant",
+      "lemborexant",
+      "suvorexant"
+    ]
+  },
+  "active_fraction": 0.028,
+  "max_reachable_ef1": 35.707,
+  "nef1": 0.06,
+  "nef5": 0.1357,
+  "nef10": 0.2357,
+  "ef1_threshold_unreachable": false,
+  "active_fraction_too_high": false,
+  "checks": {
+    "nef1": false,
+    "auc": false,
+    "bedroc": false
+  },
+  "arm": "control",
+  "thresholds_applied": false,
+  "verdict": "CONTROL_REFERENCE",
+  "verdict_reason": "음성 대조군 팔 — 절대 문턱의 PASS 요구를 적용하지 않는다. nEF1% 0.06, AUC 0.6404, BEDROC 0.1525 는 편향 없는 하한으로 치료군과 같은 표에 싣는다. 대조군이 낮은 것은 설계대로이며 결함이 아니다 — 치료군이 이보다 유의하게 높은지가 판정 대상이다.",
+  "gene": "HCRTR1",
+  "pocket_confidence": "high",
+  "eval_set_coverage": {
+    "n_library": 4999,
+    "n_docking_attempted": 4999,
+    "n_scored": 4999,
+    "coverage": 1.0,
+    "threshold": 0.9,
+    "complete": true
+  }
+}

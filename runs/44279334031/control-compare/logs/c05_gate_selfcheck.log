@@ -1,0 +1,45 @@
+[1] 문턱 정의 자체
+  [OK  ] THRESHOLDS 가 nef1 을 쓴다 (절대 EF1% 가 아니다) — {'nef1': 0.4, 'auc': 0.7, 'bedroc': 0.3}
+  [OK  ] nEF1% 문턱이 0~1 범위에 있다 — nef1=0.4
+
+[2] 하류 스크립트가 게이트 키를 전부 낸다 — '조용한 0' 방지
+  [OK  ] scripts/trivial_baselines.py 가 ['nef1', 'auc', 'bedroc'] 를 모두 낸다 — 빠진 키 []
+  [OK  ] scripts/screen_targets.py 가 ['nef1', 'auc', 'bedroc'] 를 모두 낸다 — 빠진 키 []
+  [OK  ] scripts/leakage_audit.py 가 ['nef1', 'auc', 'bedroc'] 를 모두 낸다 — 빠진 키 []
+
+[3] nEF1% 계산
+  [OK  ] 천장이 계산된다 — perfect_ef(2000,60)=33.333
+  [OK  ] 천장에 닿으면 nEF1% = 1.0 — 1.0
+  [OK  ] EF1% 0 이면 nEF1% 0
+
+[4] 판정 — 치료군
+  [OK  ] 문턱을 다 넘어도 대조군이 없으면 ABSTAIN — ABSTAIN
+  [OK  ] nEF1% 가 판정 지표에 들어간다 — ['nef1', 'auc', 'bedroc']
+  [OK  ] 천장에 닿은 경우 nef1 체크 통과 — nef1=1.0
+  [OK  ] 활성이 전부 바닥이면 nef1 미달 — nef1=0.0
+
+[5] 판정 — 대조군은 문턱의 PASS 요구에서 면제된다
+  [OK  ] 대조군 판정은 CONTROL_REFERENCE — CONTROL_REFERENCE
+  [OK  ] 대조군은 FAIL 로 떨어지지 않는다
+  [OK  ] 대조군도 지표는 그대로 낸다 — nef1=0.0
+  [OK  ] 대조군에 문턱을 적용하지 않았음이 기록된다
+  [OK  ] 치료군에는 문턱을 적용했음이 기록된다
+
+[6] 활성 비율 과다 안전장치 — nEF1% 로 바꿔도 죽지 않았는가
+  [OK  ] 활성 비율 25% 는 INVALID — INVALID (활성비율 0.25)
+  [OK  ] 활성 비율 5% 는 INVALID 가 아니다 — ABSTAIN
+
+[7] 보고서 생성이 현재 문턱으로 죽지 않는가
+  [OK  ] 치료군 판정으로 보고서가 렌더링된다 — 677자
+  [OK  ] 보고서에 nef1 문턱이 적힌다
+  [OK  ] 보고서에 auc 문턱이 적힌다
+  [OK  ] 보고서에 bedroc 문턱이 적힌다
+  [OK  ] 대조군 판정으로도 보고서가 렌더링된다
+  [OK  ] 보고서가 대조군 면제를 밝힌다 — 면제를 적지 않으면 낮은 수치가 결함으로 읽힌다
+
+[8] 실측 대조 — ci-results 에서 읽은 값과 맞는가
+  [OK  ] EPAS1 치료군(41259689466) nEF1% = 0.8333 — 계산값 0.8333
+  [OK  ] EPAS1 대조군(41259689466) nEF1% = 0.2 — 계산값 0.2
+  [OK  ] 치료군 0.8333 은 문턱 0.4 통과 / 대조군 0.2000 은 미달 — 문턱 0.4
+
+[*] 자체 점검 전부 통과

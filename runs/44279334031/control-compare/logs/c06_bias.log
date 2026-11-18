@@ -1,0 +1,11 @@
+[*] HCRTR1 구조 선택 편향 측정
+    treatment 6TOT (NRK, 유사도 1.0, 2.22 Å)
+    control   6TP4 (NRZ, 유사도 0.2135, 3.01 Å)
+
+    AUC  treatment=0.617  control=0.6404
+    차이 -0.0234
+
+
+    판정: BIAS_LOW
+    조기 인식 지표 차이가 최대 1.3배에 그친다. 구조 선택이 순위를 거의 바꾸지 않았다.
+[+] /home/runner/work/joi-bio/joi-bio/results/bias_HCRTR1.json
