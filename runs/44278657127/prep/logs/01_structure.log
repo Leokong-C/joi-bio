@@ -1,0 +1,8 @@
+===== HCRTR1 =====
+[*] HCRTR1 (O43613) 구조 준비
+    벤치마크 SMILES 3개 확보 → 구조 선택 기준으로 사용
+    구조 강제 지정: 6TOT
+      유사도=1.000 res=2.22
+    source=RCSB pdb=6TOT res=2.22 chain=A atoms=2422
+    pocket=cocrystal_ligand (high) center=[24.527, 0.498, 95.04] size=[20.0, 20.8, 20.0]
+    NRK (30 heavy atoms) 기준

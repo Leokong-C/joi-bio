@@ -1,0 +1,9 @@
+===== HCRTR1 =====
+[*] exp/HCRTR1/library_timing.jsonl 에서 64행
+    묵은 도킹 필드 제거 0행
+    rotb 재계산 0행
+[+] /home/runner/work/joi-bio/joi-bio/targets/HCRTR1/library.jsonl
+    총 64 (활성 16, decoy 48, screen 0)
+    활성비율 0.2500  EF1 천장 4.0
+    rotb 최대 34 중위 5
+    sha256 b29aeabba456cc1ab6be1954d3c0166c5f74e786e18d592563fb31cc2179a312
